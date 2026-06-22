@@ -10,6 +10,7 @@ import { Pricing } from "./components/Pricing";
 import { Footer } from "./components/Footer";
 import { Leistungen } from "./pages/Leistungen";
 import { LeistungenDetail } from "./pages/LeistungenDetail";
+import CaseDetail from "./pages/CaseDetail";
 
 function MouseGlow() {
   const glowRef = useRef<HTMLDivElement>(null);
@@ -65,6 +66,7 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/leistungen" element={<Leistungen />} />
         <Route path="/leistungen/:slug" element={<LeistungenDetail />} />
+        <Route path="/cases/:slug" element={<CaseDetail />} />
       </Routes>
     </BrowserRouter>
   );
