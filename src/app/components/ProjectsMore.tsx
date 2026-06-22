@@ -1,11 +1,15 @@
 import { useRef, useState } from "react";
+import { Link } from "react-router";
 import { motion, useInView } from "motion/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { gridCases, type GridCase } from "@/data/cases";
 
 function GridCard({ c }: { c: GridCase }) {
   return (
-    <div className="flex flex-col gap-6 group cursor-pointer shrink-0 w-[360px]">
+    <Link
+      to={`/cases/${c.slug}`}
+      className="flex flex-col gap-6 group cursor-pointer shrink-0 w-[360px] hover:opacity-90 transition-opacity"
+    >
       <div className="overflow-hidden rounded-lg">
         <img
           src={c.image}
@@ -15,19 +19,19 @@ function GridCard({ c }: { c: GridCase }) {
       </div>
       <div className="flex flex-col gap-2">
         <h3
-          className="font-['Sofia_Pro',sans-serif] font-semibold text-white leading-tight"
-          style={{ fontSize: "24px" }}
+          className=" font-semibold text-white leading-tight"
+          style={{ fontSize: "var(--text-card)" }}
         >
           {c.title}
         </h3>
         <p
-          className="text-white/60 font-['Sofia_Pro',sans-serif] font-light leading-snug"
+          className="text-white/60 font-light leading-snug"
           style={{ fontSize: "var(--text-small)" }}
         >
           {c.subtitle}
         </p>
       </div>
-    </div>
+    </Link>
   );
 }
 
@@ -52,8 +56,8 @@ export function ProjectsMore() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="font-['Sofia_Pro',sans-serif] font-semibold text-white mb-12"
-          style={{ fontSize: "clamp(1.5rem, 3vw, 2.5rem)" }}
+          className=" font-semibold text-white mb-12"
+          style={{ fontSize: "var(--text-h2)" }}
         >
           Noch mehr Projekte
         </motion.h3>

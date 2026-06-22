@@ -1,4 +1,5 @@
 import { useRef, useState, useCallback } from "react";
+import { Link } from "react-router";
 import { motion, useInView } from "motion/react";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { featuredCases, type FeaturedCase } from "@/data/cases";
@@ -102,13 +103,13 @@ function CaseCard({ c, index }: { c: FeaturedCase; index: number }) {
         <div className="flex-1 flex flex-col gap-8 justify-center">
           <div className="flex flex-col gap-4">
             <h3
-              className="font-['Sofia_Pro',sans-serif] font-light text-white leading-tight"
-              style={{ fontSize: "clamp(1.5rem, 3vw, 2rem)" }}
+              className=" font-light text-white leading-tight"
+              style={{ fontSize: "var(--text-card)" }}
             >
               {c.title}
             </h3>
             <p
-              className="text-[#a1a1a1] font-['Sofia_Pro',sans-serif] font-light leading-relaxed"
+              className="text-[#a1a1a1] font-light leading-relaxed"
               style={{ fontSize: "var(--text-body)" }}
             >
               {c.subtitle}
@@ -120,7 +121,7 @@ function CaseCard({ c, index }: { c: FeaturedCase; index: number }) {
               <li key={stat} className="flex items-start gap-3">
                 <CheckIcon />
                 <span
-                  className="text-white/90 font-['Sofia_Pro',sans-serif] font-light leading-snug"
+                  className="text-white/90 font-light leading-snug"
                   style={{ fontSize: "var(--text-body)" }}
                 >
                   {stat}
@@ -129,10 +130,13 @@ function CaseCard({ c, index }: { c: FeaturedCase; index: number }) {
             ))}
           </ul>
 
-          <button className="self-start flex items-center gap-2 bg-white/4 hover:bg-white/8 border border-white/12 text-white text-sm px-5 py-2.5 rounded-lg transition-all font-['Sofia_Pro',sans-serif]">
+          <Link
+            to={`/cases/${c.slug}`}
+            className="self-start flex items-center gap-2 bg-white/4 hover:bg-white/8 border border-white/12 text-white text-sm px-5 py-2.5 rounded-lg transition-all"
+          >
             Zum Projekt
             <ArrowRight size={14} />
-          </button>
+          </Link>
         </div>
       </motion.div>
     </>
@@ -153,14 +157,14 @@ export function ProjectsFeatured() {
           className="flex flex-col gap-6 mb-20"
         >
           <h2
-            className="font-['Sofia_Pro',sans-serif] font-semibold text-white leading-none"
+            className=" font-semibold text-white leading-none"
             style={{ fontSize: "var(--text-hero)" }}
           >
             Projekte
           </h2>
           <p
-            className="text-[#c0c0c0] font-['Sofia_Pro',sans-serif] font-light leading-snug max-w-3xl"
-            style={{ fontSize: "clamp(1.1rem, 2.5vw, 1.75rem)" }}
+            className="text-[#c0c0c0] font-light leading-snug max-w-3xl"
+            style={{ fontSize: "var(--text-body)" }}
           >
             Unsere Projekte ziehen sich durch alle Branchen.{" "}
             <br className="hidden lg:block" />
