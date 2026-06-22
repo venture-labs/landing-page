@@ -93,7 +93,7 @@ export function ClientLogos() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-white font-['Sofia_Pro',sans-serif] font-semibold"
+          className="text-white font-semibold"
           style={{ fontSize: "var(--text-hero)" }}
         >
           {siteData.clientLogosLabel}

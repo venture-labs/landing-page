@@ -38,10 +38,10 @@ function NavLink({ item, onClick }: { item: { label: string; href: string }; onC
   const isRoute = item.href.startsWith("/") && !item.href.startsWith("/#");
   const isActive = isRoute && location.pathname === item.href;
 
-  const cls = `transition-colors tracking-[-0.02em] font-['Sofia_Pro',sans-serif] ${
+  const cls = `transition-colors tracking-[-0.02em] ${
     isActive ? "text-white" : "text-white/70 hover:text-white"
   }`;
-  const style = { fontSize: "clamp(1rem, 1.13vw, 1.13rem)" };
+  const style = { fontSize: "var(--text-body)" };
 
   if (isRoute) {
     return (
@@ -78,7 +78,7 @@ export function Navbar() {
 
         <a
           href="/#kontakt"
-          className="hidden lg:flex items-center gap-2 bg-[#8129ff] hover:bg-[#9140ff] text-white font-semibold px-5 py-2.5 rounded-lg transition-colors font-['Sofia_Pro',sans-serif]"
+          className="hidden lg:flex items-center gap-2 bg-[#8129ff] hover:bg-[#9140ff] text-white font-semibold px-5 py-2.5 rounded-lg transition-colors"
           style={{ fontSize: "var(--text-btn)" }}
         >
           Kontakt aufnehmen
@@ -104,7 +104,7 @@ export function Navbar() {
           ))}
           <a
             href="/#kontakt"
-            className="mt-2 inline-flex items-center justify-center bg-[#8129ff] text-white font-semibold px-5 py-3 rounded-lg font-['Sofia_Pro',sans-serif]"
+            className="mt-2 inline-flex items-center justify-center bg-[#8129ff] text-white font-semibold px-5 py-3 rounded-lg"
             style={{ fontSize: "var(--text-btn)" }}
             onClick={() => setOpen(false)}
           >

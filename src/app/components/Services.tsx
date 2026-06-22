@@ -80,13 +80,13 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         <div className="flex flex-col gap-3">
           {iconMap[service.icon]}
           <h3
-            className="font-['Sofia_Pro',sans-serif] font-semibold text-white leading-tight"
+            className=" font-semibold text-white leading-tight"
             style={{ fontSize: "var(--text-card)" }}
           >
             {service.title}
           </h3>
           <p
-            className="text-white/80 font-['Sofia_Pro',sans-serif] font-light leading-snug"
+            className="text-white/80 font-light leading-snug"
             style={{ fontSize: "var(--text-body)" }}
           >
             {service.description}
@@ -122,13 +122,13 @@ export function Services() {
           className="flex flex-col gap-10 mb-16"
         >
           <h2
-            className="font-['Sofia_Pro',sans-serif] font-semibold text-white leading-none"
+            className=" font-semibold text-white leading-none"
             style={{ fontSize: "var(--text-hero)" }}
           >
             Unsere Leistungen
           </h2>
           <p
-            className="text-[#c0c0c0] font-['Sofia_Pro',sans-serif] font-light leading-snug max-w-3xl"
+            className="text-[#c0c0c0] font-light leading-snug max-w-3xl"
             style={{ fontSize: "var(--text-h2)" }}
           >
             VentureLabs hilft Unternehmen, digitale Produkte schneller zu

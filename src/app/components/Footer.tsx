@@ -76,7 +76,7 @@ export function Footer() {
           <div className="lg:col-span-1">
             <FooterLogo />
             <p
-              className="mt-4 text-white/40 font-['Sofia_Pro',sans-serif] font-light leading-relaxed max-w-[200px]"
+              className="mt-4 text-white/40 font-light leading-relaxed max-w-[200px]"
               style={{ fontSize: "var(--text-small)" }}
             >
               Digitale Produkte, die wirklich funktionieren.
@@ -86,7 +86,7 @@ export function Footer() {
           {footerColumns.map((col) => (
             <div key={col.title} className="flex flex-col gap-4">
               <p
-                className="text-white font-['Sofia_Pro',sans-serif] font-semibold"
+                className="text-white font-semibold"
                 style={{ fontSize: "var(--text-small)" }}
               >
                 {col.title}
@@ -97,7 +97,7 @@ export function Footer() {
                     {link.href.startsWith("/") && !link.href.startsWith("/#") ? (
                       <Link
                         to={link.href}
-                        className="text-white/40 hover:text-white/80 transition-colors font-['Sofia_Pro',sans-serif] font-light"
+                        className="text-white/40 hover:text-white/80 transition-colors font-light"
                         style={{ fontSize: "var(--text-small)" }}
                       >
                         {link.label}
@@ -105,7 +105,7 @@ export function Footer() {
                     ) : (
                       <a
                         href={link.href}
-                        className="text-white/40 hover:text-white/80 transition-colors font-['Sofia_Pro',sans-serif] font-light"
+                        className="text-white/40 hover:text-white/80 transition-colors font-light"
                         style={{ fontSize: "var(--text-small)" }}
                       >
                         {link.label}
@@ -120,7 +120,7 @@ export function Footer() {
 
         <div className="border-t border-white/8 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p
-            className="text-white/30 font-['Sofia_Pro',sans-serif] font-light"
+            className="text-white/30 font-light"
             style={{ fontSize: "var(--text-small)" }}
           >
             © {new Date().getFullYear()} VentureLabs. Alle Rechte vorbehalten.
@@ -130,7 +130,7 @@ export function Footer() {
               <a
                 key={item}
                 href="#"
-                className="text-white/30 hover:text-white/60 transition-colors font-['Sofia_Pro',sans-serif] font-light"
+                className="text-white/30 hover:text-white/60 transition-colors font-light"
                 style={{ fontSize: "var(--text-small)" }}
               >
                 {item}

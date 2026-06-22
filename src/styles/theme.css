@@ -32,6 +32,7 @@
   --text-card:  clamp(1.25rem, 2.5vw,  2.5rem);
   --text-body:  clamp(1rem,    1.12vw, 1.12rem);
   --text-small: clamp(0.875rem,1.12vw, 1.12rem);
+  --text-price: clamp(2rem,    4vw,    2.5rem);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -133,6 +134,7 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-sofia-pro);
   }
 
   /**
@@ -145,25 +147,25 @@
   }
 
   h1 {
-    font-size: var(--text-2xl);
+    font-size: var(--text-hero);
     font-weight: var(--font-weight-medium);
     line-height: 1.5;
   }
 
   h2 {
-    font-size: var(--text-xl);
+    font-size: var(--text-h2);
     font-weight: var(--font-weight-medium);
     line-height: 1.5;
   }
 
   h3 {
-    font-size: var(--text-lg);
+    font-size: var(--text-card);
     font-weight: var(--font-weight-medium);
     line-height: 1.5;
   }
 
   h4 {
-    font-size: var(--text-base);
+    font-size: var(--text-body);
     font-weight: var(--font-weight-medium);
     line-height: 1.5;
   }

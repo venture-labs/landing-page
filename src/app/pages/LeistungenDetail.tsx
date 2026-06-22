@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useParams, Link } from "react-router";
 import { motion, useInView } from "motion/react";
 import { ArrowRight, Code2, Building2, Palette, Bot } from "lucide-react";
@@ -457,6 +457,10 @@ export function LeistungenDetail() {
   const { slug } = useParams<{ slug: string }>();
   const glowRef = useRef<HTMLDivElement>(null);
   const detail = serviceDetails.find((d) => d.slug === slug);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [slug]);
 
   if (!detail) {
     return (

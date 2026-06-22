@@ -46,13 +46,13 @@ function PricingCard({
 
         <div className="flex flex-col gap-4">
           <h3
-            className="font-['Sofia_Pro',sans-serif] font-light text-white leading-tight"
-            style={{ fontSize: "clamp(1.25rem, 2.5vw, 1.75rem)" }}
+            className=" font-light text-white leading-tight"
+            style={{ fontSize: "var(--text-card)" }}
           >
             {plan.title}
           </h3>
           <p
-            className="text-[#a1a1a1] font-['Sofia_Pro',sans-serif] font-light leading-relaxed"
+            className="text-[#a1a1a1] font-light leading-relaxed"
             style={{ fontSize: "var(--text-small)" }}
           >
             {plan.description}
@@ -63,13 +63,13 @@ function PricingCard({
       <div className="px-10 pb-4">
         <div className="flex items-end gap-1">
           <span
-            className="font-['Sofia_Pro',sans-serif] font-light text-white"
-            style={{ fontSize: "clamp(2rem, 4vw, 2.5rem)" }}
+            className=" font-light text-white"
+            style={{ fontSize: "var(--text-price)" }}
           >
             {plan.price}
           </span>
           {plan.priceUnit && (
-            <span className="text-[#a1a1a1] text-xs font-['Sofia_Pro',sans-serif] mb-2">
+            <span className="text-[#a1a1a1] text-xs mb-2">
               {plan.priceUnit}
             </span>
           )}
@@ -77,7 +77,7 @@ function PricingCard({
       </div>
 
       <div className="px-10 pb-6">
-        <button className="w-full bg-white/4 hover:bg-white/8 border border-white/12 text-white text-sm font-['Sofia_Pro',sans-serif] flex items-center justify-center gap-2 px-5 py-3 rounded-lg transition-all">
+        <button className="w-full bg-white/4 hover:bg-white/8 border border-white/12 text-white text-sm flex items-center justify-center gap-2 px-5 py-3 rounded-lg transition-all">
           {plan.cta}
           <ArrowRight size={14} />
         </button>
@@ -89,8 +89,8 @@ function PricingCard({
             <div key={feature} className="flex items-start gap-2">
               <Check size={13} className="text-[#8129ff] shrink-0 mt-0.5" />
               <span
-                className="text-[#a1a1a1] font-['Sofia_Pro',sans-serif] font-light leading-snug"
-                style={{ fontSize: "clamp(0.7rem, 1vw, 0.85rem)" }}
+                className="text-[#a1a1a1] font-light leading-snug"
+                style={{ fontSize: "var(--text-small)" }}
               >
                 {feature}
               </span>
@@ -116,14 +116,14 @@ export function Pricing() {
           className="flex flex-col gap-6 mb-16"
         >
           <h2
-            className="font-['Sofia_Pro',sans-serif] font-bold text-white leading-none"
-            style={{ fontSize: "clamp(2rem, 5vw, 3.75rem)" }}
+            className=" font-bold text-white leading-none"
+            style={{ fontSize: "var(--text-h2)" }}
           >
             Flexible Pakete für jede Phase.
           </h2>
           <p
-            className="text-[#c0c0c0] font-['Sofia_Pro',sans-serif] font-light leading-relaxed max-w-3xl"
-            style={{ fontSize: "clamp(1rem, 2vw, 1.5rem)" }}
+            className="text-[#c0c0c0] font-light leading-relaxed max-w-3xl"
+            style={{ fontSize: "var(--text-body)" }}
           >
             Ob kontinuierliche Unterstützung oder schneller Sprint – wir bieten
             dir das passende Modell, um digitale Produkte effizient umzusetzen.

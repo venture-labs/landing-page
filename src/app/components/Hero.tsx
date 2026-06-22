@@ -17,8 +17,8 @@ function HeroHeadline() {
   const parts = siteData.heroHeadline.split("digitale Lösungen");
   return (
     <h1
-      className="font-['Sofia_Pro:SemiBold',_'Sofia_Pro',_sans-serif] font-semibold text-white leading-[1.05] tracking-tight w-full"
-      style={{ fontSize: "clamp(3rem, 6vw, 6rem)" }}
+      className="font-semibold text-white leading-[1.05] tracking-tight w-full"
+      style={{ fontSize: "var(--text-hero)" }}
     >
       {parts[0]}
       <span className="relative inline-block">
@@ -66,14 +66,14 @@ export function Hero() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-col gap-8 px-6 lg:px-12"
         >
-          <div className="inline-flex items-center gap-2 bg-[#17cd29]/10 border border-[#17cd29]/30 text-[#17cd29] text-sm font-medium px-4 py-2 rounded-full w-fit font-['Sofia_Pro',sans-serif]">
+          <div className="inline-flex items-center gap-2 bg-[#17cd29]/10 border border-[#17cd29]/30 text-[#17cd29] text-sm font-medium px-4 py-2 rounded-full w-fit">
             👉 Wir suchen Verstärkung!
           </div>
 
           <HeroHeadline />
 
           <p
-            className="text-white/60 font-['Sofia_Pro',sans-serif] font-light leading-relaxed max-w-2xl"
+            className="text-white/60 font-light leading-relaxed max-w-2xl"
             style={{ fontSize: "var(--text-body)" }}
           >
             {siteData.heroSubline}
@@ -82,7 +82,7 @@ export function Hero() {
           <div className="flex flex-wrap gap-4">
             <a
               href="#kontakt"
-              className="inline-flex items-center gap-2 bg-[#8129ff] hover:bg-[#9140ff] text-white font-semibold rounded-lg transition-all hover:scale-[1.02] font-['Sofia_Pro',sans-serif] px-[24px] pt-[14px] pb-[8px]"
+              className="inline-flex items-center gap-2 bg-[#8129ff] hover:bg-[#9140ff] text-white font-semibold rounded-lg transition-all hover:scale-[1.02] px-[24px] pt-[14px] pb-[8px]"
               style={{ fontSize: "var(--text-body)" }}
             >
               {siteData.heroCta}
@@ -90,7 +90,7 @@ export function Hero() {
             </a>
             <a
               href="#projekte"
-              className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/12 text-white font-medium px-6 py-3.5 rounded-lg transition-all font-['Sofia_Pro',sans-serif]"
+              className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/12 text-white font-medium px-6 py-3.5 rounded-lg transition-all"
               style={{ fontSize: "var(--text-body)" }}
             >
               {siteData.heroCtaSecondary}

@@ -30,13 +30,13 @@ export function StrengthSection() {
       <div className="bg-[#291e3d] w-full">
         <div className="flex gap-[64px] items-start p-[32px]">
           <p
-            className="font-['Sofia_Pro',sans-serif] font-semibold text-white leading-none whitespace-pre-wrap shrink-0 w-[45%]"
-            style={{ fontSize: "clamp(1.2rem, 1.75vw, 1.75rem)" }}
+            className=" font-semibold text-white leading-none whitespace-pre-wrap shrink-0 w-[45%]"
+            style={{ fontSize: "var(--text-card)" }}
           >
             {"Unsere Stärke:\nDigitale Produktentwicklung"}
           </p>
           <p
-            className="font-['Sofia_Pro',sans-serif] font-light text-[#c0c0c0] leading-[1.4] flex-1 min-w-0"
+            className=" font-light text-[#c0c0c0] leading-[1.4] flex-1 min-w-0"
             style={{ fontSize: "var(--text-small)" }}
           >
             Wir begleiten dich von der ersten Vision bis zur Umsetzung – mit einem
@@ -59,13 +59,13 @@ export function StrengthSection() {
             {/* Text */}
             <div className="flex flex-col gap-[19px]">
               <p
-                className="font-['Sofia_Pro',sans-serif] font-light text-white leading-[1.2]"
-                style={{ fontSize: "clamp(1rem, 1.5vw, 1.5rem)" }}
+                className=" font-light text-white leading-[1.2]"
+                style={{ fontSize: "var(--text-card)" }}
               >
                 {f.title}
               </p>
               <p
-                className="font-['Sofia_Pro',sans-serif] font-light text-[#a1a1a1] leading-[1.4]"
+                className=" font-light text-[#a1a1a1] leading-[1.4]"
                 style={{ fontSize: "var(--text-small)" }}
               >
                 {f.subtitle}
