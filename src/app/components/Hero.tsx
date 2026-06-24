@@ -1,8 +1,10 @@
+import { useRef, useState } from "react";
 import { motion } from "motion/react";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight, Play, Pause } from "lucide-react";
 import { siteData } from "@/data/site";
 import svgPaths from "@/imports/🖌Homepage/svg-oa0apfkpzr";
 import heroImg from "@/imports/image-5.png";
+import heroVideo from "@/assets/venturelabs reel.mp4";
 
 function BackgroundBlobs() {
   return (
@@ -44,6 +46,20 @@ function HeroHeadline() {
 }
 
 export function Hero() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const togglePlay = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
   return (
     <section className="relative min-h-screen flex items-start pt-28 overflow-hidden bg-[#1E1C27]">
       <BackgroundBlobs />
@@ -103,20 +119,27 @@ export function Hero() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-10 relative w-full rounded-2xl overflow-hidden bg-[#e8e8f0] mx-auto"
+          className="mt-10 relative w-full rounded-2xl overflow-hidden bg-black mx-auto shadow-2xl shadow-black/60"
           style={{ maxWidth: "calc(100% - 3rem)" }}
         >
-          <img
-            src={heroImg}
-            alt="VentureLabs App Mockup"
+          <video
+            ref={videoRef}
+            src={heroVideo}
             className="w-full object-cover"
             style={{ minHeight: "480px", maxHeight: "640px" }}
+            loop
+            playsInline
           />
           <button
-            aria-label="Video abspielen"
+            aria-label={isPlaying ? "Video pausieren" : "Video abspielen"}
+            onClick={togglePlay}
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center w-20 h-20 rounded-full bg-white/50 hover:bg-white/70 transition-colors backdrop-blur-sm"
           >
-            <Play size={28} fill="white" className="ml-1 text-white" />
+            {isPlaying ? (
+              <Pause size={28} fill="white" className="ml-0 text-white" />
+            ) : (
+              <Play size={28} fill="white" className="ml-1 text-white" />
+            )}
           </button>
         </motion.div>
       </div>
