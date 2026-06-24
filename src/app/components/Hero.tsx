@@ -56,19 +56,30 @@ export function Hero() {
     if (!videoContainerRef.current) return 1;
 
     const rect = videoContainerRef.current.getBoundingClientRect();
-    const elementCenter = rect.top + rect.height / 2;
-    const viewportCenter = window.innerHeight / 2;
-    const distance = Math.abs(elementCenter - viewportCenter);
+    const elementBottom = rect.bottom;
+    const elementTop = rect.top;
+    const viewportHeight = window.innerHeight;
 
-    // Nur skalieren wenn Scrolling aktiv stattfindet (nicht initial)
-    // Distance sollte kleiner sein als die Viewport-Höhe (Video ist aktiv im scrolling)
-    const maxDistance = window.innerHeight / 2;
+    // Nur zoomen wenn Video aus dem normalen View scrollt (oben oder unten)
+    // Initial sollte das Video oben im Viewport sein (elementTop > 0)
+    // Zoom nur wenn es tatsächlich nach oben oder unten scrollt
+    if (elementTop > -100 && elementBottom < viewportHeight + 100) {
+      return 1; // Video ist sichtbar, kein Zoom
+    }
 
-    // Nur zoomen wenn Video relativ nah am Center ist (in +/- 80% des Viewports)
-    if (distance > maxDistance * 0.8) return 1;
+    // Wenn Video oben aus dem View scrollt (elementBottom < 0)
+    if (elementBottom < 0) {
+      const progress = Math.min(1, Math.abs(elementBottom) / 200);
+      return 1 + progress * 0.3;
+    }
 
-    const progress = Math.max(0, 1 - distance / (maxDistance * 0.8));
-    return 1 + progress * 0.3;
+    // Wenn Video unten aus dem View scrollt (elementTop > viewportHeight)
+    if (elementTop > viewportHeight) {
+      const progress = Math.min(1, (elementTop - viewportHeight) / 200);
+      return 1 + progress * 0.3;
+    }
+
+    return 1;
   });
 
   const togglePlay = () => {
