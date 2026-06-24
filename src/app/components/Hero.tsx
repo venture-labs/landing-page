@@ -56,13 +56,17 @@ export function Hero() {
     if (!videoContainerRef.current) return 1;
 
     const rect = videoContainerRef.current.getBoundingClientRect();
-    const elementTop = window.innerHeight - rect.top;
+    const elementTop = rect.top;
+    const elementBottom = rect.bottom;
 
-    if (elementTop < 0) return 1;
-    if (elementTop > window.innerHeight) return 1;
+    // Nur skalieren wenn Video aktiv aus dem View scrollt
+    if (elementTop > 0 && elementBottom < window.innerHeight) return 1;
 
-    const progress = elementTop / window.innerHeight;
-    return 1 + progress * 1.5;
+    if (elementTop <= 0 && elementBottom >= window.innerHeight) {
+      return 1.3;
+    }
+
+    return 1;
   });
 
   const togglePlay = () => {
