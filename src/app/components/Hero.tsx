@@ -60,10 +60,14 @@ export function Hero() {
     const viewportCenter = window.innerHeight / 2;
     const distance = Math.abs(elementCenter - viewportCenter);
 
-    // Wenn Video näher am oberen oder unteren Edge ist, wird es größer
-    const maxDistance = viewportCenter;
-    const progress = Math.max(0, 1 - distance / maxDistance);
+    // Nur skalieren wenn Scrolling aktiv stattfindet (nicht initial)
+    // Distance sollte kleiner sein als die Viewport-Höhe (Video ist aktiv im scrolling)
+    const maxDistance = window.innerHeight / 2;
 
+    // Nur zoomen wenn Video relativ nah am Center ist (in +/- 80% des Viewports)
+    if (distance > maxDistance * 0.8) return 1;
+
+    const progress = Math.max(0, 1 - distance / (maxDistance * 0.8));
     return 1 + progress * 0.3;
   });
 
