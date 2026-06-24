@@ -14,11 +14,11 @@ function LeistungenHero() {
     <section
       className="relative pt-40 pb-48 overflow-hidden"
       style={{
-        background: "linear-gradient(180deg, #1E1C27 0%, #1E1C27 40%, #0e0d13 120%)"
+        background: "linear-gradient(180deg, #1E1C27 0%, #1E1C27 40%, #0e0d13 100%)"
       }}
     >
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-[-100px] left-[-200px] w-[700px] h-[700px] rounded-full bg-[#8129ff]/10 blur-[120px]" />
+        <div className="absolute top-[-250px] left-[-200px] w-[700px] h-[500px] rounded-full bg-[#8129ff]/10 blur-[120px]" />
       </div>
       <div className="relative max-w-[1400px] mx-auto px-6 lg:px-12">
         <motion.div
