@@ -60,20 +60,15 @@ export function Hero() {
     const elementTop = rect.top;
     const viewportHeight = window.innerHeight;
 
-    // Wenn Video komplett sichtbar im normalen Viewport, kein Zoom
-    if (elementTop > 0 && elementBottom < viewportHeight) {
-      return 1;
-    }
-
-    // Wenn Video oben aus dem View scrollt (elementTop < 0)
-    if (elementTop < 0 && elementBottom > 0) {
-      const progress = Math.min(1, Math.abs(elementTop) / 300);
+    // Beginne Zoom, wenn Video oben scrollt (elementTop wird negativ)
+    if (elementTop < 0 && elementBottom > viewportHeight / 2) {
+      const progress = Math.min(1, Math.abs(elementTop) / 200);
       return 1 + progress * 0.3;
     }
 
-    // Wenn Video unten aus dem View scrollt (elementBottom > viewportHeight)
-    if (elementBottom > viewportHeight && elementTop < viewportHeight) {
-      const progress = Math.min(1, (elementBottom - viewportHeight) / 300);
+    // Beginne Zoom, wenn Video unten scrollt (elementBottom wird > viewportHeight)
+    if (elementBottom > viewportHeight && elementTop < viewportHeight / 2) {
+      const progress = Math.min(1, (elementBottom - viewportHeight) / 200);
       return 1 + progress * 0.3;
     }
 
