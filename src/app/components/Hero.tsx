@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { motion } from "motion/react";
+import { motion, useScroll, useTransform } from "motion/react";
 import { ArrowRight, Play, Pause } from "lucide-react";
 import { siteData } from "@/data/site";
 import svgPaths from "@/imports/🖌Homepage/svg-oa0apfkpzr";
@@ -47,7 +47,23 @@ function HeroHeadline() {
 
 export function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const videoContainerRef = useRef<HTMLDivElement>(null);
   const [isPlaying, setIsPlaying] = useState(true);
+
+  const { scrollY } = useScroll();
+
+  const scale = useTransform(scrollY, (value) => {
+    if (!videoContainerRef.current) return 1;
+
+    const rect = videoContainerRef.current.getBoundingClientRect();
+    const elementTop = window.innerHeight - rect.top;
+
+    if (elementTop < 0) return 1;
+    if (elementTop > window.innerHeight) return 1;
+
+    const progress = elementTop / window.innerHeight;
+    return 1 + progress * 1.5;
+  });
 
   const togglePlay = () => {
     if (videoRef.current) {
@@ -116,14 +132,12 @@ export function Hero() {
 
         {/* Video block — minimal side padding so it's the widest visible element */}
         <motion.div
-          initial={{ opacity: 0, y: 40, scale: 1 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
+          ref={videoContainerRef}
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          whileInView={{ scale: 1 }}
-          whileOutOfView={{ scale: 1.2 }}
-          viewport={{ once: false, margin: "-100px" }}
+          style={{ scale, maxWidth: "calc(100% - 3rem)" }}
           className="mt-10 relative w-full overflow-hidden bg-black mx-auto"
-          style={{ maxWidth: "calc(100% - 3rem)" }}
         >
           <video
             ref={videoRef}
