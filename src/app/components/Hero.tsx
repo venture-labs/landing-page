@@ -119,8 +119,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          whileInView={{ scale: 1.02 }}
-          onViewportEnter={() => {}}
+          whileInView={{ scale: 1.2 }}
           className="mt-10 relative w-full overflow-hidden bg-black mx-auto"
           style={{ maxWidth: "calc(100% - 3rem)" }}
         >
