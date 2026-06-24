@@ -116,10 +116,12 @@ export function Hero() {
 
         {/* Video block — minimal side padding so it's the widest visible element */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 40, scale: 1 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          whileInView={{ scale: 1 }}
           whileOutOfView={{ scale: 1.2 }}
+          viewport={{ once: false, margin: "-100px" }}
           className="mt-10 relative w-full overflow-hidden bg-black mx-auto"
           style={{ maxWidth: "calc(100% - 3rem)" }}
         >
