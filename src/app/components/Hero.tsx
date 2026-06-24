@@ -119,7 +119,9 @@ export function Hero() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-10 relative w-full rounded-2xl overflow-hidden bg-black mx-auto shadow-2xl shadow-black/60"
+          whileInView={{ scale: 1.02 }}
+          onViewportEnter={() => {}}
+          className="mt-10 relative w-full overflow-hidden bg-black mx-auto"
           style={{ maxWidth: "calc(100% - 3rem)" }}
         >
           <video
@@ -135,7 +137,7 @@ export function Hero() {
           <button
             aria-label={isPlaying ? "Video pausieren" : "Video abspielen"}
             onClick={togglePlay}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center w-20 h-20 rounded-full bg-white/50 hover:bg-white/70 transition-colors backdrop-blur-sm"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex md:hidden items-center justify-center w-20 h-20 rounded-full bg-white/50 hover:bg-white/70 transition-colors backdrop-blur-sm"
           >
             {isPlaying ? (
               <Pause size={28} fill="white" className="ml-0 text-white" />
