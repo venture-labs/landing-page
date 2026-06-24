@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { ArrowRight, Play, Pause } from "lucide-react";
 import { siteData } from "@/data/site";
@@ -50,34 +50,25 @@ export function Hero() {
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const [isPlaying, setIsPlaying] = useState(true);
 
+  const [maxScale, setMaxScale] = useState(1);
+
+  useEffect(() => {
+    const updateMaxScale = () => {
+      if (!videoContainerRef.current) return;
+      const containerWidth = videoContainerRef.current.offsetWidth;
+      if (containerWidth > 0) {
+        setMaxScale(window.innerWidth / containerWidth);
+      }
+    };
+
+    updateMaxScale();
+    window.addEventListener("resize", updateMaxScale);
+    return () => window.removeEventListener("resize", updateMaxScale);
+  }, []);
+
   const { scrollY } = useScroll();
-
-  const scale = useTransform(scrollY, (value) => {
-    if (!videoContainerRef.current) return 1;
-
-    const rect = videoContainerRef.current.getBoundingClientRect();
-    const elementBottom = rect.bottom;
-    const elementTop = rect.top;
-    const viewportHeight = window.innerHeight;
-
-    // Wenn Video komplett sichtbar im Viewport: scale 1 (normal)
-    if (elementTop >= 0 && elementBottom <= viewportHeight) {
-      return 1;
-    }
-
-    // Wenn Video oben aus dem View scrollt
-    if (elementTop < 0) {
-      const progress = Math.min(1, Math.abs(elementTop) / 400);
-      return 1 + progress * 0.3;
-    }
-
-    // Wenn Video unten aus dem View scrollt
-    if (elementBottom > viewportHeight) {
-      const progress = Math.min(1, (elementBottom - viewportHeight) / 400);
-      return 1 + progress * 0.3;
-    }
-
-    return 1;
+  const scale = useTransform(scrollY, [0, 600], [1, maxScale], {
+    clamp: true,
   });
 
   const togglePlay = () => {

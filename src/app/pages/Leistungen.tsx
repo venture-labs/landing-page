@@ -11,7 +11,12 @@ import { services, type Service } from "@/data/services";
 
 function LeistungenHero() {
   return (
-    <section className="relative pt-40 pb-24 bg-[#1E1C27] overflow-hidden">
+    <section
+      className="relative pt-40 pb-48 overflow-hidden"
+      style={{
+        background: "linear-gradient(180deg, #1E1C27 0%, #1E1C27 40%, #0e0d13 120%)"
+      }}
+    >
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-[-100px] left-[-200px] w-[700px] h-[700px] rounded-full bg-[#8129ff]/10 blur-[120px]" />
       </div>

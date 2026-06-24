@@ -191,7 +191,7 @@ function ProcessSection({
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="font-['Sofia_Pro',sans-serif] font-semibold text-white mb-16"
+          className="font-['Sofia_Pro',sans-serif] font-semibold text-white mb-16 leading-[1.1]"
           style={{ fontSize: "var(--text-hero)" }}
         >
           So entwickeln wir dein Produkt

@@ -7,7 +7,7 @@ import svgPaths from "@/imports/🖌Homepage/svg-oa0apfkpzr";
 
 function LogoMark() {
   return (
-    <svg className="h-14 w-auto" fill="none" viewBox="0 0 239 63" aria-label="VentureLabs">
+    <svg className="h-11 w-auto" fill="none" viewBox="0 0 239 63" aria-label="VentureLabs">
       <g clipPath="url(#clip-nav-logo)">
         <path d={svgPaths.p36555900} fill="white" />
         <path d={svgPaths.p8830c00} fill="white" />
@@ -64,7 +64,7 @@ export function Navbar() {
     <header className="fixed top-0 left-0 right-0 z-50">
       <div className="absolute inset-0 bg-gradient-to-b from-[#0e0d13]/90 to-transparent backdrop-blur-[2px]" />
       <nav className="relative max-w-[1400px] mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
-        <Link to="/" aria-label="VentureLabs home">
+        <Link to="/" aria-label="VentureLabs home" className="py-3 pr-6">
           <LogoMark />
         </Link>
 
