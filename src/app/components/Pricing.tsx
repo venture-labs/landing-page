@@ -1,7 +1,8 @@
 import { useRef } from "react";
 import { motion, useInView } from "motion/react";
 import { ArrowRight, Check } from "lucide-react";
-import { type PricingPlan } from "@/data/pricing";
+import { useTranslation } from "react-i18next";
+import { type PricingPlan } from "@/data/de/pricing";
 import { usePricingData } from "@/data/live";
 import { tinaField } from "tinacms/dist/react";
 import svgPaths from "@/imports/🖌Homepage/svg-oa0apfkpzr";
@@ -109,6 +110,7 @@ function PricingCard({
 
 export function Pricing() {
   const pricingPlans = usePricingData();
+  const { t } = useTranslation();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -125,15 +127,13 @@ export function Pricing() {
             className=" font-bold text-white leading-none"
             style={{ fontSize: "var(--text-h2)" }}
           >
-            Flexible Pakete für jede Phase.
+            {t("pricing.heading")}
           </h2>
           <p
             className="text-[#c0c0c0] font-light leading-relaxed max-w-3xl"
             style={{ fontSize: "var(--text-body)" }}
           >
-            Ob kontinuierliche Unterstützung oder schneller Sprint – wir bieten
-            dir das passende Modell, um digitale Produkte effizient umzusetzen.
-            Mit klarer Struktur, erfahrenem Team und voller Transparenz.
+            {t("pricing.subheading")}
           </p>
         </motion.div>
 

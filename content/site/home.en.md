@@ -5,13 +5,4 @@ heroSubline: "A small, focused team of strategy, design, and project management 
 heroCta: "Book a call"
 heroCtaSecondary: "View projects"
 clientLogosLabel: "Trusted by these clients"
-nav:
-  - label: "Services"
-    href: "/leistungen"
-  - label: "Projects"
-    href: "/cases"
-  - label: "About"
-    href: "/ueber-uns"
-  - label: "Blog"
-    href: "/blog"
 ---

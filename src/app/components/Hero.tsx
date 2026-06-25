@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { ArrowRight, Play, Pause } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useSiteData } from "@/data/live";
+import { useLocale } from "@/app/locale";
 import { tinaField } from "tinacms/dist/react";
 import svgPaths from "@/imports/🖌Homepage/svg-oa0apfkpzr";
 import heroImg from "@/imports/image-5.png";
@@ -16,8 +18,16 @@ function BackgroundBlobs() {
   );
 }
 
-function HeroHeadline({ headline, fieldName }: { headline: string; fieldName?: string }) {
-  const parts = headline.split("digitale Lösungen");
+function HeroHeadline({
+  headline,
+  highlight,
+  fieldName,
+}: {
+  headline: string;
+  highlight: string;
+  fieldName?: string;
+}) {
+  const parts = headline.split(highlight);
   return (
     <h1
       data-tina-field={fieldName}
@@ -26,7 +36,7 @@ function HeroHeadline({ headline, fieldName }: { headline: string; fieldName?: s
     >
       {parts[0]}
       <span className="relative inline-block">
-        <span className="relative z-10 text-white">digitale Lösungen</span>
+        <span className="relative z-10 text-white">{highlight}</span>
         <svg
           className="absolute -bottom-2 left-0 w-full"
           viewBox="0 0 400 16"
@@ -49,6 +59,8 @@ function HeroHeadline({ headline, fieldName }: { headline: string; fieldName?: s
 
 export function Hero() {
   const siteData = useSiteData();
+  const { t } = useTranslation();
+  const { localizedPath } = useLocale();
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -107,12 +119,9 @@ export function Hero() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-col gap-8 px-6 lg:px-12"
         >
-          <div className="inline-flex items-center gap-2 bg-[#17cd29]/10 border border-[#17cd29]/30 text-[#17cd29] text-sm font-medium px-4 py-2 rounded-full w-fit">
-            👉 Wir suchen Verstärkung!
-          </div>
-
           <HeroHeadline
             headline={siteData.heroHeadline}
+            highlight={t("hero.headlineHighlight")}
             fieldName={tinaField(siteData, "heroHeadline")}
           />
 
@@ -126,16 +135,16 @@ export function Hero() {
 
           <div className="flex flex-wrap gap-4">
             <a
-              href="#kontakt"
+              href={localizedPath("/#kontakt")}
               data-tina-field={tinaField(siteData, "heroCta")}
-              className="inline-flex items-center gap-2 bg-[#8129ff] hover:bg-[#9140ff] text-white font-semibold rounded-lg transition-all hover:scale-[1.02] px-[24px] pt-[14px] pb-[8px]"
+              className="inline-flex items-center gap-2 bg-[#8129ff] hover:bg-[#9140ff] text-white font-semibold rounded-lg transition-all hover:scale-[1.02] px-[24px] py-[11px]"
               style={{ fontSize: "var(--text-body)" }}
             >
               {siteData.heroCta}
               <ArrowRight size={16} />
             </a>
             <a
-              href="#projekte"
+              href={localizedPath("/#projekte")}
               data-tina-field={tinaField(siteData, "heroCtaSecondary")}
               className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/12 text-white font-medium px-6 py-3.5 rounded-lg transition-all"
               style={{ fontSize: "var(--text-body)" }}
@@ -165,7 +174,7 @@ export function Hero() {
             playsInline
           />
           <button
-            aria-label={isPlaying ? "Video pausieren" : "Video abspielen"}
+            aria-label={isPlaying ? t("hero.videoPause") : t("hero.videoPlay")}
             onClick={togglePlay}
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex md:hidden items-center justify-center w-20 h-20 rounded-full bg-white/50 hover:bg-white/70 transition-colors backdrop-blur-sm"
           >

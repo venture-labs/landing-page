@@ -2,8 +2,10 @@ import { useRef, useState, useCallback } from "react";
 import { Link } from "react-router";
 import { motion, useInView } from "motion/react";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
-import { type FeaturedCase } from "@/data/cases";
+import { useTranslation } from "react-i18next";
+import { type FeaturedCase } from "@/data/de/cases";
 import { useCasesData } from "@/data/live";
+import { useLocale } from "@/app/locale";
 import { tinaField } from "tinacms/dist/react";
 import svgPaths from "@/imports/🖌Homepage/svg-oa0apfkpzr";
 
@@ -66,6 +68,8 @@ function CaseCursorBubble({
 function CaseCard({ c, index }: { c: FeaturedCase; index: number }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const { t } = useTranslation();
+  const { localizedPath } = useLocale();
   const isLeft = c.imagePosition === "left";
 
   const [cursorVisible, setCursorVisible] = useState(false);
@@ -136,10 +140,10 @@ function CaseCard({ c, index }: { c: FeaturedCase; index: number }) {
           </ul>
 
           <Link
-            to={`/cases/${c.slug}`}
+            to={localizedPath(`/cases/${c.slug}`)}
             className="self-start flex items-center gap-2 bg-white/4 hover:bg-white/8 border border-white/12 text-white text-sm px-5 py-2.5 rounded-lg transition-all"
           >
-            Zum Projekt
+            {t("projects.viewProject")}
             <ArrowRight size={14} />
           </Link>
         </div>
@@ -150,6 +154,7 @@ function CaseCard({ c, index }: { c: FeaturedCase; index: number }) {
 
 export function ProjectsFeatured() {
   const { featuredCases } = useCasesData();
+  const { t } = useTranslation();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -166,16 +171,13 @@ export function ProjectsFeatured() {
             className=" font-semibold text-white leading-none"
             style={{ fontSize: "var(--text-hero)" }}
           >
-            Projekte
+            {t("projects.heading")}
           </h2>
           <p
             className="text-[#c0c0c0] font-light leading-snug max-w-3xl"
             style={{ fontSize: "var(--text-body)" }}
           >
-            Unsere Projekte ziehen sich durch alle Branchen.{" "}
-            <br className="hidden lg:block" />
-            Zu unseren Kunden zählen Start-ups wie Großkonzerne. Und besonders
-            spannend wird&#39;s, wenn wir unsere eigenen Kunden sind.
+            {t("projects.subheading")}
           </p>
         </motion.div>
 

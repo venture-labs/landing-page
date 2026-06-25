@@ -2,14 +2,17 @@ import { useRef, useState } from "react";
 import { Link } from "react-router";
 import { motion, useInView } from "motion/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { type GridCase } from "@/data/cases";
+import { useTranslation } from "react-i18next";
+import { type GridCase } from "@/data/de/cases";
 import { useCasesData } from "@/data/live";
+import { useLocale } from "@/app/locale";
 import { tinaField } from "tinacms/dist/react";
 
 function GridCard({ c }: { c: GridCase }) {
+  const { localizedPath } = useLocale();
   return (
     <Link
-      to={`/cases/${c.slug}`}
+      to={localizedPath(`/cases/${c.slug}`)}
       className="flex flex-col gap-6 group cursor-pointer shrink-0 w-[360px] hover:opacity-90 transition-opacity"
     >
       <div className="overflow-hidden rounded-lg">
@@ -23,7 +26,7 @@ function GridCard({ c }: { c: GridCase }) {
         <h3
           data-tina-field={tinaField(c, "title")}
           className=" font-semibold text-white leading-tight"
-          style={{ fontSize: "var(--text-card)" }}
+          style={{ fontSize: "calc(var(--text-card) * 0.75)", lineHeight: 1.1 }}
         >
           {c.title}
         </h3>
@@ -41,6 +44,7 @@ function GridCard({ c }: { c: GridCase }) {
 
 export function ProjectsMore() {
   const { gridCases } = useCasesData();
+  const { t } = useTranslation();
   const ref = useRef(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
@@ -64,7 +68,7 @@ export function ProjectsMore() {
           className=" font-semibold text-white mb-12"
           style={{ fontSize: "var(--text-h2)" }}
         >
-          Noch mehr Projekte
+          {t("projects.moreHeading")}
         </motion.h3>
       </div>
 
@@ -76,7 +80,7 @@ export function ProjectsMore() {
       >
         {/* Left arrow */}
         <motion.button
-          aria-label="Zurück"
+          aria-label={t("projects.scrollBack")}
           onClick={() => scrollBy("left")}
           initial={false}
           animate={{ opacity: hovered ? 1 : 0, x: hovered ? 0 : -8 }}
@@ -89,7 +93,7 @@ export function ProjectsMore() {
 
         {/* Right arrow */}
         <motion.button
-          aria-label="Weiter"
+          aria-label={t("projects.scrollForward")}
           onClick={() => scrollBy("right")}
           initial={false}
           animate={{ opacity: hovered ? 1 : 0, x: hovered ? 0 : 8 }}

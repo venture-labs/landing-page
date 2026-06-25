@@ -1,8 +1,11 @@
 import { useRef, useState } from "react";
+import { Link } from "react-router";
 import { motion, useInView } from "motion/react";
 import { Code2, Building2, Palette, Bot, ArrowUpRight } from "lucide-react";
-import { type Service } from "@/data/services";
+import { useTranslation } from "react-i18next";
+import { type Service } from "@/data/de/services";
 import { useServicesData } from "@/data/live";
+import { useLocale } from "@/app/locale";
 import { tinaField } from "tinacms/dist/react";
 
 const iconMap: Record<Service["icon"], React.ReactNode> = {
@@ -26,6 +29,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const [mouse, setMouse] = useState({ x: 50, y: 50 });
   const [hovered, setHovered] = useState(false);
+  const { localizedPath } = useLocale();
 
   const accent = cardAccentColors[service.slug] ?? "163, 24, 248";
 
@@ -42,8 +46,12 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-      className="relative overflow-hidden rounded-xl cursor-pointer"
+      className="relative overflow-hidden rounded-xl"
       style={{ minHeight: "392px" }}
+    >
+    <Link
+      to={localizedPath(`/leistungen/${service.slug}`)}
+      className="absolute inset-0 block cursor-pointer"
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -108,12 +116,14 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
           </div>
         </div>
       </div>
+    </Link>
     </motion.div>
   );
 }
 
 export function Services() {
   const services = useServicesData();
+  const { t } = useTranslation();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -130,15 +140,13 @@ export function Services() {
             className=" font-semibold text-white leading-none"
             style={{ fontSize: "var(--text-hero)" }}
           >
-            Unsere Leistungen
+            {t("services.heading")}
           </h2>
           <p
             className="text-[#c0c0c0] font-light leading-snug max-w-3xl"
             style={{ fontSize: "var(--text-h2)" }}
           >
-            VentureLabs hilft Unternehmen, digitale Produkte schneller zu
-            denken, zu planen und umzusetzen – mit einem Team aus
-            Spezialist:innen für Design, Entwicklung und AI.
+            {t("services.subheading")}
           </p>
         </motion.div>
 

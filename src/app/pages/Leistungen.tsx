@@ -2,14 +2,19 @@ import { useRef } from "react";
 import { motion, useInView } from "motion/react";
 import { ArrowRight, Code2, Building2, Palette, Bot, Check } from "lucide-react";
 import { Link } from "react-router";
+import { useTranslation } from "react-i18next";
+import { tinaField } from "tinacms/dist/react";
 import { Navbar } from "@/app/components/Navbar";
-import { Pricing } from "@/app/components/Pricing";
 import { Footer } from "@/app/components/Footer";
-import { services, type Service } from "@/data/services";
+import { useServicesData, useLeistungenData } from "@/data/live";
+import { useLocale } from "@/app/locale";
+import { type Service } from "@/data/de/services";
 
 /* ─── hero ──────────────────────────────────────────────────────────── */
 
 function LeistungenHero() {
+  const { t } = useTranslation();
+  const leistungenData = useLeistungenData();
   return (
     <section
       className="relative pt-40 pb-48 overflow-hidden"
@@ -28,12 +33,13 @@ function LeistungenHero() {
           className="flex flex-col gap-8 max-w-3xl"
         >
           <h1
-            className="font-['Sofia_Pro',sans-serif] font-semibold text-white leading-[1.05]"
+            className="font-['sofia-pro',sans-serif] font-semibold text-white leading-[1.05]"
             style={{ fontSize: "var(--text-hero)" }}
+            data-tina-field={tinaField(leistungenData, "heroTitlePrefix")}
           >
-            Wir helfen dir{" "}
+            {leistungenData.heroTitlePrefix}{" "}
             <span className="relative inline-block">
-              <span className="relative z-10">zu wachsen</span>
+              <span className="relative z-10" data-tina-field={tinaField(leistungenData, "heroTitleHighlight")}>{leistungenData.heroTitleHighlight}</span>
               <span
                 className="absolute bottom-0 left-0 w-full h-[3px] rounded-full"
                 style={{ background: "linear-gradient(90deg, #8129ff, #a318f8)" }}
@@ -41,12 +47,11 @@ function LeistungenHero() {
             </span>
           </h1>
           <p
-            className="text-white/60 font-['Sofia_Pro',sans-serif] font-light leading-relaxed max-w-2xl"
+            className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed max-w-2xl"
             style={{ fontSize: "var(--text-body)" }}
+            data-tina-field={tinaField(leistungenData, "heroSubheading")}
           >
-            VentureLabs hilft Unternehmen, digitale Produkte schneller zu denken,
-            zu planen und umzusetzen – mit einem Team aus Spezialist:innen für
-            Design, Entwicklung und AI.
+            {leistungenData.heroSubheading}
           </p>
         </motion.div>
       </div>
@@ -70,50 +75,13 @@ const accentColors: Record<string, string> = {
   "ki-strategie": "#fda700",
 };
 
-const serviceDetails: Record<string, { bullets: string[]; cta: string }> = {
-  development: {
-    bullets: [
-      "Web-Apps, Portale & SaaS-Produkte",
-      "Full-Stack Entwicklung (React, Next.js, Node)",
-      "API-Integrationen & Datenbankarchitektur",
-      "Launch-ready in 4–16 Wochen",
-    ],
-    cta: "Zum Angebot",
-  },
-  "company-building": {
-    bullets: [
-      "MVP-Entwicklung & Prototyping",
-      "Geschäftsmodell & Go-to-Market Strategie",
-      "Team-Aufbau & Prozessdesign",
-      "Von der Idee zum funktionierenden Unternehmen",
-    ],
-    cta: "Zum Angebot",
-  },
-  webdesign: {
-    bullets: [
-      "UX Research & User Journey Mapping",
-      "UI Design & Design Systems",
-      "Markenführung & visuelle Identität",
-      "Responsives Design für alle Endgeräte",
-    ],
-    cta: "Zum Angebot",
-  },
-  "ki-strategie": {
-    bullets: [
-      "OpenAI, Gemini & Claude Integrationen",
-      "KI-Automatisierungen mit Zapier & Make",
-      "Custom GPT-Agenten & Workflows",
-      "KI-Readiness Assessment für dein Team",
-    ],
-    cta: "Zum Angebot",
-  },
-};
-
 function ServiceRow({ service, index }: { service: Service; index: number }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
+  const { t } = useTranslation();
+  const { localizedPath } = useLocale();
   const accent = accentColors[service.slug] ?? "#8129ff";
-  const detail = serviceDetails[service.slug];
+  const bullets = t(`leistungen.bullets.${service.slug}`, { returnObjects: true }) as string[];
 
   return (
     <motion.div
@@ -132,13 +100,13 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
           {iconMap[service.icon]}
         </div>
         <h2
-          className="font-['Sofia_Pro',sans-serif] font-semibold text-white leading-tight"
+          className="font-['sofia-pro',sans-serif] font-semibold text-white leading-tight"
           style={{ fontSize: "var(--text-h2)" }}
         >
           {service.title}
         </h2>
         <p
-          className="text-white/50 font-['Sofia_Pro',sans-serif] font-light leading-relaxed max-w-sm"
+          className="text-white/50 font-['sofia-pro',sans-serif] font-light leading-relaxed max-w-sm"
           style={{ fontSize: "var(--text-body)" }}
         >
           {service.description}
@@ -148,7 +116,7 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
       {/* Right: bullets + CTA */}
       <div className="flex flex-col justify-between gap-10">
         <ul className="flex flex-col gap-4">
-          {detail.bullets.map((b) => (
+          {bullets.map((b) => (
             <li key={b} className="flex items-start gap-3">
               <div
                 className="mt-1 w-4 h-4 rounded-full flex items-center justify-center shrink-0"
@@ -157,7 +125,7 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
                 <Check size={10} style={{ color: accent }} strokeWidth={3} />
               </div>
               <span
-                className="text-white/80 font-['Sofia_Pro',sans-serif] font-light leading-snug"
+                className="text-white/80 font-['sofia-pro',sans-serif] font-light leading-snug"
                 style={{ fontSize: "var(--text-body)" }}
               >
                 {b}
@@ -168,19 +136,23 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
 
         <div className="flex flex-wrap gap-3">
           <Link
-            to={`/leistungen/${service.slug}`}
-            className="inline-flex items-center gap-2 text-white font-['Sofia_Pro',sans-serif] font-semibold px-[24px] pt-[14px] pb-[8px] rounded-lg transition-all hover:scale-[1.02]"
-            style={{ fontSize: "var(--text-btn)", backgroundColor: accent }}
+            to={localizedPath(`/leistungen/${service.slug}`)}
+            className="inline-flex items-center gap-2 text-white font-['sofia-pro',sans-serif] font-semibold px-[24px] py-[11px] rounded-lg transition-all hover:scale-[1.02] border"
+            style={{
+              fontSize: "var(--text-btn)",
+              backgroundColor: accent + "22",
+              borderColor: accent + "44"
+            }}
           >
-            Mehr erfahren
+            {t("leistungen.learnMore")}
             <ArrowRight size={15} />
           </Link>
           <a
-            href="/#kontakt"
-            className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/12 text-white font-['Sofia_Pro',sans-serif] font-light px-[24px] pt-[14px] pb-[8px] rounded-lg transition-all"
+            href={localizedPath("/#kontakt")}
+            className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/12 text-white font-['sofia-pro',sans-serif] font-light px-[24px] py-[11px] rounded-lg transition-all"
             style={{ fontSize: "var(--text-btn)" }}
           >
-            {detail.cta}
+            {t("leistungen.ctaOffer")}
           </a>
         </div>
       </div>
@@ -193,6 +165,8 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
 function ContactStrip() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
+  const { t } = useTranslation();
+  const leistungenData = useLeistungenData();
 
   return (
     <motion.section
@@ -205,24 +179,24 @@ function ContactStrip() {
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 flex flex-col lg:flex-row lg:items-center justify-between gap-10">
         <div className="flex flex-col gap-4 max-w-xl">
           <p
-            className="text-white/50 font-['Sofia_Pro',sans-serif] font-light"
+            className="text-white/50 font-['sofia-pro',sans-serif] font-light"
             style={{ fontSize: "var(--text-body)" }}
+            data-tina-field={tinaField(leistungenData, "contactCallout")}
           >
-            Du suchst eine konkrete Beratung? Wir helfen dir. Ruf einfach an
-            oder schreib uns eine E-Mail.
+            {leistungenData.contactCallout}
           </p>
         </div>
         <div className="flex flex-col gap-3">
           <a
             href="tel:+4914874f18f6"
-            className="font-['Sofia_Pro',sans-serif] font-semibold text-[#8129ff] hover:text-[#a318f8] transition-colors"
+            className="font-['sofia-pro',sans-serif] font-semibold text-[#8129ff] hover:text-[#a318f8] transition-colors"
             style={{ fontSize: "clamp(1.2rem, 2vw, 1.75rem)" }}
           >
             +49 148 74f 18f 6
           </a>
           <a
             href="mailto:contact@venturelabs.team"
-            className="font-['Sofia_Pro',sans-serif] font-semibold text-[#8129ff] hover:text-[#a318f8] transition-colors"
+            className="font-['sofia-pro',sans-serif] font-semibold text-[#8129ff] hover:text-[#a318f8] transition-colors"
             style={{ fontSize: "clamp(1.2rem, 2vw, 1.75rem)" }}
           >
             contact@venturelabs.team
@@ -237,6 +211,7 @@ function ContactStrip() {
 
 export function Leistungen() {
   const glowRef = useRef<HTMLDivElement>(null);
+  const services = useServicesData();
 
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     if (!glowRef.current) return;
@@ -270,7 +245,6 @@ export function Leistungen() {
           ))}
         </div>
       </section>
-      <Pricing />
       <ContactStrip />
       <Footer />
     </div>

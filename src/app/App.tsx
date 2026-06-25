@@ -1,17 +1,20 @@
 import { useRef, useCallback } from "react";
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router";
+import { LangGuard, DEFAULT_LOCALE } from "./locale";
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { ProfileSection } from "./components/ProfileSection";
 import { Services } from "./components/Services";
 import { ProjectsFeatured } from "./components/ProjectsFeatured";
 import { ProjectsMore } from "./components/ProjectsMore";
-import { Pricing } from "./components/Pricing";
 import { Footer } from "./components/Footer";
 import { Leistungen } from "./pages/Leistungen";
 import { LeistungenDetail } from "./pages/LeistungenDetail";
 import CaseDetail from "./pages/CaseDetail";
 import { CasesOverview } from "./pages/CasesOverview";
+import { Kontakt } from "./pages/Kontakt";
+import { Blog } from "./pages/Blog";
+import { UeberUns } from "./pages/UeberUns";
 
 function MouseGlow() {
   const glowRef = useRef<HTMLDivElement>(null);
@@ -54,7 +57,6 @@ function HomePage() {
       <Services />
       <ProjectsFeatured />
       <ProjectsMore />
-      <Pricing />
       <Footer />
     </div>
   );
@@ -64,11 +66,71 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/leistungen" element={<Leistungen />} />
-        <Route path="/leistungen/:slug" element={<LeistungenDetail />} />
-        <Route path="/cases" element={<CasesOverview />} />
-        <Route path="/cases/:slug" element={<CaseDetail />} />
+        <Route path="/" element={<Navigate to={`/${DEFAULT_LOCALE}`} replace />} />
+        <Route
+          path="/:lang"
+          element={
+            <LangGuard>
+              <HomePage />
+            </LangGuard>
+          }
+        />
+        <Route
+          path="/:lang/leistungen"
+          element={
+            <LangGuard>
+              <Leistungen />
+            </LangGuard>
+          }
+        />
+        <Route
+          path="/:lang/leistungen/:slug"
+          element={
+            <LangGuard>
+              <LeistungenDetail />
+            </LangGuard>
+          }
+        />
+        <Route
+          path="/:lang/cases"
+          element={
+            <LangGuard>
+              <CasesOverview />
+            </LangGuard>
+          }
+        />
+        <Route
+          path="/:lang/cases/:slug"
+          element={
+            <LangGuard>
+              <CaseDetail />
+            </LangGuard>
+          }
+        />
+        <Route
+          path="/:lang/kontakt"
+          element={
+            <LangGuard>
+              <Kontakt />
+            </LangGuard>
+          }
+        />
+        <Route
+          path="/:lang/blog"
+          element={
+            <LangGuard>
+              <Blog />
+            </LangGuard>
+          }
+        />
+        <Route
+          path="/:lang/ueber-uns"
+          element={
+            <LangGuard>
+              <UeberUns />
+            </LangGuard>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, useInView } from "motion/react";
-import { siteData } from "@/data/site";
+import { useSiteData } from "@/data/live";
 import svgPaths from "@/imports/🖌Homepage/svg-oa0apfkpzr";
 
 function LidlLogo() {
@@ -70,6 +70,7 @@ const logos = [
 ];
 
 export function ClientLogos() {
+  const siteData = useSiteData();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
 

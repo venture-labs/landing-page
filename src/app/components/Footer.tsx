@@ -1,4 +1,6 @@
 import { Link } from "react-router";
+import { useTranslation } from "react-i18next";
+import { useLocale } from "@/app/locale";
 import svgPaths from "@/imports/🖌Homepage/svg-oa0apfkpzr";
 
 function FooterLogo() {
@@ -29,46 +31,49 @@ function FooterLogo() {
   );
 }
 
-const footerColumns = [
-  {
-    title: "Leistungen",
-    links: [
-      { label: "Produktentwicklung", href: "/leistungen/development" },
-      { label: "Company Building", href: "/leistungen/company-building" },
-      { label: "Webdesign & UX", href: "/leistungen/webdesign" },
-      { label: "KI Strategie", href: "/leistungen/ki-strategie" },
-    ],
-  },
-  {
-    title: "Projekte",
-    links: [
-      { label: "Tap2Link", href: "#projekte" },
-      { label: "Brylliant", href: "#projekte" },
-      { label: "Moerschen", href: "#projekte" },
-      { label: "MachineMaster", href: "#projekte" },
-    ],
-  },
-  {
-    title: "Über uns",
-    links: [
-      { label: "Team", href: "#" },
-      { label: "Jobs", href: "#" },
-      { label: "Blog", href: "#" },
-      { label: "Presse", href: "#" },
-    ],
-  },
-  {
-    title: "Kontakt",
-    links: [
-      { label: "Gespräch buchen", href: "#kontakt" },
-      { label: "hello@venturelabs.de", href: "mailto:hello@venturelabs.de" },
-      { label: "LinkedIn", href: "#" },
-      { label: "Instagram", href: "#" },
-    ],
-  },
-];
-
 export function Footer() {
+  const { t } = useTranslation();
+  const { localizedPath } = useLocale();
+
+  const footerColumns = [
+    {
+      title: t("footer.servicesTitle"),
+      links: [
+        { label: t("footer.servicesLinks.development"), href: localizedPath("/leistungen/development") },
+        { label: t("footer.servicesLinks.company-building"), href: localizedPath("/leistungen/company-building") },
+        { label: t("footer.servicesLinks.webdesign"), href: localizedPath("/leistungen/webdesign") },
+        { label: t("footer.servicesLinks.ki-strategie"), href: localizedPath("/leistungen/ki-strategie") },
+      ],
+    },
+    {
+      title: t("footer.projectsTitle"),
+      links: [
+        { label: "Tap2Link", href: localizedPath("/cases/tap2link") },
+        { label: "Brylliant", href: localizedPath("/cases/brylliant") },
+        { label: "Moerschen", href: localizedPath("/cases/moerschen") },
+        { label: "MachineMaster", href: localizedPath("/cases/machinemaster") },
+      ],
+    },
+    {
+      title: t("footer.aboutTitle"),
+      links: [
+        { label: t("footer.team"), href: localizedPath("/ueber-uns") },
+        { label: t("footer.jobs"), href: "#" },
+        { label: t("footer.blog"), href: localizedPath("/blog") },
+        { label: t("footer.press"), href: "#" },
+      ],
+    },
+    {
+      title: t("footer.contactTitle"),
+      links: [
+        { label: t("footer.bookCall"), href: localizedPath("/kontakt") },
+        { label: "hello@venturelabs.de", href: "mailto:hello@venturelabs.de" },
+        { label: "LinkedIn", href: "#" },
+        { label: "Instagram", href: "#" },
+      ],
+    },
+  ];
+
   return (
     <footer id="kontakt" className="bg-[#0e0d13] border-t border-white/8 pt-16 pb-10">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
@@ -79,7 +84,7 @@ export function Footer() {
               className="mt-4 text-white/40 font-light leading-relaxed max-w-[200px]"
               style={{ fontSize: "var(--text-small)" }}
             >
-              Digitale Produkte, die wirklich funktionieren.
+              {t("footer.tagline")}
             </p>
           </div>
 
@@ -94,7 +99,7 @@ export function Footer() {
               <ul className="flex flex-col gap-2.5">
                 {col.links.map((link) => (
                   <li key={link.label}>
-                    {link.href.startsWith("/") && !link.href.startsWith("/#") ? (
+                    {link.href.startsWith("/") && !link.href.includes("#") ? (
                       <Link
                         to={link.href}
                         className="text-white/40 hover:text-white/80 transition-colors font-light"
@@ -123,10 +128,10 @@ export function Footer() {
             className="text-white/30 font-light"
             style={{ fontSize: "var(--text-small)" }}
           >
-            © {new Date().getFullYear()} VentureLabs. Alle Rechte vorbehalten.
+            © {new Date().getFullYear()} VentureLabs. {t("footer.copyright")}
           </p>
           <div className="flex gap-6">
-            {["Impressum", "Datenschutz", "AGB"].map((item) => (
+            {[t("footer.imprint"), t("footer.privacy"), t("footer.terms")].map((item) => (
               <a
                 key={item}
                 href="#"

@@ -1,29 +1,21 @@
 import { Users, Layers, Zap, Handshake } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
-const features = [
-  {
-    icon: <Users size={20} strokeWidth={2} />,
-    title: "Nutzerzentrierte Konzeption",
-    subtitle: "Verstehen, was Nutzer wirklich brauchen",
-  },
-  {
-    icon: <Layers size={20} strokeWidth={2} />,
-    title: "Skalierbare Architektur",
-    subtitle: "Technologie, die mit deinem Business wächst",
-  },
-  {
-    icon: <Zap size={20} strokeWidth={2} />,
-    title: "Schnelles Prototyping & Testing",
-    subtitle: "Ideen früh validieren und iterieren",
-  },
-  {
-    icon: <Handshake size={20} strokeWidth={2} />,
-    title: "Enge Zusammenarbeit & Transparenz",
-    subtitle: "Du bist Teil des Entwicklungsprozesses",
-  },
+const featureKeys = [
+  { key: "userCentered", icon: <Users size={20} strokeWidth={2} /> },
+  { key: "scalable", icon: <Layers size={20} strokeWidth={2} /> },
+  { key: "prototyping", icon: <Zap size={20} strokeWidth={2} /> },
+  { key: "collaboration", icon: <Handshake size={20} strokeWidth={2} /> },
 ];
 
 export function StrengthSection() {
+  const { t } = useTranslation();
+  const features = featureKeys.map((f) => ({
+    icon: f.icon,
+    title: t(`strength.features.${f.key}.title`),
+    subtitle: t(`strength.features.${f.key}.subtitle`),
+  }));
+
   return (
     <div className="flex flex-col gap-[48px] w-full">
       {/* Header bar */}
@@ -33,17 +25,13 @@ export function StrengthSection() {
             className=" font-semibold text-white leading-none whitespace-pre-wrap shrink-0 w-[45%]"
             style={{ fontSize: "var(--text-card)" }}
           >
-            {"Unsere Stärke:\nDigitale Produktentwicklung"}
+            {t("strength.headline")}
           </p>
           <p
             className=" font-light text-[#c0c0c0] leading-[1.4] flex-1 min-w-0"
             style={{ fontSize: "var(--text-small)" }}
           >
-            Wir begleiten dich von der ersten Vision bis zur Umsetzung – mit einem
-            interdisziplinären Team aus Strategie, Design und Technologie. Unser Ziel:
-            Produkte, die technisch robust, ästhetisch überzeugend und für Nutzer:innen
-            relevant sind. Dabei arbeiten wir agil, nutzerzentriert und nutzen modernste
-            Tools – von No-Code bis KI – um schneller zu Ergebnissen zu kommen.
+            {t("strength.description")}
           </p>
         </div>
       </div>

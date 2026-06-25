@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { motion } from "motion/react";
+import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router";
-import { useSiteData } from "@/data/live";
-import { tinaField } from "tinacms/dist/react";
+import { useLocale } from "@/app/locale";
+import { LanguageSwitcher } from "./LanguageSwitcher";
+import { navigationDE, navigationEN } from "@/data/navigation";
 import svgPaths from "@/imports/🖌Homepage/svg-oa0apfkpzr";
 
 function LogoMark() {
@@ -36,15 +38,13 @@ function LogoMark() {
 
 function NavLink({
   item,
-  fieldName,
   onClick,
 }: {
   item: { label: string; href: string };
-  fieldName?: string;
   onClick?: () => void;
 }) {
   const location = useLocation();
-  const isRoute = item.href.startsWith("/") && !item.href.startsWith("/#");
+  const isRoute = item.href.startsWith("/") && !item.href.includes("#");
   const isActive = isRoute && location.pathname === item.href;
 
   const cls = `transition-colors tracking-[-0.02em] ${
@@ -54,50 +54,57 @@ function NavLink({
 
   if (isRoute) {
     return (
-      <Link to={item.href} className={cls} style={style} onClick={onClick} data-tina-field={fieldName}>
+      <Link to={item.href} className={cls} style={style} onClick={onClick}>
         {item.label}
       </Link>
     );
   }
   return (
-    <a href={item.href} className={cls} style={style} onClick={onClick} data-tina-field={fieldName}>
+    <a href={item.href} className={cls} style={style} onClick={onClick}>
       {item.label}
     </a>
   );
 }
 
 export function Navbar() {
-  const siteData = useSiteData();
+  const { lang, localizedPath } = useLocale();
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
+
+  const navigation = lang === "en" ? navigationEN : navigationDE;
+  const navItems = navigation.map((item) => ({ ...item, href: localizedPath(item.href) }));
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
       <div className="absolute inset-0 bg-gradient-to-b from-[#0e0d13]/90 to-transparent backdrop-blur-[2px]" />
       <nav className="relative max-w-[1400px] mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
-        <Link to="/" aria-label="VentureLabs home" className="py-3 pr-6">
+        <Link to={localizedPath("/")} aria-label="VentureLabs home" className="py-3 pr-6">
           <LogoMark />
         </Link>
 
         <ul className="hidden lg:flex items-center gap-8">
-          {siteData.nav.map((item, i) => (
+          {navItems.map((item) => (
             <li key={item.href}>
-              <NavLink item={item} fieldName={tinaField(siteData, "nav", i)} />
+              <NavLink item={item} />
             </li>
           ))}
         </ul>
 
-        <a
-          href="/#kontakt"
-          className="hidden lg:flex items-center gap-2 bg-[#8129ff] hover:bg-[#9140ff] text-white font-semibold px-5 py-2.5 rounded-lg transition-colors"
-          style={{ fontSize: "var(--text-btn)" }}
-        >
-          Kontakt aufnehmen
-        </a>
+        <div className="hidden lg:flex items-center gap-6">
+          <LanguageSwitcher />
+          <Link
+            to={localizedPath("/kontakt")}
+            className="flex items-center gap-2 bg-[#8129ff] hover:bg-[#9140ff] text-white font-semibold px-5 py-2.5 rounded-lg transition-colors"
+            style={{ fontSize: "var(--text-btn)" }}
+          >
+            {t("nav.contact")}
+          </Link>
+        </div>
 
         <button
           className="lg:hidden text-white p-2"
           onClick={() => setOpen(!open)}
-          aria-label={open ? "Menü schließen" : "Menü öffnen"}
+          aria-label={open ? t("nav.menuClose") : t("nav.menuOpen")}
         >
           {open ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -109,22 +116,24 @@ export function Navbar() {
           animate={{ opacity: 1, y: 0 }}
           className="lg:hidden absolute top-20 left-0 right-0 bg-[#0e0d13]/95 backdrop-blur-md border-b border-white/10 px-6 py-6 flex flex-col gap-4"
         >
-          {siteData.nav.map((item, i) => (
+          {navItems.map((item) => (
             <NavLink
               key={item.href}
               item={item}
-              fieldName={tinaField(siteData, "nav", i)}
               onClick={() => setOpen(false)}
             />
           ))}
-          <a
-            href="/#kontakt"
+          <div className="mt-2">
+            <LanguageSwitcher />
+          </div>
+          <Link
+            to={localizedPath("/kontakt")}
             className="mt-2 inline-flex items-center justify-center bg-[#8129ff] text-white font-semibold px-5 py-3 rounded-lg"
             style={{ fontSize: "var(--text-btn)" }}
             onClick={() => setOpen(false)}
           >
-            Kontakt aufnehmen
-          </a>
+            {t("nav.contact")}
+          </Link>
         </motion.div>
       )}
     </header>

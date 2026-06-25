@@ -2,15 +2,24 @@ import { useParams, Navigate } from "react-router";
 import { useEffect } from "react";
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
-import { ArrowRight } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { tinaField } from "tinacms/dist/react";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
-import { getCaseDetail } from "@/data/caseDetails";
+import { CtaButton } from "@/app/components/ui/CtaButton";
+import { useCaseDetail } from "@/data/live";
+import { useLocale } from "@/app/locale";
+import { getCaseDetail as getCaseDetailDe } from "@/data/de/caseDetails";
+import { getCaseDetail as getCaseDetailEn } from "@/data/en/caseDetails";
+
+const getCaseDetailByLocale = { de: getCaseDetailDe, en: getCaseDetailEn };
 
 const accentColor = "#2b95f6";
 
 function CaseHero({ detail }: { detail: any }) {
   const ref = useRef(null);
+  const { t } = useTranslation();
+  const { localizedPath } = useLocale();
   return (
     <section className="relative pt-36 pb-0 bg-[#1E1C27] overflow-hidden" ref={ref}>
       {/* ambient glows */}
@@ -34,31 +43,31 @@ function CaseHero({ detail }: { detail: any }) {
           className="flex flex-col gap-8 px-6 lg:px-12 pb-12"
         >
           <p
-            className="font-['Sofia_Pro',sans-serif] font-light"
+            className="font-['sofia-pro',sans-serif] font-light"
             style={{ fontSize: "var(--text-body)", color: accentColor }}
           >
-            Case Study · {detail.category.split(" ").slice(0, 3).join(" ")}
+            {t("cases.caseStudyLabel")} {detail.category.split(" ").slice(0, 3).join(" ")}
           </p>
           <h1
-            className="font-['Sofia_Pro',sans-serif] font-semibold text-white leading-[1.05]"
+            className="font-['sofia-pro',sans-serif] font-semibold text-white leading-[1.05]"
             style={{ fontSize: "var(--text-hero)" }}
+            data-tina-field={tinaField(detail, "heroHeadline")}
           >
             {detail.heroHeadline}
           </h1>
           <p
-            className="text-white/60 font-['Sofia_Pro',sans-serif] font-light leading-relaxed max-w-2xl"
+            className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed max-w-2xl"
             style={{ fontSize: "var(--text-body)" }}
+            data-tina-field={tinaField(detail, "heroSubline")}
           >
             {detail.heroSubline}
           </p>
-          <a
-            href="/#kontakt"
-            className="self-start inline-flex items-center gap-2 text-white font-['Sofia_Pro',sans-serif] font-semibold px-[24px] pt-[14px] pb-[8px] rounded-lg transition-all hover:scale-[1.02]"
-            style={{ fontSize: "var(--text-btn)", backgroundColor: accentColor }}
+          <CtaButton
+            href={localizedPath("/#kontakt")}
+            backgroundColor={accentColor}
           >
-            Jetzt anfragen
-            <ArrowRight size={15} />
-          </a>
+            {t("cases.requestNow")}
+          </CtaButton>
         </motion.div>
 
         {/* IMAGE */}
@@ -66,13 +75,12 @@ function CaseHero({ detail }: { detail: any }) {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          className="mx-6 lg:mx-8 rounded-2xl overflow-hidden shadow-2xl shadow-black/60 mb-12"
+          className="w-full shadow-2xl shadow-black/60 mb-12"
         >
           <img
             src={detail.heroImage}
             alt={detail.heroHeadline}
-            className="w-full object-cover"
-            style={{ maxHeight: "560px" }}
+            className="w-full h-auto"
           />
         </motion.div>
       </div>
@@ -83,6 +91,7 @@ function CaseHero({ detail }: { detail: any }) {
 function OverviewSection({ detail }: { detail: any }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const { t } = useTranslation();
 
   return (
     <section className="bg-[#0e0d13] py-20 px-6 lg:px-12">
@@ -92,10 +101,10 @@ function OverviewSection({ detail }: { detail: any }) {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="font-['Sofia_Pro',sans-serif] font-semibold text-white mb-12"
+          className="font-['sofia-pro',sans-serif] font-semibold text-white mb-12"
           style={{ fontSize: "var(--text-h2)" }}
         >
-          Übersicht
+          {t("cases.overviewHeading")}
         </motion.h2>
 
         {/* Description */}
@@ -106,14 +115,15 @@ function OverviewSection({ detail }: { detail: any }) {
           className="mb-16"
         >
           <h3
-            className="text-white/80 font-['Sofia_Pro',sans-serif] font-light mb-6"
+            className="text-white/80 font-['sofia-pro',sans-serif] font-light mb-6"
             style={{ fontSize: "var(--text-body)" }}
           >
-            Was wir gemacht haben
+            {t("cases.whatWeDid")}
           </h3>
           <p
-            className="text-white/60 font-['Sofia_Pro',sans-serif] font-light leading-relaxed max-w-3xl"
+            className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed max-w-3xl"
             style={{ fontSize: "var(--text-body)" }}
+            data-tina-field={tinaField(detail, "description")}
           >
             {detail.description}
           </p>
@@ -127,14 +137,15 @@ function OverviewSection({ detail }: { detail: any }) {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <h3
-              className="text-white font-['Sofia_Pro',sans-serif] font-semibold mb-4"
+              className="text-white font-['sofia-pro',sans-serif] font-semibold mb-4"
               style={{ fontSize: "var(--text-card)" }}
             >
-              Hintergrund
+              {t("cases.background")}
             </h3>
             <p
-              className="text-white/60 font-['Sofia_Pro',sans-serif] font-light leading-relaxed"
+              className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed"
               style={{ fontSize: "var(--text-body)" }}
+              data-tina-field={tinaField(detail, "background")}
             >
               {detail.background}
             </p>
@@ -146,14 +157,15 @@ function OverviewSection({ detail }: { detail: any }) {
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             <h3
-              className="text-white font-['Sofia_Pro',sans-serif] font-semibold mb-4"
+              className="text-white font-['sofia-pro',sans-serif] font-semibold mb-4"
               style={{ fontSize: "var(--text-card)" }}
             >
-              Problem
+              {t("cases.problem")}
             </h3>
             <p
-              className="text-white/60 font-['Sofia_Pro',sans-serif] font-light leading-relaxed"
+              className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed"
               style={{ fontSize: "var(--text-body)" }}
+              data-tina-field={tinaField(detail, "problem")}
             >
               {detail.problem}
             </p>
@@ -165,14 +177,15 @@ function OverviewSection({ detail }: { detail: any }) {
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <h3
-              className="text-white font-['Sofia_Pro',sans-serif] font-semibold mb-4"
+              className="text-white font-['sofia-pro',sans-serif] font-semibold mb-4"
               style={{ fontSize: "var(--text-card)" }}
             >
-              Lösung
+              {t("cases.solution")}
             </h3>
             <p
-              className="text-white/60 font-['Sofia_Pro',sans-serif] font-light leading-relaxed"
+              className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed"
               style={{ fontSize: "var(--text-body)" }}
+              data-tina-field={tinaField(detail, "solution")}
             >
               {detail.solution}
             </p>
@@ -186,6 +199,7 @@ function OverviewSection({ detail }: { detail: any }) {
 function ResultsSection({ detail }: { detail: any }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const { t } = useTranslation();
 
   return (
     <section className="bg-[#0e0d13] py-20 px-6 lg:px-12">
@@ -195,10 +209,10 @@ function ResultsSection({ detail }: { detail: any }) {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="font-['Sofia_Pro',sans-serif] font-semibold text-white mb-12"
+          className="font-['sofia-pro',sans-serif] font-semibold text-white mb-12"
           style={{ fontSize: "var(--text-h2)" }}
         >
-          Ergebnisse
+          {t("cases.resultsHeading")}
         </motion.h2>
 
         {/* Stats */}
@@ -212,13 +226,13 @@ function ResultsSection({ detail }: { detail: any }) {
               className="text-center"
             >
               <p
-                className="font-['Sofia_Pro',sans-serif] font-semibold text-white mb-2"
+                className="font-['sofia-pro',sans-serif] font-semibold text-white mb-2"
                 style={{ fontSize: "var(--text-hero)", color: accentColor }}
               >
                 {stat.value}
               </p>
               <p
-                className="text-white/60 font-['Sofia_Pro',sans-serif] font-light"
+                className="text-white/60 font-['sofia-pro',sans-serif] font-light"
                 style={{ fontSize: "var(--text-body)" }}
               >
                 {stat.label}
@@ -227,40 +241,22 @@ function ResultsSection({ detail }: { detail: any }) {
           ))}
         </div>
 
-        {/* Mockup Gallery - 2 column */}
-        <div className="grid md:grid-cols-2 gap-8 mb-8">
-          {detail.mockupImages.slice(0, 2).map((img: string, idx: number) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.3 + idx * 0.1 }}
-              className="min-h-[300px] flex items-center justify-center"
-            >
-              <img
-                src={img}
-                alt={`Mockup ${idx + 1}`}
-                className="max-w-full max-h-full object-contain"
-              />
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Full width mockup */}
-        {detail.mockupImages[2] && (
+        {/* Mockup Gallery - full width */}
+        {detail.mockupImages.map((img: string, idx: number) => (
           <motion.div
+            key={idx}
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.5 }}
+            transition={{ duration: 0.6, delay: 0.3 + idx * 0.1 }}
             className="flex items-center justify-center py-12"
           >
             <img
-              src={detail.mockupImages[2]}
-              alt="Full mockup"
+              src={img}
+              alt={`Mockup ${idx + 1}`}
               className="max-w-full max-h-full object-contain"
             />
           </motion.div>
-        )}
+        ))}
       </div>
     </section>
   );
@@ -269,6 +265,8 @@ function ResultsSection({ detail }: { detail: any }) {
 function CTASection() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const { t } = useTranslation();
+  const { localizedPath } = useLocale();
 
   return (
     <section className="bg-[#0e0d13] py-20 px-6 lg:px-12 border-t border-white/10">
@@ -277,36 +275,37 @@ function CTASection() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="font-['Sofia_Pro',sans-serif] font-semibold text-white mb-8"
+          className="font-['sofia-pro',sans-serif] font-semibold text-white mb-8"
           style={{ fontSize: "var(--text-card)" }}
         >
-          Interessiert an einer Zusammenarbeit für dein Projekt?
+          {t("cases.ctaQuestion")}
           <br />
-          Nimm jetzt Kontakt auf!
+          {t("cases.ctaQuestionLine2")}
         </motion.h2>
 
-        <motion.a
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
-          href="/#kontakt"
-          className="inline-flex items-center gap-2 text-white font-['Sofia_Pro',sans-serif] font-semibold px-[24px] pt-[14px] pb-[8px] rounded-lg transition-all hover:scale-[1.02]"
-          style={{ fontSize: "var(--text-btn)", backgroundColor: accentColor }}
         >
-          Kontakt aufnehmen
-          <ArrowRight size={15} />
-        </motion.a>
+          <CtaButton
+            href={localizedPath("/#kontakt")}
+            backgroundColor={accentColor}
+          >
+            {t("cases.contactButton")}
+          </CtaButton>
+        </motion.div>
 
         <motion.p
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-white/60 font-['Sofia_Pro',sans-serif] font-light mt-8"
+          className="text-white/60 font-['sofia-pro',sans-serif] font-light mt-8"
           style={{ fontSize: "var(--text-body)" }}
         >
-          Du möchtest eine kostenlose Erstberatung?
+          {t("cases.freeConsult")}
           <br />
-          Wir helfen gern. Bei Fragen oder dem Wunsch, melden uns zurück.
+          {t("cases.freeConsultLine2")}
         </motion.p>
       </div>
     </section>
@@ -315,14 +314,19 @@ function CTASection() {
 
 export default function CaseDetail() {
   const { slug } = useParams<{ slug: string }>();
-  const detail = slug ? getCaseDetail(slug) : undefined;
+  const { lang, localizedPath } = useLocale();
+
+  // Try to load from Tina first, fallback to static data
+  const tinaDetail = useCaseDetail(slug);
+  const fallbackDetail = slug ? getCaseDetailByLocale[lang](slug) : undefined;
+  const detail = tinaDetail || fallbackDetail;
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [slug]);
 
   if (!detail) {
-    return <Navigate to="/" replace />;
+    return <Navigate to={localizedPath("/")} replace />;
   }
 
   return (

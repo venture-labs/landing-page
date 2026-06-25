@@ -1,0 +1,129 @@
+{
+  "nav": {
+    "contact": "Kontakt aufnehmen",
+    "menuOpen": "Menü öffnen",
+    "menuClose": "Menü schließen"
+  },
+  "hero": {
+    "hiring": "👉 Wir suchen Verstärkung!",
+    "videoPlay": "Video abspielen",
+    "videoPause": "Video pausieren",
+    "headlineHighlight": "digitale Lösungen"
+  },
+  "services": {
+    "heading": "Unsere Leistungen",
+    "subheading": "VentureLabs hilft Unternehmen, digitale Produkte schneller zu denken, zu planen und umzusetzen – mit einem Team aus Spezialist:innen für Design, Entwicklung und AI."
+  },
+  "projects": {
+    "heading": "Projekte",
+    "subheading": "Unsere Projekte ziehen sich durch alle Branchen. Zu unseren Kunden zählen Start-ups wie Großkonzerne. Und besonders spannend wird's, wenn wir unsere eigenen Kunden sind.",
+    "viewProject": "Zum Projekt",
+    "moreHeading": "Noch mehr Projekte",
+    "scrollBack": "Zurück",
+    "scrollForward": "Weiter"
+  },
+  "pricing": {
+    "heading": "Flexible Pakete für jede Phase.",
+    "subheading": "Ob kontinuierliche Unterstützung oder schneller Sprint – wir bieten dir das passende Modell, um digitale Produkte effizient umzusetzen. Mit klarer Struktur, erfahrenem Team und voller Transparenz."
+  },
+  "footer": {
+    "tagline": "Digitale Produkte, die wirklich funktionieren.",
+    "servicesTitle": "Leistungen",
+    "projectsTitle": "Projekte",
+    "aboutTitle": "Über uns",
+    "contactTitle": "Kontakt",
+    "team": "Team",
+    "jobs": "Jobs",
+    "blog": "Blog",
+    "press": "Presse",
+    "bookCall": "Gespräch buchen",
+    "copyright": "Alle Rechte vorbehalten.",
+    "imprint": "Impressum",
+    "privacy": "Datenschutz",
+    "terms": "AGB",
+    "servicesLinks": {
+      "development": "Produktentwicklung",
+      "company-building": "Company Building",
+      "webdesign": "Webdesign & UX",
+      "ki-strategie": "KI Strategie"
+    }
+  },
+  "leistungen": {
+    "heroTitlePrefix": "Wir helfen dir",
+    "heroTitleHighlight": "zu wachsen",
+    "heroSubheading": "VentureLabs hilft Unternehmen, digitale Produkte schneller zu denken, zu planen und umzusetzen – mit einem Team aus Spezialist:innen für Design, Entwicklung und AI.",
+    "ctaOffer": "Zum Angebot",
+    "learnMore": "Mehr erfahren",
+    "contactCallout": "Du suchst eine konkrete Beratung? Wir helfen dir. Ruf einfach an oder schreib uns eine E-Mail.",
+    "detailLabel": "Leistung ·",
+    "requestNow": "Jetzt anfragen",
+    "processHeading": "So entwickeln wir dein Produkt",
+    "exampleCase": "Beispielcase",
+    "viewCase": "Zum Case ansehen",
+    "ctaContact": "Jetzt Kontakt aufnehmen",
+    "otherServicesHeading": "Weitere Leistungen, die dein Projekt ergänzen",
+    "contactQuestion": "Interessiert an einer Zusammenarbeit für dein Projekt? Nimm jetzt Kontakt auf.",
+    "notFound": "Service nicht gefunden.",
+    "backToOverview": "Zurück zur Übersicht",
+    "bullets": {
+      "development": [
+        "Web-Apps, Portale & SaaS-Produkte",
+        "Full-Stack Entwicklung (React, Next.js, Node)",
+        "API-Integrationen & Datenbankarchitektur",
+        "Launch-ready in 4–16 Wochen"
+      ],
+      "company-building": [
+        "MVP-Entwicklung & Prototyping",
+        "Geschäftsmodell & Go-to-Market Strategie",
+        "Team-Aufbau & Prozessdesign",
+        "Von der Idee zum funktionierenden Unternehmen"
+      ],
+      "webdesign": [
+        "UX Research & User Journey Mapping",
+        "UI Design & Design Systems",
+        "Markenführung & visuelle Identität",
+        "Responsives Design für alle Endgeräte"
+      ],
+      "ki-strategie": [
+        "OpenAI, Gemini & Claude Integrationen",
+        "KI-Automatisierungen mit Zapier & Make",
+        "Custom GPT-Agenten & Workflows",
+        "KI-Readiness Assessment für dein Team"
+      ]
+    }
+  },
+  "cases": {
+    "heroTitle": "Unsere Projekte",
+    "heroSubheading": "Unsere Projekte ziehen sich durch alle Branchen. Zu unseren Kunden zählen Start-ups wie Großkonzerne.",
+    "viewProject": "Zum Projekt",
+    "caseStudyLabel": "Case Study ·",
+    "requestNow": "Jetzt anfragen",
+    "overviewHeading": "Übersicht",
+    "whatWeDid": "Was wir gemacht haben",
+    "background": "Hintergrund",
+    "problem": "Problem",
+    "solution": "Lösung",
+    "resultsHeading": "Ergebnisse",
+    "ctaQuestion": "Interessiert an einer Zusammenarbeit für dein Projekt?",
+    "ctaQuestionLine2": "Nimm jetzt Kontakt auf!",
+    "contactButton": "Kontakt aufnehmen",
+    "freeConsult": "Du möchtest eine kostenlose Erstberatung?",
+    "freeConsultLine2": "Wir helfen gern. Bei Fragen oder dem Wunsch, melden uns zurück.",
+    "relatedServices": "Unsere Leistungen",
+    "relatedServicesDesc": "Wie können wir dir helfen? Entdecke, wie wir dein nächstes Projekt unterstützen können."
+  },
+  "strength": {
+    "headline": "Unsere Stärke:\nDigitale Produktentwicklung",
+    "description": "Wir begleiten dich von der ersten Vision bis zur Umsetzung – mit einem interdisziplinären Team aus Strategie, Design und Technologie. Unser Ziel: Produkte, die technisch robust, ästhetisch überzeugend und für Nutzer:innen relevant sind. Dabei arbeiten wir agil, nutzerzentriert und nutzen modernste Tools – von No-Code bis KI – um schneller zu Ergebnissen zu kommen.",
+    "features": {
+      "userCentered": { "title": "Nutzerzentrierte Konzeption", "subtitle": "Verstehen, was Nutzer wirklich brauchen" },
+      "scalable": { "title": "Skalierbare Architektur", "subtitle": "Technologie, die mit deinem Business wächst" },
+      "prototyping": { "title": "Schnelles Prototyping & Testing", "subtitle": "Ideen früh validieren und iterieren" },
+      "collaboration": { "title": "Enge Zusammenarbeit & Transparenz", "subtitle": "Du bist Teil des Entwicklungsprozesses" }
+    }
+  },
+  "languageSwitcher": {
+    "de": "DE",
+    "en": "EN"
+  }
+}
