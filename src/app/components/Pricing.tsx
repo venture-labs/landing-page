@@ -1,7 +1,9 @@
 import { useRef } from "react";
 import { motion, useInView } from "motion/react";
 import { ArrowRight, Check } from "lucide-react";
-import { pricingPlans, type PricingPlan } from "@/data/pricing";
+import { type PricingPlan } from "@/data/pricing";
+import { usePricingData } from "@/data/live";
+import { tinaField } from "tinacms/dist/react";
 import svgPaths from "@/imports/🖌Homepage/svg-oa0apfkpzr";
 
 function PricingCard({
@@ -46,12 +48,14 @@ function PricingCard({
 
         <div className="flex flex-col gap-4">
           <h3
+            data-tina-field={tinaField(plan, "title")}
             className=" font-light text-white leading-tight"
             style={{ fontSize: "var(--text-card)" }}
           >
             {plan.title}
           </h3>
           <p
+            data-tina-field={tinaField(plan, "description")}
             className="text-[#a1a1a1] font-light leading-relaxed"
             style={{ fontSize: "var(--text-small)" }}
           >
@@ -63,6 +67,7 @@ function PricingCard({
       <div className="px-10 pb-4">
         <div className="flex items-end gap-1">
           <span
+            data-tina-field={tinaField(plan, "price")}
             className=" font-light text-white"
             style={{ fontSize: "var(--text-price)" }}
           >
@@ -103,6 +108,7 @@ function PricingCard({
 }
 
 export function Pricing() {
+  const pricingPlans = usePricingData();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 

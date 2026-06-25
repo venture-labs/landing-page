@@ -1,5 +1,6 @@
 ---
 slug: brylliant
+order: 2
 title: "Brylliant – das Tool für perfekte Briefings"
 subtitle: "Ein skalierbares Tool für effiziente Briefings, saubere Prozesse und strategische Klarheit."
 featured: true
@@ -8,4 +9,5 @@ stats:
   - "Strukturierte Vorlagen & geführte Briefings"
   - "2x schnellere Briefing-Freigaben"
   - "95 % weniger Rückfragen von Agenturen"
+image: "/uploads/cases/brylliant-card.png"
 ---

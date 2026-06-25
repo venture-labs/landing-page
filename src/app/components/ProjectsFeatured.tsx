@@ -2,7 +2,9 @@ import { useRef, useState, useCallback } from "react";
 import { Link } from "react-router";
 import { motion, useInView } from "motion/react";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
-import { featuredCases, type FeaturedCase } from "@/data/cases";
+import { type FeaturedCase } from "@/data/cases";
+import { useCasesData } from "@/data/live";
+import { tinaField } from "tinacms/dist/react";
 import svgPaths from "@/imports/🖌Homepage/svg-oa0apfkpzr";
 
 function CheckIcon() {
@@ -103,12 +105,14 @@ function CaseCard({ c, index }: { c: FeaturedCase; index: number }) {
         <div className="flex-1 flex flex-col gap-8 justify-center">
           <div className="flex flex-col gap-4">
             <h3
+              data-tina-field={tinaField(c, "title")}
               className=" font-light text-white leading-tight"
               style={{ fontSize: "var(--text-card)" }}
             >
               {c.title}
             </h3>
             <p
+              data-tina-field={tinaField(c, "subtitle")}
               className="text-[#a1a1a1] font-light leading-relaxed"
               style={{ fontSize: "var(--text-body)" }}
             >
@@ -117,10 +121,11 @@ function CaseCard({ c, index }: { c: FeaturedCase; index: number }) {
           </div>
 
           <ul className="flex flex-col gap-3">
-            {c.stats.map((stat) => (
+            {c.stats.map((stat, i) => (
               <li key={stat} className="flex items-start gap-3">
                 <CheckIcon />
                 <span
+                  data-tina-field={tinaField(c, "stats", i)}
                   className="text-white/90 font-light leading-snug"
                   style={{ fontSize: "var(--text-body)" }}
                 >
@@ -144,6 +149,7 @@ function CaseCard({ c, index }: { c: FeaturedCase; index: number }) {
 }
 
 export function ProjectsFeatured() {
+  const { featuredCases } = useCasesData();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 

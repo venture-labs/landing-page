@@ -1,7 +1,46 @@
 ---
 slug: company-building
+order: 2
 title: "Company Building"
 description: "Wir helfen Teams beim Aufbau neuer Geschäftsmodelle und MVPs."
 gradient: "linear-gradient(268.344deg, rgba(255, 0, 0, 0.8) 0%, rgba(255, 0, 0, 0) 100%)"
 icon: grid
+heroHeadline: "Von der Idee zum funktionierenden Unternehmen"
+heroSubline: "Wir helfen Teams, neue Geschäftsmodelle zu entwickeln, zu validieren und in marktfähige Produkte zu überführen."
+heroImage: "/uploads/services/company-building-hero.png"
+tags:
+  - "MVP in 12 Wochen"
+  - "Geschäftsmodell-Design"
+  - "Go-to-Market"
+  - "Team-Aufbau"
+process:
+  - number: "01"
+    title: "Idee & Vision"
+    description: "Wir helfen dir, deine Idee zu schärfen: Was ist das echte Problem? Wer ist die Zielgruppe? Was macht dich einzigartig?"
+  - number: "02"
+    title: "Business Model Design"
+    description: "Lean Canvas, Value Proposition und Revenue-Modell – wir entwickeln ein tragfähiges Geschäftsmodell auf Basis echter Marktdaten."
+  - number: "03"
+    title: "MVP Strategie & Scope"
+    description: "Was ist das kleinstmögliche Produkt, das du validieren kannst? Wir definieren den MVP-Scope und priorisieren gnadenlos."
+  - number: "04"
+    title: "Build & Launch"
+    description: "Unser Team baut das MVP – Design, Entwicklung, Messaging. In 8–16 Wochen ist dein Produkt live."
+  - number: "05"
+    title: "Traction & Scale"
+    description: "Erste Nutzer, erstes Feedback, erste Revenue. Wir begleiten die frühe Wachstumsphase und helfen beim Aufbau eines eigenen Teams."
+caseTitle: "Moerschen"
+caseSlug: "moerschen"
+caseSubtitle: "Moerschen: Vom Relaunch zur Leadmaschine."
+caseImage: "/uploads/services/company-building-case.png"
+caseStats:
+  - value: "+45%"
+    label: "Mehr Kontaktanfragen"
+  - value: "8 Wo."
+    label: "Vom Kickoff bis Launch"
+  - value: "2×"
+    label: "Schnellere Ansprechpartner-Suche"
+caseDescription: "Website-Relaunch mit klarer Nutzerführung und neuer Kommunikationsstrategie – in 8 Wochen live."
+ctaHeadline: "Dein Startup. Unsere Erfahrung."
+ctaBody: "Lass uns gemeinsam herausfinden, wie wir dein Geschäftsmodell schnell und sicher in die Realität umsetzen."
 ---

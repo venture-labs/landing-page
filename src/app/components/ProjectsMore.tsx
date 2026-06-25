@@ -2,7 +2,9 @@ import { useRef, useState } from "react";
 import { Link } from "react-router";
 import { motion, useInView } from "motion/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { gridCases, type GridCase } from "@/data/cases";
+import { type GridCase } from "@/data/cases";
+import { useCasesData } from "@/data/live";
+import { tinaField } from "tinacms/dist/react";
 
 function GridCard({ c }: { c: GridCase }) {
   return (
@@ -19,12 +21,14 @@ function GridCard({ c }: { c: GridCase }) {
       </div>
       <div className="flex flex-col gap-2">
         <h3
+          data-tina-field={tinaField(c, "title")}
           className=" font-semibold text-white leading-tight"
           style={{ fontSize: "var(--text-card)" }}
         >
           {c.title}
         </h3>
         <p
+          data-tina-field={tinaField(c, "subtitle")}
           className="text-white/60 font-light leading-snug"
           style={{ fontSize: "var(--text-small)" }}
         >
@@ -36,6 +40,7 @@ function GridCard({ c }: { c: GridCase }) {
 }
 
 export function ProjectsMore() {
+  const { gridCases } = useCasesData();
   const ref = useRef(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });

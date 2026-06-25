@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { motion } from "motion/react";
 import { Link, useLocation } from "react-router";
-import { siteData } from "@/data/site";
+import { useSiteData } from "@/data/live";
+import { tinaField } from "tinacms/dist/react";
 import svgPaths from "@/imports/🖌Homepage/svg-oa0apfkpzr";
 
 function LogoMark() {
@@ -33,7 +34,15 @@ function LogoMark() {
   );
 }
 
-function NavLink({ item, onClick }: { item: { label: string; href: string }; onClick?: () => void }) {
+function NavLink({
+  item,
+  fieldName,
+  onClick,
+}: {
+  item: { label: string; href: string };
+  fieldName?: string;
+  onClick?: () => void;
+}) {
   const location = useLocation();
   const isRoute = item.href.startsWith("/") && !item.href.startsWith("/#");
   const isActive = isRoute && location.pathname === item.href;
@@ -45,19 +54,20 @@ function NavLink({ item, onClick }: { item: { label: string; href: string }; onC
 
   if (isRoute) {
     return (
-      <Link to={item.href} className={cls} style={style} onClick={onClick}>
+      <Link to={item.href} className={cls} style={style} onClick={onClick} data-tina-field={fieldName}>
         {item.label}
       </Link>
     );
   }
   return (
-    <a href={item.href} className={cls} style={style} onClick={onClick}>
+    <a href={item.href} className={cls} style={style} onClick={onClick} data-tina-field={fieldName}>
       {item.label}
     </a>
   );
 }
 
 export function Navbar() {
+  const siteData = useSiteData();
   const [open, setOpen] = useState(false);
 
   return (
@@ -69,9 +79,9 @@ export function Navbar() {
         </Link>
 
         <ul className="hidden lg:flex items-center gap-8">
-          {siteData.nav.map((item) => (
+          {siteData.nav.map((item, i) => (
             <li key={item.href}>
-              <NavLink item={item} />
+              <NavLink item={item} fieldName={tinaField(siteData, "nav", i)} />
             </li>
           ))}
         </ul>
@@ -99,8 +109,13 @@ export function Navbar() {
           animate={{ opacity: 1, y: 0 }}
           className="lg:hidden absolute top-20 left-0 right-0 bg-[#0e0d13]/95 backdrop-blur-md border-b border-white/10 px-6 py-6 flex flex-col gap-4"
         >
-          {siteData.nav.map((item) => (
-            <NavLink key={item.href} item={item} onClick={() => setOpen(false)} />
+          {siteData.nav.map((item, i) => (
+            <NavLink
+              key={item.href}
+              item={item}
+              fieldName={tinaField(siteData, "nav", i)}
+              onClick={() => setOpen(false)}
+            />
           ))}
           <a
             href="/#kontakt"

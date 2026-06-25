@@ -1,7 +1,46 @@
 ---
 slug: ki-strategie
+order: 4
 title: "KI Strategie"
 description: "OpenAI, Gemini, Zapier & Make – wir verbinden Mensch & Maschine."
 gradient: "linear-gradient(-56.458deg, rgba(253, 167, 0, 0.8) 0%, rgba(253, 167, 0, 0) 100%)"
 icon: bot
+heroHeadline: "KI-Potenziale erkennen und konsequent nutzen"
+heroSubline: "Wir helfen dir dabei, die richtigen KI-Tools zu finden, zu integrieren und echten Business-Wert daraus zu ziehen."
+heroImage: "/uploads/services/ki-strategie-hero.png"
+tags:
+  - "OpenAI & Gemini"
+  - "Workflow-Automatisierung"
+  - "Custom KI-Agenten"
+  - "Schnelle Umsetzung"
+process:
+  - number: "01"
+    title: "KI-Readiness Assessment"
+    description: "Analyse deiner aktuellen Prozesse, Datenlandschaft und Tech-Stack – um zu verstehen, wo KI den größten Hebel hat."
+  - number: "02"
+    title: "Use Case Identifikation"
+    description: "Gemeinsam priorisieren wir die KI-Anwendungsfälle mit dem besten ROI: Automatisierungen, Agenten oder generative Tools."
+  - number: "03"
+    title: "Prototyping & Proof of Concept"
+    description: "Schnell zeigen, was möglich ist. Wir bauen einen funktionierenden Prototypen in 2–4 Wochen – damit du echten Mehrwert siehst."
+  - number: "04"
+    title: "Integration & Rollout"
+    description: "Von der Idee in die Produktion: OpenAI, Claude, Zapier, Make, n8n – wir integrieren KI nahtlos in deinen bestehenden Stack."
+  - number: "05"
+    title: "Monitoring & Optimierung"
+    description: "KI ist kein einmaliges Projekt. Wir begleiten den laufenden Betrieb, messen Outputs und optimieren kontinuierlich."
+caseTitle: "MachineMaster"
+caseSlug: "machinemaster"
+caseSubtitle: "MachineMaster: KI im Vertrieb von Landmaschinen."
+caseImage: "/uploads/services/ki-strategie-case.png"
+caseStats:
+  - value: "+230%"
+    label: "Mehr Nutzerinteraktionen"
+  - value: "+10%"
+    label: "Verkaufssteigerung"
+  - value: "5/5"
+    label: "Kundenbewertungen"
+caseDescription: "Ein KI-gestütztes Vertriebstool für Händler und Außendienst – vom MVP in nur 12 Wochen."
+ctaHeadline: "KI konkret, nicht theoretisch."
+ctaBody: "In einem kostenlosen Erstgespräch zeigen wir dir, welche KI-Maßnahmen in deinem Business sofort Wirkung zeigen."
 ---

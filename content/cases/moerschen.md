@@ -1,5 +1,6 @@
 ---
 slug: moerschen
+order: 3
 title: "Moerschen – Website-Relaunch für bessere Kommunikation"
 subtitle: "Ein digitales Serviceportal für komplexe B2B-Prozesse in nur 8 Wochen."
 featured: true
@@ -8,4 +9,5 @@ stats:
   - "45 % mehr Kontaktanfragen über die Website"
   - "Nutzer finden Ansprechpersonen 2× schneller als vorher"
   - "8 Wochen vom Kickoff bis Livegang"
+image: "/uploads/cases/moerschen-card.png"
 ---

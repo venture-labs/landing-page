@@ -1,7 +1,46 @@
 ---
 slug: development
+order: 1
 title: "Produktentwicklung / Development"
 description: "Webapps, Portale, SaaS – technisch solide, schnell live."
 gradient: "linear-gradient(146.383deg, rgba(163, 24, 248, 0.8) 0%, rgba(163, 24, 248, 0) 100%)"
 icon: code
+heroHeadline: "Von der Idee zum marktreifen digitalen Produkt"
+heroSubline: "Wir entwickeln digitale Lösungen, die Nutzer lieben und mit denen du dein Business voranbringst."
+heroImage: "/uploads/services/development-hero.png"
+tags:
+  - "Schnellster Launch"
+  - "Revenue-orientiert"
+  - "Schnelle Produkt-Iteration & Marktvalidierung"
+  - "Enge Zusammenarbeit"
+process:
+  - number: "01"
+    title: "Discovery & Research"
+    description: "Wir verstehen dein Business, deine Nutzer und den Markt. Workshop-basiert, schnell und fokussiert – damit wir das Richtige bauen."
+  - number: "02"
+    title: "Ideation & Wireframing"
+    description: "Ideen werden strukturiert, Flows skizziert und die Produktarchitektur festgelegt. Klarer Plan, bevor die erste Zeile Code geschrieben wird."
+  - number: "03"
+    title: "Prototyping & Validation"
+    description: "Klickbare Prototypen mit echten Nutzern testen – bevor wir entwickeln. So reduzieren wir Risiken und sparen Entwicklungszeit."
+  - number: "04"
+    title: "Design & Development"
+    description: "Pixelgenaues UI trifft sauberen Code. Unser Full-Stack-Team baut schnell, iterativ und mit voller Transparenz."
+  - number: "05"
+    title: "Launch & Scale"
+    description: "Deployment, Monitoring, Analytics – und kontinuierliche Verbesserung nach dem Launch. Wir bleiben dabei."
+caseTitle: "Tap2Link"
+caseSlug: "tap2link"
+caseSubtitle: "Tap2Link: Mehr als eine digitale Visitenkarte."
+caseImage: "/uploads/services/development-case.png"
+caseStats:
+  - value: "+35%"
+    label: "Schnellerer Onboarding-Prozess"
+  - value: "-20%"
+    label: "Reduzierter Support-Aufwand"
+  - value: "+40%"
+    label: "Mehr Nutzerinteraktionen"
+caseDescription: "Ein digitales Serviceportal für komplexe B2B-Prozesse – in nur 8 Wochen von der Idee bis zum Launch."
+ctaHeadline: "Bereit, dein Produkt zu bauen?"
+ctaBody: "Lass uns in einem kostenlosen Erstgespräch herausfinden, wie wir deine Idee in ein marktreifes Produkt verwandeln können."
 ---

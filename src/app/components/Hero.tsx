@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { ArrowRight, Play, Pause } from "lucide-react";
-import { siteData } from "@/data/site";
+import { useSiteData } from "@/data/live";
+import { tinaField } from "tinacms/dist/react";
 import svgPaths from "@/imports/🖌Homepage/svg-oa0apfkpzr";
 import heroImg from "@/imports/image-5.png";
 import heroVideo from "@/assets/venturelabs reel.mp4";
@@ -15,10 +16,11 @@ function BackgroundBlobs() {
   );
 }
 
-function HeroHeadline() {
-  const parts = siteData.heroHeadline.split("digitale Lösungen");
+function HeroHeadline({ headline, fieldName }: { headline: string; fieldName?: string }) {
+  const parts = headline.split("digitale Lösungen");
   return (
     <h1
+      data-tina-field={fieldName}
       className="font-semibold text-white leading-[1.05] tracking-tight w-full"
       style={{ fontSize: "var(--text-hero)" }}
     >
@@ -46,6 +48,7 @@ function HeroHeadline() {
 }
 
 export function Hero() {
+  const siteData = useSiteData();
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -108,9 +111,13 @@ export function Hero() {
             👉 Wir suchen Verstärkung!
           </div>
 
-          <HeroHeadline />
+          <HeroHeadline
+            headline={siteData.heroHeadline}
+            fieldName={tinaField(siteData, "heroHeadline")}
+          />
 
           <p
+            data-tina-field={tinaField(siteData, "heroSubline")}
             className="text-white/60 font-light leading-relaxed max-w-2xl"
             style={{ fontSize: "var(--text-body)" }}
           >
@@ -120,6 +127,7 @@ export function Hero() {
           <div className="flex flex-wrap gap-4">
             <a
               href="#kontakt"
+              data-tina-field={tinaField(siteData, "heroCta")}
               className="inline-flex items-center gap-2 bg-[#8129ff] hover:bg-[#9140ff] text-white font-semibold rounded-lg transition-all hover:scale-[1.02] px-[24px] pt-[14px] pb-[8px]"
               style={{ fontSize: "var(--text-body)" }}
             >
@@ -128,6 +136,7 @@ export function Hero() {
             </a>
             <a
               href="#projekte"
+              data-tina-field={tinaField(siteData, "heroCtaSecondary")}
               className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/12 text-white font-medium px-6 py-3.5 rounded-lg transition-all"
               style={{ fontSize: "var(--text-body)" }}
             >

@@ -4,4 +4,13 @@ heroSubline: "Ein kleines, fokussiertes Team aus Strategy, Design und Projektlei
 heroCta: "Gespräch vereinbaren"
 heroCtaSecondary: "Projekte ansehen"
 clientLogosLabel: "Diese Kunden setzen auf uns"
+nav:
+  - label: "Leistungen"
+    href: "/leistungen"
+  - label: "Projekte"
+    href: "/#projekte"
+  - label: "Pricing"
+    href: "/#pricing"
+  - label: "Kontakt"
+    href: "/#kontakt"
 ---
