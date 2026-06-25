@@ -1,4 +1,5 @@
 ---
+language: "de"
 slug: development
 order: 1
 title: "Produktentwicklung / Development"

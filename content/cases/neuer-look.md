@@ -1,4 +1,5 @@
 ---
+language: "de"
 slug: neuer-look
 order: 5
 title: "Neuer Look, neue Webseite"

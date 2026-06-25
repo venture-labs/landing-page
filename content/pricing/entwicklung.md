@@ -1,4 +1,5 @@
 ---
+language: "de"
 slug: entwicklung
 title: "Entwicklung einer App"
 price: "25.000 €"

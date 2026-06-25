@@ -1,4 +1,5 @@
 ---
+language: "de"
 slug: workshop
 title: "Workshop mit unserem Team"
 price: "3.000 €"

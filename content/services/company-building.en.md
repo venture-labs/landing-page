@@ -1,0 +1,47 @@
+---
+slug: company-building
+language: "en"
+order: 2
+title: "Company Building"
+description: "We help teams build new business models and MVPs."
+gradient: "linear-gradient(268.344deg, rgba(255, 0, 0, 0.8) 0%, rgba(255, 0, 0, 0) 100%)"
+icon: grid
+heroHeadline: "From idea to working company"
+heroSubline: "We help teams develop, validate, and turn new business models into market-ready products."
+heroImage: "/uploads/services/company-building-hero.png"
+tags:
+  - "MVP in 12 weeks"
+  - "Business model design"
+  - "Go-to-market"
+  - "Team building"
+process:
+  - number: "01"
+    title: "Idea & Vision"
+    description: "We help you sharpen your idea: What's the real problem? Who's the target audience? What makes you unique?"
+  - number: "02"
+    title: "Business Model Design"
+    description: "Lean canvas, value proposition, and revenue model — we build a viable business model based on real market data."
+  - number: "03"
+    title: "MVP Strategy & Scope"
+    description: "What's the smallest possible product you can validate? We define the MVP scope and prioritize ruthlessly."
+  - number: "04"
+    title: "Build & Launch"
+    description: "Our team builds the MVP — design, development, messaging. Your product goes live in 8–16 weeks."
+  - number: "05"
+    title: "Traction & Scale"
+    description: "First users, first feedback, first revenue. We support the early growth phase and help you build your own team."
+caseTitle: "Moerschen"
+caseSlug: "moerschen"
+caseSubtitle: "Moerschen: from relaunch to lead machine."
+caseImage: "/uploads/services/company-building-case.png"
+caseStats:
+  - value: "+45%"
+    label: "More contact inquiries"
+  - value: "8 wks"
+    label: "From kickoff to launch"
+  - value: "2×"
+    label: "Faster to find the right contact"
+caseDescription: "Website relaunch with clear user guidance and a new communication strategy — live in 8 weeks."
+ctaHeadline: "Your startup. Our experience."
+ctaBody: "Let's find out together how to turn your business model into reality, quickly and safely."
+---

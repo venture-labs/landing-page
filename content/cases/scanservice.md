@@ -1,4 +1,5 @@
 ---
+language: "de"
 slug: scanservice
 order: 7
 title: "Dein ScanService"

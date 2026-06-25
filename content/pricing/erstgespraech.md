@@ -1,4 +1,5 @@
 ---
+language: "de"
 slug: erstgespraech
 title: "Kostenloses Erstgespräch"
 price: "0 €"

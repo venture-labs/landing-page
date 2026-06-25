@@ -1,4 +1,5 @@
 ---
+language: "de"
 slug: tap2link
 order: 1
 title: "Tap2Link – Mehr als eine digitale Visitenkarte."
@@ -27,6 +28,5 @@ detailStats:
     label: "Conversion bei Messegesprächsterminen"
 mockupImages:
   - "/uploads/cases/tap2link-mockup-1.png"
-  - "/uploads/cases/tap2link-hero.png"
   - "/uploads/cases/tap2link-mockup-3.png"
 ---

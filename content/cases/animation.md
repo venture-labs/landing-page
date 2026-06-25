@@ -1,4 +1,5 @@
 ---
+language: "de"
 slug: animation
 order: 6
 title: "Animation für mehr Nachhaltigkeit"

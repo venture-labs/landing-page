@@ -1,4 +1,5 @@
 ---
+language: "de"
 slug: company-building
 order: 2
 title: "Company Building"

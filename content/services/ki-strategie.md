@@ -1,4 +1,5 @@
 ---
+language: "de"
 slug: ki-strategie
 order: 4
 title: "KI Strategie"

@@ -1,4 +1,5 @@
 ---
+language: "de"
 slug: webdesign
 order: 3
 title: "Webdesign & UX"

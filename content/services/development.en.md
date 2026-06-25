@@ -1,0 +1,47 @@
+---
+slug: development
+language: "en"
+order: 1
+title: "Product Development"
+description: "Web apps, portals, SaaS — technically solid, launched fast."
+gradient: "linear-gradient(146.383deg, rgba(163, 24, 248, 0.8) 0%, rgba(163, 24, 248, 0) 100%)"
+icon: code
+heroHeadline: "From idea to market-ready digital product"
+heroSubline: "We build digital products that users love and that move your business forward."
+heroImage: "/uploads/services/development-hero.png"
+tags:
+  - "Fastest launch"
+  - "Revenue-focused"
+  - "Rapid product iteration & market validation"
+  - "Close collaboration"
+process:
+  - number: "01"
+    title: "Discovery & Research"
+    description: "We get to know your business, your users, and your market. Workshop-driven, fast, and focused — so we build the right thing."
+  - number: "02"
+    title: "Ideation & Wireframing"
+    description: "Ideas get structured, flows get sketched, and the product architecture is defined. A clear plan before a single line of code is written."
+  - number: "03"
+    title: "Prototyping & Validation"
+    description: "We test clickable prototypes with real users before we build — reducing risk and saving development time."
+  - number: "04"
+    title: "Design & Development"
+    description: "Pixel-perfect UI meets clean code. Our full-stack team builds fast, iteratively, and with full transparency."
+  - number: "05"
+    title: "Launch & Scale"
+    description: "Deployment, monitoring, analytics — and continuous improvement after launch. We stay with you."
+caseTitle: "Tap2Link"
+caseSlug: "tap2link"
+caseSubtitle: "Tap2Link: more than a digital business card."
+caseImage: "/uploads/services/development-case.png"
+caseStats:
+  - value: "+35%"
+    label: "Faster onboarding process"
+  - value: "-20%"
+    label: "Reduced support effort"
+  - value: "+40%"
+    label: "More user interactions"
+caseDescription: "A digital service portal for complex B2B processes — from idea to launch in just 8 weeks."
+ctaHeadline: "Ready to build your product?"
+ctaBody: "Let's find out in a free intro call how we can turn your idea into a market-ready product."
+---
