@@ -1,11 +1,11 @@
 import { useRef } from "react";
 import { Link } from "react-router";
 import { motion, useInView } from "motion/react";
-import { ArrowRight, Code2, Building2, Palette, Bot } from "lucide-react";
+import { ArrowRight, Code2, Building2, Palette, Bot, TrendingUp } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
-import { useCasesData, useServicesData } from "@/data/live";
+import { useCasesData, useServicesData, useCaseDetailsData } from "@/data/live";
 import { useLocale } from "@/app/locale";
 
 function CasesHero() {
@@ -105,8 +105,9 @@ function ServiceTile({ service, index }: { service: any; index: number }) {
 function CaseGridCard({ c, index }: { c: { slug: string; title: string; subtitle: string; image: string }; index: number }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
-  const { t } = useTranslation();
   const { localizedPath } = useLocale();
+  const caseDetails = useCaseDetailsData();
+  const detail = caseDetails[c.slug];
 
   return (
     <motion.div
@@ -117,32 +118,54 @@ function CaseGridCard({ c, index }: { c: { slug: string; title: string; subtitle
     >
       <Link
         to={localizedPath(`/cases/${c.slug}`)}
-        className="flex flex-col gap-6 group cursor-pointer hover:opacity-90 transition-opacity"
+        className="group cursor-pointer flex flex-col overflow-hidden rounded-2xl"
       >
-        <div className="overflow-hidden rounded-lg">
+        {/* Hero Image - Top */}
+        <div className="relative overflow-hidden bg-gray-800 h-[280px]">
           <img
             src={c.image}
             alt={c.title}
-            className="w-full h-[260px] object-cover transition-transform duration-500 group-hover:scale-105"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         </div>
-        <div className="flex flex-col gap-2">
-          <h3
-            className="font-semibold text-white"
-            style={{ fontSize: "calc(var(--text-card) * 0.75)", lineHeight: "1.1" }}
-          >
-            {c.title}
-          </h3>
-          <p
-            className="text-white/60 font-light leading-snug"
-            style={{ fontSize: "var(--text-small)" }}
-          >
-            {c.subtitle}
-          </p>
-          <span className="inline-flex items-center gap-2 text-[#a318f8] text-sm mt-2">
-            {t("cases.viewProject")}
-            <ArrowRight size={14} />
-          </span>
+
+        {/* Content - Bottom */}
+        <div className="bg-[#1c1a27] p-8 flex flex-col justify-between flex-1">
+          {/* Title & Subtitle */}
+          <div className="mb-8">
+            <h3
+              className="font-semibold text-white leading-tight mb-3"
+              style={{ fontSize: "1.5rem", lineHeight: "1.2" }}
+            >
+              {c.title}
+            </h3>
+            <p
+              className="text-white/70 font-light leading-relaxed max-w-sm"
+              style={{ fontSize: "0.95rem" }}
+            >
+              {c.subtitle}
+            </p>
+          </div>
+
+          {/* Stats */}
+          {detail?.stats && detail.stats.length > 0 && (
+            <div className="space-y-3 mb-6">
+              {detail.stats.slice(0, 3).map((stat, idx) => (
+                <div key={idx} className="flex items-center gap-3 h-6 overflow-hidden">
+                  <TrendingUp size={16} className="text-white/60 flex-shrink-0" />
+                  <div className="overflow-hidden truncate whitespace-nowrap">
+                    <span className="text-white font-semibold">{stat.value}</span>
+                    <span className="text-white/60 text-sm ml-2">{stat.label}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Arrow CTA */}
+          <div className="flex justify-end">
+            <ArrowRight size={24} className="text-white/80 group-hover:text-white transition-colors" />
+          </div>
         </div>
       </Link>
     </motion.div>
