@@ -166,7 +166,7 @@ export default defineConfig({
       {
         name: "leistungen",
         label: "Leistungen (Übersicht)",
-        path: "content/site",
+        path: "content/pages",
         format: "md",
         ui: {
           allowedActions: { create: false, delete: false },

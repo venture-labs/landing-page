@@ -128,8 +128,8 @@ function CaseGridCard({ c, index }: { c: { slug: string; title: string; subtitle
         </div>
         <div className="flex flex-col gap-2">
           <h3
-            className="font-semibold text-white leading-tight"
-            style={{ fontSize: "calc(var(--text-card) * 0.75)" }}
+            className="font-semibold text-white"
+            style={{ fontSize: "calc(var(--text-card) * 0.75)", lineHeight: "1.1" }}
           >
             {c.title}
           </h3>
