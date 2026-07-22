@@ -125,5 +125,61 @@
   "languageSwitcher": {
     "de": "DE",
     "en": "EN"
+  },
+  "blog": {
+    "heroTitle": "Blog",
+    "heroSubtitle": "Gedanken, Learnings und Einblicke aus unserer Arbeit mit digitalen Produkten, Teams und KI.",
+    "featuredLabel": "Empfohlen",
+    "readArticle": "Weiterlesen",
+    "backToOverview": "Zurück zur Übersicht",
+    "notFound": "Beitrag nicht gefunden.",
+    "publishedLabel": "Veröffentlicht",
+    "byLabel": "Von",
+    "readTimeLabel": "Lesezeit",
+    "tableOfContents": "Inhaltsverzeichnis",
+    "ctaText": "Fragen zum Thema? Wir sprechen gerne direkt.",
+    "ctaButton": "Kontakt aufnehmen"
+  },
+  "kontakt": {
+    "heroTitle": "Was ist dein Anliegen?",
+    "heroSubtitle": "Wähle die Themen aus, die dich interessieren – das hilft uns, dir schneller zu antworten.",
+    "topics": {
+      "development": {
+        "label": "Produktentwicklung",
+        "chips": ["Web App", "Mobile App", "SaaS-Plattform", "API & Integrationen", "MVP"]
+      },
+      "company-building": {
+        "label": "Company Building",
+        "chips": ["MVP-Aufbau", "Geschäftsmodell", "Go-to-Market", "Team-Aufbau"]
+      },
+      "webdesign": {
+        "label": "Webdesign & UX",
+        "chips": ["Webseite", "Branding", "Design System", "Prototyp", "Content"]
+      },
+      "ki-strategie": {
+        "label": "KI Strategie",
+        "chips": ["KI-Agenten", "Automatisierung", "Business Analytics", "KI-Beratung"]
+      }
+    },
+    "directContact": "Direkter Kontakt",
+    "team": {
+      "christianRole": "Geschäftsführer",
+      "martinRole": "Head of Design"
+    },
+    "formHeading": "Deine Nachricht an uns",
+    "messagePlaceholder": "Nachricht*",
+    "dataHeading": "Deine Daten",
+    "namePlaceholder": "Dein Name*",
+    "companyPlaceholder": "Unternehmen",
+    "rolePlaceholder": "Deine Rolle",
+    "contactHeading": "Wie dürfen wir dich kontaktieren?",
+    "emailPlaceholder": "E-Mail*",
+    "phonePlaceholder": "Telefon",
+    "privacyHeading": "Datenschutzerklärung",
+    "privacyText": "Mit dem Absenden dieses Formulares erklärst du dich damit einverstanden, dass die übermittelten Daten zur Bearbeitung deines Anliegens verwendet werden und stimmst unseren",
+    "privacyLinkLabel": "Datenschutzbestimmungen",
+    "submit": "Absenden",
+    "submitHint": "Öffnet dein E-Mail-Programm mit einer vorausgefüllten Nachricht an uns.",
+    "ctaQuestion": "Du möchtest eine kostenlose Erstberatung? Wir helfen dir gerne weiter. Ruf einfach an oder schreib uns, wir melden uns bei dir."
   }
 }

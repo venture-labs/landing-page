@@ -125,5 +125,61 @@
   "languageSwitcher": {
     "de": "DE",
     "en": "EN"
+  },
+  "blog": {
+    "heroTitle": "Blog",
+    "heroSubtitle": "Thoughts, learnings, and insights from our work on digital products, teams, and AI.",
+    "featuredLabel": "Featured",
+    "readArticle": "Read article",
+    "backToOverview": "Back to overview",
+    "notFound": "Post not found.",
+    "publishedLabel": "Published",
+    "byLabel": "By",
+    "readTimeLabel": "Read time",
+    "tableOfContents": "Table of contents",
+    "ctaText": "Questions on this topic? Reach out directly.",
+    "ctaButton": "Get in touch"
+  },
+  "kontakt": {
+    "heroTitle": "What's on your mind?",
+    "heroSubtitle": "Pick the topics you're interested in – it helps us get back to you faster.",
+    "topics": {
+      "development": {
+        "label": "Product Development",
+        "chips": ["Web App", "Mobile App", "SaaS Platform", "APIs & Integrations", "MVP"]
+      },
+      "company-building": {
+        "label": "Company Building",
+        "chips": ["MVP Build", "Business Model", "Go-to-Market", "Team Building"]
+      },
+      "webdesign": {
+        "label": "Webdesign & UX",
+        "chips": ["Website", "Branding", "Design System", "Prototype", "Content"]
+      },
+      "ki-strategie": {
+        "label": "AI Strategy",
+        "chips": ["AI Agents", "Automation", "Business Analytics", "AI Consulting"]
+      }
+    },
+    "directContact": "Direct Contact",
+    "team": {
+      "christianRole": "Managing Director",
+      "martinRole": "Head of Design"
+    },
+    "formHeading": "Your message to us",
+    "messagePlaceholder": "Message*",
+    "dataHeading": "Your details",
+    "namePlaceholder": "Your name*",
+    "companyPlaceholder": "Company",
+    "rolePlaceholder": "Your role",
+    "contactHeading": "How can we reach you?",
+    "emailPlaceholder": "Email*",
+    "phonePlaceholder": "Phone",
+    "privacyHeading": "Privacy policy",
+    "privacyText": "By submitting this form, you agree that the data you provide will be used to process your request and that you accept our",
+    "privacyLinkLabel": "privacy policy",
+    "submit": "Send",
+    "submitHint": "Opens your email app with a pre-filled message to us.",
+    "ctaQuestion": "Want a free initial consultation? We're happy to help. Just call or write to us – we'll get back to you."
   }
 }
