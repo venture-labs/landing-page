@@ -4,6 +4,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Quick Start
 
+**Prerequisites:** Node.js and pnpm must be installed. Check with:
+```bash
+node -v && pnpm -v
+```
+If either command is not found:
+```bash
+brew install node
+npm install -g pnpm
+```
+(Corepack is no longer bundled with recent Node versions, so `pnpm` must be installed via npm.)
+
 **Install dependencies:**
 ```bash
 pnpm install
