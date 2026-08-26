@@ -5,8 +5,12 @@ import { ArrowRight, Code2, Building2, Palette, Bot, TrendingUp } from "lucide-r
 import { useTranslation } from "react-i18next";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
-import { useCasesData, useServicesData, useCaseDetailsData } from "@/data/live";
+import { useCasesData, useServicesData } from "@/data/live";
 import { useLocale } from "@/app/locale";
+import { caseDetailsMap as caseDetailsMapDe } from "@/data/de/caseDetails";
+import { caseDetailsMap as caseDetailsMapEn } from "@/data/en/caseDetails";
+
+const caseDetailsMapByLocale = { de: caseDetailsMapDe, en: caseDetailsMapEn };
 
 function CasesHero() {
   const { t } = useTranslation();
@@ -105,9 +109,8 @@ function ServiceTile({ service, index }: { service: any; index: number }) {
 function CaseGridCard({ c, index }: { c: { slug: string; title: string; subtitle: string; image: string }; index: number }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
-  const { localizedPath } = useLocale();
-  const caseDetails = useCaseDetailsData();
-  const detail = caseDetails[c.slug];
+  const { localizedPath, lang } = useLocale();
+  const detail = caseDetailsMapByLocale[lang][c.slug];
 
   return (
     <motion.div

@@ -1,5 +1,10 @@
 packages:
   - '.'
+allowBuilds:
+  '@tailwindcss/oxide': true
+  better-sqlite3: true
+  core-js: true
+  esbuild: true
 supportedArchitectures:
   os:
     - linux

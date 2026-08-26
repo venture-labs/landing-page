@@ -19,17 +19,19 @@ npm install -g pnpm
 ```bash
 pnpm install
 ```
+Some dependencies (`@tailwindcss/oxide`, `better-sqlite3`, `core-js`, `esbuild`) run native install scripts. These are pre-approved via `allowBuilds` in `pnpm-workspace.yaml`, so `pnpm install` should run them without prompting. If pnpm ever asks interactively to approve builds, run `pnpm approve-builds`, or set the relevant package(s) to `true` under `allowBuilds` in `pnpm-workspace.yaml`.
 
 **Development server:**
 ```bash
 pnpm dev
 ```
-Runs on http://localhost:5173 by default.
+Runs on http://localhost:5173 by default. `tinacms dev` always runs its own local GraphQL server, so no TinaCloud credentials are needed for local development (unlike `pnpm build`, see below).
 
 **Build for production:**
 ```bash
 pnpm build
 ```
+This runs `tinacms build` (without `--local`), which requires TinaCloud credentials via the `TINA_CLIENT_ID` and `TINA_TOKEN` environment variables (e.g. in a `.env` file or CI/deployment secrets). Without them, `pnpm build` fails with "Client not configured properly." Get credentials at https://tina.io.
 
 ## Project Overview
 
