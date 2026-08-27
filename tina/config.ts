@@ -8,8 +8,8 @@ const branch =
 
 export default defineConfig({
   branch,
-  clientId: process.env.TINA_CLIENT_ID || "",
-  token: process.env.TINA_TOKEN || "",
+  clientId: process.env.TINA_CLIENT_ID || "local",
+  token: process.env.TINA_TOKEN || "local",
 
   build: {
     outputFolder: "admin",
@@ -33,6 +33,7 @@ export default defineConfig({
         label: "Website",
         path: "content/site",
         format: "md",
+        match: { include: "home*" },
         ui: {
           allowedActions: { create: false, delete: false },
           router: ({ document }) => `/${document.language ?? "de"}`,
@@ -82,7 +83,7 @@ export default defineConfig({
           { type: "string", name: "heroHeadline", label: "Detail: Hero Headline" },
           { type: "string", name: "heroSubline", label: "Detail: Hero Subline", ui: { component: "textarea" } },
           { type: "image", name: "heroImage", label: "Detail: Hero Bild" },
-          { type: "string", name: "tags", label: "Detail: Tags", list: true },
+          { type: "string", name: "tags", label: "Übersicht: Bullet-Points (4 Stichpunkte)", list: true },
           {
             type: "object",
             name: "process",
@@ -164,10 +165,59 @@ export default defineConfig({
         ],
       },
       {
+        name: "blog",
+        label: "Blog",
+        path: "content/blog",
+        format: "md",
+        ui: {
+          router: ({ document }) => `/${document.language ?? "de"}/blog/${document.slug}`,
+        },
+        fields: [
+          { type: "string", name: "slug", label: "Slug", required: true },
+          {
+            type: "string",
+            name: "language",
+            label: "Sprache",
+            options: ["de", "en"],
+            required: true,
+          },
+          { type: "number", name: "order", label: "Reihenfolge" },
+          { type: "string", name: "title", label: "Titel" },
+          { type: "string", name: "excerpt", label: "Teaser", ui: { component: "textarea" } },
+          {
+            type: "string",
+            name: "topicSlug",
+            label: "Themen-Slug",
+            options: ["development", "company-building", "webdesign", "ki-strategie"],
+          },
+          { type: "string", name: "topic", label: "Thema (Anzeigename)" },
+          { type: "string", name: "readTime", label: "Lesezeit" },
+          { type: "boolean", name: "featured", label: "Featured (große Karte)" },
+          { type: "string", name: "publishedDate", label: "Veröffentlicht am" },
+          { type: "string", name: "author", label: "Autor" },
+          {
+            type: "object",
+            name: "content",
+            label: "Artikel-Inhalt",
+            list: true,
+            fields: [
+              {
+                type: "string",
+                name: "type",
+                label: "Block-Typ",
+                options: ["heading", "paragraph"],
+              },
+              { type: "string", name: "text", label: "Text", ui: { component: "textarea" } },
+            ],
+          },
+        ],
+      },
+      {
         name: "leistungen",
         label: "Leistungen (Übersicht)",
-        path: "content/pages",
+        path: "content/site",
         format: "md",
+        match: { include: "leistungen*" },
         ui: {
           allowedActions: { create: false, delete: false },
           router: ({ document }) => `/${document.language ?? "de"}/leistungen`,

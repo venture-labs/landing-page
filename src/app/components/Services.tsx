@@ -46,7 +46,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-      className="relative overflow-hidden rounded-xl"
+      className="relative overflow-hidden"
       style={{ minHeight: "392px" }}
     >
     <Link
@@ -76,7 +76,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 
       {/* Subtle border glow on hover */}
       <div
-        className="absolute inset-0 rounded-xl transition-opacity duration-300 pointer-events-none"
+        className="absolute inset-0 transition-opacity duration-300 pointer-events-none"
         style={{
           opacity: hovered ? 1 : 0,
           boxShadow: `inset 0 0 0 1px rgba(${accent}, 0.3)`,
@@ -106,7 +106,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         </div>
         <div className="flex justify-end">
           <div
-            className="w-8 h-8 flex items-center justify-center rounded-full border transition-all duration-300"
+            className="w-8 h-8 flex items-center justify-center border rounded-full transition-all duration-300"
             style={{
               borderColor: hovered ? `rgba(${accent}, 0.5)` : "rgba(255,255,255,0.2)",
               color: hovered ? `rgba(${accent}, 0.9)` : "rgba(255,255,255,0.5)",

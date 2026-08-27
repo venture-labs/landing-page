@@ -1,0 +1,32 @@
+---
+slug: "user-research-schnell"
+language: "en"
+order: 6
+title: "Fast user research: 3 methods for tight timelines"
+excerpt: "Even with little time and budget, you can gather solid user feedback. Three methods that hold up in practice."
+topicSlug: "webdesign"
+topic: "Webdesign & UX"
+readTime: "5 min read"
+featured: false
+publishedDate: "June 22, 2026"
+author: "VentureLabs Team"
+content:
+  - type: "paragraph"
+    text: "\"We don't have time for that\" is the most common reason user research gets skipped. But solid feedback doesn't need weeks or a big budget — with the right methods, a few days are often enough."
+  - type: "heading"
+    text: "Why \"no time\" isn't an excuse"
+  - type: "paragraph"
+    text: "The biggest time sink in user research usually isn't running it, it's planning it. Teams that use fixed, repeatable formats can run research alongside development instead of gating it beforehand."
+  - type: "heading"
+    text: "Method 1: Guerrilla interviews"
+  - type: "paragraph"
+    text: "Five short conversations with real users — in a café, on-site with a customer, or over video call — often surface more insight than one big, carefully planned study. The only requirement is one clear question per conversation, not a full questionnaire."
+  - type: "heading"
+    text: "Method 2: Fast, focused surveys"
+  - type: "paragraph"
+    text: "One well-worded question to existing users beats any twenty-question survey. Response rates go up, analysis takes minutes instead of days, and the answers are more concrete."
+  - type: "heading"
+    text: "Method 3: Five-second tests"
+  - type: "paragraph"
+    text: "A screenshot, five seconds of viewing time, one question: \"what does this product do?\" This method shows in minutes whether a message lands — long before an elaborate usability test would even be scheduled."
+---

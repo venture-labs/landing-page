@@ -6,35 +6,60 @@ export interface Service {
   description: string;
   gradient: string;
   icon: "code" | "grid" | "palette" | "bot";
+  tags: string[];
 }
 
 export const services: Service[] = [
   {
     "slug": "development",
     "title": "Product Development",
-    "description": "Web apps, portals, SaaS — technically solid, launched fast.",
+    "description": "A solid software foundation, rethought: products that grow with AI agents instead of standing still.",
     "gradient": "linear-gradient(146.383deg, rgba(163, 24, 248, 0.8) 0%, rgba(163, 24, 248, 0) 100%)",
-    "icon": "code"
+    "icon": "code",
+    "tags": [
+      "Consulting: experienced developer team, honest & human",
+      "Execution: AI-driven development & automation",
+      "Self-learning features instead of static software",
+      "Launch-ready in 4–16 weeks"
+    ]
   },
   {
     "slug": "company-building",
     "title": "Company Building",
-    "description": "We help teams build new business models and MVPs.",
+    "description": "Business-model consulting from real people, MVP execution accelerated by AI.",
     "gradient": "linear-gradient(268.344deg, rgba(255, 0, 0, 0.8) 0%, rgba(255, 0, 0, 0) 100%)",
-    "icon": "grid"
+    "icon": "grid",
+    "tags": [
+      "Business-model consulting from experienced founders",
+      "MVP execution with AI-driven development",
+      "Automated processes instead of manual busywork",
+      "MVP live in 8–16 weeks"
+    ]
   },
   {
     "slug": "webdesign",
     "title": "Webdesign & UX",
-    "description": "Visually strong, functionally sound — UX, UI, brand identity.",
+    "description": "UX consulting in conversation, execution with AI-powered design systems that learn.",
     "gradient": "linear-gradient(44.336deg, rgba(43, 149, 246, 0.8) 0%, rgba(43, 149, 246, 0) 100%)",
-    "icon": "palette"
+    "icon": "palette",
+    "tags": [
+      "UX consulting in direct conversation with our team",
+      "AI-powered design systems & content creation",
+      "Personalized interfaces instead of static screens",
+      "From sketch to live interface in 4–8 weeks"
+    ]
   },
   {
     "slug": "ki-strategie",
     "title": "AI Strategy",
-    "description": "OpenAI, Gemini, Zapier & Make — we connect human and machine.",
+    "description": "Honest AI consulting from our software team, radical automation through AI agents.",
     "gradient": "linear-gradient(-56.458deg, rgba(253, 167, 0, 0.8) 0%, rgba(253, 167, 0, 0) 100%)",
-    "icon": "bot"
+    "icon": "bot",
+    "tags": [
+      "AI readiness consulting with an experienced software team",
+      "Custom AI agents & self-learning workflows",
+      "Deep automation instead of isolated tools",
+      "First prototype in 2–4 weeks"
+    ]
   }
 ];

@@ -43,8 +43,8 @@ export const featuredCases: FeaturedCase[] = [
   },
   {
     "slug": "moerschen",
-    "title": "Moerschen – Website-Relaunch für bessere Kommunikation",
-    "subtitle": "Ein digitales Serviceportal für komplexe B2B-Prozesse in nur 8 Wochen.",
+    "title": "Moerschen – Shaping the industry for more than 100 years",
+    "subtitle": "Website-Relaunch für eine Landmaschinen-Institution mit 100+ Jahren Geschichte",
     "imagePosition": "right",
     "stats": [
       "45 % mehr Kontaktanfragen über die Website",

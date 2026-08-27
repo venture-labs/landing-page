@@ -64,33 +64,7 @@
     "otherServicesHeading": "More services that complement your project",
     "contactQuestion": "Interested in working together on your project? Get in touch now.",
     "notFound": "Service not found.",
-    "backToOverview": "Back to overview",
-    "bullets": {
-      "development": [
-        "Web apps, portals & SaaS products",
-        "Full-stack development (React, Next.js, Node)",
-        "API integrations & database architecture",
-        "Launch-ready in 4–16 weeks"
-      ],
-      "company-building": [
-        "MVP development & prototyping",
-        "Business model & go-to-market strategy",
-        "Team building & process design",
-        "From idea to working company"
-      ],
-      "webdesign": [
-        "UX research & user journey mapping",
-        "UI design & design systems",
-        "Brand identity & visual design",
-        "Responsive design for every device"
-      ],
-      "ki-strategie": [
-        "OpenAI, Gemini & Claude integrations",
-        "AI automations with Zapier & Make",
-        "Custom GPT agents & workflows",
-        "AI readiness assessment for your team"
-      ]
-    }
+    "backToOverview": "Back to overview"
   },
   "cases": {
     "heroTitle": "Our projects",

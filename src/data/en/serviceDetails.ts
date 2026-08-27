@@ -31,40 +31,40 @@ export interface ServiceDetail {
 export const serviceDetails: ServiceDetail[] = [
   {
     "slug": "development",
-    "heroHeadline": "From idea to market-ready digital product",
-    "heroSubline": "We build digital products that users love and that move your business forward.",
+    "heroHeadline": "From digital product to self-learning system",
+    "heroSubline": "We come from software development — and use that foundation to build products that evolve with AI instead of stagnating.",
     "heroImage": "/uploads/services/development-hero.png",
     "tags": [
-      "Fastest launch",
-      "Revenue-focused",
-      "Rapid product iteration & market validation",
-      "Close collaboration"
+      "Consulting: experienced developer team, honest & human",
+      "Execution: AI-driven development & automation",
+      "Self-learning features instead of static software",
+      "Launch-ready in 4–16 weeks"
     ],
     "process": [
       {
         "number": "01",
-        "title": "Discovery & Research",
-        "description": "We get to know your business, your users, and your market. Workshop-driven, fast, and focused — so we build the right thing."
+        "title": "Discovery & Strategy",
+        "description": "We listen and get to know your business in direct conversation, not through a questionnaire. Honest advice from people who have built things themselves."
       },
       {
         "number": "02",
-        "title": "Ideation & Wireframing",
-        "description": "Ideas get structured, flows get sketched, and the product architecture is defined. A clear plan before a single line of code is written."
+        "title": "Architecture & AI Concept",
+        "description": "Together we decide where classic software is enough — and where a self-learning system or an AI agent makes the difference."
       },
       {
         "number": "03",
-        "title": "Prototyping & Validation",
-        "description": "We test clickable prototypes with real users before we build — reducing risk and saving development time."
+        "title": "AI-Assisted Prototyping",
+        "description": "Our developers use AI tools to build prototypes in days instead of weeks — validated with real users."
       },
       {
         "number": "04",
-        "title": "Design & Development",
-        "description": "Pixel-perfect UI meets clean code. Our full-stack team builds fast, iteratively, and with full transparency."
+        "title": "Development & Automation",
+        "description": "Where code used to be written line by line, AI agents now take over recurring tasks — we build the tools that build new tools."
       },
       {
         "number": "05",
-        "title": "Launch & Scale",
-        "description": "Deployment, monitoring, analytics — and continuous improvement after launch. We stay with you."
+        "title": "Launch & Continuous Learning",
+        "description": "Development doesn't stop at launch: the system keeps learning from real data and is optimized automatically."
       }
     ],
     "caseTitle": "Tap2Link",
@@ -86,45 +86,45 @@ export const serviceDetails: ServiceDetail[] = [
       }
     ],
     "caseDescription": "A digital service portal for complex B2B processes — from idea to launch in just 8 weeks.",
-    "ctaHeadline": "Ready to build your product?",
-    "ctaBody": "Let's find out in a free intro call how we can turn your idea into a market-ready product."
+    "ctaHeadline": "Ready for a product that thinks along?",
+    "ctaBody": "Let's find out in an honest intro call whether your next product needs classic software or a self-learning system."
   },
   {
     "slug": "company-building",
-    "heroHeadline": "From idea to working company",
-    "heroSubline": "We help teams develop, validate, and turn new business models into market-ready products.",
+    "heroHeadline": "From idea to AI-powered company",
+    "heroSubline": "Business-model consulting stays a matter of trust between people. For execution, we rely on AI to get your MVP live faster and leaner.",
     "heroImage": "/uploads/services/company-building-hero.png",
     "tags": [
-      "MVP in 12 weeks",
-      "Business model design",
-      "Go-to-market",
-      "Team building"
+      "Business-model consulting from experienced founders",
+      "MVP execution with AI-driven development",
+      "Automated processes instead of manual busywork",
+      "MVP live in 8–16 weeks"
     ],
     "process": [
       {
         "number": "01",
         "title": "Idea & Vision",
-        "description": "We help you sharpen your idea: What's the real problem? Who's the target audience? What makes you unique?"
+        "description": "In a personal conversation, we sharpen your idea: the real problem, the real audience, the real USP."
       },
       {
         "number": "02",
-        "title": "Business Model Design",
-        "description": "Lean canvas, value proposition, and revenue model — we build a viable business model based on real market data."
+        "title": "Business Model Consulting",
+        "description": "Lean canvas and revenue model take shape in dialogue with our team — not an automated template, but real entrepreneurial experience."
       },
       {
         "number": "03",
-        "title": "MVP Strategy & Scope",
-        "description": "What's the smallest possible product you can validate? We define the MVP scope and prioritize ruthlessly."
+        "title": "AI-Focused MVP Scope",
+        "description": "We define which processes your company can automate and scale with AI agents from day one."
       },
       {
         "number": "04",
-        "title": "Build & Launch",
-        "description": "Our team builds the MVP — design, development, messaging. Your product goes live in 8–16 weeks."
+        "title": "Build & Automation",
+        "description": "Our team builds your MVP — design, development, messaging. AI takes over what repeats, so you can focus on growth."
       },
       {
         "number": "05",
         "title": "Traction & Scale",
-        "description": "First users, first feedback, first revenue. We support the early growth phase and help you build your own team."
+        "description": "We support the first users, the first feedback, the first revenue — and help embed AI-driven processes in your own team."
       }
     ],
     "caseTitle": "Moerschen",
@@ -146,45 +146,45 @@ export const serviceDetails: ServiceDetail[] = [
       }
     ],
     "caseDescription": "Website relaunch with clear user guidance and a new communication strategy — live in 8 weeks.",
-    "ctaHeadline": "Your startup. Our experience.",
-    "ctaBody": "Let's find out together how to turn your business model into reality, quickly and safely."
+    "ctaHeadline": "Your startup. Our experience. AI as an accelerator.",
+    "ctaBody": "Let's find out in a free intro call how we turn your business model into reality with real experience and smart automation."
   },
   {
     "slug": "webdesign",
-    "heroHeadline": "Design that converts and delights",
-    "heroSubline": "From the first sketch to a live interface — we design digital products that users truly understand.",
+    "heroHeadline": "Design that learns alongside your users",
+    "heroSubline": "Good UX starts with real listening — that stays handmade. For execution and personalization, we use AI so your interface keeps evolving.",
     "heroImage": "/uploads/services/webdesign-hero.png",
     "tags": [
-      "UX research",
-      "Pixel-perfect UI",
-      "Design systems",
-      "Mobile-first"
+      "UX consulting in direct conversation with our team",
+      "AI-powered design systems & content creation",
+      "Personalized interfaces instead of static screens",
+      "From sketch to live interface in 4–8 weeks"
     ],
     "process": [
       {
         "number": "01",
         "title": "UX Research & Analysis",
-        "description": "User interviews, competitive analysis, and heuristic evaluation lay the foundation for sound design decisions."
+        "description": "User interviews and competitive analysis — led by real people who listen, not by a survey tool."
       },
       {
         "number": "02",
-        "title": "User Flows & Architecture",
-        "description": "Information architecture and user flows ensure users always know where they are and what comes next."
+        "title": "Information Architecture",
+        "description": "Together we define how users find their way — the foundation for any good interface, classic or AI-powered."
       },
       {
         "number": "03",
-        "title": "Wireframes & Concept",
-        "description": "Lo-fi wireframes reveal the structure before we go into detail. Fast feedback, fast iteration."
+        "title": "AI-Assisted Concept",
+        "description": "Our designers use AI tools for faster wireframes and variants — the decision still rests with a human."
       },
       {
         "number": "04",
-        "title": "Visual Design & Prototyping",
-        "description": "High-fidelity UI design in Figma, including a design system and a clickable prototype for user testing."
+        "title": "Visual Design & Design System",
+        "description": "A design system that grows with AI-powered components instead of starting from zero with every new feature."
       },
       {
         "number": "05",
-        "title": "Design Handoff & Support",
-        "description": "Pixel-perfect handoff to the dev team with complete documentation and dev-mode annotations."
+        "title": "Handoff & Learning Optimization",
+        "description": "After launch, we measure how users actually use the interface — and keep optimizing based on real data."
       }
     ],
     "caseTitle": "Brylliant",
@@ -206,45 +206,45 @@ export const serviceDetails: ServiceDetail[] = [
       }
     ],
     "caseDescription": "A scalable tool for efficient briefings, clean processes, and strategic clarity — designed in 6 weeks.",
-    "ctaHeadline": "Design that actually works.",
-    "ctaBody": "Let us show you how thoughtful UX/UI design boosts your conversion rate and user satisfaction."
+    "ctaHeadline": "Design that doesn't stand still.",
+    "ctaBody": "Let us show you in an honest intro call how thoughtful UX design and smart AI tools achieve more together."
   },
   {
     "slug": "ki-strategie",
-    "heroHeadline": "Recognize AI potential and use it consistently",
-    "heroSubline": "We help you find and integrate the right AI tools — and extract real business value from them.",
+    "heroHeadline": "We build the tools that build new tools",
+    "heroSubline": "As a software team, we know the pitfalls of AI projects firsthand. We handle consulting in person; self-learning systems and AI agents handle the automation.",
     "heroImage": "/uploads/services/ki-strategie-hero.png",
     "tags": [
-      "OpenAI & Gemini",
-      "Workflow automation",
-      "Custom AI agents",
-      "Fast implementation"
+      "AI readiness consulting with an experienced software team",
+      "Custom AI agents & self-learning workflows",
+      "Deep automation instead of isolated tools",
+      "First prototype in 2–4 weeks"
     ],
     "process": [
       {
         "number": "01",
         "title": "AI Readiness Assessment",
-        "description": "Analysis of your current processes, data landscape, and tech stack — to find where AI has the biggest leverage."
+        "description": "We take an honest look at where your company stands — processes, data, tech stack. No buzzword analysis, just a real conversation."
       },
       {
         "number": "02",
-        "title": "Use Case Identification",
-        "description": "Together we prioritize the AI use cases with the best ROI: automations, agents, or generative tools."
+        "title": "Use Case Prioritization",
+        "description": "Together we decide which processes are genuinely suited for AI agents — and which aren't, yet."
       },
       {
         "number": "03",
-        "title": "Prototyping & Proof of Concept",
-        "description": "Show what's possible, fast. We build a working prototype in 2–4 weeks — so you see real value."
+        "title": "Prototyping Self-Learning Systems",
+        "description": "We build a working agent or automation workflow in 2–4 weeks that learns from real data."
       },
       {
         "number": "04",
         "title": "Integration & Rollout",
-        "description": "From idea to production: OpenAI, Claude, Zapier, Make, n8n — we integrate AI seamlessly into your existing stack."
+        "description": "From idea to production: we integrate AI agents so they automate your existing stack rather than replace it."
       },
       {
         "number": "05",
-        "title": "Monitoring & Optimization",
-        "description": "AI isn't a one-off project. We support ongoing operations, measure outputs, and continuously optimize."
+        "title": "Monitoring & Evolution",
+        "description": "Self-learning systems are never 'finished'. We support ongoing operations, measure results, and let the systems keep learning."
       }
     ],
     "caseTitle": "MachineMaster",
@@ -266,7 +266,7 @@ export const serviceDetails: ServiceDetail[] = [
       }
     ],
     "caseDescription": "An AI-powered sales tool for dealers and field reps — from MVP in just 12 weeks.",
-    "ctaHeadline": "AI in practice, not theory.",
-    "ctaBody": "In a free intro call we'll show you which AI measures will make an immediate impact on your business."
+    "ctaHeadline": "AI that actually automates — not just a chatbot.",
+    "ctaBody": "In a free intro call with our team, we'll talk honestly about where AI agents can already make a difference in your business today."
   }
 ];

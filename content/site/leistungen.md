@@ -2,6 +2,6 @@
 language: de
 heroTitlePrefix: 'Unsere'
 heroTitleHighlight: 'Leistungen'
-heroSubheading: 'Wir bieten eine breite Palette von digitalen Services, um dein Business zu transformieren. Von Strategy über Design bis zur Entwicklung – alles aus einer Hand.'
-contactCallout: 'Interessiert? Lass uns zusammen überlegen, wie wir dir helfen können.'
+heroSubheading: 'Beratung bleibt bei uns Menschenwerk. Für die Umsetzung setzen wir konsequent auf KI-Agenten und selbstlernende Systeme – von der Produktentwicklung bis zur Automatisierung.'
+contactCallout: 'Du suchst ehrliche Beratung statt Buzzwords? Ruf uns an oder schreib uns – wir hören zu, bevor wir bauen.'
 ---

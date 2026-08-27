@@ -121,7 +121,7 @@ function ValuesSection({ data }: { data: ReturnType<typeof useAboutData> }) {
             className="flex flex-col gap-6"
           >
             <div
-              className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
+              className="w-12 h-12 flex items-center justify-center shrink-0"
               style={{ backgroundColor: "#8129ff22", border: "1px solid #8129ff44" }}
             >
               {valueIcons[String(i)]}

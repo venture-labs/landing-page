@@ -1,0 +1,32 @@
+---
+slug: "pitch-zu-produkt"
+language: "de"
+order: 4
+title: "Vom Pitch zum Produkt: Wie wir in 12 Wochen ein MVP bauen"
+excerpt: "Ein Blick hinter die Kulissen unseres Company-Building-Prozesses – von der ersten Idee bis zum ersten zahlenden Kunden."
+topicSlug: "company-building"
+topic: "Company Building"
+readTime: "7 Min. Lesezeit"
+featured: false
+publishedDate: "15. Januar 2026"
+author: "VentureLabs Team"
+content:
+  - type: "paragraph"
+    text: "Zwölf Wochen klingen ambitioniert für ein vollständiges Produkt – und das sind sie auch. Aber mit dem richtigen Prozess ist es machbar, planbar und wiederholbar. Ein Blick hinter die Kulissen unseres Company-Building-Ansatzes."
+  - type: "heading"
+    text: "Woche 1 bis 2: Validierung vor Code"
+  - type: "paragraph"
+    text: "Bevor eine Zeile Code geschrieben wird, sprechen wir mit potenziellen Kund:innen. Ziel ist nicht Bestätigung, sondern Widerspruch – wir wollen möglichst früh erfahren, wo die Idee nicht trägt. Erst wenn ein klares Problem und eine zahlungsbereite Zielgruppe erkennbar sind, geht es weiter."
+  - type: "heading"
+    text: "Woche 3 bis 8: Bauen im Kernteam"
+  - type: "paragraph"
+    text: "Ein kleines, interdisziplinäres Team aus Produkt, Design und Entwicklung baut den Kern der Lösung – bewusst ohne alles, was „später auch noch wichtig wird“. Wöchentliche Reviews mit echten Nutzer:innen sorgen dafür, dass Kurskorrekturen früh passieren, nicht erst am Ende."
+  - type: "heading"
+    text: "Woche 9 bis 12: Der erste zahlende Kunde"
+  - type: "paragraph"
+    text: "In dieser Phase geht es nicht mehr um Features, sondern um den ersten echten Vertragsabschluss. Das Produkt muss nicht vollständig sein – es muss das eine Problem lösen, für das jemand bereit ist zu zahlen. Dieser erste Kunde ist der eigentliche Beweis, dass die Idee trägt."
+  - type: "heading"
+    text: "Was diesen Prozess planbar macht"
+  - type: "paragraph"
+    text: "Klare Entscheidungspunkte am Ende jeder Phase, an denen wir ehrlich fragen: weitermachen, anpassen oder stoppen? Das nimmt dem Prozess die Beliebigkeit – und macht aus „wir bauen mal was“ ein Vorgehen, das sich wiederholen lässt, Projekt für Projekt."
+---

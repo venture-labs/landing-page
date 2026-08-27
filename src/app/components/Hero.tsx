@@ -144,7 +144,7 @@ export function Hero() {
               <ArrowRight size={16} />
             </a>
             <a
-              href={localizedPath("/#projekte")}
+              href={localizedPath("/cases")}
               data-tina-field={tinaField(siteData, "heroCtaSecondary")}
               className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/12 text-white font-medium px-6 py-3.5 rounded-lg transition-all"
               style={{ fontSize: "var(--text-body)" }}

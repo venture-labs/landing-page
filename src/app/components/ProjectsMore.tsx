@@ -15,7 +15,7 @@ function GridCard({ c }: { c: GridCase }) {
       to={localizedPath(`/cases/${c.slug}`)}
       className="flex flex-col gap-6 group cursor-pointer shrink-0 w-[360px] hover:opacity-90 transition-opacity"
     >
-      <div className="overflow-hidden rounded-lg">
+      <div className="overflow-hidden">
         <img
           src={c.image}
           alt={c.title}

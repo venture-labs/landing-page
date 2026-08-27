@@ -14,7 +14,7 @@ image: "/uploads/cases/machinemaster-card.png"
 category: "AI-powered sales tools"
 heroHeadline: "AI in agricultural machinery sales"
 heroSubline: "An AI-powered sales tool for dealers and field reps — from MVP in just 12 weeks."
-heroImage: "/uploads/cases/machinemaster-hero.png"
+heroImage: "/uploads/cases/hero-machinemaster.png"
 description: "MachineMaster helps dealers and field reps sell agricultural machinery with AI-powered product guidance. We built the MVP from first idea to rollout in 12 weeks."
 background: "Field reps had to keep extensive product catalogs and technical specs in their heads to advise customers competently on site. That cost time and created uncertainty in sales conversations."
 problem: "Complex product ranges, high advisory demands in the field, no fast access to the right machine configurations, high onboarding effort for new staff."
@@ -27,5 +27,7 @@ detailStats:
   - value: "5/5"
     label: "customer reviews"
 mockupImages:
-  - "/uploads/cases/machinemaster-mockup-1.png"
+  - "/uploads/cases/case-machinemaster-1.png"
+  - "/uploads/cases/case-machinemaster-2.png"
+  - "/uploads/cases/case-machinemaster-3.png"
 ---

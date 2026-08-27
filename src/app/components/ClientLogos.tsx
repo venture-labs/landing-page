@@ -112,7 +112,7 @@ export function ClientLogos() {
           {[...logos, ...logos].map((logo, i) => (
             <div
               key={`${logo.id}-${i}`}
-              className="shrink-0 bg-[#272530] rounded-lg w-[220px] h-[140px] flex items-center justify-center"
+              className="shrink-0 bg-[#272530] w-[220px] h-[140px] flex items-center justify-center"
             >
               {logo.element}
             </div>

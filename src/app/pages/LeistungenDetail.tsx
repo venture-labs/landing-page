@@ -4,7 +4,10 @@ import { motion, useInView } from "motion/react";
 import { ArrowRight, Code2, Building2, Palette, Bot } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { tinaField } from "tinacms/dist/react";
-import heroDetailImg from "@/imports/image-3.png";
+import headerWebdesign from "@/assets/service-headers/webdesign.svg";
+import headerCompanyBuilding from "@/assets/service-headers/company-building.svg";
+import headerDevelopment from "@/assets/service-headers/development.svg";
+import headerKiStrategie from "@/assets/service-headers/ki-strategie.svg";
 import { StrengthSection } from "@/app/components/StrengthSection";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
@@ -23,6 +26,13 @@ const accentColors: Record<string, string> = {
   "company-building": "#ef4444",
   webdesign: "#2b95f6",
   "ki-strategie": "#fda700",
+};
+
+const heroGraphics: Record<string, string> = {
+  development: headerDevelopment,
+  "company-building": headerCompanyBuilding,
+  webdesign: headerWebdesign,
+  "ki-strategie": headerKiStrategie,
 };
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -81,14 +91,14 @@ function DetailHero({ detail, accent }: { detail: any; accent: string }) {
           </CtaButton>
         </motion.div>
 
-        {/* ── IMAGE — full width ── */}
+        {/* ── HEADER GRAPHIC — full width, colored per service ── */}
         <motion.img
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          src={heroDetailImg}
-          alt={detail.heroHeadline}
-          className="w-full object-cover"
+          src={heroGraphics[detail.slug]}
+          alt=""
+          className="w-full h-auto px-6 lg:px-12 py-20"
         />
 
         {/* ── STRENGTH SECTION — below the image ── */}

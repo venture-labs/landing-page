@@ -2,6 +2,6 @@
 language: en
 heroTitlePrefix: 'Our'
 heroTitleHighlight: 'Services'
-heroSubheading: 'We offer a comprehensive range of digital services to transform your business. From strategy to design to development – everything from a single source.'
-contactCallout: 'Interested? Let us think together about how we can help you.'
+heroSubheading: 'Consulting stays human at heart. For execution, we consistently rely on AI agents and self-learning systems — from product development to automation.'
+contactCallout: 'Looking for honest advice instead of buzzwords? Call or email us — we listen before we build.'
 ---

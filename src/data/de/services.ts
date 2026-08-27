@@ -6,35 +6,60 @@ export interface Service {
   description: string;
   gradient: string;
   icon: "code" | "grid" | "palette" | "bot";
+  tags: string[];
 }
 
 export const services: Service[] = [
   {
     "slug": "development",
     "title": "Produktentwicklung / Development",
-    "description": "Webapps, Portale, SaaS – technisch solide, schnell live.",
+    "description": "Solides Software-Fundament, neu gedacht: Produkte, die mit KI-Agenten mitwachsen statt stillzustehen.",
     "gradient": "linear-gradient(146.383deg, rgba(163, 24, 248, 0.8) 0%, rgba(163, 24, 248, 0) 100%)",
-    "icon": "code"
+    "icon": "code",
+    "tags": [
+      "Beratung: erfahrenes Entwickler-Team, menschlich & ehrlich",
+      "Umsetzung: KI-gestützte Entwicklung & Automatisierung",
+      "Selbstlernende Features statt starrer Software",
+      "Launch-ready in 4–16 Wochen"
+    ]
   },
   {
     "slug": "company-building",
     "title": "Company Building",
-    "description": "Wir helfen Teams beim Aufbau neuer Geschäftsmodelle und MVPs.",
+    "description": "Geschäftsmodell-Beratung von Menschen, MVP-Umsetzung beschleunigt durch KI.",
     "gradient": "linear-gradient(268.344deg, rgba(255, 0, 0, 0.8) 0%, rgba(255, 0, 0, 0) 100%)",
-    "icon": "grid"
+    "icon": "grid",
+    "tags": [
+      "Geschäftsmodell-Beratung von erfahrenen Gründer:innen",
+      "MVP-Umsetzung mit KI-gestützter Entwicklung",
+      "Automatisierte Prozesse statt manueller Handarbeit",
+      "MVP in 8–16 Wochen live"
+    ]
   },
   {
     "slug": "webdesign",
     "title": "Webdesign & UX",
-    "description": "Visuell stark, funktional gedacht – UX, UI, Markenführung.",
+    "description": "UX-Beratung im Gespräch, Umsetzung mit KI-gestützten Design-Systemen, die mitlernen.",
     "gradient": "linear-gradient(44.336deg, rgba(43, 149, 246, 0.8) 0%, rgba(43, 149, 246, 0) 100%)",
-    "icon": "palette"
+    "icon": "palette",
+    "tags": [
+      "UX-Beratung im direkten Gespräch mit unserem Team",
+      "KI-gestützte Design-Systeme & Content-Erstellung",
+      "Personalisierte Interfaces statt statischer Screens",
+      "Von der Skizze zum Live-Interface in 4–8 Wochen"
+    ]
   },
   {
     "slug": "ki-strategie",
     "title": "KI Strategie",
-    "description": "OpenAI, Gemini, Zapier & Make – wir verbinden Mensch & Maschine.",
+    "description": "Ehrliche KI-Beratung von unserem Software-Team, radikale Automatisierung durch KI-Agenten.",
     "gradient": "linear-gradient(-56.458deg, rgba(253, 167, 0, 0.8) 0%, rgba(253, 167, 0, 0) 100%)",
-    "icon": "bot"
+    "icon": "bot",
+    "tags": [
+      "KI-Readiness-Beratung mit erfahrenem Software-Team",
+      "Custom KI-Agenten & selbstlernende Workflows",
+      "Weitgehende Automatisierung statt Insellösungen",
+      "Erster Prototyp in 2–4 Wochen"
+    ]
   }
 ];

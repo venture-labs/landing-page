@@ -1,0 +1,32 @@
+---
+slug: "pitch-zu-produkt"
+language: "en"
+order: 4
+title: "From pitch to product: how we build an MVP in 12 weeks"
+excerpt: "A behind-the-scenes look at our company-building process – from first idea to first paying customer."
+topicSlug: "company-building"
+topic: "Company Building"
+readTime: "7 min read"
+featured: false
+publishedDate: "January 15, 2026"
+author: "VentureLabs Team"
+content:
+  - type: "paragraph"
+    text: "Twelve weeks sounds ambitious for a full product — and it is. But with the right process, it's achievable, plannable, and repeatable. A behind-the-scenes look at our company-building approach."
+  - type: "heading"
+    text: "Weeks 1–2: Validation before code"
+  - type: "paragraph"
+    text: "Before a single line of code gets written, we talk to potential customers. The goal isn't confirmation, it's contradiction — we want to learn as early as possible where the idea doesn't hold up. Only once a clear problem and a paying audience are visible do we move forward."
+  - type: "heading"
+    text: "Weeks 3–8: Building with the core team"
+  - type: "paragraph"
+    text: "A small, cross-functional team of product, design, and engineering builds the core of the solution — deliberately without anything that's \"important later too.\" Weekly reviews with real users make sure course corrections happen early, not at the end."
+  - type: "heading"
+    text: "Weeks 9–12: The first paying customer"
+  - type: "paragraph"
+    text: "This phase isn't about features anymore, it's about closing the first real deal. The product doesn't need to be complete — it needs to solve the one problem someone is willing to pay for. That first customer is the actual proof the idea holds up."
+  - type: "heading"
+    text: "What makes this process plannable"
+  - type: "paragraph"
+    text: "Clear decision points at the end of each phase, where we honestly ask: continue, adjust, or stop? That takes the randomness out of the process — turning \"let's build something\" into an approach that repeats, project after project."
+---

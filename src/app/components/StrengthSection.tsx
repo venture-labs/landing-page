@@ -41,7 +41,7 @@ export function StrengthSection() {
         {features.map((f) => (
           <div key={f.title} className="flex flex-col gap-[39px] items-start py-[40px]">
             {/* Icon badge */}
-            <div className="bg-white w-10 h-10 rounded-[8px] flex items-center justify-center shrink-0 text-[#0a0a0a]">
+            <div className="bg-white w-10 h-10 flex items-center justify-center shrink-0 text-[#0a0a0a]">
               {f.icon}
             </div>
             {/* Text */}

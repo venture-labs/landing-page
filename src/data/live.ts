@@ -18,10 +18,14 @@ import {
   type FeaturedCase,
   type GridCase,
 } from "./de/cases";
+import { caseDetailsMap as staticCaseDetailsDe, type CaseDetail } from "./de/caseDetails";
+import { blogPosts as staticBlogPostsDe, type BlogPost } from "./de/blog";
 import { siteData as staticSiteDataEn } from "./en/site";
 import { aboutData as staticAboutDataEn } from "./en/about";
 import { services as staticServicesEn } from "./en/services";
 import { featuredCases as staticFeaturedCasesEn, gridCases as staticGridCasesEn } from "./en/cases";
+import { caseDetailsMap as staticCaseDetailsEn } from "./en/caseDetails";
+import { blogPosts as staticBlogPostsEn } from "./en/blog";
 
 const isDev = import.meta.env.DEV;
 
@@ -54,15 +58,15 @@ const staticLeistungenData: Record<Locale, any> = {
     language: "de",
     heroTitlePrefix: "Unsere",
     heroTitleHighlight: "Leistungen",
-    heroSubheading: "Wir bieten eine breite Palette von digitalen Services, um dein Business zu transformieren. Von Strategy über Design bis zur Entwicklung – alles aus einer Hand.",
-    contactCallout: "Interessiert? Lass uns zusammen überlegen, wie wir dir helfen können.",
+    heroSubheading: "Beratung bleibt bei uns Menschenwerk. Für die Umsetzung setzen wir konsequent auf KI-Agenten und selbstlernende Systeme – von der Produktentwicklung bis zur Automatisierung.",
+    contactCallout: "Du suchst ehrliche Beratung statt Buzzwords? Ruf uns an oder schreib uns – wir hören zu, bevor wir bauen.",
   },
   en: {
     language: "en",
     heroTitlePrefix: "Our",
     heroTitleHighlight: "Services",
-    heroSubheading: "We offer a comprehensive range of digital services to transform your business. From strategy to design to development – everything from a single source.",
-    contactCallout: "Interested? Let us think together about how we can help you.",
+    heroSubheading: "Consulting stays human at heart. For execution, we consistently rely on AI agents and self-learning systems — from product development to automation.",
+    contactCallout: "Looking for honest advice instead of buzzwords? Call or email us — we listen before we build.",
   },
 };
 const staticServices: Record<Locale, Service[]> = {
@@ -76,6 +80,14 @@ const staticFeaturedCases: Record<Locale, FeaturedCase[]> = {
 const staticGridCases: Record<Locale, GridCase[]> = {
   de: staticGridCasesDe,
   en: staticGridCasesEn,
+};
+const staticCaseDetails: Record<Locale, Record<string, CaseDetail>> = {
+  de: staticCaseDetailsDe,
+  en: staticCaseDetailsEn,
+};
+const staticBlogPosts: Record<Locale, BlogPost[]> = {
+  de: staticBlogPostsDe,
+  en: staticBlogPostsEn,
 };
 
 // Placeholder query used until the real query/data arrives from Tina's client.
@@ -159,6 +171,36 @@ export function useCasesData(): { featuredCases: FeaturedCase[]; gridCases: Grid
   };
 }
 
+export function useBlogData(): BlogPost[] {
+  const { lang } = useLocale();
+  const data = useLiveQuery(
+    () => client.queries.blogConnection(),
+    { blogConnection: { edges: [] } } as any,
+    [lang]
+  );
+  const edges = (data as any).blogConnection?.edges;
+  if (!isDev || !edges?.length) return staticBlogPosts[lang];
+  return edges
+    .map((e: any) => e!.node!)
+    .filter((p: any) => (p.language ?? "de") === lang)
+    .sort((a: any, b: any) => (a.order ?? 0) - (b.order ?? 0));
+}
+
+export function useBlogDetail(slug?: string): BlogPost | null {
+  const { lang } = useLocale();
+  const data = useLiveQuery(
+    () => client.queries.blogConnection({ filter: { slug: { eq: slug } } }),
+    { blogConnection: { edges: [] } } as any,
+    [lang, slug]
+  );
+  const edges = (data as any).blogConnection?.edges;
+  if (!isDev || !edges?.length) return null;
+  const post = edges
+    .map((e: any) => e!.node!)
+    .find((p: any) => (p.language ?? "de") === lang && p.slug === slug);
+  return post || null;
+}
+
 export function useAboutData(): AboutData {
   const { lang } = useLocale();
   const data = useLiveQuery(
@@ -220,6 +262,11 @@ export function useCaseDetail(slug?: string) {
     .map((e: any) => e!.node!)
     .find((c: any) => (c.language ?? "de") === lang && c.slug === slug);
   return caseData || null;
+}
+
+export function useCaseDetailsData(): Record<string, CaseDetail> {
+  const { lang } = useLocale();
+  return staticCaseDetails[lang];
 }
 
 export function usePricingData() {

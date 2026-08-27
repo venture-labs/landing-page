@@ -1,6 +1,7 @@
-import { useRef, useCallback } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router";
+import { useRef, useCallback, type ReactNode } from "react";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router";
 import { LangGuard, DEFAULT_LOCALE } from "./locale";
+import { ErrorBoundary } from "./components/ErrorBoundary";
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { ProfileSection } from "./components/ProfileSection";
@@ -14,6 +15,7 @@ import CaseDetail from "./pages/CaseDetail";
 import { CasesOverview } from "./pages/CasesOverview";
 import { Kontakt } from "./pages/Kontakt";
 import { Blog } from "./pages/Blog";
+import { BlogDetail } from "./pages/BlogDetail";
 import { UeberUns } from "./pages/UeberUns";
 
 function MouseGlow() {
@@ -62,9 +64,15 @@ function HomePage() {
   );
 }
 
+function RoutedErrorBoundary({ children }: { children: ReactNode }) {
+  const location = useLocation();
+  return <ErrorBoundary key={location.pathname}>{children}</ErrorBoundary>;
+}
+
 export default function App() {
   return (
     <BrowserRouter>
+      <RoutedErrorBoundary>
       <Routes>
         <Route path="/" element={<Navigate to={`/${DEFAULT_LOCALE}`} replace />} />
         <Route
@@ -124,6 +132,14 @@ export default function App() {
           }
         />
         <Route
+          path="/:lang/blog/:slug"
+          element={
+            <LangGuard>
+              <BlogDetail />
+            </LangGuard>
+          }
+        />
+        <Route
           path="/:lang/ueber-uns"
           element={
             <LangGuard>
@@ -132,6 +148,7 @@ export default function App() {
           }
         />
       </Routes>
+      </RoutedErrorBoundary>
     </BrowserRouter>
   );
 }
