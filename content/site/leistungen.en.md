@@ -4,4 +4,19 @@ heroTitlePrefix: 'Our'
 heroTitleHighlight: 'Services'
 heroSubheading: 'Consulting stays human at heart. For execution, we consistently rely on AI agents and self-learning systems — from product development to automation.'
 contactCallout: 'Looking for honest advice instead of buzzwords? Call or email us — we listen before we build.'
+strengthHeadline: "Our strength:\nDigital product development"
+strengthDescription: 'We support you from first vision to execution — with an interdisciplinary team of strategy, design, and technology experts. Our goal: products that are technically robust, aesthetically compelling, and relevant to users. We work agile and user-centered, using the most modern tools — from no-code to AI — to reach results faster.'
+strengthFeatures:
+  - icon: users
+    title: 'User-centered conception'
+    subtitle: 'Understanding what users really need'
+  - icon: layers
+    title: 'Scalable architecture'
+    subtitle: 'Technology that grows with your business'
+  - icon: zap
+    title: 'Rapid prototyping & testing'
+    subtitle: 'Validate and iterate on ideas early'
+  - icon: handshake
+    title: 'Close collaboration & transparency'
+    subtitle: "You're part of the development process"
 ---

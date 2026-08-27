@@ -17,10 +17,10 @@ export const services: Service[] = [
     "gradient": "linear-gradient(146.383deg, rgba(163, 24, 248, 0.8) 0%, rgba(163, 24, 248, 0) 100%)",
     "icon": "code",
     "tags": [
-      "Consulting: experienced developer team, honest & human",
-      "Execution: AI-driven development & automation",
-      "Self-learning features instead of static software",
-      "Launch-ready in 4–16 weeks"
+      "Fullstack development",
+      "API integration",
+      "Database architecture",
+      "Agent engineering — AI-powered implementation"
     ]
   },
   {
@@ -30,36 +30,34 @@ export const services: Service[] = [
     "gradient": "linear-gradient(268.344deg, rgba(255, 0, 0, 0.8) 0%, rgba(255, 0, 0, 0) 100%)",
     "icon": "grid",
     "tags": [
-      "Business-model consulting from experienced founders",
-      "MVP execution with AI-driven development",
-      "Automated processes instead of manual busywork",
-      "MVP live in 8–16 weeks"
+      "Business plan & strategy",
+      "Process design",
+      "Building agent systems as the core of the company",
+      "Support from idea to ongoing operations"
     ]
   },
   {
-    "slug": "webdesign",
-    "title": "Webdesign & UX",
+    "slug": "ui-ux",
+    "title": "UI & UX",
     "description": "UX consulting in conversation, execution with AI-powered design systems that learn.",
     "gradient": "linear-gradient(44.336deg, rgba(43, 149, 246, 0.8) 0%, rgba(43, 149, 246, 0) 100%)",
     "icon": "palette",
     "tags": [
-      "UX consulting in direct conversation with our team",
-      "AI-powered design systems & content creation",
-      "Personalized interfaces instead of static screens",
-      "From sketch to live interface in 4–8 weeks"
+      "Interface design for AI-powered products",
+      "Unified dashboards for complex data",
+      "Structure & user flows from first idea to rollout"
     ]
   },
   {
-    "slug": "ki-strategie",
-    "title": "AI Strategy",
-    "description": "Honest AI consulting from our software team, radical automation through AI agents.",
+    "slug": "ai-consulting",
+    "title": "AI Consulting & Implementation",
+    "description": "Honest AI consulting from our software team, ongoing support implementing and running your AI agents.",
     "gradient": "linear-gradient(-56.458deg, rgba(253, 167, 0, 0.8) 0%, rgba(253, 167, 0, 0) 100%)",
     "icon": "bot",
     "tags": [
-      "AI readiness consulting with an experienced software team",
-      "Custom AI agents & self-learning workflows",
-      "Deep automation instead of isolated tools",
-      "First prototype in 2–4 weeks"
+      "Assessment: where are you today, and where does AI actually pay off?",
+      "Sub-projects: clean data infrastructure, reporting for leadership, automated customer interaction",
+      "Ongoing operation: we monitor how the AI is used and continuously adjust processes and prompts"
     ]
   }
 ];

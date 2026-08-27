@@ -44,8 +44,8 @@
     "servicesLinks": {
       "development": "Produktentwicklung",
       "company-building": "Company Building",
-      "webdesign": "Webdesign & UX",
-      "ki-strategie": "KI Strategie"
+      "ui-ux": "UI & UX",
+      "ai-consulting": "KI-Beratung & Implementierung"
     }
   },
   "leistungen": {
@@ -86,16 +86,6 @@
     "relatedServices": "Unsere Leistungen",
     "relatedServicesDesc": "Wie können wir dir helfen? Entdecke, wie wir dein nächstes Projekt unterstützen können."
   },
-  "strength": {
-    "headline": "Unsere Stärke:\nDigitale Produktentwicklung",
-    "description": "Wir begleiten dich von der ersten Vision bis zur Umsetzung – mit einem interdisziplinären Team aus Strategie, Design und Technologie. Unser Ziel: Produkte, die technisch robust, ästhetisch überzeugend und für Nutzer:innen relevant sind. Dabei arbeiten wir agil, nutzerzentriert und nutzen modernste Tools – von No-Code bis KI – um schneller zu Ergebnissen zu kommen.",
-    "features": {
-      "userCentered": { "title": "Nutzerzentrierte Konzeption", "subtitle": "Verstehen, was Nutzer wirklich brauchen" },
-      "scalable": { "title": "Skalierbare Architektur", "subtitle": "Technologie, die mit deinem Business wächst" },
-      "prototyping": { "title": "Schnelles Prototyping & Testing", "subtitle": "Ideen früh validieren und iterieren" },
-      "collaboration": { "title": "Enge Zusammenarbeit & Transparenz", "subtitle": "Du bist Teil des Entwicklungsprozesses" }
-    }
-  },
   "languageSwitcher": {
     "de": "DE",
     "en": "EN"
@@ -126,12 +116,12 @@
         "label": "Company Building",
         "chips": ["MVP-Aufbau", "Geschäftsmodell", "Go-to-Market", "Team-Aufbau"]
       },
-      "webdesign": {
-        "label": "Webdesign & UX",
+      "ui-ux": {
+        "label": "UI & UX",
         "chips": ["Webseite", "Branding", "Design System", "Prototyp", "Content"]
       },
-      "ki-strategie": {
-        "label": "KI Strategie",
+      "ai-consulting": {
+        "label": "KI-Beratung & Implementierung",
         "chips": ["KI-Agenten", "Automatisierung", "Business Analytics", "KI-Beratung"]
       }
     },

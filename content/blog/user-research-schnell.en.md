@@ -4,8 +4,8 @@ language: "en"
 order: 6
 title: "Fast user research: 3 methods for tight timelines"
 excerpt: "Even with little time and budget, you can gather solid user feedback. Three methods that hold up in practice."
-topicSlug: "webdesign"
-topic: "Webdesign & UX"
+topicSlug: "ui-ux"
+topic: "UI & UX"
 readTime: "5 min read"
 featured: false
 publishedDate: "June 22, 2026"

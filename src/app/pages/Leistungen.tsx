@@ -71,8 +71,8 @@ const iconMap: Record<Service["icon"], React.ReactNode> = {
 const accentColors: Record<string, string> = {
   development: "#a318f8",
   "company-building": "#ef4444",
-  webdesign: "#2b95f6",
-  "ki-strategie": "#fda700",
+  "ui-ux": "#2b95f6",
+  "ai-consulting": "#fda700",
 };
 
 function ServiceRow({ service, index }: { service: Service; index: number }) {

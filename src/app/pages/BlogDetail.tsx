@@ -11,15 +11,15 @@ import { useBlogData, useBlogDetail } from "@/data/live";
 const topicAccent: Record<string, string> = {
   development: "#a318f8",
   "company-building": "#ef4444",
-  webdesign: "#2b95f6",
-  "ki-strategie": "#fda700",
+  "ui-ux": "#2b95f6",
+  "ai-consulting": "#fda700",
 };
 
 const topicIcon: Record<string, React.ReactNode> = {
   development: <Code2 size={40} strokeWidth={1.5} className="text-white/80" />,
   "company-building": <Building2 size={40} strokeWidth={1.5} className="text-white/80" />,
-  webdesign: <Palette size={40} strokeWidth={1.5} className="text-white/80" />,
-  "ki-strategie": <Bot size={40} strokeWidth={1.5} className="text-white/80" />,
+  "ui-ux": <Palette size={40} strokeWidth={1.5} className="text-white/80" />,
+  "ai-consulting": <Bot size={40} strokeWidth={1.5} className="text-white/80" />,
 };
 
 function slugify(text: string) {

@@ -44,8 +44,8 @@
     "servicesLinks": {
       "development": "Product Development",
       "company-building": "Company Building",
-      "webdesign": "Webdesign & UX",
-      "ki-strategie": "AI Strategy"
+      "ui-ux": "UI & UX",
+      "ai-consulting": "AI Consulting & Implementation"
     }
   },
   "leistungen": {
@@ -86,16 +86,6 @@
     "relatedServices": "Our Services",
     "relatedServicesDesc": "How can we help? Discover how we can support your next project."
   },
-  "strength": {
-    "headline": "Our strength:\nDigital product development",
-    "description": "We support you from first vision to execution — with an interdisciplinary team of strategy, design, and technology experts. Our goal: products that are technically robust, aesthetically compelling, and relevant to users. We work agile and user-centered, using the most modern tools — from no-code to AI — to reach results faster.",
-    "features": {
-      "userCentered": { "title": "User-centered conception", "subtitle": "Understanding what users really need" },
-      "scalable": { "title": "Scalable architecture", "subtitle": "Technology that grows with your business" },
-      "prototyping": { "title": "Rapid prototyping & testing", "subtitle": "Validate and iterate on ideas early" },
-      "collaboration": { "title": "Close collaboration & transparency", "subtitle": "You're part of the development process" }
-    }
-  },
   "languageSwitcher": {
     "de": "DE",
     "en": "EN"
@@ -126,12 +116,12 @@
         "label": "Company Building",
         "chips": ["MVP Build", "Business Model", "Go-to-Market", "Team Building"]
       },
-      "webdesign": {
-        "label": "Webdesign & UX",
+      "ui-ux": {
+        "label": "UI & UX",
         "chips": ["Website", "Branding", "Design System", "Prototype", "Content"]
       },
-      "ki-strategie": {
-        "label": "AI Strategy",
+      "ai-consulting": {
+        "label": "AI Consulting & Implementation",
         "chips": ["AI Agents", "Automation", "Business Analytics", "AI Consulting"]
       }
     },

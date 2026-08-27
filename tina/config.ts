@@ -188,7 +188,7 @@ export default defineConfig({
             type: "string",
             name: "topicSlug",
             label: "Themen-Slug",
-            options: ["development", "company-building", "webdesign", "ki-strategie"],
+            options: ["development", "company-building", "ui-ux", "ai-consulting"],
           },
           { type: "string", name: "topic", label: "Thema (Anzeigename)" },
           { type: "string", name: "readTime", label: "Lesezeit" },
@@ -234,6 +234,24 @@ export default defineConfig({
           { type: "string", name: "heroTitleHighlight", label: "Hero Title Highlight" },
           { type: "string", name: "heroSubheading", label: "Hero Subheading", ui: { component: "textarea" } },
           { type: "string", name: "contactCallout", label: "Contact Callout", ui: { component: "textarea" } },
+          { type: "string", name: "strengthHeadline", label: "Stärke-Box: Headline", ui: { component: "textarea" } },
+          { type: "string", name: "strengthDescription", label: "Stärke-Box: Beschreibung", ui: { component: "textarea" } },
+          {
+            type: "object",
+            name: "strengthFeatures",
+            label: "Stärke-Box: Merkmale",
+            list: true,
+            fields: [
+              {
+                type: "string",
+                name: "icon",
+                label: "Icon",
+                options: ["users", "layers", "zap", "handshake"],
+              },
+              { type: "string", name: "title", label: "Titel" },
+              { type: "string", name: "subtitle", label: "Untertitel" },
+            ],
+          },
         ],
       },
       {

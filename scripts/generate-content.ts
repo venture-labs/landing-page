@@ -346,7 +346,7 @@ export interface BlogPost {
   slug: string;
   title: string;
   excerpt: string;
-  topicSlug: "development" | "company-building" | "webdesign" | "ki-strategie";
+  topicSlug: "development" | "company-building" | "ui-ux" | "ai-consulting";
   topic: string;
   readTime: string;
   featured: boolean;

@@ -1,5 +1,5 @@
 import { useRef, useCallback, type ReactNode } from "react";
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router";
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useParams } from "react-router";
 import { LangGuard, DEFAULT_LOCALE } from "./locale";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { Navbar } from "./components/Navbar";
@@ -69,6 +69,12 @@ function RoutedErrorBoundary({ children }: { children: ReactNode }) {
   return <ErrorBoundary key={location.pathname}>{children}</ErrorBoundary>;
 }
 
+/** Redirects an old service slug (e.g. "webdesign") to its renamed slug, keeping the current :lang. */
+function LegacyServiceRedirect({ slug }: { slug: string }) {
+  const { lang } = useParams<{ lang: string }>();
+  return <Navigate to={`/${lang ?? DEFAULT_LOCALE}/leistungen/${slug}`} replace />;
+}
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -96,6 +102,22 @@ export default function App() {
           element={
             <LangGuard>
               <LeistungenDetail />
+            </LangGuard>
+          }
+        />
+        <Route
+          path="/:lang/leistungen/webdesign"
+          element={
+            <LangGuard>
+              <LegacyServiceRedirect slug="ui-ux" />
+            </LangGuard>
+          }
+        />
+        <Route
+          path="/:lang/leistungen/ki-strategie"
+          element={
+            <LangGuard>
+              <LegacyServiceRedirect slug="ai-consulting" />
             </LangGuard>
           }
         />

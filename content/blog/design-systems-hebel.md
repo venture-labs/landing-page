@@ -4,8 +4,8 @@ language: "de"
 order: 3
 title: "Design Systems: Der unterschätzte Hebel für schnelleres Wachstum"
 excerpt: "Ein gutes Design System spart nicht nur Zeit im Design – es beschleunigt auch die Entwicklung. So baust du eins, das wirklich genutzt wird."
-topicSlug: "webdesign"
-topic: "Webdesign & UX"
+topicSlug: "ui-ux"
+topic: "UI & UX"
 readTime: "5 Min. Lesezeit"
 featured: false
 publishedDate: "9. Februar 2026"

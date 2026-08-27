@@ -4,11 +4,12 @@ import { motion, useInView } from "motion/react";
 import { ArrowRight, Code2, Building2, Palette, Bot } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { tinaField } from "tinacms/dist/react";
-import headerWebdesign from "@/assets/service-headers/webdesign.svg";
+import headerUiUx from "@/assets/service-headers/ui-ux.svg";
 import headerCompanyBuilding from "@/assets/service-headers/company-building.svg";
 import headerDevelopment from "@/assets/service-headers/development.svg";
-import headerKiStrategie from "@/assets/service-headers/ki-strategie.svg";
+import headerAiConsulting from "@/assets/service-headers/ai-consulting.svg";
 import { StrengthSection } from "@/app/components/StrengthSection";
+import { PulseSection } from "@/app/components/PulseSection";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
 import { CtaButton } from "@/app/components/ui/CtaButton";
@@ -24,15 +25,15 @@ const serviceDetailsByLocale = { de: serviceDetailsDe, en: serviceDetailsEn };
 const accentColors: Record<string, string> = {
   development: "#a318f8",
   "company-building": "#ef4444",
-  webdesign: "#2b95f6",
-  "ki-strategie": "#fda700",
+  "ui-ux": "#2b95f6",
+  "ai-consulting": "#fda700",
 };
 
 const heroGraphics: Record<string, string> = {
   development: headerDevelopment,
   "company-building": headerCompanyBuilding,
-  webdesign: headerWebdesign,
-  "ki-strategie": headerKiStrategie,
+  "ui-ux": headerUiUx,
+  "ai-consulting": headerAiConsulting,
 };
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -141,14 +142,14 @@ function ProcessStep({
     >
       <div className="flex items-center gap-8 py-7">
         <span
-          className="font-['sofia-pro',sans-serif] font-semibold shrink-0 w-12 tabular-nums"
-          style={{ fontSize: "var(--text-h2)", color: open ? accent : "rgba(255,255,255,0.2)" }}
+          className="font-['sofia-pro',sans-serif] font-semibold shrink-0 w-16 tabular-nums"
+          style={{ fontSize: "clamp(2.25rem, 3.75vw, 3.75rem)", color: open ? accent : "rgba(255,255,255,0.2)" }}
         >
           {step.number}
         </span>
         <h3
           className="flex-1 font-['sofia-pro',sans-serif] font-semibold text-white transition-colors"
-          style={{ fontSize: "var(--text-h2)" }}
+          style={{ fontSize: "var(--text-h3)" }}
           data-tina-field={tinaField(step, "title")}
         >
           {step.title}
@@ -202,7 +203,7 @@ function ProcessSection({
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
           className="font-['sofia-pro',sans-serif] font-semibold text-white mb-16 leading-[1.1]"
-          style={{ fontSize: "var(--text-hero)" }}
+          style={{ fontSize: "var(--text-section)" }}
           data-tina-field={tinaField(detail, "process")}
         >
           {t("leistungen.processHeading")}
@@ -533,6 +534,7 @@ export function LeistungenDetail() {
       <Navbar />
       <DetailHero detail={detail as any} accent={accent} />
       <ProcessSection detail={detail} accent={accent} />
+      {detail.slug === "ai-consulting" && <PulseSection accent={accent} />}
       <CaseSection detail={detail} accent={accent} />
       <CtaBanner detail={detail} accent={accent} />
       <OtherServices currentSlug={detail.slug} />

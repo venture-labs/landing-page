@@ -12,15 +12,15 @@ import { type BlogPost } from "@/data/de/blog";
 const topicAccent: Record<string, string> = {
   development: "#a318f8",
   "company-building": "#ef4444",
-  webdesign: "#2b95f6",
-  "ki-strategie": "#fda700",
+  "ui-ux": "#2b95f6",
+  "ai-consulting": "#fda700",
 };
 
 const topicIcon: Record<string, React.ReactNode> = {
   development: <Code2 size={28} strokeWidth={1.5} className="text-white/80" />,
   "company-building": <Building2 size={28} strokeWidth={1.5} className="text-white/80" />,
-  webdesign: <Palette size={28} strokeWidth={1.5} className="text-white/80" />,
-  "ki-strategie": <Bot size={28} strokeWidth={1.5} className="text-white/80" />,
+  "ui-ux": <Palette size={28} strokeWidth={1.5} className="text-white/80" />,
+  "ai-consulting": <Bot size={28} strokeWidth={1.5} className="text-white/80" />,
 };
 
 /* ─── hero ───────────────────────────────────────────────────────────── */

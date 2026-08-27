@@ -9,7 +9,7 @@ export interface BlogPost {
   slug: string;
   title: string;
   excerpt: string;
-  topicSlug: "development" | "company-building" | "webdesign" | "ki-strategie";
+  topicSlug: "development" | "company-building" | "ui-ux" | "ai-consulting";
   topic: string;
   readTime: string;
   featured: boolean;
@@ -72,8 +72,8 @@ export const blogPosts: BlogPost[] = [
     "slug": "ki-agenten-use-cases",
     "title": "KI-Agenten im Unternehmensalltag: 5 Use Cases, die wirklich funktionieren",
     "excerpt": "Von automatisierten Support-Workflows bis zu internen Wissens-Assistenten: fünf KI-Anwendungen, die heute schon echten Mehrwert liefern – ohne Hype.",
-    "topicSlug": "ki-strategie",
-    "topic": "KI Strategie",
+    "topicSlug": "ai-consulting",
+    "topic": "KI-Beratung & Implementierung",
     "readTime": "8 Min. Lesezeit",
     "featured": true,
     "publishedDate": "28. April 2026",
@@ -121,8 +121,8 @@ export const blogPosts: BlogPost[] = [
     "slug": "design-systems-hebel",
     "title": "Design Systems: Der unterschätzte Hebel für schnelleres Wachstum",
     "excerpt": "Ein gutes Design System spart nicht nur Zeit im Design – es beschleunigt auch die Entwicklung. So baust du eins, das wirklich genutzt wird.",
-    "topicSlug": "webdesign",
-    "topic": "Webdesign & UX",
+    "topicSlug": "ui-ux",
+    "topic": "UI & UX",
     "readTime": "5 Min. Lesezeit",
     "featured": false,
     "publishedDate": "9. Februar 2026",
@@ -268,8 +268,8 @@ export const blogPosts: BlogPost[] = [
     "slug": "user-research-schnell",
     "title": "User Research auf die Schnelle: 3 Methoden für enge Timelines",
     "excerpt": "Auch mit wenig Zeit und Budget lässt sich fundiertes Nutzerfeedback einholen. Drei Methoden, die sich in der Praxis bewährt haben.",
-    "topicSlug": "webdesign",
-    "topic": "Webdesign & UX",
+    "topicSlug": "ui-ux",
+    "topic": "UI & UX",
     "readTime": "5 Min. Lesezeit",
     "featured": false,
     "publishedDate": "22. Juni 2026",

@@ -1,19 +1,18 @@
 ---
 language: "de"
-slug: webdesign
+slug: ui-ux
 order: 3
-title: "Webdesign & UX"
+title: "UI & UX"
 description: "UX-Beratung im Gespräch, Umsetzung mit KI-gestützten Design-Systemen, die mitlernen."
 gradient: "linear-gradient(44.336deg, rgba(43, 149, 246, 0.8) 0%, rgba(43, 149, 246, 0) 100%)"
 icon: palette
-heroHeadline: "Design, das mit deinen Nutzern mitlernt"
-heroSubline: "Gute UX beginnt mit echtem Zuhören – das bleibt Handarbeit. Für Umsetzung und Personalisierung nutzen wir KI, damit dein Interface sich weiterentwickelt."
-heroImage: "/uploads/services/webdesign-hero.png"
+heroHeadline: "UI & UX"
+heroSubline: "KI braucht trotzdem ein Gesicht, das Menschen verstehen. Auch wenn im Hintergrund immer mehr durch KI läuft: Ohne ein durchdachtes Interface bleiben die Ergebnisse für Nutzer:innen unzugänglich. Wir gestalten UI & UX, die komplexe KI-Prozesse in klare, nutzbare Oberflächen übersetzt – einheitlich, verständlich, auf den Punkt. Wir kommen aus dem klassischen Webdesign und bringen diese Erfahrung jetzt dahin, wo sie heute gebraucht wird: als Schnittstelle zwischen Mensch und KI."
+heroImage: "/uploads/services/ui-ux-hero.png"
 tags:
-  - "UX-Beratung im direkten Gespräch mit unserem Team"
-  - "KI-gestützte Design-Systeme & Content-Erstellung"
-  - "Personalisierte Interfaces statt statischer Screens"
-  - "Von der Skizze zum Live-Interface in 4–8 Wochen"
+  - "Interface-Design für KI-gestützte Produkte"
+  - "Einheitliche Dashboards für komplexe Daten"
+  - "Struktur & Nutzerführung von der ersten Idee bis zum Rollout"
 process:
   - number: "01"
     title: "UX Research & Analyse"
@@ -33,7 +32,7 @@ process:
 caseTitle: "Brylliant"
 caseSlug: "brylliant"
 caseSubtitle: "Brylliant: Das Tool für perfekte Briefings."
-caseImage: "/uploads/services/webdesign-case.png"
+caseImage: "/uploads/services/ui-ux-case.png"
 caseStats:
   - value: "2×"
     label: "Schnellere Briefing-Freigaben"

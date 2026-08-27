@@ -4,8 +4,8 @@ language: "de"
 order: 6
 title: "User Research auf die Schnelle: 3 Methoden für enge Timelines"
 excerpt: "Auch mit wenig Zeit und Budget lässt sich fundiertes Nutzerfeedback einholen. Drei Methoden, die sich in der Praxis bewährt haben."
-topicSlug: "webdesign"
-topic: "Webdesign & UX"
+topicSlug: "ui-ux"
+topic: "UI & UX"
 readTime: "5 Min. Lesezeit"
 featured: false
 publishedDate: "22. Juni 2026"

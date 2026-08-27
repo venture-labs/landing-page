@@ -20,8 +20,8 @@ const iconMap: Record<Service["icon"], React.ReactNode> = {
 const cardAccentColors: Record<string, string> = {
   development: "163, 24, 248",
   "company-building": "255, 50, 50",
-  webdesign: "43, 149, 246",
-  "ki-strategie": "253, 167, 0",
+  "ui-ux": "43, 149, 246",
+  "ai-consulting": "253, 167, 0",
 };
 
 function ServiceCard({ service, index }: { service: Service; index: number }) {

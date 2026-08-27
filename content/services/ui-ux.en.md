@@ -1,19 +1,18 @@
 ---
-slug: webdesign
+slug: ui-ux
 language: "en"
 order: 3
-title: "Webdesign & UX"
+title: "UI & UX"
 description: "UX consulting in conversation, execution with AI-powered design systems that learn."
 gradient: "linear-gradient(44.336deg, rgba(43, 149, 246, 0.8) 0%, rgba(43, 149, 246, 0) 100%)"
 icon: palette
-heroHeadline: "Design that learns alongside your users"
-heroSubline: "Good UX starts with real listening — that stays handmade. For execution and personalization, we use AI so your interface keeps evolving."
-heroImage: "/uploads/services/webdesign-hero.png"
+heroHeadline: "UI & UX"
+heroSubline: "AI still needs a face people can understand. Even as more happens behind the scenes through AI, results stay inaccessible to users without a well-thought-out interface. We design UI & UX that translates complex AI processes into clear, usable interfaces — consistent, understandable, to the point. We come from classic web design and now bring that experience to where it's needed most: as the interface between people and AI."
+heroImage: "/uploads/services/ui-ux-hero.png"
 tags:
-  - "UX consulting in direct conversation with our team"
-  - "AI-powered design systems & content creation"
-  - "Personalized interfaces instead of static screens"
-  - "From sketch to live interface in 4–8 weeks"
+  - "Interface design for AI-powered products"
+  - "Unified dashboards for complex data"
+  - "Structure & user flows from first idea to rollout"
 process:
   - number: "01"
     title: "UX Research & Analysis"
@@ -33,7 +32,7 @@ process:
 caseTitle: "Brylliant"
 caseSlug: "brylliant"
 caseSubtitle: "Brylliant: the tool for perfect briefings."
-caseImage: "/uploads/services/webdesign-case.png"
+caseImage: "/uploads/services/ui-ux-case.png"
 caseStats:
   - value: "2×"
     label: "Faster briefing approvals"

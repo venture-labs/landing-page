@@ -31,40 +31,30 @@ export interface ServiceDetail {
 export const serviceDetails: ServiceDetail[] = [
   {
     "slug": "development",
-    "heroHeadline": "From digital product to self-learning system",
-    "heroSubline": "We come from software development — and use that foundation to build products that evolve with AI instead of stagnating.",
+    "heroHeadline": "AI-First Product Development",
+    "heroSubline": "We advise on what you need. AI implements it. Building a product still means the same thing: understanding what's needed, structuring it, and building it. What's changed is how. We develop primarily with AI agents — developers step in only where truly necessary. The result: products that used to take months are now ready in weeks.",
     "heroImage": "/uploads/services/development-hero.png",
     "tags": [
-      "Consulting: experienced developer team, honest & human",
-      "Execution: AI-driven development & automation",
-      "Self-learning features instead of static software",
-      "Launch-ready in 4–16 weeks"
+      "Fullstack development",
+      "API integration",
+      "Database architecture",
+      "Agent engineering — AI-powered implementation"
     ],
     "process": [
       {
         "number": "01",
-        "title": "Discovery & Strategy",
-        "description": "We listen and get to know your business in direct conversation, not through a questionnaire. Honest advice from people who have built things themselves."
+        "title": "Assessment",
+        "description": "Assessment of your product or idea."
       },
       {
         "number": "02",
-        "title": "Architecture & AI Concept",
-        "description": "Together we decide where classic software is enough — and where a self-learning system or an AI agent makes the difference."
+        "title": "Sub-projects",
+        "description": "For example data infrastructure, reporting, or customer interaction tools."
       },
       {
         "number": "03",
-        "title": "AI-Assisted Prototyping",
-        "description": "Our developers use AI tools to build prototypes in days instead of weeks — validated with real users."
-      },
-      {
-        "number": "04",
-        "title": "Development & Automation",
-        "description": "Where code used to be written line by line, AI agents now take over recurring tasks — we build the tools that build new tools."
-      },
-      {
-        "number": "05",
-        "title": "Launch & Continuous Learning",
-        "description": "Development doesn't stop at launch: the system keeps learning from real data and is optimized automatically."
+        "title": "Ongoing development",
+        "description": "Ongoing development instead of a supposedly \"finished\" product."
       }
     ],
     "caseTitle": "Tap2Link",
@@ -91,14 +81,14 @@ export const serviceDetails: ServiceDetail[] = [
   },
   {
     "slug": "company-building",
-    "heroHeadline": "From idea to AI-powered company",
-    "heroSubline": "Business-model consulting stays a matter of trust between people. For execution, we rely on AI to get your MVP live faster and leaner.",
+    "heroHeadline": "Company Building",
+    "heroSubline": "We build AI-first companies. Building a company still means the same things: writing a business plan, designing processes, putting together a team, getting from idea to running company. What's different today: the focus is on agent systems — AI takes over where it can, and we make sure the structure holds up. We come from company building and know how companies come together: software as a service is dead — AI is the next chapter, and we build it with you.",
     "heroImage": "/uploads/services/company-building-hero.png",
     "tags": [
-      "Business-model consulting from experienced founders",
-      "MVP execution with AI-driven development",
-      "Automated processes instead of manual busywork",
-      "MVP live in 8–16 weeks"
+      "Business plan & strategy",
+      "Process design",
+      "Building agent systems as the core of the company",
+      "Support from idea to ongoing operations"
     ],
     "process": [
       {
@@ -150,15 +140,14 @@ export const serviceDetails: ServiceDetail[] = [
     "ctaBody": "Let's find out in a free intro call how we turn your business model into reality with real experience and smart automation."
   },
   {
-    "slug": "webdesign",
-    "heroHeadline": "Design that learns alongside your users",
-    "heroSubline": "Good UX starts with real listening — that stays handmade. For execution and personalization, we use AI so your interface keeps evolving.",
-    "heroImage": "/uploads/services/webdesign-hero.png",
+    "slug": "ui-ux",
+    "heroHeadline": "UI & UX",
+    "heroSubline": "AI still needs a face people can understand. Even as more happens behind the scenes through AI, results stay inaccessible to users without a well-thought-out interface. We design UI & UX that translates complex AI processes into clear, usable interfaces — consistent, understandable, to the point. We come from classic web design and now bring that experience to where it's needed most: as the interface between people and AI.",
+    "heroImage": "/uploads/services/ui-ux-hero.png",
     "tags": [
-      "UX consulting in direct conversation with our team",
-      "AI-powered design systems & content creation",
-      "Personalized interfaces instead of static screens",
-      "From sketch to live interface in 4–8 weeks"
+      "Interface design for AI-powered products",
+      "Unified dashboards for complex data",
+      "Structure & user flows from first idea to rollout"
     ],
     "process": [
       {
@@ -190,7 +179,7 @@ export const serviceDetails: ServiceDetail[] = [
     "caseTitle": "Brylliant",
     "caseSlug": "brylliant",
     "caseSubtitle": "Brylliant: the tool for perfect briefings.",
-    "caseImage": "/uploads/services/webdesign-case.png",
+    "caseImage": "/uploads/services/ui-ux-case.png",
     "caseStats": [
       {
         "value": "2×",
@@ -210,47 +199,41 @@ export const serviceDetails: ServiceDetail[] = [
     "ctaBody": "Let us show you in an honest intro call how thoughtful UX design and smart AI tools achieve more together."
   },
   {
-    "slug": "ki-strategie",
-    "heroHeadline": "We build the tools that build new tools",
-    "heroSubline": "As a software team, we know the pitfalls of AI projects firsthand. We handle consulting in person; self-learning systems and AI agents handle the automation.",
-    "heroImage": "/uploads/services/ki-strategie-hero.png",
+    "slug": "ai-consulting",
+    "heroHeadline": "AI Consulting & Implementation",
+    "heroSubline": "We're the interface between your company and AI. Most companies know they should be using AI — they just don't know where to start. That's where we come in: we look at your business, find where AI agents make the biggest difference, and implement it. Not as a one-off project, but as ongoing support. We come from software development and company building, so we know how companies and products work — we now use that experience to help companies become AI-first.",
+    "heroImage": "/uploads/services/ai-consulting-hero.png",
     "tags": [
-      "AI readiness consulting with an experienced software team",
-      "Custom AI agents & self-learning workflows",
-      "Deep automation instead of isolated tools",
-      "First prototype in 2–4 weeks"
+      "Assessment: where are you today, and where does AI actually pay off?",
+      "Sub-projects: clean data infrastructure, reporting for leadership, automated customer interaction",
+      "Ongoing operation: we monitor how the AI is used and continuously adjust processes and prompts"
     ],
     "process": [
       {
         "number": "01",
-        "title": "AI Readiness Assessment",
-        "description": "We take an honest look at where your company stands — processes, data, tech stack. No buzzword analysis, just a real conversation."
+        "title": "Diagnose",
+        "description": "We analyse your data, processes, team and tools in 1–2 days and show you where AI creates the most leverage."
       },
       {
         "number": "02",
-        "title": "Use Case Prioritization",
-        "description": "Together we decide which processes are genuinely suited for AI agents — and which aren't, yet."
+        "title": "Prescribe",
+        "description": "You get a prioritised roadmap, not a generic strategy deck."
       },
       {
         "number": "03",
-        "title": "Prototyping Self-Learning Systems",
-        "description": "We build a working agent or automation workflow in 2–4 weeks that learns from real data."
+        "title": "Build",
+        "description": "We build the 1–3 highest-priority use cases in a 4-week sprint."
       },
       {
         "number": "04",
-        "title": "Integration & Rollout",
-        "description": "From idea to production: we integrate AI agents so they automate your existing stack rather than replace it."
-      },
-      {
-        "number": "05",
-        "title": "Monitoring & Evolution",
-        "description": "Self-learning systems are never 'finished'. We support ongoing operations, measure results, and let the systems keep learning."
+        "title": "Monitor",
+        "description": "Then we stay involved: monthly check-ins, a shared dashboard, and quarterly reviews."
       }
     ],
     "caseTitle": "MachineMaster",
     "caseSlug": "machinemaster",
     "caseSubtitle": "MachineMaster: AI in agricultural machinery sales.",
-    "caseImage": "/uploads/services/ki-strategie-case.png",
+    "caseImage": "/uploads/services/ai-consulting-case.png",
     "caseStats": [
       {
         "value": "+230%",

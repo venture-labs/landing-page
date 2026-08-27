@@ -31,40 +31,30 @@ export interface ServiceDetail {
 export const serviceDetails: ServiceDetail[] = [
   {
     "slug": "development",
-    "heroHeadline": "Vom digitalen Produkt zum selbstlernenden System",
-    "heroSubline": "Wir kommen aus der Softwareentwicklung – und nutzen dieses Fundament, um Produkte zu bauen, die sich mit KI weiterentwickeln, statt zu stagnieren.",
+    "heroHeadline": "Produktentwicklung mit KI-Agenten",
+    "heroSubline": "Wir beraten, was du brauchst. Die KI setzt es um. Ein Produkt zu bauen bedeutet immer noch dasselbe: verstehen, was gebraucht wird, es strukturieren und umsetzen. Was sich geändert hat, ist das Wie. Wir entwickeln primär mit KI-Agenten – Entwickler:innen kommen nur dort zum Einsatz, wo es wirklich nötig ist. Das Ergebnis: Produkte, die früher Monate gedauert haben, sind heute in Wochen einsatzbereit.",
     "heroImage": "/uploads/services/development-hero.png",
     "tags": [
-      "Beratung: erfahrenes Entwickler-Team, menschlich & ehrlich",
-      "Umsetzung: KI-gestützte Entwicklung & Automatisierung",
-      "Selbstlernende Features statt starrer Software",
-      "Launch-ready in 4–16 Wochen"
+      "Fullstack-Entwicklung",
+      "API-Integration",
+      "Datenbankarchitektur",
+      "Agent Engineering – KI-gestützte Umsetzung"
     ],
     "process": [
       {
         "number": "01",
-        "title": "Discovery & Strategie",
-        "description": "Wir hören zu und verstehen dein Business im direkten Gespräch, nicht per Fragebogen. Ehrliche Beratung von Menschen, die selbst gebaut haben."
+        "title": "Bestandsaufnahme",
+        "description": "Bestandsaufnahme deines Produkts oder deiner Idee."
       },
       {
         "number": "02",
-        "title": "Architektur & KI-Konzept",
-        "description": "Wir entscheiden gemeinsam, wo klassische Software reicht und wo ein selbstlernendes System oder ein KI-Agent den Unterschied macht."
+        "title": "Teilprojekte",
+        "description": "Zum Beispiel Datenhaltung, Auswertungen oder Kundeninteraktions-Tools."
       },
       {
         "number": "03",
-        "title": "Prototyping mit KI-Unterstützung",
-        "description": "Unsere Entwickler:innen nutzen KI-Tools, um Prototypen in Tagen statt Wochen zu bauen – validiert an echten Nutzern."
-      },
-      {
-        "number": "04",
-        "title": "Entwicklung & Automatisierung",
-        "description": "Wo früher Zeile für Zeile programmiert wurde, übernehmen heute KI-Agenten wiederkehrende Aufgaben – wir bauen die Werkzeuge, die weitere Werkzeuge schaffen."
-      },
-      {
-        "number": "05",
-        "title": "Launch & kontinuierliches Lernen",
-        "description": "Nach dem Launch hört die Entwicklung nicht auf: Das System lernt aus echten Daten weiter und wird automatisiert optimiert."
+        "title": "Laufende Weiterentwicklung",
+        "description": "Laufende Weiterentwicklung statt eines vermeintlich „fertigen” Produkts."
       }
     ],
     "caseTitle": "Tap2Link",
@@ -91,14 +81,14 @@ export const serviceDetails: ServiceDetail[] = [
   },
   {
     "slug": "company-building",
-    "heroHeadline": "Von der Idee zum KI-gestützten Unternehmen",
-    "heroSubline": "Geschäftsmodell-Beratung bleibt Vertrauenssache zwischen Menschen. Für die Umsetzung setzen wir auf KI, um dein MVP schneller und schlanker an den Start zu bringen.",
+    "heroHeadline": "Company Building",
+    "heroSubline": "Wir bauen KI-first Unternehmen. Ein Unternehmen aufzubauen bedeutet immer noch: einen Businessplan schreiben, Prozesse entwerfen, ein Team aufstellen, von der Idee zum funktionierenden Unternehmen kommen. Der Unterschied heute: Der Fokus liegt auf Agentensystemen – KI übernimmt, wo sie kann, wir sorgen dafür, dass die Struktur stimmt. Wir kommen aus dem Company Building und wissen, wie Unternehmen entstehen: Software as a Service is dead – KI ist das nächste Kapitel, und wir bauen es mit dir.",
     "heroImage": "/uploads/services/company-building-hero.png",
     "tags": [
-      "Geschäftsmodell-Beratung von erfahrenen Gründer:innen",
-      "MVP-Umsetzung mit KI-gestützter Entwicklung",
-      "Automatisierte Prozesse statt manueller Handarbeit",
-      "MVP in 8–16 Wochen live"
+      "Businessplan & Strategie",
+      "Prozessdesign",
+      "Aufbau von Agentensystemen als Kern des Unternehmens",
+      "Begleitung von der Idee bis zum laufenden Betrieb"
     ],
     "process": [
       {
@@ -150,15 +140,14 @@ export const serviceDetails: ServiceDetail[] = [
     "ctaBody": "Lass uns im kostenlosen Erstgespräch herausfinden, wie wir dein Geschäftsmodell mit echter Erfahrung und smarter Automatisierung in die Realität umsetzen."
   },
   {
-    "slug": "webdesign",
-    "heroHeadline": "Design, das mit deinen Nutzern mitlernt",
-    "heroSubline": "Gute UX beginnt mit echtem Zuhören – das bleibt Handarbeit. Für Umsetzung und Personalisierung nutzen wir KI, damit dein Interface sich weiterentwickelt.",
-    "heroImage": "/uploads/services/webdesign-hero.png",
+    "slug": "ui-ux",
+    "heroHeadline": "UI & UX",
+    "heroSubline": "KI braucht trotzdem ein Gesicht, das Menschen verstehen. Auch wenn im Hintergrund immer mehr durch KI läuft: Ohne ein durchdachtes Interface bleiben die Ergebnisse für Nutzer:innen unzugänglich. Wir gestalten UI & UX, die komplexe KI-Prozesse in klare, nutzbare Oberflächen übersetzt – einheitlich, verständlich, auf den Punkt. Wir kommen aus dem klassischen Webdesign und bringen diese Erfahrung jetzt dahin, wo sie heute gebraucht wird: als Schnittstelle zwischen Mensch und KI.",
+    "heroImage": "/uploads/services/ui-ux-hero.png",
     "tags": [
-      "UX-Beratung im direkten Gespräch mit unserem Team",
-      "KI-gestützte Design-Systeme & Content-Erstellung",
-      "Personalisierte Interfaces statt statischer Screens",
-      "Von der Skizze zum Live-Interface in 4–8 Wochen"
+      "Interface-Design für KI-gestützte Produkte",
+      "Einheitliche Dashboards für komplexe Daten",
+      "Struktur & Nutzerführung von der ersten Idee bis zum Rollout"
     ],
     "process": [
       {
@@ -190,7 +179,7 @@ export const serviceDetails: ServiceDetail[] = [
     "caseTitle": "Brylliant",
     "caseSlug": "brylliant",
     "caseSubtitle": "Brylliant: Das Tool für perfekte Briefings.",
-    "caseImage": "/uploads/services/webdesign-case.png",
+    "caseImage": "/uploads/services/ui-ux-case.png",
     "caseStats": [
       {
         "value": "2×",
@@ -210,47 +199,41 @@ export const serviceDetails: ServiceDetail[] = [
     "ctaBody": "Lass uns in einem ehrlichen Erstgespräch zeigen, wie durchdachtes UX-Design und smarte KI-Tools zusammen mehr Wirkung erzielen."
   },
   {
-    "slug": "ki-strategie",
-    "heroHeadline": "Wir bauen die Werkzeuge, die neue Werkzeuge schaffen",
-    "heroSubline": "Als Software-Team kennen wir die Fallstricke von KI-Projekten aus erster Hand. Die Beratung führen wir persönlich, die Automatisierung übernehmen selbstlernende Systeme und KI-Agenten.",
-    "heroImage": "/uploads/services/ki-strategie-hero.png",
+    "slug": "ai-consulting",
+    "heroHeadline": "KI-Beratung & Implementierung",
+    "heroSubline": "Wir sind die Schnittstelle zwischen deinem Unternehmen und der KI. Die meisten Unternehmen wissen, dass sie KI einsetzen sollten – aber nicht, wo sie anfangen sollen. Genau da setzen wir an: Wir schauen uns dein Unternehmen an, finden heraus, wo KI-Agenten den größten Unterschied machen, und setzen das um. Nicht als einmaliges Projekt, sondern als laufende Begleitung. Wir kommen aus Softwareentwicklung und Company Building und wissen, wie Unternehmen und Produkte funktionieren – diese Erfahrung nutzen wir jetzt, um Unternehmen KI-first aufzustellen.",
+    "heroImage": "/uploads/services/ai-consulting-hero.png",
     "tags": [
-      "KI-Readiness-Beratung mit erfahrenem Software-Team",
-      "Custom KI-Agenten & selbstlernende Workflows",
-      "Weitgehende Automatisierung statt Insellösungen",
-      "Erster Prototyp in 2–4 Wochen"
+      "Bestandsaufnahme: Wo stehst du heute, wo lohnt sich KI wirklich?",
+      "Teilprojekte: saubere Datenhaltung, Auswertungen fürs Management, automatisierte Kundeninteraktion",
+      "Laufender Betrieb: Wir prüfen, wie die KI genutzt wird, und passen Prozesse und Prompts kontinuierlich an"
     ],
     "process": [
       {
         "number": "01",
-        "title": "KI-Readiness Assessment",
-        "description": "Wir schauen uns ehrlich an, wo dein Unternehmen steht – Prozesse, Daten, Tech-Stack. Keine Buzzword-Analyse, sondern ein ehrliches Gespräch."
+        "title": "Diagnose",
+        "description": "Wir analysieren Daten, Prozesse, Team und Tools in 1–2 Tagen und zeigen, wo KI den größten Hebel bietet."
       },
       {
         "number": "02",
-        "title": "Use-Case-Priorisierung",
-        "description": "Gemeinsam entscheiden wir, welche Prozesse sich wirklich für KI-Agenten eignen – und welche (noch) nicht."
+        "title": "Empfehlung",
+        "description": "Sie erhalten eine priorisierte Roadmap statt einer generischen Strategiepräsentation."
       },
       {
         "number": "03",
-        "title": "Prototyping selbstlernender Systeme",
-        "description": "Wir bauen einen funktionierenden Agenten oder Automatisierungs-Workflow in 2–4 Wochen, der aus echten Daten lernt."
+        "title": "Umsetzung",
+        "description": "Wir bauen die 1–3 wichtigsten Anwendungsfälle in einem 4-wöchigen Sprint."
       },
       {
         "number": "04",
-        "title": "Integration & Rollout",
-        "description": "Von der Idee in die Produktion: Wir integrieren KI-Agenten so, dass sie deinen bestehenden Stack automatisieren, nicht ersetzen."
-      },
-      {
-        "number": "05",
-        "title": "Monitoring & Weiterentwicklung",
-        "description": "Selbstlernende Systeme sind nie 'fertig'. Wir begleiten den Betrieb, messen Ergebnisse und lassen die Systeme kontinuierlich dazulernen."
+        "title": "Begleitung",
+        "description": "Danach bleiben wir dran: monatliche Check-ins, ein Dashboard und vierteljährliche Reviews."
       }
     ],
     "caseTitle": "MachineMaster",
     "caseSlug": "machinemaster",
     "caseSubtitle": "MachineMaster: KI im Vertrieb von Landmaschinen.",
-    "caseImage": "/uploads/services/ki-strategie-case.png",
+    "caseImage": "/uploads/services/ai-consulting-case.png",
     "caseStats": [
       {
         "value": "+230%",

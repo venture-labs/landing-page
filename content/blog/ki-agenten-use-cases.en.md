@@ -4,8 +4,8 @@ language: "en"
 order: 2
 title: "AI agents in everyday business: 5 use cases that actually work"
 excerpt: "From automated support workflows to internal knowledge assistants: five AI applications delivering real value today – no hype attached."
-topicSlug: "ki-strategie"
-topic: "AI Strategy"
+topicSlug: "ai-consulting"
+topic: "AI Consulting & Implementation"
 readTime: "8 min read"
 featured: true
 publishedDate: "April 28, 2026"

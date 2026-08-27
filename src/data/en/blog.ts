@@ -9,7 +9,7 @@ export interface BlogPost {
   slug: string;
   title: string;
   excerpt: string;
-  topicSlug: "development" | "company-building" | "webdesign" | "ki-strategie";
+  topicSlug: "development" | "company-building" | "ui-ux" | "ai-consulting";
   topic: string;
   readTime: string;
   featured: boolean;
@@ -72,8 +72,8 @@ export const blogPosts: BlogPost[] = [
     "slug": "ki-agenten-use-cases",
     "title": "AI agents in everyday business: 5 use cases that actually work",
     "excerpt": "From automated support workflows to internal knowledge assistants: five AI applications delivering real value today – no hype attached.",
-    "topicSlug": "ki-strategie",
-    "topic": "AI Strategy",
+    "topicSlug": "ai-consulting",
+    "topic": "AI Consulting & Implementation",
     "readTime": "8 min read",
     "featured": true,
     "publishedDate": "April 28, 2026",
@@ -121,8 +121,8 @@ export const blogPosts: BlogPost[] = [
     "slug": "design-systems-hebel",
     "title": "Design systems: the underrated lever for faster growth",
     "excerpt": "A good design system doesn't just save time in design – it speeds up development too. Here's how to build one people actually use.",
-    "topicSlug": "webdesign",
-    "topic": "Webdesign & UX",
+    "topicSlug": "ui-ux",
+    "topic": "UI & UX",
     "readTime": "5 min read",
     "featured": false,
     "publishedDate": "February 9, 2026",
@@ -268,8 +268,8 @@ export const blogPosts: BlogPost[] = [
     "slug": "user-research-schnell",
     "title": "Fast user research: 3 methods for tight timelines",
     "excerpt": "Even with little time and budget, you can gather solid user feedback. Three methods that hold up in practice.",
-    "topicSlug": "webdesign",
-    "topic": "Webdesign & UX",
+    "topicSlug": "ui-ux",
+    "topic": "UI & UX",
     "readTime": "5 min read",
     "featured": false,
     "publishedDate": "June 22, 2026",

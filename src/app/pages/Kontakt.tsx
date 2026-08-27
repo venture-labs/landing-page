@@ -9,8 +9,8 @@ import { Footer } from "@/app/components/Footer";
 const topicCategories = [
   { slug: "development", accent: "#a318f8" },
   { slug: "company-building", accent: "#ef4444" },
-  { slug: "webdesign", accent: "#2b95f6" },
-  { slug: "ki-strategie", accent: "#fda700" },
+  { slug: "ui-ux", accent: "#2b95f6" },
+  { slug: "ai-consulting", accent: "#fda700" },
 ] as const;
 
 const teamContacts = [
