@@ -1,2 +1,6 @@
 [build.environment]
   NODE_OPTIONS = "--max-old-space-size=4096"
+  # TinaCMS's generated client (src/data/live.ts) embeds TINA_TOKEN in the
+  # browser bundle by design: it's the project's read-only Content API
+  # token, meant to be public so the client can query Tina Cloud directly.
+  SECRETS_SCAN_OMIT_KEYS = "TINA_TOKEN"
