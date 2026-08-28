@@ -1,0 +1,32 @@
+---
+slug: "user-research-schnell"
+language: "de"
+order: 6
+title: "User Research auf die Schnelle: 3 Methoden für enge Timelines"
+excerpt: "Auch mit wenig Zeit und Budget lässt sich fundiertes Nutzerfeedback einholen. Drei Methoden, die sich in der Praxis bewährt haben."
+topicSlug: "ui-ux"
+topic: "UI & UX"
+readTime: "5 Min. Lesezeit"
+featured: false
+publishedDate: "22. Juni 2026"
+author: "VentureLabs Team"
+content:
+  - type: "paragraph"
+    text: "„Dafür haben wir keine Zeit“ ist der häufigste Grund, warum User Research ausfällt. Dabei braucht fundiertes Feedback weder Wochen noch ein großes Budget – mit den richtigen Methoden reichen oft ein paar Tage."
+  - type: "heading"
+    text: "Warum „keine Zeit“ keine Ausrede ist"
+  - type: "paragraph"
+    text: "Der größte Zeitfresser bei User Research ist meist nicht die Durchführung, sondern die Planung. Wer feste, wiederholbare Formate nutzt, kann Research parallel zur Entwicklung laufen lassen, statt sie davor zu schalten."
+  - type: "heading"
+    text: "Methode 1: Guerrilla-Interviews"
+  - type: "paragraph"
+    text: "Fünf kurze Gespräche mit echten Nutzer:innen – im Café, beim Kunden vor Ort oder per Video-Call – liefern oft mehr Erkenntnis als eine große, aufwendig geplante Studie. Wichtig ist nur eine klare Frage pro Gespräch, nicht ein ganzer Fragebogen."
+  - type: "heading"
+    text: "Methode 2: Schnelle Umfragen mit Fokus"
+  - type: "paragraph"
+    text: "Eine einzelne, gut formulierte Frage an bestehende Nutzer:innen schlägt jede Umfrage mit zwanzig Fragen. Die Rücklaufquote steigt, die Auswertung dauert Minuten statt Tage – und die Antworten sind konkreter."
+  - type: "heading"
+    text: "Methode 3: 5-Sekunden-Tests"
+  - type: "paragraph"
+    text: "Ein Screenshot, fünf Sekunden Betrachtungszeit, eine Frage: „Was macht dieses Produkt?“ Diese Methode zeigt in Minuten, ob eine Botschaft ankommt – lange bevor ein aufwendiger Usability-Test überhaupt geplant wäre."
+---

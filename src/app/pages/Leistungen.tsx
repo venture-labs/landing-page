@@ -71,8 +71,8 @@ const iconMap: Record<Service["icon"], React.ReactNode> = {
 const accentColors: Record<string, string> = {
   development: "#a318f8",
   "company-building": "#ef4444",
-  webdesign: "#2b95f6",
-  "ki-strategie": "#fda700",
+  "ui-ux": "#2b95f6",
+  "ai-consulting": "#fda700",
 };
 
 function ServiceRow({ service, index }: { service: Service; index: number }) {
@@ -81,7 +81,7 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
   const { t } = useTranslation();
   const { localizedPath } = useLocale();
   const accent = accentColors[service.slug] ?? "#8129ff";
-  const bullets = t(`leistungen.bullets.${service.slug}`, { returnObjects: true }) as string[];
+  const bullets = service.tags ?? [];
 
   return (
     <motion.div
@@ -94,7 +94,7 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
       {/* Left: icon + title */}
       <div className="flex flex-col gap-8">
         <div
-          className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0"
+          className="w-14 h-14 flex items-center justify-center shrink-0"
           style={{ backgroundColor: accent + "22", border: `1px solid ${accent}44` }}
         >
           {iconMap[service.icon]}
@@ -119,7 +119,7 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
           {bullets.map((b) => (
             <li key={b} className="flex items-start gap-3">
               <div
-                className="mt-1 w-4 h-4 rounded-full flex items-center justify-center shrink-0"
+                className="mt-1 w-4 h-4 flex items-center justify-center shrink-0"
                 style={{ backgroundColor: accent + "22" }}
               >
                 <Check size={10} style={{ color: accent }} strokeWidth={3} />
@@ -147,13 +147,6 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
             {t("leistungen.learnMore")}
             <ArrowRight size={15} />
           </Link>
-          <a
-            href={localizedPath("/#kontakt")}
-            className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/12 text-white font-['sofia-pro',sans-serif] font-light px-[24px] py-[11px] rounded-lg transition-all"
-            style={{ fontSize: "var(--text-btn)" }}
-          >
-            {t("leistungen.ctaOffer")}
-          </a>
         </div>
       </div>
     </motion.div>

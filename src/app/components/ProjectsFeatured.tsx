@@ -97,7 +97,7 @@ function CaseCard({ c, index }: { c: FeaturedCase; index: number }) {
           onMouseLeave={() => setCursorVisible(false)}
           onMouseMove={handleMouseMove}
         >
-          <div className="overflow-hidden rounded-xl">
+          <div className="overflow-hidden">
             <img
               src={c.image}
               alt={c.title}

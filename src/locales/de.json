@@ -44,8 +44,8 @@
     "servicesLinks": {
       "development": "Produktentwicklung",
       "company-building": "Company Building",
-      "webdesign": "Webdesign & UX",
-      "ki-strategie": "KI Strategie"
+      "ui-ux": "UI & UX",
+      "ai-consulting": "KI-Beratung & Implementierung"
     }
   },
   "leistungen": {
@@ -64,33 +64,7 @@
     "otherServicesHeading": "Weitere Leistungen, die dein Projekt ergänzen",
     "contactQuestion": "Interessiert an einer Zusammenarbeit für dein Projekt? Nimm jetzt Kontakt auf.",
     "notFound": "Service nicht gefunden.",
-    "backToOverview": "Zurück zur Übersicht",
-    "bullets": {
-      "development": [
-        "Web-Apps, Portale & SaaS-Produkte",
-        "Full-Stack Entwicklung (React, Next.js, Node)",
-        "API-Integrationen & Datenbankarchitektur",
-        "Launch-ready in 4–16 Wochen"
-      ],
-      "company-building": [
-        "MVP-Entwicklung & Prototyping",
-        "Geschäftsmodell & Go-to-Market Strategie",
-        "Team-Aufbau & Prozessdesign",
-        "Von der Idee zum funktionierenden Unternehmen"
-      ],
-      "webdesign": [
-        "UX Research & User Journey Mapping",
-        "UI Design & Design Systems",
-        "Markenführung & visuelle Identität",
-        "Responsives Design für alle Endgeräte"
-      ],
-      "ki-strategie": [
-        "OpenAI, Gemini & Claude Integrationen",
-        "KI-Automatisierungen mit Zapier & Make",
-        "Custom GPT-Agenten & Workflows",
-        "KI-Readiness Assessment für dein Team"
-      ]
-    }
+    "backToOverview": "Zurück zur Übersicht"
   },
   "cases": {
     "heroTitle": "Unsere Projekte",
@@ -111,16 +85,6 @@
     "freeConsultLine2": "Wir helfen gern. Bei Fragen oder dem Wunsch, melden uns zurück.",
     "relatedServices": "Unsere Leistungen",
     "relatedServicesDesc": "Wie können wir dir helfen? Entdecke, wie wir dein nächstes Projekt unterstützen können."
-  },
-  "strength": {
-    "headline": "Unsere Stärke:\nDigitale Produktentwicklung",
-    "description": "Wir begleiten dich von der ersten Vision bis zur Umsetzung – mit einem interdisziplinären Team aus Strategie, Design und Technologie. Unser Ziel: Produkte, die technisch robust, ästhetisch überzeugend und für Nutzer:innen relevant sind. Dabei arbeiten wir agil, nutzerzentriert und nutzen modernste Tools – von No-Code bis KI – um schneller zu Ergebnissen zu kommen.",
-    "features": {
-      "userCentered": { "title": "Nutzerzentrierte Konzeption", "subtitle": "Verstehen, was Nutzer wirklich brauchen" },
-      "scalable": { "title": "Skalierbare Architektur", "subtitle": "Technologie, die mit deinem Business wächst" },
-      "prototyping": { "title": "Schnelles Prototyping & Testing", "subtitle": "Ideen früh validieren und iterieren" },
-      "collaboration": { "title": "Enge Zusammenarbeit & Transparenz", "subtitle": "Du bist Teil des Entwicklungsprozesses" }
-    }
   },
   "languageSwitcher": {
     "de": "DE",
@@ -152,12 +116,12 @@
         "label": "Company Building",
         "chips": ["MVP-Aufbau", "Geschäftsmodell", "Go-to-Market", "Team-Aufbau"]
       },
-      "webdesign": {
-        "label": "Webdesign & UX",
+      "ui-ux": {
+        "label": "UI & UX",
         "chips": ["Webseite", "Branding", "Design System", "Prototyp", "Content"]
       },
-      "ki-strategie": {
-        "label": "KI Strategie",
+      "ai-consulting": {
+        "label": "KI-Beratung & Implementierung",
         "chips": ["KI-Agenten", "Automatisierung", "Business Analytics", "KI-Beratung"]
       }
     },

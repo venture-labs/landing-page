@@ -71,19 +71,19 @@ export const gridCases: GridCase[] = [
   {
     "slug": "neuer-look",
     "title": "New look, new website",
-    "subtitle": "A digital service portal for complex B2B processes in just 8 weeks.",
+    "subtitle": "A complete website relaunch for a fresh brand presence in just a few weeks.",
     "image": "/uploads/cases/neuer-look-card.png"
   },
   {
-    "slug": "animation",
-    "title": "Animation for more sustainability",
-    "subtitle": "A digital service portal for complex B2B processes in just 8 weeks.",
+    "slug": "creator-studios",
+    "title": "Creator Studio – booking platform for creative spaces",
+    "subtitle": "A minimal booking website for a photo studio in Düsseldorf that turns inquiries into direct bookings.",
     "image": "/uploads/cases/animation-card.png"
   },
   {
     "slug": "scanservice",
     "title": "Your ScanService",
-    "subtitle": "A digital service portal for complex B2B processes in just 8 weeks.",
+    "subtitle": "A digital platform that makes scanning and managing documents easier than ever.",
     "image": "/uploads/cases/scanservice-card.png"
   }
 ];

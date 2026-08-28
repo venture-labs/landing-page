@@ -46,7 +46,7 @@ function CaseHero({ detail }: { detail: any }) {
             className="font-['sofia-pro',sans-serif] font-light"
             style={{ fontSize: "var(--text-body)", color: accentColor }}
           >
-            {t("cases.caseStudyLabel")} {detail.category.split(" ").slice(0, 3).join(" ")}
+            {t("cases.caseStudyLabel")} {(detail.category ?? "").split(" ").slice(0, 3).join(" ")}
           </p>
           <h1
             className="font-['sofia-pro',sans-serif] font-semibold text-white leading-[1.05]"
@@ -217,7 +217,7 @@ function ResultsSection({ detail }: { detail: any }) {
 
         {/* Stats */}
         <div className="grid md:grid-cols-3 gap-8 mb-16">
-          {detail.stats.map((stat: any, idx: number) => (
+          {(detail.detailStats ?? detail.stats ?? []).map((stat: any, idx: number) => (
             <motion.div
               key={idx}
               initial={{ opacity: 0, y: 20 }}
@@ -242,7 +242,7 @@ function ResultsSection({ detail }: { detail: any }) {
         </div>
 
         {/* Mockup Gallery - full width */}
-        {detail.mockupImages.map((img: string, idx: number) => (
+        {(detail.mockupImages ?? []).map((img: string, idx: number) => (
           <motion.div
             key={idx}
             initial={{ opacity: 0, y: 20 }}

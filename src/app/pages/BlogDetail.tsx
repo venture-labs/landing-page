@@ -6,23 +6,20 @@ import { useTranslation } from "react-i18next";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
 import { useLocale } from "@/app/locale";
-import { blogPosts as blogPostsDe } from "@/data/de/blog";
-import { blogPosts as blogPostsEn } from "@/data/en/blog";
-
-const blogPostsByLocale = { de: blogPostsDe, en: blogPostsEn };
+import { useBlogData, useBlogDetail } from "@/data/live";
 
 const topicAccent: Record<string, string> = {
   development: "#a318f8",
   "company-building": "#ef4444",
-  webdesign: "#2b95f6",
-  "ki-strategie": "#fda700",
+  "ui-ux": "#2b95f6",
+  "ai-consulting": "#fda700",
 };
 
 const topicIcon: Record<string, React.ReactNode> = {
   development: <Code2 size={40} strokeWidth={1.5} className="text-white/80" />,
   "company-building": <Building2 size={40} strokeWidth={1.5} className="text-white/80" />,
-  webdesign: <Palette size={40} strokeWidth={1.5} className="text-white/80" />,
-  "ki-strategie": <Bot size={40} strokeWidth={1.5} className="text-white/80" />,
+  "ui-ux": <Palette size={40} strokeWidth={1.5} className="text-white/80" />,
+  "ai-consulting": <Bot size={40} strokeWidth={1.5} className="text-white/80" />,
 };
 
 function slugify(text: string) {
@@ -36,10 +33,11 @@ function slugify(text: string) {
 export function BlogDetail() {
   const { slug } = useParams<{ slug: string }>();
   const { t } = useTranslation();
-  const { lang, localizedPath } = useLocale();
+  const { localizedPath } = useLocale();
   const glowRef = useRef<HTMLDivElement>(null);
-  const posts = blogPostsByLocale[lang];
-  const post = posts.find((p) => p.slug === slug);
+  const posts = useBlogData();
+  const tinaPost = useBlogDetail(slug);
+  const post = tinaPost || posts.find((p) => p.slug === slug);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -99,7 +97,7 @@ export function BlogDetail() {
           </Link>
 
           <h1
-            className="font-['sofia-pro',sans-serif] font-semibold text-white leading-[1.1] mb-12 max-w-4xl"
+            className="font-['sofia-pro',sans-serif] font-semibold text-white leading-[110%] mb-12 max-w-4xl"
             style={{ fontSize: "var(--text-hero)" }}
           >
             {post.title}

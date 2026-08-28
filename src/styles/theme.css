@@ -27,12 +27,15 @@
   --ring: #8129ff;
 
   /* fluid typography — max values calibrated to Figma's 1600px canvas */
-  --text-hero:  clamp(3rem,    5.75vw, 5.75rem);
-  --text-h2:    clamp(2rem,    2.5vw,  2.5rem);
-  --text-card:  clamp(1.25rem, 2.5vw,  2.5rem);
-  --text-body:  clamp(1rem,    1.12vw, 1.12rem);
-  --text-small: clamp(0.875rem,1.12vw, 1.12rem);
-  --text-price: clamp(2rem,    4vw,    2.5rem);
+  --text-hero:    clamp(3rem,    5.75vw, 5.75rem);
+  --text-section: clamp(1.75rem, 3.25vw, 3.25rem);
+  --text-h2:      clamp(2rem,    2.5vw,  2.5rem);
+  --text-h3:      clamp(1.5rem,  1.75vw, 1.75rem);
+  --text-card:    clamp(1.25rem, 2.5vw,  2.5rem);
+  --text-body:    clamp(1rem,    1.12vw, 1.12rem);
+  --text-small:   clamp(0.875rem,1.12vw, 1.12rem);
+  --text-btn:     clamp(1rem,    1.125vw,1.125rem);
+  --text-price:   clamp(2rem,    4vw,    2.5rem);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);

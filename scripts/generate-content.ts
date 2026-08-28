@@ -37,11 +37,12 @@ async function generateLocale(locale: Locale) {
   const outDir = resolve(dataDir, locale);
   mkdirSync(outDir, { recursive: true });
 
-  const [siteRes, aboutRes, servicesRes, casesRes] = await Promise.all([
+  const [siteRes, aboutRes, servicesRes, casesRes, blogRes] = await Promise.all([
     client.queries.site({ relativePath: siteRelativePath[locale] }),
     client.queries.about({ relativePath: aboutRelativePath[locale] }),
     client.queries.serviceConnection(),
     client.queries.caseConnection(),
+    client.queries.blogConnection(),
   ]);
 
   const services = (servicesRes.data.serviceConnection.edges ?? [])
@@ -52,6 +53,11 @@ async function generateLocale(locale: Locale) {
   const cases = (casesRes.data.caseConnection.edges ?? [])
     .map((e) => e!.node!)
     .filter((c: any) => (c.language ?? "de") === locale)
+    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+
+  const blogPosts = (blogRes.data.blogConnection.edges ?? [])
+    .map((e) => e!.node!)
+    .filter((p: any) => (p.language ?? "de") === locale)
     .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
 
@@ -142,6 +148,7 @@ export interface Service {
   description: string;
   gradient: string;
   icon: "code" | "grid" | "palette" | "bot";
+  tags: string[];
 }
 
 export const services: Service[] = ${JSON.stringify(
@@ -151,6 +158,7 @@ export const services: Service[] = ${JSON.stringify(
         description: s.description,
         gradient: s.gradient,
         icon: s.icon,
+        tags: s.tags ?? [],
       })),
       null,
       2
@@ -325,8 +333,52 @@ export function getCaseDetail(slug: string): CaseDetail | undefined {
   );
 
 
+  /* ── blog.ts ─────────────────────────────────────────────────────────── */
+  writeFileSync(
+    resolve(outDir, "blog.ts"),
+    `${banner()}
+export interface BlogContentBlock {
+  type: "heading" | "paragraph";
+  text: string;
+}
+
+export interface BlogPost {
+  slug: string;
+  title: string;
+  excerpt: string;
+  topicSlug: "development" | "company-building" | "ui-ux" | "ai-consulting";
+  topic: string;
+  readTime: string;
+  featured: boolean;
+  publishedDate: string;
+  author: string;
+  content: BlogContentBlock[];
+}
+
+export const blogPosts: BlogPost[] = ${JSON.stringify(
+      blogPosts.map((p) => ({
+        slug: p.slug,
+        title: p.title,
+        excerpt: p.excerpt,
+        topicSlug: p.topicSlug,
+        topic: p.topic,
+        readTime: p.readTime,
+        featured: !!p.featured,
+        publishedDate: p.publishedDate,
+        author: p.author,
+        content: (p.content ?? []).map((b: any) => ({
+          type: b!.type,
+          text: b!.text,
+        })),
+      })),
+      null,
+      2
+    )};
+`
+  );
+
   console.log(
-    `generate-content[${locale}]: wrote site.ts, about.ts, services.ts, serviceDetails.ts, cases.ts (${featured.length} featured / ${grid.length} grid), caseDetails.ts (${withDetail.length} with detail)`
+    `generate-content[${locale}]: wrote site.ts, about.ts, services.ts, serviceDetails.ts, cases.ts (${featured.length} featured / ${grid.length} grid), caseDetails.ts (${withDetail.length} with detail), blog.ts (${blogPosts.length} posts)`
   );
 }
 

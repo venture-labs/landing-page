@@ -31,40 +31,30 @@ export interface ServiceDetail {
 export const serviceDetails: ServiceDetail[] = [
   {
     "slug": "development",
-    "heroHeadline": "Von der Idee zum marktreifen digitalen Produkt",
-    "heroSubline": "Wir entwickeln digitale Lösungen, die Nutzer lieben und mit denen du dein Business voranbringst.",
+    "heroHeadline": "Produktentwicklung mit KI-Agenten",
+    "heroSubline": "Wir beraten, was du brauchst. Die KI setzt es um. Ein Produkt zu bauen bedeutet immer noch dasselbe: verstehen, was gebraucht wird, es strukturieren und umsetzen. Was sich geändert hat, ist das Wie. Wir entwickeln primär mit KI-Agenten – Entwickler:innen kommen nur dort zum Einsatz, wo es wirklich nötig ist. Das Ergebnis: Produkte, die früher Monate gedauert haben, sind heute in Wochen einsatzbereit.",
     "heroImage": "/uploads/services/development-hero.png",
     "tags": [
-      "Schnellster Launch",
-      "Revenue-orientiert",
-      "Schnelle Produkt-Iteration & Marktvalidierung",
-      "Enge Zusammenarbeit"
+      "Fullstack-Entwicklung",
+      "API-Integration",
+      "Datenbankarchitektur",
+      "Agent Engineering – KI-gestützte Umsetzung"
     ],
     "process": [
       {
         "number": "01",
-        "title": "Discovery & Research",
-        "description": "Wir verstehen dein Business, deine Nutzer und den Markt. Workshop-basiert, schnell und fokussiert – damit wir das Richtige bauen."
+        "title": "Bestandsaufnahme",
+        "description": "Bestandsaufnahme deines Produkts oder deiner Idee."
       },
       {
         "number": "02",
-        "title": "Ideation & Wireframing",
-        "description": "Ideen werden strukturiert, Flows skizziert und die Produktarchitektur festgelegt. Klarer Plan, bevor die erste Zeile Code geschrieben wird."
+        "title": "Teilprojekte",
+        "description": "Zum Beispiel Datenhaltung, Auswertungen oder Kundeninteraktions-Tools."
       },
       {
         "number": "03",
-        "title": "Prototyping & Validation",
-        "description": "Klickbare Prototypen mit echten Nutzern testen – bevor wir entwickeln. So reduzieren wir Risiken und sparen Entwicklungszeit."
-      },
-      {
-        "number": "04",
-        "title": "Design & Development",
-        "description": "Pixelgenaues UI trifft sauberen Code. Unser Full-Stack-Team baut schnell, iterativ und mit voller Transparenz."
-      },
-      {
-        "number": "05",
-        "title": "Launch & Scale",
-        "description": "Deployment, Monitoring, Analytics – und kontinuierliche Verbesserung nach dem Launch. Wir bleiben dabei."
+        "title": "Laufende Weiterentwicklung",
+        "description": "Laufende Weiterentwicklung statt eines vermeintlich „fertigen” Produkts."
       }
     ],
     "caseTitle": "Tap2Link",
@@ -86,45 +76,45 @@ export const serviceDetails: ServiceDetail[] = [
       }
     ],
     "caseDescription": "Ein digitales Serviceportal für komplexe B2B-Prozesse – in nur 8 Wochen von der Idee bis zum Launch.",
-    "ctaHeadline": "Bereit, dein Produkt zu bauen?",
-    "ctaBody": "Lass uns in einem kostenlosen Erstgespräch herausfinden, wie wir deine Idee in ein marktreifes Produkt verwandeln können."
+    "ctaHeadline": "Bereit für ein Produkt, das mitdenkt?",
+    "ctaBody": "Lass uns in einem ehrlichen Erstgespräch herausfinden, ob dein nächstes Produkt klassische Software oder ein selbstlernendes System braucht."
   },
   {
     "slug": "company-building",
-    "heroHeadline": "Von der Idee zum funktionierenden Unternehmen",
-    "heroSubline": "Wir helfen Teams, neue Geschäftsmodelle zu entwickeln, zu validieren und in marktfähige Produkte zu überführen.",
+    "heroHeadline": "Company Building",
+    "heroSubline": "Wir bauen KI-first Unternehmen. Ein Unternehmen aufzubauen bedeutet immer noch: einen Businessplan schreiben, Prozesse entwerfen, ein Team aufstellen, von der Idee zum funktionierenden Unternehmen kommen. Der Unterschied heute: Der Fokus liegt auf Agentensystemen – KI übernimmt, wo sie kann, wir sorgen dafür, dass die Struktur stimmt. Wir kommen aus dem Company Building und wissen, wie Unternehmen entstehen: Software as a Service is dead – KI ist das nächste Kapitel, und wir bauen es mit dir.",
     "heroImage": "/uploads/services/company-building-hero.png",
     "tags": [
-      "MVP in 12 Wochen",
-      "Geschäftsmodell-Design",
-      "Go-to-Market",
-      "Team-Aufbau"
+      "Businessplan & Strategie",
+      "Prozessdesign",
+      "Aufbau von Agentensystemen als Kern des Unternehmens",
+      "Begleitung von der Idee bis zum laufenden Betrieb"
     ],
     "process": [
       {
         "number": "01",
         "title": "Idee & Vision",
-        "description": "Wir helfen dir, deine Idee zu schärfen: Was ist das echte Problem? Wer ist die Zielgruppe? Was macht dich einzigartig?"
+        "description": "Im persönlichen Gespräch schärfen wir deine Idee: echtes Problem, echte Zielgruppe, echter USP."
       },
       {
         "number": "02",
-        "title": "Business Model Design",
-        "description": "Lean Canvas, Value Proposition und Revenue-Modell – wir entwickeln ein tragfähiges Geschäftsmodell auf Basis echter Marktdaten."
+        "title": "Geschäftsmodell-Beratung",
+        "description": "Lean Canvas und Revenue-Modell entstehen im Dialog mit unserem Team – keine automatisierte Vorlage, sondern echte unternehmerische Erfahrung."
       },
       {
         "number": "03",
-        "title": "MVP Strategie & Scope",
-        "description": "Was ist das kleinstmögliche Produkt, das du validieren kannst? Wir definieren den MVP-Scope und priorisieren gnadenlos."
+        "title": "MVP-Scope mit KI-Fokus",
+        "description": "Wir definieren, welche Prozesse dein Unternehmen von Anfang an automatisieren und mit KI-Agenten skalieren kann."
       },
       {
         "number": "04",
-        "title": "Build & Launch",
-        "description": "Unser Team baut das MVP – Design, Entwicklung, Messaging. In 8–16 Wochen ist dein Produkt live."
+        "title": "Build & Automatisierung",
+        "description": "Unser Team baut dein MVP – Design, Entwicklung, Automatisierungen. KI übernimmt, was sich wiederholt, damit du dich aufs Wachstum konzentrierst."
       },
       {
         "number": "05",
-        "title": "Traction & Scale",
-        "description": "Erste Nutzer, erstes Feedback, erste Revenue. Wir begleiten die frühe Wachstumsphase und helfen beim Aufbau eines eigenen Teams."
+        "title": "Traction & Skalierung",
+        "description": "Wir begleiten die ersten Nutzer, das erste Feedback, die ersten Umsätze – und helfen, KI-gestützte Prozesse in deinem eigenen Team zu verankern."
       }
     ],
     "caseTitle": "Moerschen",
@@ -146,51 +136,50 @@ export const serviceDetails: ServiceDetail[] = [
       }
     ],
     "caseDescription": "Website-Relaunch mit klarer Nutzerführung und neuer Kommunikationsstrategie – in 8 Wochen live.",
-    "ctaHeadline": "Dein Startup. Unsere Erfahrung.",
-    "ctaBody": "Lass uns gemeinsam herausfinden, wie wir dein Geschäftsmodell schnell und sicher in die Realität umsetzen."
+    "ctaHeadline": "Dein Startup. Unsere Erfahrung. KI als Beschleuniger.",
+    "ctaBody": "Lass uns im kostenlosen Erstgespräch herausfinden, wie wir dein Geschäftsmodell mit echter Erfahrung und smarter Automatisierung in die Realität umsetzen."
   },
   {
-    "slug": "webdesign",
-    "heroHeadline": "Design, das konvertiert und begeistert",
-    "heroSubline": "Von der ersten Skizze bis zum live geschalteten Interface – wir gestalten digitale Produkte, die Nutzer wirklich verstehen.",
-    "heroImage": "/uploads/services/webdesign-hero.png",
+    "slug": "ui-ux",
+    "heroHeadline": "UI & UX",
+    "heroSubline": "KI braucht trotzdem ein Gesicht, das Menschen verstehen. Auch wenn im Hintergrund immer mehr durch KI läuft: Ohne ein durchdachtes Interface bleiben die Ergebnisse für Nutzer:innen unzugänglich. Wir gestalten UI & UX, die komplexe KI-Prozesse in klare, nutzbare Oberflächen übersetzt – einheitlich, verständlich, auf den Punkt. Wir kommen aus dem klassischen Webdesign und bringen diese Erfahrung jetzt dahin, wo sie heute gebraucht wird: als Schnittstelle zwischen Mensch und KI.",
+    "heroImage": "/uploads/services/ui-ux-hero.png",
     "tags": [
-      "UX Research",
-      "Pixel-perfektes UI",
-      "Design Systems",
-      "Mobile-First"
+      "Interface-Design für KI-gestützte Produkte",
+      "Einheitliche Dashboards für komplexe Daten",
+      "Struktur & Nutzerführung von der ersten Idee bis zum Rollout"
     ],
     "process": [
       {
         "number": "01",
-        "title": "UX Research & Analysis",
-        "description": "Nutzerinterviews, Wettbewerbsanalyse und Heuristic Evaluation legen den Grundstein für fundierte Design-Entscheidungen."
+        "title": "UX Research & Analyse",
+        "description": "Nutzerinterviews und Wettbewerbsanalyse – geführt von echten Menschen, die zuhören, nicht von einem Fragebogen-Tool."
       },
       {
         "number": "02",
-        "title": "User Flows & Architecture",
-        "description": "Information Architecture und User Flows sorgen dafür, dass Nutzer immer wissen, wo sie sind und was als nächstes kommt."
+        "title": "Informationsarchitektur",
+        "description": "Gemeinsam legen wir fest, wie Nutzer:innen sich orientieren – die Grundlage für jedes gute Interface, ob klassisch oder KI-gestützt."
       },
       {
         "number": "03",
-        "title": "Wireframes & Konzept",
-        "description": "Lo-Fi Wireframes zeigen die Struktur, bevor wir ins Detail gehen. Schnelles Feedback, schnelle Iteration."
+        "title": "Konzept mit KI-Unterstützung",
+        "description": "Unsere Designer:innen nutzen KI-Tools für schnellere Wireframes und Varianten – die Entscheidung bleibt beim Menschen."
       },
       {
         "number": "04",
-        "title": "Visual Design & Prototyping",
-        "description": "Hochauflösendes UI-Design in Figma, inklusive Design System und klickbarem Prototypen für User Tests."
+        "title": "Visual Design & Design-System",
+        "description": "Ein Design-System, das mit KI-gestützten Komponenten mitwächst, statt bei jedem neuen Feature von Null zu starten."
       },
       {
         "number": "05",
-        "title": "Design Handoff & Support",
-        "description": "Pixel-genaue Übergabe ans Entwicklungsteam mit vollständiger Dokumentation und Dev-Mode Annotations."
+        "title": "Handoff & lernende Optimierung",
+        "description": "Nach dem Launch messen wir, wie Nutzer:innen das Interface tatsächlich verwenden – und optimieren datenbasiert weiter."
       }
     ],
     "caseTitle": "Brylliant",
     "caseSlug": "brylliant",
     "caseSubtitle": "Brylliant: Das Tool für perfekte Briefings.",
-    "caseImage": "/uploads/services/webdesign-case.png",
+    "caseImage": "/uploads/services/ui-ux-case.png",
     "caseStats": [
       {
         "value": "2×",
@@ -206,51 +195,45 @@ export const serviceDetails: ServiceDetail[] = [
       }
     ],
     "caseDescription": "Ein skalierbares Tool für effiziente Briefings, saubere Prozesse und strategische Klarheit – designed in 6 Wochen.",
-    "ctaHeadline": "Design, das wirklich wirkt.",
-    "ctaBody": "Lass uns zeigen, wie durchdachtes UX/UI-Design deinen Conversion-Rate und Nutzerzufriedenheit steigert."
+    "ctaHeadline": "Design, das nicht stehen bleibt.",
+    "ctaBody": "Lass uns in einem ehrlichen Erstgespräch zeigen, wie durchdachtes UX-Design und smarte KI-Tools zusammen mehr Wirkung erzielen."
   },
   {
-    "slug": "ki-strategie",
-    "heroHeadline": "KI-Potenziale erkennen und konsequent nutzen",
-    "heroSubline": "Wir helfen dir dabei, die richtigen KI-Tools zu finden, zu integrieren und echten Business-Wert daraus zu ziehen.",
-    "heroImage": "/uploads/services/ki-strategie-hero.png",
+    "slug": "ai-consulting",
+    "heroHeadline": "KI-Beratung & Implementierung",
+    "heroSubline": "Wir sind die Schnittstelle zwischen deinem Unternehmen und der KI. Die meisten Unternehmen wissen, dass sie KI einsetzen sollten – aber nicht, wo sie anfangen sollen. Genau da setzen wir an: Wir schauen uns dein Unternehmen an, finden heraus, wo KI-Agenten den größten Unterschied machen, und setzen das um. Nicht als einmaliges Projekt, sondern als laufende Begleitung. Wir kommen aus Softwareentwicklung und Company Building und wissen, wie Unternehmen und Produkte funktionieren – diese Erfahrung nutzen wir jetzt, um Unternehmen KI-first aufzustellen.",
+    "heroImage": "/uploads/services/ai-consulting-hero.png",
     "tags": [
-      "OpenAI & Gemini",
-      "Workflow-Automatisierung",
-      "Custom KI-Agenten",
-      "Schnelle Umsetzung"
+      "Bestandsaufnahme: Wo stehst du heute, wo lohnt sich KI wirklich?",
+      "Teilprojekte: saubere Datenhaltung, Auswertungen fürs Management, automatisierte Kundeninteraktion",
+      "Laufender Betrieb: Wir prüfen, wie die KI genutzt wird, und passen Prozesse und Prompts kontinuierlich an"
     ],
     "process": [
       {
         "number": "01",
-        "title": "KI-Readiness Assessment",
-        "description": "Analyse deiner aktuellen Prozesse, Datenlandschaft und Tech-Stack – um zu verstehen, wo KI den größten Hebel hat."
+        "title": "Diagnose",
+        "description": "Wir analysieren Daten, Prozesse, Team und Tools in 1–2 Tagen und zeigen, wo KI den größten Hebel bietet."
       },
       {
         "number": "02",
-        "title": "Use Case Identifikation",
-        "description": "Gemeinsam priorisieren wir die KI-Anwendungsfälle mit dem besten ROI: Automatisierungen, Agenten oder generative Tools."
+        "title": "Empfehlung",
+        "description": "Sie erhalten eine priorisierte Roadmap statt einer generischen Strategiepräsentation."
       },
       {
         "number": "03",
-        "title": "Prototyping & Proof of Concept",
-        "description": "Schnell zeigen, was möglich ist. Wir bauen einen funktionierenden Prototypen in 2–4 Wochen – damit du echten Mehrwert siehst."
+        "title": "Umsetzung",
+        "description": "Wir bauen die 1–3 wichtigsten Anwendungsfälle in einem 4-wöchigen Sprint."
       },
       {
         "number": "04",
-        "title": "Integration & Rollout",
-        "description": "Von der Idee in die Produktion: OpenAI, Claude, Zapier, Make, n8n – wir integrieren KI nahtlos in deinen bestehenden Stack."
-      },
-      {
-        "number": "05",
-        "title": "Monitoring & Optimierung",
-        "description": "KI ist kein einmaliges Projekt. Wir begleiten den laufenden Betrieb, messen Outputs und optimieren kontinuierlich."
+        "title": "Begleitung",
+        "description": "Danach bleiben wir dran: monatliche Check-ins, ein Dashboard und vierteljährliche Reviews."
       }
     ],
     "caseTitle": "MachineMaster",
     "caseSlug": "machinemaster",
     "caseSubtitle": "MachineMaster: KI im Vertrieb von Landmaschinen.",
-    "caseImage": "/uploads/services/ki-strategie-case.png",
+    "caseImage": "/uploads/services/ai-consulting-case.png",
     "caseStats": [
       {
         "value": "+230%",
@@ -266,7 +249,7 @@ export const serviceDetails: ServiceDetail[] = [
       }
     ],
     "caseDescription": "Ein KI-gestütztes Vertriebstool für Händler und Außendienst – vom MVP in nur 12 Wochen.",
-    "ctaHeadline": "KI konkret, nicht theoretisch.",
-    "ctaBody": "In einem kostenlosen Erstgespräch zeigen wir dir, welche KI-Maßnahmen in deinem Business sofort Wirkung zeigen."
+    "ctaHeadline": "KI, die wirklich automatisiert – nicht nur ein Chatbot.",
+    "ctaBody": "Im kostenlosen Erstgespräch mit unserem Team sprechen wir ehrlich darüber, wo KI-Agenten in deinem Business heute schon den Unterschied machen."
   }
 ];

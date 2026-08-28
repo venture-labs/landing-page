@@ -6,35 +6,58 @@ export interface Service {
   description: string;
   gradient: string;
   icon: "code" | "grid" | "palette" | "bot";
+  tags: string[];
 }
 
 export const services: Service[] = [
   {
     "slug": "development",
     "title": "Produktentwicklung / Development",
-    "description": "Webapps, Portale, SaaS – technisch solide, schnell live.",
+    "description": "Solides Software-Fundament, neu gedacht: Produkte, die mit KI-Agenten mitwachsen statt stillzustehen.",
     "gradient": "linear-gradient(146.383deg, rgba(163, 24, 248, 0.8) 0%, rgba(163, 24, 248, 0) 100%)",
-    "icon": "code"
+    "icon": "code",
+    "tags": [
+      "Fullstack-Entwicklung",
+      "API-Integration",
+      "Datenbankarchitektur",
+      "Agent Engineering – KI-gestützte Umsetzung"
+    ]
   },
   {
     "slug": "company-building",
     "title": "Company Building",
-    "description": "Wir helfen Teams beim Aufbau neuer Geschäftsmodelle und MVPs.",
+    "description": "Geschäftsmodell-Beratung von Menschen, MVP-Umsetzung beschleunigt durch KI.",
     "gradient": "linear-gradient(268.344deg, rgba(255, 0, 0, 0.8) 0%, rgba(255, 0, 0, 0) 100%)",
-    "icon": "grid"
+    "icon": "grid",
+    "tags": [
+      "Businessplan & Strategie",
+      "Prozessdesign",
+      "Aufbau von Agentensystemen als Kern des Unternehmens",
+      "Begleitung von der Idee bis zum laufenden Betrieb"
+    ]
   },
   {
-    "slug": "webdesign",
-    "title": "Webdesign & UX",
-    "description": "Visuell stark, funktional gedacht – UX, UI, Markenführung.",
+    "slug": "ui-ux",
+    "title": "UI & UX",
+    "description": "UX-Beratung im Gespräch, Umsetzung mit KI-gestützten Design-Systemen, die mitlernen.",
     "gradient": "linear-gradient(44.336deg, rgba(43, 149, 246, 0.8) 0%, rgba(43, 149, 246, 0) 100%)",
-    "icon": "palette"
+    "icon": "palette",
+    "tags": [
+      "Interface-Design für KI-gestützte Produkte",
+      "Einheitliche Dashboards für komplexe Daten",
+      "Struktur & Nutzerführung von der ersten Idee bis zum Rollout"
+    ]
   },
   {
-    "slug": "ki-strategie",
-    "title": "KI Strategie",
-    "description": "OpenAI, Gemini, Zapier & Make – wir verbinden Mensch & Maschine.",
+    "slug": "ai-consulting",
+    "title": "KI-Beratung & Implementierung",
+    "description": "Ehrliche KI-Beratung von unserem Software-Team, dauerhafte Begleitung bei Implementierung und Betrieb deiner KI-Agenten.",
     "gradient": "linear-gradient(-56.458deg, rgba(253, 167, 0, 0.8) 0%, rgba(253, 167, 0, 0) 100%)",
-    "icon": "bot"
+    "icon": "bot",
+    "tags": [
+      "Bestandsaufnahme: Wo stehst du heute, wo lohnt sich KI wirklich?",
+      "Teilprojekte: saubere Datenhaltung, Auswertungen fürs Management, automatisierte Kundeninteraktion",
+      "Laufender Betrieb: Wir prüfen, wie die KI genutzt wird, und passen Prozesse und Prompts kontinuierlich an"
+    ]
   }
 ];

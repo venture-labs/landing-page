@@ -6,35 +6,58 @@ export interface Service {
   description: string;
   gradient: string;
   icon: "code" | "grid" | "palette" | "bot";
+  tags: string[];
 }
 
 export const services: Service[] = [
   {
     "slug": "development",
     "title": "Product Development",
-    "description": "Web apps, portals, SaaS — technically solid, launched fast.",
+    "description": "A solid software foundation, rethought: products that grow with AI agents instead of standing still.",
     "gradient": "linear-gradient(146.383deg, rgba(163, 24, 248, 0.8) 0%, rgba(163, 24, 248, 0) 100%)",
-    "icon": "code"
+    "icon": "code",
+    "tags": [
+      "Fullstack development",
+      "API integration",
+      "Database architecture",
+      "Agent engineering — AI-powered implementation"
+    ]
   },
   {
     "slug": "company-building",
     "title": "Company Building",
-    "description": "We help teams build new business models and MVPs.",
+    "description": "Business-model consulting from real people, MVP execution accelerated by AI.",
     "gradient": "linear-gradient(268.344deg, rgba(255, 0, 0, 0.8) 0%, rgba(255, 0, 0, 0) 100%)",
-    "icon": "grid"
+    "icon": "grid",
+    "tags": [
+      "Business plan & strategy",
+      "Process design",
+      "Building agent systems as the core of the company",
+      "Support from idea to ongoing operations"
+    ]
   },
   {
-    "slug": "webdesign",
-    "title": "Webdesign & UX",
-    "description": "Visually strong, functionally sound — UX, UI, brand identity.",
+    "slug": "ui-ux",
+    "title": "UI & UX",
+    "description": "UX consulting in conversation, execution with AI-powered design systems that learn.",
     "gradient": "linear-gradient(44.336deg, rgba(43, 149, 246, 0.8) 0%, rgba(43, 149, 246, 0) 100%)",
-    "icon": "palette"
+    "icon": "palette",
+    "tags": [
+      "Interface design for AI-powered products",
+      "Unified dashboards for complex data",
+      "Structure & user flows from first idea to rollout"
+    ]
   },
   {
-    "slug": "ki-strategie",
-    "title": "AI Strategy",
-    "description": "OpenAI, Gemini, Zapier & Make — we connect human and machine.",
+    "slug": "ai-consulting",
+    "title": "AI Consulting & Implementation",
+    "description": "Honest AI consulting from our software team, ongoing support implementing and running your AI agents.",
     "gradient": "linear-gradient(-56.458deg, rgba(253, 167, 0, 0.8) 0%, rgba(253, 167, 0, 0) 100%)",
-    "icon": "bot"
+    "icon": "bot",
+    "tags": [
+      "Assessment: where are you today, and where does AI actually pay off?",
+      "Sub-projects: clean data infrastructure, reporting for leadership, automated customer interaction",
+      "Ongoing operation: we monitor how the AI is used and continuously adjust processes and prompts"
+    ]
   }
 ];

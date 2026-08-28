@@ -47,6 +47,64 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
       "/uploads/cases/tap2link-hero.png",
       "/uploads/cases/tap2link-mockup-3.png"
     ]
+  },
+  "moerschen": {
+    "slug": "moerschen",
+    "category": "Website-Relaunch & Industrie",
+    "heroHeadline": "Moerschen – Modern, klar, kompetent",
+    "heroSubline": "Website-Relaunch für eine Landmaschinen-Firma mit 100+ Jahren Tradition. Moderne Website, klare Kommunikation, bessere Nutzererfahrung.",
+    "heroImage": "/uploads/cases/moerschen-hero.png",
+    "description": "Moerschen ist seit 1920 eine etablierte Kraft in der Landmaschinen-Branche. Mit über 450.000 Ersatzteilen und 8.000+ Kunden ist das Unternehmen ein zuverlässiger Partner. Die neue Website transportiert diese Stärken klar und modern – damit Nutzer schnell finden, was sie suchen, und die richtigen Ansprechpartner erreichen.",
+    "background": "Die alte Website war technisch veraltet, Navigation unübersichtlich, Design nicht mehr zeitgemäß. Moerschens lange Geschichte und aktuelle Kompetenz kamen nicht rüber. Das Unternehmen brauchte eine moderne Plattform, die es als etablierten, kompetenten Partner darstellt.",
+    "problem": "Alte Website, veraltete Navigation, Design nicht mehr zeitgemäß, Stärken des Unternehmens nicht sichtbar, Nutzer finden Kontaktpersonen schwer, keine klare Struktur für die große Produktvielfalt.",
+    "solution": "Komplettes Redesign mit neuer Inhaltsstruktur. Rot/Dunkelgrün-Farbschema für Klarheit. Neue Sektionen: Machine Market (bessere Maschinenübersicht), Schulungen, Karriere, Fachleute für Fachfragen (Service-Fokus). Responsives Design für Mobile und Desktop. Klare Navigationspfade für alle Zielgruppen.",
+    "stats": [
+      {
+        "value": "+45%",
+        "label": "mehr Kontaktanfragen"
+      },
+      {
+        "value": "8 Wo.",
+        "label": "vom Kickoff bis Launch"
+      },
+      {
+        "value": "2×",
+        "label": "schnellere Ansprechpartner-Suche"
+      }
+    ],
+    "mockupImages": [
+      "/uploads/cases/moerschen-mockup-1.png",
+      "/uploads/cases/moerschen-mockup-2.png",
+      "/uploads/cases/moerschen-mockup-3.png"
+    ]
+  },
+  "machinemaster": {
+    "slug": "machinemaster",
+    "category": "Plattform-Design & B2B",
+    "heroHeadline": "MachineMaster – Die Plattform für Maschinenhandel",
+    "heroSubline": "B2B-Vertriebsplattform für Landmaschinen-Händler. Übersichtliche Katalogverwaltung, Gebrauchtmarkt, regionale Strukturen, Brand-Management.",
+    "heroImage": "/uploads/cases/machinemaster-hero.png",
+    "description": "MachineMaster ist eine B2B-Plattform für Landmaschinen-Händler. Zentrales Feature: Intuitive Katalogverwaltung mit Markenübersicht (JCB, Kubota, SABO, etc.). Funktioniert auf Desktop und Smartphone. Händler finden schnell ihre Maschinen, verwalten mehrere Marken und koordinieren Ansprechpartner pro Marke.",
+    "background": "Die alte Plattform war unübersichtlich und schwerfällig. Neue Maschinen hochzuladen brauchte Zeit. Große Produktvielfalt (mehrere Hersteller) war schwer zu strukturieren. Nutzer hatten Mühe, den richtigen Ansprechpartner pro Marke zu identifizieren. Keine Mobile-Unterstützung.",
+    "problem": "Unklare Struktur für mehrere Marken, komplizierte Katalogverwaltung, keine schnelle Brand-zu-Person-Zuweisung, nicht responsive, zu viele Funktionen in einer View, Nutzer verlieren sich bei der Navigation.",
+    "solution": "Komplettes Redesign mit klarer Struktur. Orange/Navy-Design für hohe Erkennbarkeit. Hauptsektionen: Your catalogue (Maschinenverwaltung), Used machines (Gebrauchtkauf), Regional Retailers (Vertrieb), Neumaschinen (Übersicht). Brand-Management integriert: Schnelle Personenzuweisung pro Marke. Responsive Design für alle Geräte. Fokus auf Usability statt Feature-Überladung.",
+    "stats": [
+      {
+        "value": "5+",
+        "label": "Maschinenhersteller integrierbar"
+      },
+      {
+        "value": "2×",
+        "label": "schnellere Katalogverwaltung"
+      },
+      {
+        "value": "Mobile+Desktop",
+        "label": "vollständig optimiert"
+      }
+    ],
+    "mockupImages": [
+      "/uploads/cases/machinemaster-card.png"
+    ]
   }
 };
 

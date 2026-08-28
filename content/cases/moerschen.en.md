@@ -14,7 +14,7 @@ image: "/uploads/cases/moerschen-card.png"
 category: "Website relaunch & company building"
 heroHeadline: "From relaunch to lead machine"
 heroSubline: "Website relaunch with clear user guidance and a new communication strategy — live in 8 weeks."
-heroImage: "/uploads/cases/moerschen-hero.png"
+heroImage: "/uploads/cases/hero-moereschen.png"
 description: "Moerschen needed a website that makes complex industrial services understandable and guides prospects straight to the right contact. We rebuilt information architecture, design, and content from scratch."
 background: "The old website had grown organically over the years, was hard to navigate, and technically outdated. Visitors couldn't find the right contacts or the right services."
 problem: "Unclear navigation, outdated design, missing clear calls-to-action, long paths to the right contact person, no consistent brand experience across sections."
@@ -27,5 +27,7 @@ detailStats:
   - value: "2×"
     label: "faster to find the right contact"
 mockupImages:
-  - "/uploads/cases/moerschen-mockup-1.png"
+  - "/uploads/cases/case-moerschen-pic1.png"
+  - "/uploads/cases/case-moerschen-pic2.png"
+  - "/uploads/cases/case-moerschen-pic3.png"
 ---

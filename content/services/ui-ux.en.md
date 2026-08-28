@@ -1,0 +1,46 @@
+---
+slug: ui-ux
+language: "en"
+order: 3
+title: "UI & UX"
+description: "UX consulting in conversation, execution with AI-powered design systems that learn."
+gradient: "linear-gradient(44.336deg, rgba(43, 149, 246, 0.8) 0%, rgba(43, 149, 246, 0) 100%)"
+icon: palette
+heroHeadline: "UI & UX"
+heroSubline: "AI still needs a face people can understand. Even as more happens behind the scenes through AI, results stay inaccessible to users without a well-thought-out interface. We design UI & UX that translates complex AI processes into clear, usable interfaces — consistent, understandable, to the point. We come from classic web design and now bring that experience to where it's needed most: as the interface between people and AI."
+heroImage: "/uploads/services/ui-ux-hero.png"
+tags:
+  - "Interface design for AI-powered products"
+  - "Unified dashboards for complex data"
+  - "Structure & user flows from first idea to rollout"
+process:
+  - number: "01"
+    title: "UX Research & Analysis"
+    description: "User interviews and competitive analysis — led by real people who listen, not by a survey tool."
+  - number: "02"
+    title: "Information Architecture"
+    description: "Together we define how users find their way — the foundation for any good interface, classic or AI-powered."
+  - number: "03"
+    title: "AI-Assisted Concept"
+    description: "Our designers use AI tools for faster wireframes and variants — the decision still rests with a human."
+  - number: "04"
+    title: "Visual Design & Design System"
+    description: "A design system that grows with AI-powered components instead of starting from zero with every new feature."
+  - number: "05"
+    title: "Handoff & Learning Optimization"
+    description: "After launch, we measure how users actually use the interface — and keep optimizing based on real data."
+caseTitle: "Brylliant"
+caseSlug: "brylliant"
+caseSubtitle: "Brylliant: the tool for perfect briefings."
+caseImage: "/uploads/services/ui-ux-case.png"
+caseStats:
+  - value: "2×"
+    label: "Faster briefing approvals"
+  - value: "95%"
+    label: "Fewer follow-up questions"
+  - value: "+60%"
+    label: "Higher user satisfaction"
+caseDescription: "A scalable tool for efficient briefings, clean processes, and strategic clarity — designed in 6 weeks."
+ctaHeadline: "Design that doesn't stand still."
+ctaBody: "Let us show you in an honest intro call how thoughtful UX design and smart AI tools achieve more together."
+---

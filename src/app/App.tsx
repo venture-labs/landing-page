@@ -1,6 +1,7 @@
-import { useRef, useCallback } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router";
+import { useRef, useCallback, type ReactNode } from "react";
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useParams } from "react-router";
 import { LangGuard, DEFAULT_LOCALE } from "./locale";
+import { ErrorBoundary } from "./components/ErrorBoundary";
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { ProfileSection } from "./components/ProfileSection";
@@ -14,6 +15,7 @@ import CaseDetail from "./pages/CaseDetail";
 import { CasesOverview } from "./pages/CasesOverview";
 import { Kontakt } from "./pages/Kontakt";
 import { Blog } from "./pages/Blog";
+import { BlogDetail } from "./pages/BlogDetail";
 import { UeberUns } from "./pages/UeberUns";
 
 function MouseGlow() {
@@ -62,9 +64,21 @@ function HomePage() {
   );
 }
 
+function RoutedErrorBoundary({ children }: { children: ReactNode }) {
+  const location = useLocation();
+  return <ErrorBoundary key={location.pathname}>{children}</ErrorBoundary>;
+}
+
+/** Redirects an old service slug (e.g. "webdesign") to its renamed slug, keeping the current :lang. */
+function LegacyServiceRedirect({ slug }: { slug: string }) {
+  const { lang } = useParams<{ lang: string }>();
+  return <Navigate to={`/${lang ?? DEFAULT_LOCALE}/leistungen/${slug}`} replace />;
+}
+
 export default function App() {
   return (
     <BrowserRouter>
+      <RoutedErrorBoundary>
       <Routes>
         <Route path="/" element={<Navigate to={`/${DEFAULT_LOCALE}`} replace />} />
         <Route
@@ -88,6 +102,22 @@ export default function App() {
           element={
             <LangGuard>
               <LeistungenDetail />
+            </LangGuard>
+          }
+        />
+        <Route
+          path="/:lang/leistungen/webdesign"
+          element={
+            <LangGuard>
+              <LegacyServiceRedirect slug="ui-ux" />
+            </LangGuard>
+          }
+        />
+        <Route
+          path="/:lang/leistungen/ki-strategie"
+          element={
+            <LangGuard>
+              <LegacyServiceRedirect slug="ai-consulting" />
             </LangGuard>
           }
         />
@@ -124,6 +154,14 @@ export default function App() {
           }
         />
         <Route
+          path="/:lang/blog/:slug"
+          element={
+            <LangGuard>
+              <BlogDetail />
+            </LangGuard>
+          }
+        />
+        <Route
           path="/:lang/ueber-uns"
           element={
             <LangGuard>
@@ -132,6 +170,7 @@ export default function App() {
           }
         />
       </Routes>
+      </RoutedErrorBoundary>
     </BrowserRouter>
   );
 }

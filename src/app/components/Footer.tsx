@@ -41,8 +41,8 @@ export function Footer() {
       links: [
         { label: t("footer.servicesLinks.development"), href: localizedPath("/leistungen/development") },
         { label: t("footer.servicesLinks.company-building"), href: localizedPath("/leistungen/company-building") },
-        { label: t("footer.servicesLinks.webdesign"), href: localizedPath("/leistungen/webdesign") },
-        { label: t("footer.servicesLinks.ki-strategie"), href: localizedPath("/leistungen/ki-strategie") },
+        { label: t("footer.servicesLinks.ui-ux"), href: localizedPath("/leistungen/ui-ux") },
+        { label: t("footer.servicesLinks.ai-consulting"), href: localizedPath("/leistungen/ai-consulting") },
       ],
     },
     {

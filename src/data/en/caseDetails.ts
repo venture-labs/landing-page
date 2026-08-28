@@ -52,7 +52,7 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
     "category": "Design systems & UX tools",
     "heroHeadline": "The tool for perfect briefings",
     "heroSubline": "A scalable tool for efficient briefings, clean processes, and strategic clarity — designed in 6 weeks.",
-    "heroImage": "/uploads/cases/brylliant-hero.png",
+    "heroImage": "/uploads/cases/brylliant-card.png",
     "description": "Brylliant is a briefing tool that puts agencies and clients on the same page. We rethought the interface and workflow from scratch so briefings are no longer a matter of luck.",
     "background": "Briefings used to run through unstructured documents and email threads. Important information got lost, and follow-up questions cost time and nerves on both sides.",
     "problem": "Inconsistent briefing formats, missing required fields, many rounds of follow-up questions, no central place for status and approvals, growing frustration on both client and agency side.",
@@ -72,7 +72,7 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
       }
     ],
     "mockupImages": [
-      "/uploads/cases/brylliant-mockup-1.png"
+      "/uploads/cases/brylliant-card.png"
     ]
   },
   "moerschen": {
@@ -80,7 +80,7 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
     "category": "Website relaunch & company building",
     "heroHeadline": "From relaunch to lead machine",
     "heroSubline": "Website relaunch with clear user guidance and a new communication strategy — live in 8 weeks.",
-    "heroImage": "/uploads/cases/moerschen-hero.png",
+    "heroImage": "/uploads/cases/hero-moereschen.png",
     "description": "Moerschen needed a website that makes complex industrial services understandable and guides prospects straight to the right contact. We rebuilt information architecture, design, and content from scratch.",
     "background": "The old website had grown organically over the years, was hard to navigate, and technically outdated. Visitors couldn't find the right contacts or the right services.",
     "problem": "Unclear navigation, outdated design, missing clear calls-to-action, long paths to the right contact person, no consistent brand experience across sections.",
@@ -100,7 +100,9 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
       }
     ],
     "mockupImages": [
-      "/uploads/cases/moerschen-mockup-1.png"
+      "/uploads/cases/case-moerschen-pic1.png",
+      "/uploads/cases/case-moerschen-pic2.png",
+      "/uploads/cases/case-moerschen-pic3.png"
     ]
   },
   "machinemaster": {
@@ -108,7 +110,7 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
     "category": "AI-powered sales tools",
     "heroHeadline": "AI in agricultural machinery sales",
     "heroSubline": "An AI-powered sales tool for dealers and field reps — from MVP in just 12 weeks.",
-    "heroImage": "/uploads/cases/machinemaster-hero.png",
+    "heroImage": "/uploads/cases/hero-machinemaster.png",
     "description": "MachineMaster helps dealers and field reps sell agricultural machinery with AI-powered product guidance. We built the MVP from first idea to rollout in 12 weeks.",
     "background": "Field reps had to keep extensive product catalogs and technical specs in their heads to advise customers competently on site. That cost time and created uncertainty in sales conversations.",
     "problem": "Complex product ranges, high advisory demands in the field, no fast access to the right machine configurations, high onboarding effort for new staff.",
@@ -128,7 +130,93 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
       }
     ],
     "mockupImages": [
-      "/uploads/cases/machinemaster-mockup-1.png"
+      "/uploads/cases/case-machinemaster-1.png",
+      "/uploads/cases/case-machinemaster-2.png",
+      "/uploads/cases/case-machinemaster-3.png"
+    ]
+  },
+  "neuer-look": {
+    "slug": "neuer-look",
+    "category": "Website relaunch & branding",
+    "heroHeadline": "New look, new impact",
+    "heroSubline": "A website relaunch that drops old structures and brings brand, design, and content up to date.",
+    "heroImage": "/uploads/cases/neuer-look-card.png",
+    "description": "The existing website no longer matched the company's current presence. We rethought design, structure, and content from scratch and delivered it on a clear timeline.",
+    "background": "The old site had grown organically over the years, looked visually outdated, and reflected neither the current offering nor the brand positioning.",
+    "problem": "Outdated design, confusing navigation, stale content, no recognizable brand identity, no clear call to action for visitors.",
+    "solution": "New design concept based on the brand's values, clearly structured navigation, revised content focused on the most important offerings, consistent calls to action on every page.",
+    "stats": [
+      {
+        "value": "4 wks",
+        "label": "from concept to launch"
+      },
+      {
+        "value": "+40%",
+        "label": "longer time on site"
+      },
+      {
+        "value": "100%",
+        "label": "of content restructured"
+      }
+    ],
+    "mockupImages": [
+      "/uploads/cases/neuer-look-card.png"
+    ]
+  },
+  "creator-studios": {
+    "slug": "creator-studios",
+    "category": "Website & booking platform",
+    "heroHeadline": "Turning ideas into trends",
+    "heroSubline": "A new website for Creator Studio that lets creatives book their space in Düsseldorf directly online.",
+    "heroImage": "/uploads/cases/animation-card.png",
+    "description": "For Creator Studio, a photo studio in Düsseldorf, we built a new website with direct space booking. The goal was a reduced, high-quality look that puts the spaces themselves front and center and turns inquiries into real bookings.",
+    "background": "Inquiries for the studio used to run entirely through email and Instagram. There was no central view of availability, and prospects often had to exchange several messages before a booking was confirmed.",
+    "problem": "No way to book online, unclear availability, high manual effort for every inquiry, no clear presentation of spaces and equipment.",
+    "solution": "Clearly structured pages for Space, Features, and Interior, a direct 'Book a space' call-to-action, a reduced design with a focus on imagery, a mobile-optimized booking flow.",
+    "stats": [
+      {
+        "value": "-60%",
+        "label": "fewer manual email inquiries"
+      },
+      {
+        "value": "4 wks",
+        "label": "from concept to launch"
+      },
+      {
+        "value": "100%",
+        "label": "of bookings made directly online"
+      }
+    ],
+    "mockupImages": [
+      "/uploads/cases/animation-card.png"
+    ]
+  },
+  "scanservice": {
+    "slug": "scanservice",
+    "category": "Digital service platform",
+    "heroHeadline": "Your scan, your order",
+    "heroSubline": "A platform that lets customers submit documents, have them digitized, and find them again anytime.",
+    "heroImage": "/uploads/cases/scanservice-card.png",
+    "description": "For a document scanning service, we built a digital platform where customers submit orders, track their status, and manage their digitized documents in one structured place.",
+    "background": "Orders and inquiries used to run entirely over phone and email. Customers had no visibility into the processing status of their orders.",
+    "problem": "Manual order intake, no transparency on processing status, time-consuming phone and email communication, no central storage for digitized documents.",
+    "solution": "Self-service portal for order submission, automated status updates via email, structured document storage with search, easy handover of completed orders.",
+    "stats": [
+      {
+        "value": "-70%",
+        "label": "fewer phone inquiries"
+      },
+      {
+        "value": "24/7",
+        "label": "order status visible anytime"
+      },
+      {
+        "value": "6 wks",
+        "label": "from concept to launch"
+      }
+    ],
+    "mockupImages": [
+      "/uploads/cases/scanservice-card.png"
     ]
   }
 };

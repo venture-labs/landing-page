@@ -14,7 +14,7 @@ image: "/uploads/cases/brylliant-card.png"
 category: "Design systems & UX tools"
 heroHeadline: "The tool for perfect briefings"
 heroSubline: "A scalable tool for efficient briefings, clean processes, and strategic clarity — designed in 6 weeks."
-heroImage: "/uploads/cases/brylliant-hero.png"
+heroImage: "/uploads/cases/brylliant-card.png"
 description: "Brylliant is a briefing tool that puts agencies and clients on the same page. We rethought the interface and workflow from scratch so briefings are no longer a matter of luck."
 background: "Briefings used to run through unstructured documents and email threads. Important information got lost, and follow-up questions cost time and nerves on both sides."
 problem: "Inconsistent briefing formats, missing required fields, many rounds of follow-up questions, no central place for status and approvals, growing frustration on both client and agency side."
@@ -27,5 +27,5 @@ detailStats:
   - value: "+60%"
     label: "higher user satisfaction"
 mockupImages:
-  - "/uploads/cases/brylliant-mockup-1.png"
+  - "/uploads/cases/brylliant-card.png"
 ---

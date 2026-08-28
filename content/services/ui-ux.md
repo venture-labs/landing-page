@@ -1,0 +1,46 @@
+---
+language: "de"
+slug: ui-ux
+order: 3
+title: "UI & UX"
+description: "UX-Beratung im Gespräch, Umsetzung mit KI-gestützten Design-Systemen, die mitlernen."
+gradient: "linear-gradient(44.336deg, rgba(43, 149, 246, 0.8) 0%, rgba(43, 149, 246, 0) 100%)"
+icon: palette
+heroHeadline: "UI & UX"
+heroSubline: "KI braucht trotzdem ein Gesicht, das Menschen verstehen. Auch wenn im Hintergrund immer mehr durch KI läuft: Ohne ein durchdachtes Interface bleiben die Ergebnisse für Nutzer:innen unzugänglich. Wir gestalten UI & UX, die komplexe KI-Prozesse in klare, nutzbare Oberflächen übersetzt – einheitlich, verständlich, auf den Punkt. Wir kommen aus dem klassischen Webdesign und bringen diese Erfahrung jetzt dahin, wo sie heute gebraucht wird: als Schnittstelle zwischen Mensch und KI."
+heroImage: "/uploads/services/ui-ux-hero.png"
+tags:
+  - "Interface-Design für KI-gestützte Produkte"
+  - "Einheitliche Dashboards für komplexe Daten"
+  - "Struktur & Nutzerführung von der ersten Idee bis zum Rollout"
+process:
+  - number: "01"
+    title: "UX Research & Analyse"
+    description: "Nutzerinterviews und Wettbewerbsanalyse – geführt von echten Menschen, die zuhören, nicht von einem Fragebogen-Tool."
+  - number: "02"
+    title: "Informationsarchitektur"
+    description: "Gemeinsam legen wir fest, wie Nutzer:innen sich orientieren – die Grundlage für jedes gute Interface, ob klassisch oder KI-gestützt."
+  - number: "03"
+    title: "Konzept mit KI-Unterstützung"
+    description: "Unsere Designer:innen nutzen KI-Tools für schnellere Wireframes und Varianten – die Entscheidung bleibt beim Menschen."
+  - number: "04"
+    title: "Visual Design & Design-System"
+    description: "Ein Design-System, das mit KI-gestützten Komponenten mitwächst, statt bei jedem neuen Feature von Null zu starten."
+  - number: "05"
+    title: "Handoff & lernende Optimierung"
+    description: "Nach dem Launch messen wir, wie Nutzer:innen das Interface tatsächlich verwenden – und optimieren datenbasiert weiter."
+caseTitle: "Brylliant"
+caseSlug: "brylliant"
+caseSubtitle: "Brylliant: Das Tool für perfekte Briefings."
+caseImage: "/uploads/services/ui-ux-case.png"
+caseStats:
+  - value: "2×"
+    label: "Schnellere Briefing-Freigaben"
+  - value: "95%"
+    label: "Weniger Rückfragen"
+  - value: "+60%"
+    label: "Höhere Nutzerzufriedenheit"
+caseDescription: "Ein skalierbares Tool für effiziente Briefings, saubere Prozesse und strategische Klarheit – designed in 6 Wochen."
+ctaHeadline: "Design, das nicht stehen bleibt."
+ctaBody: "Lass uns in einem ehrlichen Erstgespräch zeigen, wie durchdachtes UX-Design und smarte KI-Tools zusammen mehr Wirkung erzielen."
+---

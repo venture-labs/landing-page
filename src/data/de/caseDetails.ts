@@ -52,7 +52,7 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
     "category": "Design Systeme & UX-Tools",
     "heroHeadline": "Das Tool für perfekte Briefings",
     "heroSubline": "Ein skalierbares Tool für effiziente Briefings, saubere Prozesse und strategische Klarheit – designed in 6 Wochen.",
-    "heroImage": "/uploads/cases/brylliant-hero.png",
+    "heroImage": "/uploads/cases/brylliant-card.png",
     "description": "Brylliant ist ein Briefing-Tool, das Agenturen und Kunden auf eine gemeinsame Grundlage bringt. Wir haben Interface und Workflow von Grund auf neu gedacht, damit Briefings nicht mehr Glückssache sind.",
     "background": "Briefings liefen bisher über unstrukturierte Dokumente und E-Mail-Ketten. Wichtige Informationen gingen verloren, Rückfragen kosteten Zeit und Nerven auf beiden Seiten.",
     "problem": "Uneinheitliche Briefing-Formate, fehlende Pflichtfelder, viele Rückfragerunden, kein zentraler Ort für Status und Freigaben, wachsender Frust bei Kunden und Agenturen.",
@@ -72,7 +72,7 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
       }
     ],
     "mockupImages": [
-      "/uploads/cases/brylliant-mockup-1.png"
+      "/uploads/cases/brylliant-card.png"
     ]
   },
   "moerschen": {
@@ -80,7 +80,7 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
     "category": "Website-Relaunch & Company Building",
     "heroHeadline": "Vom Relaunch zur Leadmaschine",
     "heroSubline": "Website-Relaunch mit klarer Nutzerführung und neuer Kommunikationsstrategie – in 8 Wochen live.",
-    "heroImage": "/uploads/cases/moerschen-hero.png",
+    "heroImage": "/uploads/cases/hero-moereschen.png",
     "description": "Moerschen brauchte eine Website, die komplexe Industrieleistungen verständlich macht und Interessenten direkt zum richtigen Ansprechpartner führt. Wir haben Informationsarchitektur, Design und Content komplett neu aufgesetzt.",
     "background": "Die alte Website war historisch gewachsen, unübersichtlich und technisch in die Jahre gekommen. Besucher fanden weder passende Ansprechpartner noch die richtigen Leistungen.",
     "problem": "Unklare Navigation, veraltetes Design, fehlende klare Calls-to-Action, lange Wege zu Ansprechpartnern, kein einheitliches Markenbild über alle Bereiche.",
@@ -100,7 +100,9 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
       }
     ],
     "mockupImages": [
-      "/uploads/cases/moerschen-mockup-1.png"
+      "/uploads/cases/case-moerschen-pic1.png",
+      "/uploads/cases/case-moerschen-pic2.png",
+      "/uploads/cases/case-moerschen-pic3.png"
     ]
   },
   "machinemaster": {
@@ -108,7 +110,7 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
     "category": "KI-gestützte Vertriebstools",
     "heroHeadline": "KI im Vertrieb von Landmaschinen",
     "heroSubline": "Ein KI-gestütztes Vertriebstool für Händler und Außendienst – vom MVP in nur 12 Wochen.",
-    "heroImage": "/uploads/cases/machinemaster-hero.png",
+    "heroImage": "/uploads/cases/hero-machinemaster.png",
     "description": "MachineMaster unterstützt Händler und Außendienst beim Verkauf von Landmaschinen mit KI-gestützter Produktberatung. Wir haben das MVP von der ersten Idee bis zum Rollout in 12 Wochen gebaut.",
     "background": "Außendienstler mussten umfangreiche Produktkataloge und technische Spezifikationen im Kopf haben, um Kunden vor Ort kompetent beraten zu können. Das kostete Zeit und führte zu Unsicherheit im Verkaufsgespräch.",
     "problem": "Komplexe Produktwelten, hohe Beratungsanforderungen im Außendienst, fehlender schneller Zugriff auf passende Maschinenkonfigurationen, hoher Schulungsaufwand für neue Mitarbeiter.",
@@ -128,7 +130,93 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
       }
     ],
     "mockupImages": [
-      "/uploads/cases/machinemaster-mockup-1.png"
+      "/uploads/cases/case-machinemaster-1.png",
+      "/uploads/cases/case-machinemaster-2.png",
+      "/uploads/cases/case-machinemaster-3.png"
+    ]
+  },
+  "neuer-look": {
+    "slug": "neuer-look",
+    "category": "Website-Relaunch & Branding",
+    "heroHeadline": "Neuer Look, neue Wirkung",
+    "heroSubline": "Ein Website-Relaunch, der alte Strukturen abwirft und Marke, Design und Inhalte auf den aktuellen Stand bringt.",
+    "heroImage": "/uploads/cases/neuer-look-card.png",
+    "description": "Die bestehende Webseite passte nicht mehr zum heutigen Auftritt des Unternehmens. Wir haben Design, Struktur und Inhalte von Grund auf neu gedacht und in einem klaren Zeitplan umgesetzt.",
+    "background": "Die alte Seite war über Jahre gewachsen, wirkte optisch veraltet und spiegelte weder aktuelle Leistungen noch die Markenpositionierung wider.",
+    "problem": "Veraltetes Design, unübersichtliche Navigation, Inhalte nicht mehr aktuell, fehlender Wiedererkennungswert, keine klare Handlungsaufforderung für Besucher.",
+    "solution": "Neues Design-Konzept auf Basis der Markenwerte, klar strukturierte Navigation, überarbeitete Inhalte mit Fokus auf die wichtigsten Angebote, durchgängige Handlungsaufforderungen auf jeder Seite.",
+    "stats": [
+      {
+        "value": "4 Wo.",
+        "label": "von Konzept bis Livegang"
+      },
+      {
+        "value": "+40%",
+        "label": "längere Verweildauer auf der Seite"
+      },
+      {
+        "value": "100%",
+        "label": "der Inhalte neu strukturiert"
+      }
+    ],
+    "mockupImages": [
+      "/uploads/cases/neuer-look-card.png"
+    ]
+  },
+  "creator-studios": {
+    "slug": "creator-studios",
+    "category": "Website & Buchungsplattform",
+    "heroHeadline": "Turning ideas into trends",
+    "heroSubline": "Eine neue Website für Creator Studio, mit der Kreative ihren Raum in Düsseldorf direkt online buchen können.",
+    "heroImage": "/uploads/cases/animation-card.png",
+    "description": "Für Creator Studio, ein Fotostudio in Düsseldorf, haben wir eine neue Website mit direkter Raumbuchung entwickelt. Ziel war ein reduziertes, hochwertiges Erscheinungsbild, das die Räume selbst in den Mittelpunkt stellt und aus Anfragen echte Buchungen macht.",
+    "background": "Anfragen für das Studio liefen bisher ausschließlich über E-Mail und Instagram. Es gab keine zentrale Übersicht über Verfügbarkeiten, und Interessenten mussten oft mehrere Nachrichten austauschen, bevor ein Termin feststand.",
+    "problem": "Keine Möglichkeit zur Online-Buchung, unübersichtliche Verfügbarkeiten, hoher manueller Aufwand bei jeder Anfrage, keine klare Präsentation von Räumen und Ausstattung.",
+    "solution": "Klar strukturierte Seiten für Space, Features und Interior, direkter 'Book a space'-Call-to-Action, reduziertes Design mit Fokus auf Bildsprache, mobile-optimierte Buchungsstrecke.",
+    "stats": [
+      {
+        "value": "-60%",
+        "label": "weniger manuelle Anfragen per E-Mail"
+      },
+      {
+        "value": "4 Wo.",
+        "label": "von Konzept bis Livegang"
+      },
+      {
+        "value": "100%",
+        "label": "der Buchungen direkt online"
+      }
+    ],
+    "mockupImages": [
+      "/uploads/cases/animation-card.png"
+    ]
+  },
+  "scanservice": {
+    "slug": "scanservice",
+    "category": "Digitale Serviceplattform",
+    "heroHeadline": "Dein Scan, deine Ordnung",
+    "heroSubline": "Eine Plattform, mit der Kunden Dokumente einreichen, digitalisieren lassen und jederzeit wiederfinden.",
+    "heroImage": "/uploads/cases/scanservice-card.png",
+    "description": "Für einen Dokumenten-Scan-Service haben wir eine digitale Plattform entwickelt, über die Kunden Aufträge einreichen, den Status verfolgen und ihre digitalisierten Dokumente strukturiert verwalten können.",
+    "background": "Bestellungen und Rückfragen liefen bisher per Telefon und E-Mail. Kunden hatten keinen Überblick über den Bearbeitungsstatus ihrer Aufträge.",
+    "problem": "Manuelle Auftragsannahme, keine Transparenz über den Bearbeitungsstand, aufwendige Kommunikation per Telefon und E-Mail, keine zentrale Ablage für digitalisierte Dokumente.",
+    "solution": "Self-Service-Portal für Auftragserfassung, automatisierte Status-Updates per E-Mail, strukturierte Dokumentenablage mit Suchfunktion, einfache Weitergabe abgeschlossener Aufträge.",
+    "stats": [
+      {
+        "value": "-70%",
+        "label": "weniger Rückfragen per Telefon"
+      },
+      {
+        "value": "24/7",
+        "label": "Auftragsstatus jederzeit einsehbar"
+      },
+      {
+        "value": "6 Wo.",
+        "label": "von Konzept bis Launch"
+      }
+    ],
+    "mockupImages": [
+      "/uploads/cases/scanservice-card.png"
     ]
   }
 };

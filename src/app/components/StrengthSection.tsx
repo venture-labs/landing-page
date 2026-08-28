@@ -1,20 +1,17 @@
 import { Users, Layers, Zap, Handshake } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { tinaField } from "tinacms/dist/react";
+import { useLeistungenData } from "@/data/live";
 
-const featureKeys = [
-  { key: "userCentered", icon: <Users size={20} strokeWidth={2} /> },
-  { key: "scalable", icon: <Layers size={20} strokeWidth={2} /> },
-  { key: "prototyping", icon: <Zap size={20} strokeWidth={2} /> },
-  { key: "collaboration", icon: <Handshake size={20} strokeWidth={2} /> },
-];
+const iconMap: Record<string, React.ReactNode> = {
+  users: <Users size={20} strokeWidth={2} />,
+  layers: <Layers size={20} strokeWidth={2} />,
+  zap: <Zap size={20} strokeWidth={2} />,
+  handshake: <Handshake size={20} strokeWidth={2} />,
+};
 
 export function StrengthSection() {
-  const { t } = useTranslation();
-  const features = featureKeys.map((f) => ({
-    icon: f.icon,
-    title: t(`strength.features.${f.key}.title`),
-    subtitle: t(`strength.features.${f.key}.subtitle`),
-  }));
+  const leistungenData = useLeistungenData();
+  const features = leistungenData.strengthFeatures ?? [];
 
   return (
     <div className="flex flex-col gap-[48px] w-full">
@@ -23,38 +20,42 @@ export function StrengthSection() {
         <div className="flex gap-[64px] items-start p-[32px]">
           <p
             className=" font-semibold text-white leading-none whitespace-pre-wrap shrink-0 w-[45%]"
-            style={{ fontSize: "var(--text-card)" }}
+            style={{ fontSize: "var(--text-h3)" }}
+            data-tina-field={tinaField(leistungenData, "strengthHeadline")}
           >
-            {t("strength.headline")}
+            {leistungenData.strengthHeadline}
           </p>
           <p
             className=" font-light text-[#c0c0c0] leading-[1.4] flex-1 min-w-0"
             style={{ fontSize: "var(--text-small)" }}
+            data-tina-field={tinaField(leistungenData, "strengthDescription")}
           >
-            {t("strength.description")}
+            {leistungenData.strengthDescription}
           </p>
         </div>
       </div>
 
       {/* 4-column feature grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 px-0">
-        {features.map((f) => (
-          <div key={f.title} className="flex flex-col gap-[39px] items-start py-[40px]">
+        {features.map((f: any, i: number) => (
+          <div key={f.title ?? i} className="flex flex-col gap-[39px] items-start py-[40px]">
             {/* Icon badge */}
-            <div className="bg-white w-10 h-10 rounded-[8px] flex items-center justify-center shrink-0 text-[#0a0a0a]">
-              {f.icon}
+            <div className="bg-white w-10 h-10 flex items-center justify-center shrink-0 text-[#0a0a0a]">
+              {iconMap[f.icon] ?? iconMap.users}
             </div>
             {/* Text */}
             <div className="flex flex-col gap-[19px]">
               <p
                 className=" font-light text-white leading-[1.2]"
-                style={{ fontSize: "var(--text-card)" }}
+                style={{ fontSize: "clamp(1.25rem, 1.5vw, 1.5rem)" }}
+                data-tina-field={tinaField(f, "title")}
               >
                 {f.title}
               </p>
               <p
                 className=" font-light text-[#a1a1a1] leading-[1.4]"
                 style={{ fontSize: "var(--text-small)" }}
+                data-tina-field={tinaField(f, "subtitle")}
               >
                 {f.subtitle}
               </p>

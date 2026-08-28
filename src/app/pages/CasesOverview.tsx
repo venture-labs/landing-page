@@ -59,8 +59,8 @@ const iconMap = {
 const serviceGradients: Record<string, string> = {
   development: "linear-gradient(268.344deg, rgba(163, 24, 248, 0.15) 0%, rgba(163, 24, 248, 0) 100%)",
   "company-building": "linear-gradient(268.344deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0) 100%)",
-  webdesign: "linear-gradient(44.336deg, rgba(43, 149, 246, 0.15) 0%, rgba(43, 149, 246, 0) 100%)",
-  "ki-strategie": "linear-gradient(-56.458deg, rgba(253, 167, 0, 0.15) 0%, rgba(253, 167, 0, 0) 100%)",
+  "ui-ux": "linear-gradient(44.336deg, rgba(43, 149, 246, 0.15) 0%, rgba(43, 149, 246, 0) 100%)",
+  "ai-consulting": "linear-gradient(-56.458deg, rgba(253, 167, 0, 0.15) 0%, rgba(253, 167, 0, 0) 100%)",
 };
 
 function ServiceTile({ service, index }: { service: any; index: number }) {
@@ -74,7 +74,7 @@ function ServiceTile({ service, index }: { service: any; index: number }) {
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-      className="relative overflow-hidden rounded-xl p-6 bg-[#1c1a27]/50 border border-white/10 hover:border-white/20 transition-colors"
+      className="relative overflow-hidden p-6 bg-[#1c1a27]/50 border border-white/10 hover:border-white/20 transition-colors"
       style={{
         backgroundImage: serviceGradients[service.slug],
         minHeight: "280px",
@@ -121,7 +121,7 @@ function CaseGridCard({ c, index }: { c: { slug: string; title: string; subtitle
     >
       <Link
         to={localizedPath(`/cases/${c.slug}`)}
-        className="group cursor-pointer flex flex-col overflow-hidden rounded-2xl"
+        className="group cursor-pointer flex flex-col overflow-hidden"
       >
         {/* Hero Image - Top */}
         <div className="relative overflow-hidden bg-gray-800 h-[280px]">
