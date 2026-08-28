@@ -4,9 +4,3 @@
   # browser bundle by design: it's the project's read-only Content API
   # token, meant to be public so the client can query Tina Cloud directly.
   SECRETS_SCAN_OMIT_KEYS = "TINA_TOKEN"
-  # package.json was bumped past what pnpm-lock.yaml has resolved (no
-  # Node/pnpm available to regenerate the lockfile at bump time), so let
-  # pnpm re-resolve during install instead of failing the frozen-lockfile
-  # check. Remove once someone runs `pnpm install` locally and commits an
-  # up-to-date lockfile.
-  npm_config_frozen_lockfile = "false"
