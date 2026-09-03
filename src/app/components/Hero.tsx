@@ -2,9 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { ArrowRight, Play, Pause } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useSiteData } from "@/data/live";
+import { useSiteData } from "@/data/content";
 import { useLocale } from "@/app/locale";
-import { tinaField } from "tinacms/dist/react";
 import svgPaths from "@/imports/🖌Homepage/svg-oa0apfkpzr";
 import heroImg from "@/imports/image-5.png";
 import heroVideo from "@/assets/venturelabs reel.mp4";
@@ -21,16 +20,13 @@ function BackgroundBlobs() {
 function HeroHeadline({
   headline,
   highlight,
-  fieldName,
 }: {
   headline: string;
   highlight: string;
-  fieldName?: string;
 }) {
   const parts = headline.split(highlight);
   return (
     <h1
-      data-tina-field={fieldName}
       className="font-semibold text-white leading-[1.05] tracking-tight w-full"
       style={{ fontSize: "var(--text-hero)" }}
     >
@@ -122,11 +118,9 @@ export function Hero() {
           <HeroHeadline
             headline={siteData.heroHeadline}
             highlight={t("hero.headlineHighlight")}
-            fieldName={tinaField(siteData, "heroHeadline")}
           />
 
           <p
-            data-tina-field={tinaField(siteData, "heroSubline")}
             className="text-white/60 font-light leading-relaxed max-w-2xl"
             style={{ fontSize: "var(--text-body)" }}
           >
@@ -136,7 +130,6 @@ export function Hero() {
           <div className="flex flex-wrap gap-4">
             <a
               href={localizedPath("/#kontakt")}
-              data-tina-field={tinaField(siteData, "heroCta")}
               className="inline-flex items-center gap-2 bg-[#8129ff] hover:bg-[#9140ff] text-white font-semibold rounded-lg transition-all hover:scale-[1.02] px-[24px] py-[11px]"
               style={{ fontSize: "var(--text-body)" }}
             >
@@ -145,7 +138,6 @@ export function Hero() {
             </a>
             <a
               href={localizedPath("/cases")}
-              data-tina-field={tinaField(siteData, "heroCtaSecondary")}
               className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/12 text-white font-medium px-6 py-3.5 rounded-lg transition-all"
               style={{ fontSize: "var(--text-body)" }}
             >

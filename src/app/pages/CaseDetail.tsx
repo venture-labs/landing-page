@@ -3,16 +3,12 @@ import { useEffect } from "react";
 import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { tinaField } from "tinacms/dist/react";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
 import { CtaButton } from "@/app/components/ui/CtaButton";
-import { useCaseDetail } from "@/data/live";
+import { useCaseDetail } from "@/data/content";
 import { useLocale } from "@/app/locale";
-import { getCaseDetail as getCaseDetailDe } from "@/data/de/caseDetails";
-import { getCaseDetail as getCaseDetailEn } from "@/data/en/caseDetails";
 
-const getCaseDetailByLocale = { de: getCaseDetailDe, en: getCaseDetailEn };
 
 const accentColor = "#2b95f6";
 
@@ -51,14 +47,12 @@ function CaseHero({ detail }: { detail: any }) {
           <h1
             className="font-['sofia-pro',sans-serif] font-semibold text-white leading-[1.05]"
             style={{ fontSize: "var(--text-hero)" }}
-            data-tina-field={tinaField(detail, "heroHeadline")}
           >
             {detail.heroHeadline}
           </h1>
           <p
             className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed max-w-2xl"
             style={{ fontSize: "var(--text-body)" }}
-            data-tina-field={tinaField(detail, "heroSubline")}
           >
             {detail.heroSubline}
           </p>
@@ -123,7 +117,6 @@ function OverviewSection({ detail }: { detail: any }) {
           <p
             className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed max-w-3xl"
             style={{ fontSize: "var(--text-body)" }}
-            data-tina-field={tinaField(detail, "description")}
           >
             {detail.description}
           </p>
@@ -145,7 +138,6 @@ function OverviewSection({ detail }: { detail: any }) {
             <p
               className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed"
               style={{ fontSize: "var(--text-body)" }}
-              data-tina-field={tinaField(detail, "background")}
             >
               {detail.background}
             </p>
@@ -165,7 +157,6 @@ function OverviewSection({ detail }: { detail: any }) {
             <p
               className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed"
               style={{ fontSize: "var(--text-body)" }}
-              data-tina-field={tinaField(detail, "problem")}
             >
               {detail.problem}
             </p>
@@ -185,7 +176,6 @@ function OverviewSection({ detail }: { detail: any }) {
             <p
               className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed"
               style={{ fontSize: "var(--text-body)" }}
-              data-tina-field={tinaField(detail, "solution")}
             >
               {detail.solution}
             </p>
@@ -217,7 +207,7 @@ function ResultsSection({ detail }: { detail: any }) {
 
         {/* Stats */}
         <div className="grid md:grid-cols-3 gap-8 mb-16">
-          {(detail.detailStats ?? detail.stats ?? []).map((stat: any, idx: number) => (
+          {(detail.stats ?? []).map((stat: any, idx: number) => (
             <motion.div
               key={idx}
               initial={{ opacity: 0, y: 20 }}
@@ -314,12 +304,9 @@ function CTASection() {
 
 export default function CaseDetail() {
   const { slug } = useParams<{ slug: string }>();
-  const { lang, localizedPath } = useLocale();
+  const { localizedPath } = useLocale();
 
-  // Try to load from Tina first, fallback to static data
-  const tinaDetail = useCaseDetail(slug);
-  const fallbackDetail = slug ? getCaseDetailByLocale[lang](slug) : undefined;
-  const detail = tinaDetail || fallbackDetail;
+  const detail = useCaseDetail(slug);
 
   useEffect(() => {
     window.scrollTo(0, 0);

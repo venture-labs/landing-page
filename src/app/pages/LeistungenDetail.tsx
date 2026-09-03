@@ -3,7 +3,6 @@ import { useParams, Link } from "react-router";
 import { motion, useInView } from "motion/react";
 import { ArrowRight, Code2, Building2, Palette, Bot } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { tinaField } from "tinacms/dist/react";
 import headerUiUx from "@/assets/service-headers/ui-ux.svg";
 import headerCompanyBuilding from "@/assets/service-headers/company-building.svg";
 import headerDevelopment from "@/assets/service-headers/development.svg";
@@ -13,12 +12,9 @@ import { PulseSection } from "@/app/components/PulseSection";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
 import { CtaButton } from "@/app/components/ui/CtaButton";
-import { useServicesData, useServiceDetail } from "@/data/live";
+import { useServicesData, useServiceDetail } from "@/data/content";
 import { useLocale } from "@/app/locale";
-import { serviceDetails as serviceDetailsDe } from "@/data/de/serviceDetails";
-import { serviceDetails as serviceDetailsEn } from "@/data/en/serviceDetails";
 
-const serviceDetailsByLocale = { de: serviceDetailsDe, en: serviceDetailsEn };
 
 /* ─── helpers ────────────────────────────────────────────────────────── */
 
@@ -73,14 +69,12 @@ function DetailHero({ detail, accent }: { detail: any; accent: string }) {
           <h1
             className="font-['sofia-pro',sans-serif] font-semibold text-white leading-[1.05]"
             style={{ fontSize: "var(--text-hero)" }}
-            data-tina-field={tinaField(detail, "heroHeadline")}
           >
             {detail.heroHeadline}
           </h1>
           <p
             className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed max-w-2xl"
             style={{ fontSize: "var(--text-body)" }}
-            data-tina-field={tinaField(detail, "heroSubline")}
           >
             {detail.heroSubline}
           </p>
@@ -150,7 +144,6 @@ function ProcessStep({
         <h3
           className="flex-1 font-['sofia-pro',sans-serif] font-semibold text-white transition-colors"
           style={{ fontSize: "var(--text-h3)" }}
-          data-tina-field={tinaField(step, "title")}
         >
           {step.title}
         </h3>
@@ -204,7 +197,6 @@ function ProcessSection({
           transition={{ duration: 0.6 }}
           className="font-['sofia-pro',sans-serif] font-semibold text-white mb-16 leading-[1.1]"
           style={{ fontSize: "var(--text-section)" }}
-          data-tina-field={tinaField(detail, "process")}
         >
           {t("leistungen.processHeading")}
         </motion.h2>
@@ -236,7 +228,6 @@ function CaseSection({ detail, accent }: { detail: any; accent: string }) {
           transition={{ duration: 0.5 }}
           className="font-['sofia-pro',sans-serif] font-semibold text-white mb-16"
           style={{ fontSize: "var(--text-section)" }}
-          data-tina-field={tinaField(detail, "caseTitle")}
         >
           {t("leistungen.exampleCase")} {detail.caseTitle}
         </motion.p>
@@ -287,7 +278,6 @@ function CaseSection({ detail, accent }: { detail: any; accent: string }) {
             <h3
               className="font-['sofia-pro',sans-serif] font-semibold text-white leading-tight"
               style={{ fontSize: "var(--text-h2)" }}
-              data-tina-field={tinaField(detail, "caseSubtitle")}
             >
               {detail.caseSubtitle}
             </h3>
@@ -335,14 +325,12 @@ function CtaBanner({ detail, accent }: { detail: any; accent: string }) {
           <h2
             className="font-['sofia-pro',sans-serif] font-semibold text-white leading-tight"
             style={{ fontSize: "var(--text-section)" }}
-            data-tina-field={tinaField(detail, "ctaHeadline")}
           >
             {detail.ctaHeadline}
           </h2>
           <p
             className="text-white/80 font-['sofia-pro',sans-serif] font-light leading-relaxed"
             style={{ fontSize: "var(--text-body)" }}
-            data-tina-field={tinaField(detail, "ctaBody")}
           >
             {detail.ctaBody}
           </p>
@@ -482,12 +470,9 @@ export function LeistungenDetail() {
   const { slug } = useParams<{ slug: string }>();
   const glowRef = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
-  const { lang, localizedPath } = useLocale();
+  const { localizedPath } = useLocale();
 
-  // Try to load from Tina first, fallback to static data
-  const tinaDetail = useServiceDetail(slug);
-  const fallbackDetail = serviceDetailsByLocale[lang].find((d) => d.slug === slug);
-  const detail = tinaDetail || fallbackDetail;
+  const detail = useServiceDetail(slug);
 
   useEffect(() => {
     window.scrollTo(0, 0);

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, useInView } from "motion/react";
-import { useSiteData } from "@/data/live";
+import { useSiteData } from "@/data/content";
 import svgPaths from "@/imports/🖌Homepage/svg-oa0apfkpzr";
 
 function LidlLogo() {

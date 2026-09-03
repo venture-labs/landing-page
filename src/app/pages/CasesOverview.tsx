@@ -5,7 +5,7 @@ import { ArrowRight, Code2, Building2, Palette, Bot, TrendingUp } from "lucide-r
 import { useTranslation } from "react-i18next";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
-import { useCasesData, useServicesData } from "@/data/live";
+import { useCasesData, useServicesData } from "@/data/content";
 import { useLocale } from "@/app/locale";
 import { caseDetailsMap as caseDetailsMapDe } from "@/data/de/caseDetails";
 import { caseDetailsMap as caseDetailsMapEn } from "@/data/en/caseDetails";

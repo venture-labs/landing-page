@@ -4,7 +4,7 @@ import { Users, Lightbulb, Target, Zap } from "lucide-react";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
 import { useLocale } from "@/app/locale";
-import { useAboutData } from "@/data/live";
+import { useAboutData } from "@/data/content";
 
 /* ─── hero ──────────────────────────────────────────────────────────── */
 

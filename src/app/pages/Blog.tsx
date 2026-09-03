@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
 import { useLocale } from "@/app/locale";
-import { useBlogData } from "@/data/live";
+import { useBlogData } from "@/data/content";
 import { type BlogPost } from "@/data/de/blog";
 
 const topicAccent: Record<string, string> = {

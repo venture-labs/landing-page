@@ -1,6 +1,5 @@
 import { Users, Layers, Zap, Handshake } from "lucide-react";
-import { tinaField } from "tinacms/dist/react";
-import { useLeistungenData } from "@/data/live";
+import { useLeistungenData } from "@/data/content";
 
 const iconMap: Record<string, React.ReactNode> = {
   users: <Users size={20} strokeWidth={2} />,
@@ -21,14 +20,12 @@ export function StrengthSection() {
           <p
             className=" font-semibold text-white leading-none whitespace-pre-wrap shrink-0 w-[45%]"
             style={{ fontSize: "var(--text-h3)" }}
-            data-tina-field={tinaField(leistungenData, "strengthHeadline")}
           >
             {leistungenData.strengthHeadline}
           </p>
           <p
             className=" font-light text-[#c0c0c0] leading-[1.4] flex-1 min-w-0"
             style={{ fontSize: "var(--text-small)" }}
-            data-tina-field={tinaField(leistungenData, "strengthDescription")}
           >
             {leistungenData.strengthDescription}
           </p>
@@ -48,14 +45,12 @@ export function StrengthSection() {
               <p
                 className=" font-light text-white leading-[1.2]"
                 style={{ fontSize: "clamp(1.25rem, 1.5vw, 1.5rem)" }}
-                data-tina-field={tinaField(f, "title")}
               >
                 {f.title}
               </p>
               <p
                 className=" font-light text-[#a1a1a1] leading-[1.4]"
                 style={{ fontSize: "var(--text-small)" }}
-                data-tina-field={tinaField(f, "subtitle")}
               >
                 {f.subtitle}
               </p>

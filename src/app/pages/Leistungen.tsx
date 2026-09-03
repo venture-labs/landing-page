@@ -3,10 +3,9 @@ import { motion, useInView } from "motion/react";
 import { ArrowRight, Code2, Building2, Palette, Bot, Check } from "lucide-react";
 import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
-import { tinaField } from "tinacms/dist/react";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
-import { useServicesData, useLeistungenData } from "@/data/live";
+import { useServicesData, useLeistungenData } from "@/data/content";
 import { useLocale } from "@/app/locale";
 import { type Service } from "@/data/de/services";
 
@@ -35,11 +34,10 @@ function LeistungenHero() {
           <h1
             className="font-['sofia-pro',sans-serif] font-semibold text-white leading-[1.05]"
             style={{ fontSize: "var(--text-hero)" }}
-            data-tina-field={tinaField(leistungenData, "heroTitlePrefix")}
           >
             {leistungenData.heroTitlePrefix}{" "}
             <span className="relative inline-block">
-              <span className="relative z-10" data-tina-field={tinaField(leistungenData, "heroTitleHighlight")}>{leistungenData.heroTitleHighlight}</span>
+              <span className="relative z-10">{leistungenData.heroTitleHighlight}</span>
               <span
                 className="absolute bottom-0 left-0 w-full h-[3px] rounded-full"
                 style={{ background: "linear-gradient(90deg, #8129ff, #a318f8)" }}
@@ -49,7 +47,6 @@ function LeistungenHero() {
           <p
             className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed max-w-2xl"
             style={{ fontSize: "var(--text-body)" }}
-            data-tina-field={tinaField(leistungenData, "heroSubheading")}
           >
             {leistungenData.heroSubheading}
           </p>
@@ -174,7 +171,6 @@ function ContactStrip() {
           <p
             className="text-white/50 font-['sofia-pro',sans-serif] font-light"
             style={{ fontSize: "var(--text-body)" }}
-            data-tina-field={tinaField(leistungenData, "contactCallout")}
           >
             {leistungenData.contactCallout}
           </p>

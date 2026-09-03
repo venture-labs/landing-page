@@ -4,9 +4,8 @@ import { motion, useInView } from "motion/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { type GridCase } from "@/data/de/cases";
-import { useCasesData } from "@/data/live";
+import { useCasesData } from "@/data/content";
 import { useLocale } from "@/app/locale";
-import { tinaField } from "tinacms/dist/react";
 
 function GridCard({ c }: { c: GridCase }) {
   const { localizedPath } = useLocale();
@@ -24,14 +23,12 @@ function GridCard({ c }: { c: GridCase }) {
       </div>
       <div className="flex flex-col gap-2">
         <h3
-          data-tina-field={tinaField(c, "title")}
           className=" font-semibold text-white leading-tight"
           style={{ fontSize: "calc(var(--text-card) * 0.75)", lineHeight: 1.1 }}
         >
           {c.title}
         </h3>
         <p
-          data-tina-field={tinaField(c, "subtitle")}
           className="text-white/60 font-light leading-snug"
           style={{ fontSize: "var(--text-small)" }}
         >

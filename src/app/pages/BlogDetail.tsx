@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
 import { useLocale } from "@/app/locale";
-import { useBlogData, useBlogDetail } from "@/data/live";
+import { useBlogDetail } from "@/data/content";
 
 const topicAccent: Record<string, string> = {
   development: "#a318f8",
@@ -35,9 +35,7 @@ export function BlogDetail() {
   const { t } = useTranslation();
   const { localizedPath } = useLocale();
   const glowRef = useRef<HTMLDivElement>(null);
-  const posts = useBlogData();
-  const tinaPost = useBlogDetail(slug);
-  const post = tinaPost || posts.find((p) => p.slug === slug);
+  const post = useBlogDetail(slug);
 
   useEffect(() => {
     window.scrollTo(0, 0);

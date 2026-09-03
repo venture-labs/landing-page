@@ -19,19 +19,19 @@ npm install -g pnpm
 ```bash
 pnpm install
 ```
-Some dependencies (`@tailwindcss/oxide`, `better-sqlite3`, `core-js`, `esbuild`) run native install scripts. These are pre-approved via `allowBuilds` in `pnpm-workspace.yaml`, so `pnpm install` should run them without prompting. If pnpm ever asks interactively to approve builds, run `pnpm approve-builds`, or set the relevant package(s) to `true` under `allowBuilds` in `pnpm-workspace.yaml`.
+Some dependencies (`@tailwindcss/oxide`, `core-js`, `esbuild`) run native install scripts. These are pre-approved via `allowBuilds` in `pnpm-workspace.yaml`, so `pnpm install` should run them without prompting. If pnpm ever asks interactively to approve builds, run `pnpm approve-builds`, or set the relevant package(s) to `true` under `allowBuilds` in `pnpm-workspace.yaml`.
 
 **Development server:**
 ```bash
 pnpm dev
 ```
-Runs on http://localhost:5173 by default. `tinacms dev` always runs its own local GraphQL server, so no TinaCloud credentials are needed for local development (unlike `pnpm build`, see below).
+Runs on http://localhost:5173 by default. `pnpm dev` regenerates `src/data/{de,en}/` from the markdown in `content/` before starting Vite, so edits to content show up on restart. No credentials or external services are needed.
 
 **Build for production:**
 ```bash
 pnpm build
 ```
-This runs `tinacms build` (without `--local`), which requires TinaCloud credentials via the `TINA_CLIENT_ID` and `TINA_TOKEN` environment variables (e.g. in a `.env` file or CI/deployment secrets). Without them, `pnpm build` fails with "Client not configured properly." Get credentials at https://tina.io.
+This runs `scripts/generate-content.ts` (markdown → `src/data/{de,en}/*.ts`) and then `vite build`. No credentials or external services are involved.
 
 ## Project Overview
 
@@ -86,11 +86,11 @@ The homepage includes a mouse-follow glow effect managed via CSS variables (`--g
 
 **Path Alias:** `@` resolves to `src/` for clean imports (e.g., `import { Button } from '@/components/ui/button'`).
 
-**Data-Driven Content:** Service, pricing, and case data are centralized in `src/data/`. Modify these files to update content without touching components.
+**Data-Driven Content:** All editorial content lives as YAML frontmatter in `content/` (services, cases, blog, about, site, leistungen). `scripts/generate-content.ts` compiles it into `src/data/{de,en}/*.ts` at build time; components read it through the locale-aware hooks in `src/data/content.ts`. Never hand-edit `src/data/{de,en}/` — those files are generated. UI chrome strings (buttons, labels) live separately in `src/locales/{de,en}.json` via i18next.
 
 ## Common Development Tasks
 
-**Add a new service:** Update `src/data/services.ts` and `src/data/serviceDetails.ts`, then ensure the detail page references the slug.
+**Add a new service:** Add a markdown file to `content/services/` (one per locale, e.g. `foo.md` + `foo.en.md`) with a `slug`, `language`, and `order`, then confirm the detail page resolves that slug.
 
 **Style adjustments:** Modify Tailwind classes directly in components. Use `clsx` or `tailwind-merge` for conditional/merged class logic.
 

@@ -8,7 +8,7 @@ import { CtaButton } from "@/app/components/ui/CtaButton";
  * Pulse Check / Build / Care structure and the 10-question Pulse Score quiz,
  * transposed from the live pulse.venturelabs.team site (both content and
  * quiz logic captured directly from the running app, DE + EN). Not part of
- * the Tina schema — this is a fixed product feature specific to the
+ * the markdown content — this is a fixed product feature specific to the
  * "ai-consulting" service page, so it's plain code rather than CMS content.
  *
  * The score narrative is verified for the two ends of the 0–100 range

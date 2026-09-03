@@ -4,9 +4,8 @@ import { motion, useInView } from "motion/react";
 import { Code2, Building2, Palette, Bot, ArrowUpRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { type Service } from "@/data/de/services";
-import { useServicesData } from "@/data/live";
+import { useServicesData } from "@/data/content";
 import { useLocale } from "@/app/locale";
-import { tinaField } from "tinacms/dist/react";
 
 const iconMap: Record<Service["icon"], React.ReactNode> = {
   code: <Code2 size={40} strokeWidth={1.5} className="text-white/90" />,
@@ -90,14 +89,12 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         <div className="flex flex-col gap-3">
           {iconMap[service.icon]}
           <h3
-            data-tina-field={tinaField(service, "title")}
             className=" font-semibold text-white leading-tight"
             style={{ fontSize: "var(--text-card)" }}
           >
             {service.title}
           </h3>
           <p
-            data-tina-field={tinaField(service, "description")}
             className="text-white/80 font-light leading-snug"
             style={{ fontSize: "var(--text-body)" }}
           >
