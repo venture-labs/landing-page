@@ -1,9 +1,19 @@
 [build.environment]
   NODE_OPTIONS = "--max-old-space-size=4096"
 
+# The app itself redirects "/" to "/de" client-side via <Navigate>, which
+# means a crawler hitting the bare domain sees the generic, JS-only shell
+# instead of the prerendered German homepage. Send it there directly.
+[[redirects]]
+  from = "/"
+  to = "/de"
+  status = 302
+
 # Client-side routing (react-router) means routes like /de/leistungen only
 # exist in JS. Without this, a direct visit or refresh on any route but "/"
-# 404s instead of loading the app.
+# 404s instead of loading the app. Netlify checks for a matching static file
+# (e.g. the per-route index.html files scripts/prerender.ts writes) before
+# falling through to this, so prerendered routes are unaffected.
 [[redirects]]
   from = "/*"
   to = "/index.html"

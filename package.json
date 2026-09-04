@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "build": "tsx scripts/generate-content.ts && vite build",
+    "build": "tsx scripts/generate-content.ts && vite build && tsx scripts/prerender.ts",
     "dev": "tsx scripts/generate-content.ts && vite"
   },
   "dependencies": {
