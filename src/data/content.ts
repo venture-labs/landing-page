@@ -85,8 +85,3 @@ export function useBlogDetail(slug?: string): BlogPost | null {
   const { lang } = useLocale();
   return blogPosts[lang].find((p) => p.slug === slug) ?? null;
 }
-
-export function usePricingData() {
-  // Pricing component removed from the site
-  return [];
-}

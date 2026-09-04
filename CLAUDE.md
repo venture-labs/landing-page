@@ -50,23 +50,21 @@ VentureLabs-Website is a React + Vite single-page application showcasing service
 ## Architecture
 
 ### Routing Structure
-The app uses React Router with three main routes:
-- `/` — Homepage with all sections (hero, profile, services, featured projects, pricing)
-- `/leistungen` — Services listing page
-- `/leistungen/:slug` — Individual service detail page
+All routes are locale-prefixed (`/:lang`, `de` or `en`); `/` redirects to the default locale.
+- `/:lang` — Homepage (hero, profile, services, featured projects)
+- `/:lang/leistungen`, `/:lang/leistungen/:slug` — Services listing and detail
+- `/:lang/cases`, `/:lang/cases/:slug` — Case studies listing and detail
+- `/:lang/blog`, `/:lang/blog/:slug` — Blog listing and post
+- `/:lang/kontakt` — Contact
+- `/:lang/ueber-uns` — About
 
 ### Key Directories
 - **src/app/** — Main application container and pages
-  - `components/` — Reusable React components (Navbar, Hero, Services, Pricing, Footer, etc.)
-  - `pages/` — Full page components (Leistungen, LeistungenDetail)
-- **src/data/** — Content and configuration files
-  - `services.ts` — Service definitions
-  - `cases.ts` — Project/case studies
-  - `pricing.ts` — Pricing data
-  - `serviceDetails.ts` — Extended service information
-  - `site.ts` — Global site configuration
+  - `components/` — Reusable React components (Navbar, Hero, Services, Footer, etc.)
+  - `pages/` — Full page components (Leistungen, LeistungenDetail, CasesOverview, CaseDetail, Blog, BlogDetail, Kontakt, UeberUns)
+- **src/data/** — Locale-aware content accessors (`content.ts`) plus the generated `de/` and `en/` data — see Data-Driven Content below
 - **src/styles/** — Global stylesheets
-- **src/imports/** — Likely re-exports or utility imports
+- **src/imports/** — Figma-exported components and assets
 - **src/assets/** — Images and static files (referenced via Figma asset resolver)
 
 ### Component Patterns

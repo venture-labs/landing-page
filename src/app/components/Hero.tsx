@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import { useSiteData } from "@/data/content";
 import { useLocale } from "@/app/locale";
 import svgPaths from "@/imports/🖌Homepage/svg-oa0apfkpzr";
-import heroImg from "@/imports/image-5.png";
 import heroVideo from "@/assets/venturelabs reel.mp4";
 
 function BackgroundBlobs() {

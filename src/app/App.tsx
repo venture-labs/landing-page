@@ -18,11 +18,6 @@ import { Blog } from "./pages/Blog";
 import { BlogDetail } from "./pages/BlogDetail";
 import { UeberUns } from "./pages/UeberUns";
 
-function MouseGlow() {
-  const glowRef = useRef<HTMLDivElement>(null);
-  return { glowRef };
-}
-
 function HomePage() {
   const glowRef = useRef<HTMLDivElement>(null);
 
