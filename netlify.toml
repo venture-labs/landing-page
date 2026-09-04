@@ -1,2 +1,10 @@
 [build.environment]
   NODE_OPTIONS = "--max-old-space-size=4096"
+
+# Client-side routing (react-router) means routes like /de/leistungen only
+# exist in JS. Without this, a direct visit or refresh on any route but "/"
+# 404s instead of loading the app.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

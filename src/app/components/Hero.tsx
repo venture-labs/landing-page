@@ -164,6 +164,7 @@ export function Hero() {
             muted
             loop
             playsInline
+            preload="metadata"
           />
           <button
             aria-label={isPlaying ? t("hero.videoPause") : t("hero.videoPlay")}
