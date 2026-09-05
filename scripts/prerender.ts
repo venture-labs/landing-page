@@ -151,6 +151,26 @@ function buildPagesForLocale(lang: Locale): PageMeta[] {
     description: about.heroSubheading,
   });
 
+  pages.push({
+    path: `/${lang}/impressum`,
+    lang,
+    title: `${lang === "de" ? "Impressum" : "Imprint"}${suffix}`,
+    description:
+      lang === "de"
+        ? "Impressum der Venture Labs GmbH."
+        : "Legal notice (Impressum) for Venture Labs GmbH.",
+  });
+
+  pages.push({
+    path: `/${lang}/datenschutz`,
+    lang,
+    title: `${lang === "de" ? "Datenschutzerklärung" : "Privacy Policy"}${suffix}`,
+    description:
+      lang === "de"
+        ? "Datenschutzerklärung für venturelabs.team."
+        : "Privacy policy for venturelabs.team.",
+  });
+
   return pages;
 }
 

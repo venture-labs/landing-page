@@ -17,6 +17,8 @@ import { Kontakt } from "./pages/Kontakt";
 import { Blog } from "./pages/Blog";
 import { BlogDetail } from "./pages/BlogDetail";
 import { UeberUns } from "./pages/UeberUns";
+import { Impressum } from "./pages/Impressum";
+import { Datenschutz } from "./pages/Datenschutz";
 
 function HomePage() {
   const glowRef = useRef<HTMLDivElement>(null);
@@ -161,6 +163,22 @@ export default function App() {
           element={
             <LangGuard>
               <UeberUns />
+            </LangGuard>
+          }
+        />
+        <Route
+          path="/:lang/impressum"
+          element={
+            <LangGuard>
+              <Impressum />
+            </LangGuard>
+          }
+        />
+        <Route
+          path="/:lang/datenschutz"
+          element={
+            <LangGuard>
+              <Datenschutz />
             </LangGuard>
           }
         />

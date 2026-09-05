@@ -58,18 +58,15 @@ export function Footer() {
       title: t("footer.aboutTitle"),
       links: [
         { label: t("footer.team"), href: localizedPath("/ueber-uns") },
-        { label: t("footer.jobs"), href: "#" },
+        { label: t("footer.jobs"), href: "mailto:contact@venturelabs.team" },
         { label: t("footer.blog"), href: localizedPath("/blog") },
-        { label: t("footer.press"), href: "#" },
       ],
     },
     {
       title: t("footer.contactTitle"),
       links: [
         { label: t("footer.bookCall"), href: localizedPath("/kontakt") },
-        { label: "hello@venturelabs.de", href: "mailto:hello@venturelabs.de" },
-        { label: "LinkedIn", href: "#" },
-        { label: "Instagram", href: "#" },
+        { label: "contact@venturelabs.team", href: "mailto:contact@venturelabs.team" },
       ],
     },
   ];
@@ -131,15 +128,18 @@ export function Footer() {
             © {new Date().getFullYear()} VentureLabs. {t("footer.copyright")}
           </p>
           <div className="flex gap-6">
-            {[t("footer.imprint"), t("footer.privacy"), t("footer.terms")].map((item) => (
-              <a
-                key={item}
-                href="#"
+            {[
+              { label: t("footer.imprint"), href: localizedPath("/impressum") },
+              { label: t("footer.privacy"), href: localizedPath("/datenschutz") },
+            ].map((item) => (
+              <Link
+                key={item.href}
+                to={item.href}
                 className="text-white/30 hover:text-white/60 transition-colors font-light"
                 style={{ fontSize: "var(--text-small)" }}
               >
-                {item}
-              </a>
+                {item.label}
+              </Link>
             ))}
           </div>
         </div>

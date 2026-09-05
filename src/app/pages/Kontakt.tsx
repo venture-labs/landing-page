@@ -1,8 +1,10 @@
 import { useRef, useState } from "react";
+import { Link } from "react-router";
 import { motion, useInView } from "motion/react";
 import { useTranslation } from "react-i18next";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
+import { useLocale } from "@/app/locale";
 
 /* ─── data ───────────────────────────────────────────────────────────── */
 
@@ -152,6 +154,7 @@ const fieldClasses =
 
 function ContactForm({ selectedTopics }: { selectedTopics: string[] }) {
   const { t } = useTranslation();
+  const { localizedPath } = useLocale();
   const [message, setMessage] = useState("");
   const [name, setName] = useState("");
   const [company, setCompany] = useState("");
@@ -273,9 +276,9 @@ function ContactForm({ selectedTopics }: { selectedTopics: string[] }) {
             style={{ fontSize: "var(--text-small)" }}
           >
             {t("kontakt.privacyText")}{" "}
-            <a href="#" className="text-white/70 underline hover:text-white transition-colors">
+            <Link to={localizedPath("/datenschutz")} className="text-white/70 underline hover:text-white transition-colors">
               {t("kontakt.privacyLinkLabel")}
-            </a>
+            </Link>
             .
           </span>
         </label>
