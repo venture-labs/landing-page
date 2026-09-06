@@ -306,25 +306,45 @@ this task — all explicitly out of scope per the brief and per ADR 0001's "firs
 ## Scope addendum (Christian, 2026-09-06): scroll reveal on the start page
 
 Requested after Designer round 1, via the board (front desk folded it in before the Implementer
-starts). Reference: loopstudio.app's landing page (loop-studio landing-page PR #5 preview). Checked
-source: it is a normal scrolling page, no viewport-snap slides — each section fades and slides up
-(~24 px) into place when it scrolls into view (Webflow IX2), plus one card slider for its four-step
-block. This repo is React/Vite/Tailwind, so the equivalent is:
+starts). **Correction 16:30, after Christian caught a wrong reference in the first draft of this
+addendum:** the reference is loopstudio.app's *rewritten* landing page (branch
+`feature/adopt-onlinemedianer-site`, PR #5 in `loop-studio-venture/landing-page` — "adopt the
+onlinemedianer.de example site 1:1"), not the live `index.html` on `dev`, which is a leftover
+Webflow export of Loop Studio's own SaaS product page (unrelated content, plain Webflow IX2 +
+a Finsweet slider) and was wrongly used as the source for the first draft. Christian: "we in the
+end replaced the full website with a new one, so the stack for the new website / feature request
+changed completely."
 
-- **A1.** One reusable scroll-reveal wrapper (`src/components/ScrollReveal.tsx`: a small
-  IntersectionObserver hook, or Framer Motion `whileInView` if a dependency is preferred —
-  Implementer's call, keep it to one approach), applied to every start-page section below the hero:
-  opacity 0 → 1 and translateY 24 px → 0, ~500 ms ease-out, once (no replay on scroll-up),
-  threshold ~15 %, optional per-child stagger inside card grids (areas, proof cases).
+**What the real reference does** (`web/bewegung.js` on that branch, GSAP + ScrollTrigger + Lenis
+from `web/lib/`, ~500 lines): Lenis smooth-scrolling wired to `ScrollTrigger.update`; word-by-word
+text reveals; several scrubbed/staggered GSAP timelines (a typing effect, a step-slider fed by
+scroll position, a "monster feeding" scene); all gated behind `prefers-reduced-motion` and a
+`window.innerWidth > 900` check that drops Lenis on small screens. This is bespoke, Loop-Studio-
+brand-specific interaction design, built by hand for that one page — **not something to port
+literally**. What carries over to venturelabs is the *category* of technique (GSAP + ScrollTrigger,
+optionally Lenis for smooth scroll), not the specific effects.
+
+Christian's own framing: use the new site's tech approach as the example, not Webflow's built-in
+interactions; the concrete implementation for venturelabs is the Architect's call. So:
+
+- **A1.** Every start-page section below the hero gets a scroll-triggered reveal (fade in, slide up
+  ~24 px, ~500 ms, once, no replay on scroll-up; optional per-child stagger inside card grids —
+  areas, proof cases). **The Architect chooses the technique** — GSAP + ScrollTrigger (matches the
+  reference, adds a real dependency), Framer Motion `whileInView` (React-idiomatic, similar
+  weight), or a small IntersectionObserver hook (no dependency) — and says which, and why, in the
+  spec; keep it to one approach for this slice. Lenis-style smooth scrolling is optional and only
+  worth it if the Architect judges it fits this brand; it is not a requirement.
 - **A2.** `prefers-reduced-motion: reduce` disables the transform and shows content immediately;
   content is never hidden without JS (SSR/prerender output must render visible; the reveal only
   adds the transition once mounted) — the prerendered HTML shells must not ship opacity 0.
 - **A3.** No new carousel unless the approved design round contains a step-slider block; if it
-  does, use the `embla-carousel-react` already in package.json.
+  does, use the `embla-carousel-react` already in package.json rather than GSAP's own slider.
 - **A4.** Scope: the start page only in this slice. The AI Pulse page and the other pages get the
-  same wrapper later (board item 20260906-scroll-reveal-rollout), so the wrapper must not be tied
-  to home-page data.
-- Not a port of the Webflow/GSAP files; no scroll-jacking, no full-page slides.
+  same treatment later (board item 20260906-scroll-reveal-rollout), so whatever wrapper/hook is
+  built must not be tied to home-page data.
+- No scroll-jacking, no full-page/viewport-snap slides, and no Loop-Studio-specific effects
+  (word flights, the monster scene, the typing/URL animation) — those are that brand's, not a
+  technique to copy for Venture Labs.
 
 ## Test plan
 
