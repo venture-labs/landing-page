@@ -4,7 +4,7 @@ company: venturelabs
 status: ready
 size: L
 branch: feature/site-restructure-slice-1-new-start-page-and-ai-p
-base: feature/restructure
+base: dev
 design: needed (start page, /:lang; AI Pulse page, /:lang/ai-pulse)
 ---
 
