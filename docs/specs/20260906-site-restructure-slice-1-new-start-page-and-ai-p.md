@@ -315,6 +315,16 @@ a Finsweet slider) and was wrongly used as the source for the first draft. Chris
 end replaced the full website with a new one, so the stack for the new website / feature request
 changed completely."
 
+**Authoritative source (found after this addendum's first correction):**
+`loopstudio/knowledge-base/architecture/decisions/0007-landing-page-motion-stack-and-calendly-widget.md`
+(status: Implemented). Pinned versions: **Lenis 1.1.18** (smooth scroll) + **GSAP 3.15.0 /
+ScrollTrigger**; a shared `.ls-rv` scroll-reveal utility class used across sections; a pinned/
+scrubbed step sequence (`ScrollTrigger.create({ pin, scrub })`) for one block; full
+`prefers-reduced-motion` fallback (no Lenis, no pin/scrub, reveals shown at end-state). Christian's
+rule in that ADR: **one motion stack — don't mix animation libraries** on a page. Read that ADR
+before implementing; it is the precise version of what the paragraph below describes from a
+straight read of the reference branch's own `web/bewegung.js`.
+
 **What the real reference does** (`web/bewegung.js` on that branch, GSAP + ScrollTrigger + Lenis
 from `web/lib/`, ~500 lines): Lenis smooth-scrolling wired to `ScrollTrigger.update`; word-by-word
 text reveals; several scrubbed/staggered GSAP timelines (a typing effect, a step-slider fed by
