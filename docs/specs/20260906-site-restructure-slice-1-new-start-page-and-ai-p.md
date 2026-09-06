@@ -367,7 +367,11 @@ runner.
   is `dev`; this task's brief explicitly sets `base: feature/restructure`. Followed the task
   brief (more specific/current for this task) — flagging the discrepancy in case
   `feature/restructure` was meant to itself be rebased onto `dev` before this branch was cut.
-  Non-blocking.
+  Non-blocking. **Resolved at gate 1 (Christian, 2026-09-06): base is `dev`; the work runs on
+  this feature branch and the PR targets `dev`.** Both branches pointed at the same commit
+  (87bd24df) when this branch was cut, so nothing needs rebasing. Christian approved the whole
+  slice with only that change; implement in the recommended order of the split (font swap, start
+  page, AI Pulse page) as separate commits on this branch.
 - **Quiz band copy is read, not owned, from `pulse-landing-page/index.html`** (reference only,
   per the task's own instruction not to touch that repo). If the live pulse site's quiz copy has
   changed since this read (2026-09-06), the ported bands will be stale — worth a byte-for-byte
