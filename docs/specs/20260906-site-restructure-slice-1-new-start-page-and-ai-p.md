@@ -311,16 +311,16 @@ source: it is a normal scrolling page, no viewport-snap slides — each section 
 (~24 px) into place when it scrolls into view (Webflow IX2), plus one card slider for its four-step
 block. This repo is React/Vite/Tailwind, so the equivalent is:
 
-- **A1.** One reusable scroll-reveal wrapper (: a small
-  IntersectionObserver hook, or Framer Motion  if a dependency is preferred —
+- **A1.** One reusable scroll-reveal wrapper (`src/components/ScrollReveal.tsx`: a small
+  IntersectionObserver hook, or Framer Motion `whileInView` if a dependency is preferred —
   Implementer's call, keep it to one approach), applied to every start-page section below the hero:
   opacity 0 → 1 and translateY 24 px → 0, ~500 ms ease-out, once (no replay on scroll-up),
   threshold ~15 %, optional per-child stagger inside card grids (areas, proof cases).
-- **A2.**  disables the transform and shows content immediately;
+- **A2.** `prefers-reduced-motion: reduce` disables the transform and shows content immediately;
   content is never hidden without JS (SSR/prerender output must render visible; the reveal only
   adds the transition once mounted) — the prerendered HTML shells must not ship opacity 0.
 - **A3.** No new carousel unless the approved design round contains a step-slider block; if it
-  does, use the  already in package.json.
+  does, use the `embla-carousel-react` already in package.json.
 - **A4.** Scope: the start page only in this slice. The AI Pulse page and the other pages get the
   same wrapper later (board item 20260906-scroll-reveal-rollout), so the wrapper must not be tied
   to home-page data.
