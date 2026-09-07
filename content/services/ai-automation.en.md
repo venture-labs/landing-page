@@ -6,6 +6,8 @@ title: "AI Automation"
 description: "Rethinking existing processes: we turn manual business processes into intelligent, integrated workflows."
 gradient: "linear-gradient(-56.458deg, rgba(253, 167, 0, 0.8) 0%, rgba(253, 167, 0, 0) 100%)"
 icon: bot
+usedIn: [check, build, care]
+proof: "Quotes that used to take three days now go out in minutes."
 heroHeadline: "Improve the business."
 heroSubline: "We automate processes where AI measurably saves time, cuts costs, and reduces errors."
 heroImage: "/uploads/services/ai-automation-hero.png"

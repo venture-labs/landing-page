@@ -6,6 +6,8 @@ title: "Venture Building"
 description: "Aus Chancen neue Geschäfte machen: Wir validieren Geschäftsmodelle und bauen daraus funktionierende digitale Ventures."
 gradient: "linear-gradient(268.344deg, rgba(255, 0, 0, 0.8) 0%, rgba(255, 0, 0, 0) 100%)"
 icon: grid
+usedIn: [check, build, care]
+proof: "Aus einer Idee im Nebensatz wurde ein eigenes Geschäft."
 heroHeadline: "Create the new business."
 heroSubline: "Von der Opportunity zum validierten Geschäftsmodell und funktionierenden Venture."
 heroImage: "/uploads/services/venture-building-hero.png"

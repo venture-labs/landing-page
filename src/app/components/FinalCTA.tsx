@@ -32,7 +32,7 @@ export function FinalCTA() {
             {t("finalCta.body")}
           </p>
           <div className="flex flex-wrap gap-4">
-            <CtaButton href={localizedPath("/ai-pulse")} backgroundColor="#8129ff">
+            <CtaButton href={localizedPath("/leistungen")} backgroundColor="#8129ff">
               {t("finalCta.primaryCta")}
             </CtaButton>
             <a

@@ -6,6 +6,8 @@ title: "AI Experience"
 description: "Designing how people and AI work together: we design interfaces, workflows, and interactions for a new generation of digital products."
 gradient: "linear-gradient(44.336deg, rgba(43, 149, 246, 0.8) 0%, rgba(43, 149, 246, 0) 100%)"
 icon: palette
+usedIn: [check, build]
+proof: "An interface that shows what the AI is doing — and why."
 heroHeadline: "Design the interaction."
 heroSubline: "New interfaces for how people and intelligent systems work together."
 heroImage: "/uploads/services/ai-experience-hero.png"

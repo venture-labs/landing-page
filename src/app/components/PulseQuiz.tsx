@@ -4,11 +4,10 @@ import { useLocale } from "@/app/locale";
 import { CtaButton } from "@/app/components/ui/CtaButton";
 
 /**
- * Pulse Check / Build / Care structure and the 10-question Pulse Score quiz,
- * transposed from the live pulse.venturelabs.team site (both content and
- * quiz logic captured directly from the running app, DE + EN). Not part of
- * the markdown content — this is a fixed product feature specific to the
- * "ai-automation" service page, so it's plain code rather than CMS content.
+ * The 10-question Pulse Score quiz, transposed from the live
+ * pulse.venturelabs.team site (both content and quiz logic captured directly
+ * from the running app, DE + EN). Not part of the markdown content — the
+ * scoring is bound to the question set, so copy and logic live together here.
  *
  * The score narrative is verified for the two ends of the 0–100 range
  * ("Erste Anzeichen"/"Early Signs" at the low end, "Stabiler Puls"/"Steady
@@ -27,20 +26,6 @@ interface QuizQuestion {
 }
 
 export interface Copy {
-  pulseHeading: string;
-  pulseIntro: string;
-  steps: {
-    stepLabel: string;
-    title: string;
-    price: string;
-    description: string;
-    inputLabel: string;
-    input: string;
-    outputLabel: string;
-    output: string;
-    bullets: string[];
-    footnote: string;
-  }[];
   areaLabels: Record<Area, string>;
   quizHeading: string;
   quizIntro: string;
@@ -60,53 +45,6 @@ export interface Copy {
 
 export const COPY: Record<"de" | "en", Copy> = {
   de: {
-    pulseHeading: "Pulse Check, Build, Care",
-    pulseIntro:
-      "Jeder Schritt baut auf dem vorherigen auf. Du entscheidest nach jedem Schritt, ob es weitergeht – ganz ohne Verpflichtung zum nächsten.",
-    steps: [
-      {
-        stepLabel: "Schritt 1 · Einstieg",
-        title: "Pulse Check",
-        price: "Ab 2.900 €",
-        description:
-          "1–2 Tage strukturierte Analyse über deine Abteilungen hinweg, geliefert als priorisierte Roadmap.",
-        inputLabel: "Input",
-        input: "Deine aktuellen Prozesse, Daten und deine Tool-Landschaft – so, wie sie heute sind.",
-        outputLabel: "Output",
-        output: "Eine priorisierte Roadmap mit den 1–3 Anwendungsfällen mit dem größten Hebel.",
-        bullets: ["AI Vital Signs Report", "Priorisierter Opportunity-Backlog", "Kein 40-seitiger Bericht, den niemand liest"],
-        footnote: "Der einzige Schritt, den du direkt buchen kannst.",
-      },
-      {
-        stepLabel: "Schritt 2 · Falls sinnvoll",
-        title: "Pulse Build",
-        price: "Ab 15.000 €",
-        description:
-          "Sobald der Pulse Check zeigt, wo der größte Hebel liegt, setzen wir gemeinsam die 1–3 wichtigsten Anwendungsfälle um.",
-        inputLabel: "Input",
-        input: "Der priorisierte Anwendungsfall aus deinem Pulse Check.",
-        outputLabel: "Output",
-        output: "Eine funktionierende Lösung im Produktivbetrieb – kein Prototyp für die Schublade.",
-        bullets: [
-          "4 Wochen Standardumfang, erweiterbar auf 8",
-          "Dedizierter Entwickler, feste Ansprechperson während der gesamten Umsetzung",
-          "Festpreis mit klar definiertem Umfang – keine versteckten Kosten",
-        ],
-        footnote: "Wird nach deinem Pulse Check gemeinsam entschieden – kein eigenständiges Angebot.",
-      },
-      {
-        stepLabel: "Schritt 3 · Nach dem Build",
-        title: "Pulse Care",
-        price: "Ab 2.500 €/Monat",
-        description: "Sobald eine erste Lösung läuft, halten wir sie mit dir aktuell: 2 Termine pro Monat plus Dashboard-Zugriff.",
-        inputLabel: "Input",
-        input: "Die im Pulse Build gebaute Lösung.",
-        outputLabel: "Output",
-        output: "Eine Lösung, die läuft, überwacht wird und mit deinem Geschäft mitwächst.",
-        bullets: ["Monatliches Dashboard-Tracking", "Vierteljährliches Deep-Review", "Jährlicher Pulse-Check-Refresh"],
-        footnote: "Relevant, sobald wir gemeinsam etwas gebaut haben.",
-      },
-    ],
     areaLabels: {
       data: "Datenbasis",
       process: "Prozesse",
@@ -237,51 +175,6 @@ export const COPY: Record<"de" | "en", Copy> = {
     ],
   },
   en: {
-    pulseHeading: "Pulse Check, Build, Care",
-    pulseIntro:
-      "Each step builds on the last. You decide after every step whether to continue — no obligation to move to the next one.",
-    steps: [
-      {
-        stepLabel: "Step 1 · Starting point",
-        title: "Pulse Check",
-        price: "Starting at €2,900",
-        description: "1–2 days of structured analysis across your departments, delivered as a prioritised roadmap.",
-        inputLabel: "Input",
-        input: "Your current processes, data, and tool stack — as they are today.",
-        outputLabel: "Output",
-        output: "A prioritised roadmap naming the 1–3 highest-leverage use cases.",
-        bullets: ["AI Vital Signs Report", "Prioritised opportunity backlog", "Not a 40-page report nobody reads"],
-        footnote: "The only step you book directly.",
-      },
-      {
-        stepLabel: "Step 2 · If it makes sense",
-        title: "Pulse Build",
-        price: "Starting at €15,000",
-        description: "Once your Pulse Check has shown where the leverage is, we build the 1–3 highest-priority use cases together.",
-        inputLabel: "Input",
-        input: "The priority use case from your Pulse Check.",
-        outputLabel: "Output",
-        output: "A working solution in production — not a prototype that sits on a shelf.",
-        bullets: [
-          "4-week standard scope, extendable to 8",
-          "A dedicated developer and a single point of contact throughout",
-          "Fixed price with a clearly defined scope — no hidden costs",
-        ],
-        footnote: "Decided together after your Pulse Check — not a standalone purchase.",
-      },
-      {
-        stepLabel: "Step 3 · After the build",
-        title: "Pulse Care",
-        price: "Starting at €2,500/month",
-        description: "Once a first solution is live, we keep it current with you: 2 scheduled calls a month plus dashboard access.",
-        inputLabel: "Input",
-        input: "The solution built during your Pulse Build.",
-        outputLabel: "Output",
-        output: "A solution that stays live, monitored, and current as your business evolves.",
-        bullets: ["Monthly dashboard tracking", "Quarterly deep review", "Annual Pulse Check refresh"],
-        footnote: "Relevant once we've built something together.",
-      },
-    ],
     areaLabels: {
       data: "Data Readiness",
       process: "Process Fit",

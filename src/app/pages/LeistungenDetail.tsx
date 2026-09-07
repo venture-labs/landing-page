@@ -8,10 +8,10 @@ import headerVentureBuilding from "@/assets/service-headers/venture-building.svg
 import headerAiProducts from "@/assets/service-headers/ai-products.svg";
 import headerAiAutomation from "@/assets/service-headers/ai-automation.svg";
 import { StrengthSection } from "@/app/components/StrengthSection";
-import { PulseSection } from "@/app/components/PulseSection";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
 import { CtaButton } from "@/app/components/ui/CtaButton";
+import { PulseCheckModal } from "@/app/components/PulseCheckModal";
 import { useServicesData, useServiceDetail } from "@/data/content";
 import { useLocale } from "@/app/locale";
 
@@ -317,6 +317,7 @@ function CtaBanner({ detail, accent }: { detail: any; accent: string }) {
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const { t } = useTranslation();
   const { localizedPath } = useLocale();
+  const [quizOpen, setQuizOpen] = useState(false);
 
   return (
     <motion.section
@@ -343,15 +344,20 @@ function CtaBanner({ detail, accent }: { detail: any; accent: string }) {
             {detail.ctaBody}
           </p>
         </div>
-        <CtaButton
-          href={localizedPath("/#kontakt")}
-          backgroundColor="white"
-          textColor="text-[#1E1C27]"
-          fontSize="var(--text-body)"
-        >
-          {detail.ctaButtonLabel || t("leistungen.ctaContact")}
-        </CtaButton>
+        <div className="flex flex-wrap gap-4 shrink-0">
+          <CtaButton onClick={() => setQuizOpen(true)} backgroundColor="white" textColor="text-[#1E1C27]" fontSize="var(--text-body)">
+            {t("leistungen.pulseCta")}
+          </CtaButton>
+          <CtaButton
+            href={localizedPath("/#kontakt")}
+            backgroundColor="rgba(255,255,255,0.1)"
+            fontSize="var(--text-body)"
+          >
+            {detail.ctaButtonLabel || t("leistungen.ctaContact")}
+          </CtaButton>
+        </div>
       </div>
+      <PulseCheckModal open={quizOpen} onOpenChange={setQuizOpen} />
     </motion.section>
   );
 }
@@ -529,7 +535,6 @@ export function LeistungenDetail() {
       <Navbar />
       <DetailHero detail={detail as any} accent={accent} title={serviceTitle} />
       <ProcessSection detail={detail} accent={accent} />
-      {detail.slug === "ai-automation" && <PulseSection accent={accent} />}
       <CaseSection detail={detail} accent={accent} />
       <CtaBanner detail={detail} accent={accent} />
       <OtherServices currentSlug={detail.slug} />

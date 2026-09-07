@@ -148,6 +148,8 @@ export const aboutData: AboutData = {
   writeFileSync(
     resolve(outDir, "services.ts"),
     `${banner()}
+export type PulseStep = "check" | "build" | "care";
+
 export interface Service {
   slug: string;
   title: string;
@@ -155,6 +157,8 @@ export interface Service {
   gradient: string;
   icon: "code" | "grid" | "palette" | "bot";
   tags: string[];
+  usedIn: PulseStep[];
+  proof: string;
 }
 
 export const services: Service[] = ${JSON.stringify(
@@ -165,6 +169,8 @@ export const services: Service[] = ${JSON.stringify(
         gradient: s.gradient,
         icon: s.icon,
         tags: s.tags ?? [],
+        usedIn: s.usedIn ?? [],
+        proof: s.proof ?? "",
       })),
       null,
       2
@@ -395,10 +401,33 @@ export interface StrengthFeature {
   subtitle: string;
 }
 
+export interface CoreService {
+  key: "check" | "build" | "care";
+  step: string;
+  label: string;
+  title: string;
+  tagline: string;
+  meta: string;
+  description: string;
+  input: string;
+  output: string;
+  bullets: string[];
+  ctaLabel: string;
+}
+
 export interface LeistungenData {
+  heroEyebrow: string;
   heroTitlePrefix: string;
   heroTitleHighlight: string;
   heroSubheading: string;
+  coreHeading: string;
+  coreIntro: string;
+  coreServices: CoreService[];
+  skillsHeading: string;
+  skillsIntro: string;
+  skillStepLabels: Record<"check" | "build" | "care", string>;
+  ctaHeading: string;
+  ctaBody: string;
   contactCallout: string;
   strengthHeadline: string;
   strengthDescription: string;
@@ -406,9 +435,18 @@ export interface LeistungenData {
 }
 
 export const leistungenData: LeistungenData = {
+  heroEyebrow: ${strLit(leistungen.heroEyebrow)},
   heroTitlePrefix: ${strLit(leistungen.heroTitlePrefix)},
   heroTitleHighlight: ${strLit(leistungen.heroTitleHighlight)},
   heroSubheading: ${strLit(leistungen.heroSubheading)},
+  coreHeading: ${strLit(leistungen.coreHeading)},
+  coreIntro: ${strLit(leistungen.coreIntro)},
+  coreServices: ${JSON.stringify(leistungen.coreServices ?? [], null, 2)},
+  skillsHeading: ${strLit(leistungen.skillsHeading)},
+  skillsIntro: ${strLit(leistungen.skillsIntro)},
+  skillStepLabels: ${JSON.stringify(leistungen.skillStepLabels ?? {}, null, 2)},
+  ctaHeading: ${strLit(leistungen.ctaHeading)},
+  ctaBody: ${strLit(leistungen.ctaBody)},
   contactCallout: ${strLit(leistungen.contactCallout)},
   strengthHeadline: ${strLit(leistungen.strengthHeadline)},
   strengthDescription: ${strLit(leistungen.strengthDescription)},

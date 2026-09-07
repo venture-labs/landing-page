@@ -6,6 +6,8 @@ title: "Venture Building"
 description: "Turning opportunities into new businesses: we validate business models and build them into working digital ventures."
 gradient: "linear-gradient(268.344deg, rgba(255, 0, 0, 0.8) 0%, rgba(255, 0, 0, 0) 100%)"
 icon: grid
+usedIn: [check, build, care]
+proof: "An idea mentioned in passing turned into a business of its own."
 heroHeadline: "Create the new business."
 heroSubline: "From opportunity to a validated business model and a working venture."
 heroImage: "/uploads/services/venture-building-hero.png"

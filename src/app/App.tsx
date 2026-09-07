@@ -6,8 +6,7 @@ import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { AIPulseTeaser } from "./components/AIPulseTeaser";
 import { Services } from "./components/Services";
-import { HowWeWork } from "./components/HowWeWork";
-import { UseCases } from "./components/UseCases";
+import { PulseJourney } from "./components/PulseJourney";
 import { ProjectsFeatured } from "./components/ProjectsFeatured";
 import { ProjectsMore } from "./components/ProjectsMore";
 import { AboutTeaser } from "./components/AboutTeaser";
@@ -18,7 +17,6 @@ import { LeistungenDetail } from "./pages/LeistungenDetail";
 import CaseDetail from "./pages/CaseDetail";
 import { CasesOverview } from "./pages/CasesOverview";
 import { Kontakt } from "./pages/Kontakt";
-import { AIPulse } from "./pages/AIPulse";
 import { Blog } from "./pages/Blog";
 import { BlogDetail } from "./pages/BlogDetail";
 import { UeberUns } from "./pages/UeberUns";
@@ -56,9 +54,8 @@ function HomePage() {
       <Navbar />
       <Hero />
       <AIPulseTeaser />
+      <PulseJourney compact />
       <Services />
-      <HowWeWork />
-      <UseCases />
       <ProjectsFeatured />
       <ProjectsMore />
       <AboutTeaser />
@@ -73,10 +70,10 @@ function RoutedErrorBoundary({ children }: { children: ReactNode }) {
   return <ErrorBoundary key={location.pathname}>{children}</ErrorBoundary>;
 }
 
-/** Redirects an old service slug (e.g. "webdesign") to its renamed slug, keeping the current :lang. */
-function LegacyServiceRedirect({ slug }: { slug: string }) {
+/** Redirects a retired path (e.g. "/ai-pulse") to its replacement, keeping the current :lang. */
+function LegacyRedirect({ to }: { to: string }) {
   const { lang } = useParams<{ lang: string }>();
-  return <Navigate to={`/${lang ?? DEFAULT_LOCALE}/leistungen/${slug}`} replace />;
+  return <Navigate to={`/${lang ?? DEFAULT_LOCALE}${to}`} replace />;
 }
 
 export default function App() {
@@ -109,54 +106,12 @@ export default function App() {
             </LangGuard>
           }
         />
-        <Route
-          path="/:lang/leistungen/webdesign"
-          element={
-            <LangGuard>
-              <LegacyServiceRedirect slug="ai-experience" />
-            </LangGuard>
-          }
-        />
-        <Route
-          path="/:lang/leistungen/ki-strategie"
-          element={
-            <LangGuard>
-              <LegacyServiceRedirect slug="ai-automation" />
-            </LangGuard>
-          }
-        />
-        <Route
-          path="/:lang/leistungen/ai-consulting"
-          element={
-            <LangGuard>
-              <LegacyServiceRedirect slug="ai-automation" />
-            </LangGuard>
-          }
-        />
-        <Route
-          path="/:lang/leistungen/development"
-          element={
-            <LangGuard>
-              <LegacyServiceRedirect slug="ai-products" />
-            </LangGuard>
-          }
-        />
-        <Route
-          path="/:lang/leistungen/ui-ux"
-          element={
-            <LangGuard>
-              <LegacyServiceRedirect slug="ai-experience" />
-            </LangGuard>
-          }
-        />
-        <Route
-          path="/:lang/leistungen/company-building"
-          element={
-            <LangGuard>
-              <LegacyServiceRedirect slug="venture-building" />
-            </LangGuard>
-          }
-        />
+        <Route path="/:lang/leistungen/webdesign" element={<LegacyRedirect to="/leistungen/ai-experience" />} />
+        <Route path="/:lang/leistungen/ki-strategie" element={<LegacyRedirect to="/leistungen/ai-automation" />} />
+        <Route path="/:lang/leistungen/ai-consulting" element={<LegacyRedirect to="/leistungen/ai-automation" />} />
+        <Route path="/:lang/leistungen/development" element={<LegacyRedirect to="/leistungen/ai-products" />} />
+        <Route path="/:lang/leistungen/ui-ux" element={<LegacyRedirect to="/leistungen/ai-experience" />} />
+        <Route path="/:lang/leistungen/company-building" element={<LegacyRedirect to="/leistungen/venture-building" />} />
         <Route
           path="/:lang/cases"
           element={
@@ -181,14 +136,7 @@ export default function App() {
             </LangGuard>
           }
         />
-        <Route
-          path="/:lang/ai-pulse"
-          element={
-            <LangGuard>
-              <AIPulse />
-            </LangGuard>
-          }
-        />
+        <Route path="/:lang/ai-pulse" element={<LegacyRedirect to="/leistungen" />} />
         <Route
           path="/:lang/blog"
           element={

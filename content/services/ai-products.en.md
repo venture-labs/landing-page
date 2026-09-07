@@ -6,6 +6,8 @@ title: "AI Products"
 description: "Building new digital products: we develop products that don't bolt on AI as an afterthought, but design it in from day one."
 gradient: "linear-gradient(146.383deg, rgba(163, 24, 248, 0.8) 0%, rgba(163, 24, 248, 0) 100%)"
 icon: code
+usedIn: [build, care]
+proof: "A spreadsheet turned into a product customers operate themselves."
 heroHeadline: "Build the product."
 heroSubline: "Digital products where AI is part of the product from day one."
 heroImage: "/uploads/services/ai-products-hero.png"
