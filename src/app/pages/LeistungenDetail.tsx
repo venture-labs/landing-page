@@ -3,10 +3,10 @@ import { useParams, Link } from "react-router";
 import { motion, useInView } from "motion/react";
 import { ArrowRight, Code2, Building2, Palette, Bot } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import headerUiUx from "@/assets/service-headers/ui-ux.svg";
-import headerCompanyBuilding from "@/assets/service-headers/company-building.svg";
-import headerDevelopment from "@/assets/service-headers/development.svg";
-import headerAiConsulting from "@/assets/service-headers/ai-consulting.svg";
+import headerAiExperience from "@/assets/service-headers/ai-experience.svg";
+import headerVentureBuilding from "@/assets/service-headers/venture-building.svg";
+import headerAiProducts from "@/assets/service-headers/ai-products.svg";
+import headerAiAutomation from "@/assets/service-headers/ai-automation.svg";
 import { StrengthSection } from "@/app/components/StrengthSection";
 import { PulseSection } from "@/app/components/PulseSection";
 import { Navbar } from "@/app/components/Navbar";
@@ -19,17 +19,17 @@ import { useLocale } from "@/app/locale";
 /* ─── helpers ────────────────────────────────────────────────────────── */
 
 const accentColors: Record<string, string> = {
-  development: "#a318f8",
-  "company-building": "#ef4444",
-  "ui-ux": "#2b95f6",
-  "ai-consulting": "#fda700",
+  "ai-automation": "#fda700",
+  "ai-products": "#a318f8",
+  "ai-experience": "#2b95f6",
+  "venture-building": "#ef4444",
 };
 
 const heroGraphics: Record<string, string> = {
-  development: headerDevelopment,
-  "company-building": headerCompanyBuilding,
-  "ui-ux": headerUiUx,
-  "ai-consulting": headerAiConsulting,
+  "ai-automation": headerAiAutomation,
+  "ai-products": headerAiProducts,
+  "ai-experience": headerAiExperience,
+  "venture-building": headerVentureBuilding,
 };
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -41,7 +41,7 @@ const iconMap: Record<string, React.ReactNode> = {
 
 /* ─── hero ───────────────────────────────────────────────────────────── */
 
-function DetailHero({ detail, accent }: { detail: any; accent: string }) {
+function DetailHero({ detail, accent, title }: { detail: any; accent: string; title?: string }) {
   const { t } = useTranslation();
   const { localizedPath } = useLocale();
   return (
@@ -66,6 +66,14 @@ function DetailHero({ detail, accent }: { detail: any; accent: string }) {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-col gap-8 px-6 lg:px-12 pb-12"
         >
+          {title && (
+            <span
+              className="font-['sofia-pro',sans-serif] font-semibold uppercase tracking-wide"
+              style={{ fontSize: "var(--text-small)", color: accent }}
+            >
+              {title}
+            </span>
+          )}
           <h1
             className="font-['sofia-pro',sans-serif] font-semibold text-white leading-[1.05]"
             style={{ fontSize: "var(--text-hero)" }}
@@ -341,7 +349,7 @@ function CtaBanner({ detail, accent }: { detail: any; accent: string }) {
           textColor="text-[#1E1C27]"
           fontSize="var(--text-body)"
         >
-          {t("leistungen.ctaContact")}
+          {detail.ctaButtonLabel || t("leistungen.ctaContact")}
         </CtaButton>
       </div>
     </motion.section>
@@ -473,6 +481,7 @@ export function LeistungenDetail() {
   const { localizedPath } = useLocale();
 
   const detail = useServiceDetail(slug);
+  const services = useServicesData();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -492,6 +501,7 @@ export function LeistungenDetail() {
   }
 
   const accent = accentColors[detail.slug] ?? "#8129ff";
+  const serviceTitle = services.find((s) => s.slug === detail.slug)?.title;
 
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     if (!glowRef.current) return;
@@ -517,9 +527,9 @@ export function LeistungenDetail() {
         aria-hidden
       />
       <Navbar />
-      <DetailHero detail={detail as any} accent={accent} />
+      <DetailHero detail={detail as any} accent={accent} title={serviceTitle} />
       <ProcessSection detail={detail} accent={accent} />
-      {detail.slug === "ai-consulting" && <PulseSection accent={accent} />}
+      {detail.slug === "ai-automation" && <PulseSection accent={accent} />}
       <CaseSection detail={detail} accent={accent} />
       <CtaBanner detail={detail} accent={accent} />
       <OtherServices currentSlug={detail.slug} />

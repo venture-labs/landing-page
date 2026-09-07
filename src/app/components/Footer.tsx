@@ -39,10 +39,10 @@ export function Footer() {
     {
       title: t("footer.servicesTitle"),
       links: [
-        { label: t("footer.servicesLinks.development"), href: localizedPath("/leistungen/development") },
-        { label: t("footer.servicesLinks.company-building"), href: localizedPath("/leistungen/company-building") },
-        { label: t("footer.servicesLinks.ui-ux"), href: localizedPath("/leistungen/ui-ux") },
-        { label: t("footer.servicesLinks.ai-consulting"), href: localizedPath("/leistungen/ai-consulting") },
+        { label: t("footer.servicesLinks.ai-automation"), href: localizedPath("/leistungen/ai-automation") },
+        { label: t("footer.servicesLinks.ai-products"), href: localizedPath("/leistungen/ai-products") },
+        { label: t("footer.servicesLinks.ai-experience"), href: localizedPath("/leistungen/ai-experience") },
+        { label: t("footer.servicesLinks.venture-building"), href: localizedPath("/leistungen/venture-building") },
       ],
     },
     {

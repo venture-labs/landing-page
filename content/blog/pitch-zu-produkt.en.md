@@ -4,8 +4,8 @@ language: "en"
 order: 4
 title: "From pitch to product: how we build an MVP in 12 weeks"
 excerpt: "A behind-the-scenes look at our company-building process – from first idea to first paying customer."
-topicSlug: "company-building"
-topic: "Company Building"
+topicSlug: "venture-building"
+topic: "Venture Building"
 readTime: "7 min read"
 featured: false
 publishedDate: "January 15, 2026"

@@ -4,8 +4,8 @@ language: "en"
 order: 1
 title: "Why most MVPs fail – and how to do better"
 excerpt: "An MVP isn't a half-finished product – it's a test. Here are the mistakes teams make most often, and how to learn more with less effort."
-topicSlug: "development"
-topic: "Product Development"
+topicSlug: "ai-products"
+topic: "AI Products"
 readTime: "6 min read"
 featured: true
 publishedDate: "March 12, 2026"

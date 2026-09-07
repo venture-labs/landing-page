@@ -202,6 +202,7 @@ export interface ServiceDetail {
   caseDescription: string;
   ctaHeadline: string;
   ctaBody: string;
+  ctaButtonLabel: string;
 }
 
 export const serviceDetails: ServiceDetail[] = ${JSON.stringify(
@@ -227,6 +228,7 @@ export const serviceDetails: ServiceDetail[] = ${JSON.stringify(
         caseDescription: s.caseDescription,
         ctaHeadline: s.ctaHeadline,
         ctaBody: s.ctaBody,
+        ctaButtonLabel: s.ctaButtonLabel ?? "",
       })),
       null,
       2
@@ -352,7 +354,7 @@ export interface BlogPost {
   slug: string;
   title: string;
   excerpt: string;
-  topicSlug: "development" | "company-building" | "ui-ux" | "ai-consulting";
+  topicSlug: "ai-automation" | "ai-products" | "ai-experience" | "venture-building";
   topic: string;
   readTime: string;
   featured: boolean;

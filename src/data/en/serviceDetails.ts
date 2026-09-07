@@ -26,19 +26,80 @@ export interface ServiceDetail {
   caseDescription: string;
   ctaHeadline: string;
   ctaBody: string;
+  ctaButtonLabel: string;
 }
 
 export const serviceDetails: ServiceDetail[] = [
   {
-    "slug": "development",
-    "heroHeadline": "AI-First Product Development",
-    "heroSubline": "We advise on what you need. AI implements it. Building a product still means the same thing: understanding what's needed, structuring it, and building it. What's changed is how. We develop primarily with AI agents — developers step in only where truly necessary. The result: products that used to take months are now ready in weeks.",
-    "heroImage": "/uploads/services/development-hero.png",
+    "slug": "ai-automation",
+    "heroHeadline": "Improve the business.",
+    "heroSubline": "We automate processes where AI measurably saves time, cuts costs, and reduces errors.",
+    "heroImage": "/uploads/services/ai-automation-hero.png",
     "tags": [
-      "Fullstack development",
-      "API integration",
-      "Database architecture",
-      "Agent engineering — AI-powered implementation"
+      "AI agents & intelligent workflows",
+      "Email & document process automation",
+      "Knowledge & research systems",
+      "Sales, service & operations automation",
+      "Integration with ERP, CRM, DMS & existing tools",
+      "Operation & continuous improvement"
+    ],
+    "process": [
+      {
+        "number": "01",
+        "title": "Diagnose",
+        "description": "We analyse your data, processes, team and tools in 1–2 days and show you where AI creates the most leverage."
+      },
+      {
+        "number": "02",
+        "title": "Prescribe",
+        "description": "You get a prioritised roadmap, not a generic strategy deck."
+      },
+      {
+        "number": "03",
+        "title": "Build",
+        "description": "We build the 1–3 highest-priority use cases in a 4-week sprint."
+      },
+      {
+        "number": "04",
+        "title": "Monitor",
+        "description": "Then we stay involved: monthly check-ins, a shared dashboard, and quarterly reviews."
+      }
+    ],
+    "caseTitle": "MachineMaster",
+    "caseSlug": "machinemaster",
+    "caseSubtitle": "MachineMaster: AI in agricultural machinery sales.",
+    "caseImage": "/uploads/services/ai-automation-case.png",
+    "caseStats": [
+      {
+        "value": "+230%",
+        "label": "More user interactions"
+      },
+      {
+        "value": "+10%",
+        "label": "Sales increase"
+      },
+      {
+        "value": "5/5",
+        "label": "Customer ratings"
+      }
+    ],
+    "caseDescription": "An AI-powered sales tool for dealers and field reps — from MVP in just 12 weeks.",
+    "ctaHeadline": "AI that actually automates — not just a chatbot.",
+    "ctaBody": "In a free intro call with our team, we'll talk honestly about where AI agents can already make a difference in your business today.",
+    "ctaButtonLabel": "Find your automation opportunity"
+  },
+  {
+    "slug": "ai-products",
+    "heroHeadline": "Build the product.",
+    "heroSubline": "Digital products where AI is part of the product from day one.",
+    "heroImage": "/uploads/services/ai-products-hero.png",
+    "tags": [
+      "Product strategy & concept",
+      "AI-native product development",
+      "Prototyping & MVPs",
+      "Web apps & business software",
+      "AI architecture & integrations",
+      "Launch & continuous development"
     ],
     "process": [
       {
@@ -60,7 +121,7 @@ export const serviceDetails: ServiceDetail[] = [
     "caseTitle": "Tap2Link",
     "caseSlug": "tap2link",
     "caseSubtitle": "Tap2Link: more than a digital business card.",
-    "caseImage": "/uploads/services/development-case.png",
+    "caseImage": "/uploads/services/ai-products-case.png",
     "caseStats": [
       {
         "value": "+35%",
@@ -77,77 +138,21 @@ export const serviceDetails: ServiceDetail[] = [
     ],
     "caseDescription": "A digital service portal for complex B2B processes — from idea to launch in just 8 weeks.",
     "ctaHeadline": "Ready for a product that thinks along?",
-    "ctaBody": "Let's find out in an honest intro call whether your next product needs classic software or a self-learning system."
+    "ctaBody": "Let's find out in an honest intro call whether your next product needs classic software or a self-learning system.",
+    "ctaButtonLabel": "Build your product"
   },
   {
-    "slug": "company-building",
-    "heroHeadline": "Company Building",
-    "heroSubline": "We build AI-first companies. Building a company still means the same things: writing a business plan, designing processes, putting together a team, getting from idea to running company. What's different today: the focus is on agent systems — AI takes over where it can, and we make sure the structure holds up. We come from company building and know how companies come together: software as a service is dead — AI is the next chapter, and we build it with you.",
-    "heroImage": "/uploads/services/company-building-hero.png",
+    "slug": "ai-experience",
+    "heroHeadline": "Design the interaction.",
+    "heroSubline": "New interfaces for how people and intelligent systems work together.",
+    "heroImage": "/uploads/services/ai-experience-hero.png",
     "tags": [
-      "Business plan & strategy",
-      "Process design",
-      "Building agent systems as the core of the company",
-      "Support from idea to ongoing operations"
-    ],
-    "process": [
-      {
-        "number": "01",
-        "title": "Idea & Vision",
-        "description": "In a personal conversation, we sharpen your idea: the real problem, the real audience, the real USP."
-      },
-      {
-        "number": "02",
-        "title": "Business Model Consulting",
-        "description": "Lean canvas and revenue model take shape in dialogue with our team — not an automated template, but real entrepreneurial experience."
-      },
-      {
-        "number": "03",
-        "title": "AI-Focused MVP Scope",
-        "description": "We define which processes your company can automate and scale with AI agents from day one."
-      },
-      {
-        "number": "04",
-        "title": "Build & Automation",
-        "description": "Our team builds your MVP — design, development, messaging. AI takes over what repeats, so you can focus on growth."
-      },
-      {
-        "number": "05",
-        "title": "Traction & Scale",
-        "description": "We support the first users, the first feedback, the first revenue — and help embed AI-driven processes in your own team."
-      }
-    ],
-    "caseTitle": "Moerschen",
-    "caseSlug": "moerschen",
-    "caseSubtitle": "Moerschen: from relaunch to lead machine.",
-    "caseImage": "/uploads/services/company-building-case.png",
-    "caseStats": [
-      {
-        "value": "+45%",
-        "label": "More contact inquiries"
-      },
-      {
-        "value": "8 wks",
-        "label": "From kickoff to launch"
-      },
-      {
-        "value": "2×",
-        "label": "Faster to find the right contact"
-      }
-    ],
-    "caseDescription": "Website relaunch with clear user guidance and a new communication strategy — live in 8 weeks.",
-    "ctaHeadline": "Your startup. Our experience. AI as an accelerator.",
-    "ctaBody": "Let's find out in a free intro call how we turn your business model into reality with real experience and smart automation."
-  },
-  {
-    "slug": "ui-ux",
-    "heroHeadline": "UI & UX",
-    "heroSubline": "AI still needs a face people can understand. Even as more happens behind the scenes through AI, results stay inaccessible to users without a well-thought-out interface. We design UI & UX that translates complex AI processes into clear, usable interfaces — consistent, understandable, to the point. We come from classic web design and now bring that experience to where it's needed most: as the interface between people and AI.",
-    "heroImage": "/uploads/services/ui-ux-hero.png",
-    "tags": [
-      "Interface design for AI-powered products",
-      "Unified dashboards for complex data",
-      "Structure & user flows from first idea to rollout"
+      "AI interaction design",
+      "Agent UX & conversational interfaces",
+      "UX for complex B2B processes",
+      "Product design & prototyping",
+      "Design systems",
+      "Evaluation & optimization"
     ],
     "process": [
       {
@@ -179,7 +184,7 @@ export const serviceDetails: ServiceDetail[] = [
     "caseTitle": "Brylliant",
     "caseSlug": "brylliant",
     "caseSubtitle": "Brylliant: the tool for perfect briefings.",
-    "caseImage": "/uploads/services/ui-ux-case.png",
+    "caseImage": "/uploads/services/ai-experience-case.png",
     "caseStats": [
       {
         "value": "2×",
@@ -196,60 +201,70 @@ export const serviceDetails: ServiceDetail[] = [
     ],
     "caseDescription": "A scalable tool for efficient briefings, clean processes, and strategic clarity — designed in 6 weeks.",
     "ctaHeadline": "Design that doesn't stand still.",
-    "ctaBody": "Let us show you in an honest intro call how thoughtful UX design and smart AI tools achieve more together."
+    "ctaBody": "Let us show you in an honest intro call how thoughtful UX design and smart AI tools achieve more together.",
+    "ctaButtonLabel": "Design your AI experience"
   },
   {
-    "slug": "ai-consulting",
-    "heroHeadline": "AI Consulting & Implementation",
-    "heroSubline": "We're the interface between your company and AI. Most companies know they should be using AI — they just don't know where to start. That's where we come in: we look at your business, find where AI agents make the biggest difference, and implement it. Not as a one-off project, but as ongoing support. We come from software development and company building, so we know how companies and products work — we now use that experience to help companies become AI-first.",
-    "heroImage": "/uploads/services/ai-consulting-hero.png",
+    "slug": "venture-building",
+    "heroHeadline": "Create the new business.",
+    "heroSubline": "From opportunity to a validated business model and a working venture.",
+    "heroImage": "/uploads/services/venture-building-hero.png",
     "tags": [
-      "Assessment: where are you today, and where does AI actually pay off?",
-      "Sub-projects: clean data infrastructure, reporting for leadership, automated customer interaction",
-      "Ongoing operation: we monitor how the AI is used and continuously adjust processes and prompts"
+      "Opportunity discovery",
+      "Business model & strategy",
+      "Market & concept validation",
+      "MVP & product development",
+      "AI-native products",
+      "Launch & growth"
     ],
     "process": [
       {
         "number": "01",
-        "title": "Diagnose",
-        "description": "We analyse your data, processes, team and tools in 1–2 days and show you where AI creates the most leverage."
+        "title": "Idea & Vision",
+        "description": "In a personal conversation, we sharpen your idea: the real problem, the real audience, the real USP."
       },
       {
         "number": "02",
-        "title": "Prescribe",
-        "description": "You get a prioritised roadmap, not a generic strategy deck."
+        "title": "Business Model Consulting",
+        "description": "Lean canvas and revenue model take shape in dialogue with our team — not an automated template, but real entrepreneurial experience."
       },
       {
         "number": "03",
-        "title": "Build",
-        "description": "We build the 1–3 highest-priority use cases in a 4-week sprint."
+        "title": "AI-Focused MVP Scope",
+        "description": "We define which processes your company can automate and scale with AI agents from day one."
       },
       {
         "number": "04",
-        "title": "Monitor",
-        "description": "Then we stay involved: monthly check-ins, a shared dashboard, and quarterly reviews."
+        "title": "Build & Automation",
+        "description": "Our team builds your MVP — design, development, messaging. AI takes over what repeats, so you can focus on growth."
+      },
+      {
+        "number": "05",
+        "title": "Traction & Scale",
+        "description": "We support the first users, the first feedback, the first revenue — and help embed AI-driven processes in your own team."
       }
     ],
-    "caseTitle": "MachineMaster",
-    "caseSlug": "machinemaster",
-    "caseSubtitle": "MachineMaster: AI in agricultural machinery sales.",
-    "caseImage": "/uploads/services/ai-consulting-case.png",
+    "caseTitle": "Moerschen",
+    "caseSlug": "moerschen",
+    "caseSubtitle": "Moerschen: from relaunch to lead machine.",
+    "caseImage": "/uploads/services/venture-building-case.png",
     "caseStats": [
       {
-        "value": "+230%",
-        "label": "More user interactions"
+        "value": "+45%",
+        "label": "More contact inquiries"
       },
       {
-        "value": "+10%",
-        "label": "Sales increase"
+        "value": "8 wks",
+        "label": "From kickoff to launch"
       },
       {
-        "value": "5/5",
-        "label": "Customer ratings"
+        "value": "2×",
+        "label": "Faster to find the right contact"
       }
     ],
-    "caseDescription": "An AI-powered sales tool for dealers and field reps — from MVP in just 12 weeks.",
-    "ctaHeadline": "AI that actually automates — not just a chatbot.",
-    "ctaBody": "In a free intro call with our team, we'll talk honestly about where AI agents can already make a difference in your business today."
+    "caseDescription": "Website relaunch with clear user guidance and a new communication strategy — live in 8 weeks.",
+    "ctaHeadline": "Your startup. Our experience. AI as an accelerator.",
+    "ctaBody": "Let's find out in a free intro call how we turn your business model into reality with real experience and smart automation.",
+    "ctaButtonLabel": "Build a new venture"
   }
 ];

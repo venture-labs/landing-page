@@ -1,9 +1,9 @@
 ---
 language: de
-heroHeadline: Wir bauen digitale Lösungen für dein Business.
-heroSubline: 'Ein kleines, fokussiertes Team aus Strategy, Design und Projektleitung entwickelt in wenigen Wochen digitale Produkte, die wirklich funktionieren.'
-heroCta: Gespräch vereinbaren
-heroCtaSecondary: Projekte ansehen
+heroHeadline: We build what's next.
+heroSubline: 'Wir helfen Unternehmen, mit KI neue Möglichkeiten zu entdecken, zu entwickeln und zu skalieren.'
+heroCta: Start with AI Pulse
+heroCtaSecondary: Talk to us
 clientLogosLabel: Diese Kunden setzen auf uns
 ---
 

@@ -1,18 +1,21 @@
 ---
 language: "de"
-slug: ui-ux
+slug: ai-experience
 order: 3
-title: "UI & UX"
-description: "UX-Beratung im Gespräch, Umsetzung mit KI-gestützten Design-Systemen, die mitlernen."
+title: "AI Experience"
+description: "Die Zusammenarbeit von Mensch und AI gestalten: Wir gestalten Interfaces, Workflows und Interaktionen für eine neue Generation digitaler Produkte."
 gradient: "linear-gradient(44.336deg, rgba(43, 149, 246, 0.8) 0%, rgba(43, 149, 246, 0) 100%)"
 icon: palette
-heroHeadline: "UI & UX"
-heroSubline: "KI braucht trotzdem ein Gesicht, das Menschen verstehen. Auch wenn im Hintergrund immer mehr durch KI läuft: Ohne ein durchdachtes Interface bleiben die Ergebnisse für Nutzer:innen unzugänglich. Wir gestalten UI & UX, die komplexe KI-Prozesse in klare, nutzbare Oberflächen übersetzt – einheitlich, verständlich, auf den Punkt. Wir kommen aus dem klassischen Webdesign und bringen diese Erfahrung jetzt dahin, wo sie heute gebraucht wird: als Schnittstelle zwischen Mensch und KI."
-heroImage: "/uploads/services/ui-ux-hero.png"
+heroHeadline: "Design the interaction."
+heroSubline: "Neue Interfaces für die Zusammenarbeit von Menschen und intelligenten Systemen."
+heroImage: "/uploads/services/ai-experience-hero.png"
 tags:
-  - "Interface-Design für KI-gestützte Produkte"
-  - "Einheitliche Dashboards für komplexe Daten"
-  - "Struktur & Nutzerführung von der ersten Idee bis zum Rollout"
+  - "AI Interaction Design"
+  - "Agent UX & Conversational Interfaces"
+  - "UX für komplexe B2B-Prozesse"
+  - "Product Design & Prototyping"
+  - "Design Systems"
+  - "Evaluation & Optimierung"
 process:
   - number: "01"
     title: "UX Research & Analyse"
@@ -32,7 +35,7 @@ process:
 caseTitle: "Brylliant"
 caseSlug: "brylliant"
 caseSubtitle: "Brylliant: Das Tool für perfekte Briefings."
-caseImage: "/uploads/services/ui-ux-case.png"
+caseImage: "/uploads/services/ai-experience-case.png"
 caseStats:
   - value: "2×"
     label: "Schnellere Briefing-Freigaben"
@@ -43,4 +46,5 @@ caseStats:
 caseDescription: "Ein skalierbares Tool für effiziente Briefings, saubere Prozesse und strategische Klarheit – designed in 6 Wochen."
 ctaHeadline: "Design, das nicht stehen bleibt."
 ctaBody: "Lass uns in einem ehrlichen Erstgespräch zeigen, wie durchdachtes UX-Design und smarte KI-Tools zusammen mehr Wirkung erzielen."
+ctaButtonLabel: "Design your AI experience"
 ---

@@ -9,7 +9,7 @@ import { CtaButton } from "@/app/components/ui/CtaButton";
  * transposed from the live pulse.venturelabs.team site (both content and
  * quiz logic captured directly from the running app, DE + EN). Not part of
  * the markdown content — this is a fixed product feature specific to the
- * "ai-consulting" service page, so it's plain code rather than CMS content.
+ * "ai-automation" service page, so it's plain code rather than CMS content.
  *
  * The score narrative is verified for the two ends of the 0–100 range
  * ("Erste Anzeichen"/"Early Signs" at the low end, "Stabiler Puls"/"Steady

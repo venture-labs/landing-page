@@ -129,6 +129,13 @@ function buildPagesForLocale(lang: Locale): PageMeta[] {
   });
 
   pages.push({
+    path: `/${lang}/ai-pulse`,
+    lang,
+    title: `${ui.aiPulsePage.heroHeadline}${suffix}`,
+    description: ui.aiPulsePage.heroSubline,
+  });
+
+  pages.push({
     path: `/${lang}/blog`,
     lang,
     title: `${ui.blog.heroTitle}${suffix}`,

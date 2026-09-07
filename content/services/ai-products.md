@@ -1,19 +1,21 @@
 ---
 language: "de"
-slug: development
-order: 1
-title: "Produktentwicklung / Development"
-description: "Solides Software-Fundament, neu gedacht: Produkte, die mit KI-Agenten mitwachsen statt stillzustehen."
+slug: ai-products
+order: 2
+title: "AI Products"
+description: "Neue digitale Produkte bauen: Wir entwickeln Produkte, die AI nicht nachträglich aufsetzen, sondern von Anfang an mitdenken."
 gradient: "linear-gradient(146.383deg, rgba(163, 24, 248, 0.8) 0%, rgba(163, 24, 248, 0) 100%)"
 icon: code
-heroHeadline: "Produktentwicklung mit KI-Agenten"
-heroSubline: "Wir beraten, was du brauchst. Die KI setzt es um. Ein Produkt zu bauen bedeutet immer noch dasselbe: verstehen, was gebraucht wird, es strukturieren und umsetzen. Was sich geändert hat, ist das Wie. Wir entwickeln primär mit KI-Agenten – Entwickler:innen kommen nur dort zum Einsatz, wo es wirklich nötig ist. Das Ergebnis: Produkte, die früher Monate gedauert haben, sind heute in Wochen einsatzbereit."
-heroImage: "/uploads/services/development-hero.png"
+heroHeadline: "Build the product."
+heroSubline: "Digitale Produkte, bei denen KI von Anfang an Teil des Produkts ist."
+heroImage: "/uploads/services/ai-products-hero.png"
 tags:
-  - "Fullstack-Entwicklung"
-  - "API-Integration"
-  - "Datenbankarchitektur"
-  - "Agent Engineering – KI-gestützte Umsetzung"
+  - "Produktstrategie & Konzept"
+  - "AI-native Produktentwicklung"
+  - "Prototyping & MVPs"
+  - "Web Apps & Business Software"
+  - "AI-Architektur & Integrationen"
+  - "Launch & kontinuierliche Weiterentwicklung"
 process:
   - number: "01"
     title: "Bestandsaufnahme"
@@ -27,7 +29,7 @@ process:
 caseTitle: "Tap2Link"
 caseSlug: "tap2link"
 caseSubtitle: "Tap2Link: Mehr als eine digitale Visitenkarte."
-caseImage: "/uploads/services/development-case.png"
+caseImage: "/uploads/services/ai-products-case.png"
 caseStats:
   - value: "+35%"
     label: "Schnellerer Onboarding-Prozess"
@@ -38,4 +40,5 @@ caseStats:
 caseDescription: "Ein digitales Serviceportal für komplexe B2B-Prozesse – in nur 8 Wochen von der Idee bis zum Launch."
 ctaHeadline: "Bereit für ein Produkt, das mitdenkt?"
 ctaBody: "Lass uns in einem ehrlichen Erstgespräch herausfinden, ob dein nächstes Produkt klassische Software oder ein selbstlernendes System braucht."
+ctaButtonLabel: "Build your product"
 ---

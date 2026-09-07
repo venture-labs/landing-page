@@ -1,18 +1,21 @@
 ---
 language: "de"
-slug: ai-consulting
-order: 4
-title: "KI-Beratung & Implementierung"
-description: "Ehrliche KI-Beratung von unserem Software-Team, dauerhafte Begleitung bei Implementierung und Betrieb deiner KI-Agenten."
+slug: ai-automation
+order: 1
+title: "AI Automation"
+description: "Bestehende Prozesse neu denken: Wir verwandeln manuelle Geschäftsprozesse in intelligente, integrierte Workflows."
 gradient: "linear-gradient(-56.458deg, rgba(253, 167, 0, 0.8) 0%, rgba(253, 167, 0, 0) 100%)"
 icon: bot
-heroHeadline: "KI-Beratung & Implementierung"
-heroSubline: "Wir sind die Schnittstelle zwischen deinem Unternehmen und der KI. Die meisten Unternehmen wissen, dass sie KI einsetzen sollten – aber nicht, wo sie anfangen sollen. Genau da setzen wir an: Wir schauen uns dein Unternehmen an, finden heraus, wo KI-Agenten den größten Unterschied machen, und setzen das um. Nicht als einmaliges Projekt, sondern als laufende Begleitung. Wir kommen aus Softwareentwicklung und Company Building und wissen, wie Unternehmen und Produkte funktionieren – diese Erfahrung nutzen wir jetzt, um Unternehmen KI-first aufzustellen."
-heroImage: "/uploads/services/ai-consulting-hero.png"
+heroHeadline: "Improve the business."
+heroSubline: "Wir automatisieren Prozesse dort, wo KI messbar Zeit, Kosten und Fehler reduziert."
+heroImage: "/uploads/services/ai-automation-hero.png"
 tags:
-  - "Bestandsaufnahme: Wo stehst du heute, wo lohnt sich KI wirklich?"
-  - "Teilprojekte: saubere Datenhaltung, Auswertungen fürs Management, automatisierte Kundeninteraktion"
-  - "Laufender Betrieb: Wir prüfen, wie die KI genutzt wird, und passen Prozesse und Prompts kontinuierlich an"
+  - "AI Agents & intelligente Workflows"
+  - "Automatisierung von E-Mail- und Dokumentenprozessen"
+  - "Wissens- und Recherche-Systeme"
+  - "Automatisierung von Vertrieb, Service & Operations"
+  - "Integration in ERP, CRM, DMS & bestehende Tools"
+  - "Betrieb und kontinuierliche Weiterentwicklung"
 process:
   - number: "01"
     title: "Diagnose"
@@ -29,7 +32,7 @@ process:
 caseTitle: "MachineMaster"
 caseSlug: "machinemaster"
 caseSubtitle: "MachineMaster: KI im Vertrieb von Landmaschinen."
-caseImage: "/uploads/services/ai-consulting-case.png"
+caseImage: "/uploads/services/ai-automation-case.png"
 caseStats:
   - value: "+230%"
     label: "Mehr Nutzerinteraktionen"
@@ -40,4 +43,5 @@ caseStats:
 caseDescription: "Ein KI-gestütztes Vertriebstool für Händler und Außendienst – vom MVP in nur 12 Wochen."
 ctaHeadline: "KI, die wirklich automatisiert – nicht nur ein Chatbot."
 ctaBody: "Im kostenlosen Erstgespräch mit unserem Team sprechen wir ehrlich darüber, wo KI-Agenten in deinem Business heute schon den Unterschied machen."
+ctaButtonLabel: "Find your automation opportunity"
 ---

@@ -1,19 +1,21 @@
 ---
-slug: company-building
+slug: venture-building
 language: "en"
-order: 2
-title: "Company Building"
-description: "Business-model consulting from real people, MVP execution accelerated by AI."
+order: 4
+title: "Venture Building"
+description: "Turning opportunities into new businesses: we validate business models and build them into working digital ventures."
 gradient: "linear-gradient(268.344deg, rgba(255, 0, 0, 0.8) 0%, rgba(255, 0, 0, 0) 100%)"
 icon: grid
-heroHeadline: "Company Building"
-heroSubline: "We build AI-first companies. Building a company still means the same things: writing a business plan, designing processes, putting together a team, getting from idea to running company. What's different today: the focus is on agent systems — AI takes over where it can, and we make sure the structure holds up. We come from company building and know how companies come together: software as a service is dead — AI is the next chapter, and we build it with you."
-heroImage: "/uploads/services/company-building-hero.png"
+heroHeadline: "Create the new business."
+heroSubline: "From opportunity to a validated business model and a working venture."
+heroImage: "/uploads/services/venture-building-hero.png"
 tags:
-  - "Business plan & strategy"
-  - "Process design"
-  - "Building agent systems as the core of the company"
-  - "Support from idea to ongoing operations"
+  - "Opportunity discovery"
+  - "Business model & strategy"
+  - "Market & concept validation"
+  - "MVP & product development"
+  - "AI-native products"
+  - "Launch & growth"
 process:
   - number: "01"
     title: "Idea & Vision"
@@ -33,7 +35,7 @@ process:
 caseTitle: "Moerschen"
 caseSlug: "moerschen"
 caseSubtitle: "Moerschen: from relaunch to lead machine."
-caseImage: "/uploads/services/company-building-case.png"
+caseImage: "/uploads/services/venture-building-case.png"
 caseStats:
   - value: "+45%"
     label: "More contact inquiries"
@@ -44,4 +46,5 @@ caseStats:
 caseDescription: "Website relaunch with clear user guidance and a new communication strategy — live in 8 weeks."
 ctaHeadline: "Your startup. Our experience. AI as an accelerator."
 ctaBody: "Let's find out in a free intro call how we turn your business model into reality with real experience and smart automation."
+ctaButtonLabel: "Build a new venture"
 ---

@@ -17,10 +17,10 @@ const iconMap: Record<Service["icon"], React.ReactNode> = {
 /* Extract the accent color from the gradient string so the radial spotlight
    can use the same hue as each card's directional gradient */
 const cardAccentColors: Record<string, string> = {
-  development: "163, 24, 248",
-  "company-building": "255, 50, 50",
-  "ui-ux": "43, 149, 246",
-  "ai-consulting": "253, 167, 0",
+  "ai-automation": "253, 167, 0",
+  "ai-products": "163, 24, 248",
+  "ai-experience": "43, 149, 246",
+  "venture-building": "255, 50, 50",
 };
 
 function ServiceCard({ service, index }: { service: Service; index: number }) {
@@ -29,6 +29,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
   const [mouse, setMouse] = useState({ x: 50, y: 50 });
   const [hovered, setHovered] = useState(false);
   const { localizedPath } = useLocale();
+  const { t } = useTranslation();
 
   const accent = cardAccentColors[service.slug] ?? "163, 24, 248";
 
@@ -101,9 +102,18 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
             {service.description}
           </p>
         </div>
-        <div className="flex justify-end">
+        <div className="flex items-center justify-between">
+          <span
+            className="font-semibold uppercase tracking-wide transition-colors duration-300"
+            style={{
+              fontSize: "var(--text-small)",
+              color: hovered ? `rgba(${accent}, 0.9)` : "rgba(255,255,255,0.5)",
+            }}
+          >
+            {t("services.exploreCta")} {service.title}
+          </span>
           <div
-            className="w-8 h-8 flex items-center justify-center border rounded-full transition-all duration-300"
+            className="w-8 h-8 flex items-center justify-center border rounded-full transition-all duration-300 shrink-0"
             style={{
               borderColor: hovered ? `rgba(${accent}, 0.5)` : "rgba(255,255,255,0.2)",
               color: hovered ? `rgba(${accent}, 0.9)` : "rgba(255,255,255,0.5)",

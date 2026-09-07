@@ -8,14 +8,56 @@
     "hiring": "👉 We're hiring!",
     "videoPlay": "Play video",
     "videoPause": "Pause video",
-    "headlineHighlight": "digital products"
+    "headlineHighlight": "what's next"
   },
   "services": {
-    "heading": "Our services",
-    "subheading": "VentureLabs helps companies think, plan, and ship digital products faster — with a team of specialists in design, development, and AI."
+    "heading": "From opportunity to impact.",
+    "subheading": "Whether you want to improve existing processes, build a new product, or start a new business: we combine business, product, design, engineering, and AI.",
+    "exploreCta": "Explore"
+  },
+  "problem": {
+    "heading": "AI is changing how businesses work.",
+    "body": "Many businesses know AI is becoming relevant, but not where the biggest leverage lies. Venture Labs helps turn potential into concrete solutions."
+  },
+  "aiPulse": {
+    "heading": "Find your AI opportunities.",
+    "body": "AI can improve processes, unlock new products, and change entire business models. We help you find where the biggest leverage in your business lies — and build the solution from there.",
+    "cta": "Explore AI Pulse"
+  },
+  "howWeWork": {
+    "heading": "Discover. Prioritize. Build. Scale.",
+    "subheading": "How we work — one connected process, not four separate services.",
+    "steps": [
+      { "number": "01", "title": "Discover", "description": "Understand processes, opportunities, and requirements." },
+      { "number": "02", "title": "Prioritize", "description": "Select the most valuable use cases." },
+      { "number": "03", "title": "Build", "description": "Build a working pilot or product." },
+      { "number": "04", "title": "Scale", "description": "Integrate, operate, and keep evolving the solution." }
+    ]
+  },
+  "useCases": {
+    "heading": "Less effort, better outcomes.",
+    "subheading": "Not technology — concrete problems.",
+    "items": [
+      "Less manual work",
+      "Faster quotes",
+      "Better knowledge search",
+      "Automated document processes",
+      "New digital products"
+    ]
+  },
+  "aboutTeaser": {
+    "heading": "One team. From business to AI.",
+    "body": "Business understanding, product thinking, UX, engineering, and AI in one team. No handoffs between strategy, design, and development — just building together.",
+    "cta": "More about us"
+  },
+  "finalCta": {
+    "heading": "Have an AI opportunity in mind?",
+    "body": "Let's turn it into something that works.",
+    "primaryCta": "Start with AI Pulse",
+    "secondaryCta": "Talk to Venture Labs"
   },
   "projects": {
-    "heading": "Projects",
+    "heading": "Built for real business.",
     "subheading": "Our projects span every industry. Our clients range from startups to large enterprises. And it gets especially exciting when we're our own client.",
     "viewProject": "View project",
     "moreHeading": "More projects",
@@ -42,10 +84,10 @@
     "privacy": "Privacy",
     "terms": "Terms",
     "servicesLinks": {
-      "development": "Product Development",
-      "company-building": "Company Building",
-      "ui-ux": "UI & UX",
-      "ai-consulting": "AI Consulting & Implementation"
+      "ai-automation": "AI Automation",
+      "ai-products": "AI Products",
+      "ai-experience": "AI Experience",
+      "venture-building": "Venture Building"
     }
   },
   "leistungen": {
@@ -108,21 +150,21 @@
     "heroTitle": "What's on your mind?",
     "heroSubtitle": "Pick the topics you're interested in – it helps us get back to you faster.",
     "topics": {
-      "development": {
-        "label": "Product Development",
+      "ai-automation": {
+        "label": "AI Automation",
+        "chips": ["AI Agents", "Automation", "Business Analytics", "AI Consulting"]
+      },
+      "ai-products": {
+        "label": "AI Products",
         "chips": ["Web App", "Mobile App", "SaaS Platform", "APIs & Integrations", "MVP"]
       },
-      "company-building": {
-        "label": "Company Building",
-        "chips": ["MVP Build", "Business Model", "Go-to-Market", "Team Building"]
-      },
-      "ui-ux": {
-        "label": "UI & UX",
+      "ai-experience": {
+        "label": "AI Experience",
         "chips": ["Website", "Branding", "Design System", "Prototype", "Content"]
       },
-      "ai-consulting": {
-        "label": "AI Consulting & Implementation",
-        "chips": ["AI Agents", "Automation", "Business Analytics", "AI Consulting"]
+      "venture-building": {
+        "label": "Venture Building",
+        "chips": ["MVP Build", "Business Model", "Go-to-Market", "Team Building"]
       }
     },
     "directContact": "Direct Contact",
@@ -145,5 +187,30 @@
     "submit": "Send",
     "submitHint": "Opens your email app with a pre-filled message to us.",
     "ctaQuestion": "Want a free initial consultation? We're happy to help. Just call or write to us – we'll get back to you."
+  },
+  "aiPulsePage": {
+    "eyebrow": "AI Pulse",
+    "heroHeadline": "Find the AI opportunities that matter.",
+    "heroSubline": "In a focused sprint, we identify the AI opportunities with the highest economic potential in your business.",
+    "heroCta": "Start your AI Pulse",
+    "problemHeading": "You know AI matters. But not which processes are actually worth it?",
+    "problemBody": "Most businesses know they should be using AI — they just don't know where to start. AI Pulse gives you clarity in a short sprint, not another consulting deck.",
+    "processHeading": "Understand. Discover. Prioritize. Pilot.",
+    "steps": [
+      { "number": "01", "title": "Understand", "description": "We build a clear picture of your processes, systems, data, and ways of working." },
+      { "number": "02", "title": "Discover", "description": "We identify the AI applications with the highest economic leverage." },
+      { "number": "03", "title": "Prioritize", "description": "We prioritise 3–5 use cases by business impact, feasibility, and effort." },
+      { "number": "04", "title": "Pilot", "description": "We deliver a concrete plan for a production pilot — not another report." }
+    ],
+    "outputHeading": "Output",
+    "outputItems": [
+      "AI Opportunity Map",
+      "Prioritised use cases",
+      "Business case",
+      "Technical feasibility",
+      "Pilot roadmap"
+    ],
+    "ctaHeading": "Ready to find your AI opportunities?",
+    "ctaBody": "Start with a focused AI Pulse sprint — and a concrete next build step instead of a slide deck."
   }
 }

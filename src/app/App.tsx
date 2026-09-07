@@ -4,16 +4,22 @@ import { LangGuard, DEFAULT_LOCALE } from "./locale";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
-import { ProfileSection } from "./components/ProfileSection";
+import { ProblemSection } from "./components/ProblemSection";
+import { AIPulseTeaser } from "./components/AIPulseTeaser";
 import { Services } from "./components/Services";
+import { HowWeWork } from "./components/HowWeWork";
+import { UseCases } from "./components/UseCases";
 import { ProjectsFeatured } from "./components/ProjectsFeatured";
 import { ProjectsMore } from "./components/ProjectsMore";
+import { AboutTeaser } from "./components/AboutTeaser";
+import { FinalCTA } from "./components/FinalCTA";
 import { Footer } from "./components/Footer";
 import { Leistungen } from "./pages/Leistungen";
 import { LeistungenDetail } from "./pages/LeistungenDetail";
 import CaseDetail from "./pages/CaseDetail";
 import { CasesOverview } from "./pages/CasesOverview";
 import { Kontakt } from "./pages/Kontakt";
+import { AIPulse } from "./pages/AIPulse";
 import { Blog } from "./pages/Blog";
 import { BlogDetail } from "./pages/BlogDetail";
 import { UeberUns } from "./pages/UeberUns";
@@ -50,10 +56,15 @@ function HomePage() {
       />
       <Navbar />
       <Hero />
-      <ProfileSection />
+      <ProblemSection />
+      <AIPulseTeaser />
       <Services />
+      <HowWeWork />
+      <UseCases />
       <ProjectsFeatured />
       <ProjectsMore />
+      <AboutTeaser />
+      <FinalCTA />
       <Footer />
     </div>
   );
@@ -104,7 +115,7 @@ export default function App() {
           path="/:lang/leistungen/webdesign"
           element={
             <LangGuard>
-              <LegacyServiceRedirect slug="ui-ux" />
+              <LegacyServiceRedirect slug="ai-experience" />
             </LangGuard>
           }
         />
@@ -112,7 +123,39 @@ export default function App() {
           path="/:lang/leistungen/ki-strategie"
           element={
             <LangGuard>
-              <LegacyServiceRedirect slug="ai-consulting" />
+              <LegacyServiceRedirect slug="ai-automation" />
+            </LangGuard>
+          }
+        />
+        <Route
+          path="/:lang/leistungen/ai-consulting"
+          element={
+            <LangGuard>
+              <LegacyServiceRedirect slug="ai-automation" />
+            </LangGuard>
+          }
+        />
+        <Route
+          path="/:lang/leistungen/development"
+          element={
+            <LangGuard>
+              <LegacyServiceRedirect slug="ai-products" />
+            </LangGuard>
+          }
+        />
+        <Route
+          path="/:lang/leistungen/ui-ux"
+          element={
+            <LangGuard>
+              <LegacyServiceRedirect slug="ai-experience" />
+            </LangGuard>
+          }
+        />
+        <Route
+          path="/:lang/leistungen/company-building"
+          element={
+            <LangGuard>
+              <LegacyServiceRedirect slug="venture-building" />
             </LangGuard>
           }
         />
@@ -137,6 +180,14 @@ export default function App() {
           element={
             <LangGuard>
               <Kontakt />
+            </LangGuard>
+          }
+        />
+        <Route
+          path="/:lang/ai-pulse"
+          element={
+            <LangGuard>
+              <AIPulse />
             </LangGuard>
           }
         />

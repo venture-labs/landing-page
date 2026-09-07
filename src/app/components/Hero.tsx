@@ -27,7 +27,7 @@ function HeroHeadline({
   return (
     <h1
       className="font-semibold text-white leading-[1.05] tracking-tight w-full"
-      style={{ fontSize: "var(--text-hero)" }}
+      style={{ fontSize: "calc(var(--text-hero) * 1.25)" }}
     >
       {parts[0]}
       <span className="relative inline-block">
@@ -93,7 +93,7 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-start pt-28 overflow-hidden bg-[#1E1C27]">
+    <section className="relative min-h-screen flex items-start pt-[9.8rem] overflow-hidden bg-[#1E1C27]">
       <BackgroundBlobs />
 
       <div
@@ -106,7 +106,7 @@ export function Hero() {
       />
 
       {/* Outer max-width wrapper — nothing grows beyond 1400px */}
-      <div className="relative z-10 w-full max-w-[1400px] mx-auto pb-20">
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto pb-40">
         {/* Text content with comfortable side padding */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -120,7 +120,7 @@ export function Hero() {
           />
 
           <p
-            className="text-white/60 font-light leading-relaxed max-w-2xl"
+            className="text-white/60 font-light leading-relaxed w-full lg:whitespace-nowrap"
             style={{ fontSize: "var(--text-body)" }}
           >
             {siteData.heroSubline}
@@ -128,7 +128,7 @@ export function Hero() {
 
           <div className="flex flex-wrap gap-4">
             <a
-              href={localizedPath("/#kontakt")}
+              href={localizedPath("/ai-pulse")}
               className="inline-flex items-center gap-2 bg-[#8129ff] hover:bg-[#9140ff] text-white font-semibold rounded-lg transition-all hover:scale-[1.02] px-[24px] py-[11px]"
               style={{ fontSize: "var(--text-body)" }}
             >
@@ -136,7 +136,7 @@ export function Hero() {
               <ArrowRight size={16} />
             </a>
             <a
-              href={localizedPath("/cases")}
+              href={localizedPath("/#kontakt")}
               className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/12 text-white font-medium px-6 py-3.5 rounded-lg transition-all"
               style={{ fontSize: "var(--text-body)" }}
             >
@@ -152,7 +152,7 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
           style={{ scale, maxWidth: "calc(100% - 3rem)" }}
-          className="mt-10 relative w-full overflow-hidden bg-black mx-auto"
+          className="mt-[9.8rem] relative w-full overflow-hidden bg-black mx-auto"
         >
           <video
             ref={videoRef}

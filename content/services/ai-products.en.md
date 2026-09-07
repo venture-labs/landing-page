@@ -1,19 +1,21 @@
 ---
-slug: development
+slug: ai-products
 language: "en"
-order: 1
-title: "Product Development"
-description: "A solid software foundation, rethought: products that grow with AI agents instead of standing still."
+order: 2
+title: "AI Products"
+description: "Building new digital products: we develop products that don't bolt on AI as an afterthought, but design it in from day one."
 gradient: "linear-gradient(146.383deg, rgba(163, 24, 248, 0.8) 0%, rgba(163, 24, 248, 0) 100%)"
 icon: code
-heroHeadline: "AI-First Product Development"
-heroSubline: "We advise on what you need. AI implements it. Building a product still means the same thing: understanding what's needed, structuring it, and building it. What's changed is how. We develop primarily with AI agents — developers step in only where truly necessary. The result: products that used to take months are now ready in weeks."
-heroImage: "/uploads/services/development-hero.png"
+heroHeadline: "Build the product."
+heroSubline: "Digital products where AI is part of the product from day one."
+heroImage: "/uploads/services/ai-products-hero.png"
 tags:
-  - "Fullstack development"
-  - "API integration"
-  - "Database architecture"
-  - "Agent engineering — AI-powered implementation"
+  - "Product strategy & concept"
+  - "AI-native product development"
+  - "Prototyping & MVPs"
+  - "Web apps & business software"
+  - "AI architecture & integrations"
+  - "Launch & continuous development"
 process:
   - number: "01"
     title: "Assessment"
@@ -27,7 +29,7 @@ process:
 caseTitle: "Tap2Link"
 caseSlug: "tap2link"
 caseSubtitle: "Tap2Link: more than a digital business card."
-caseImage: "/uploads/services/development-case.png"
+caseImage: "/uploads/services/ai-products-case.png"
 caseStats:
   - value: "+35%"
     label: "Faster onboarding process"
@@ -38,4 +40,5 @@ caseStats:
 caseDescription: "A digital service portal for complex B2B processes — from idea to launch in just 8 weeks."
 ctaHeadline: "Ready for a product that thinks along?"
 ctaBody: "Let's find out in an honest intro call whether your next product needs classic software or a self-learning system."
+ctaButtonLabel: "Build your product"
 ---
