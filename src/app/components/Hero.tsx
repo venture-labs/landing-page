@@ -4,6 +4,7 @@ import { ArrowRight, Play, Pause } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useSiteData } from "@/data/content";
 import { useLocale } from "@/app/locale";
+import { PulseCheckModal } from "@/app/components/PulseCheckModal";
 import svgPaths from "@/imports/🖌Homepage/svg-oa0apfkpzr";
 import heroVideo from "@/assets/venturelabs reel.mp4";
 
@@ -59,6 +60,7 @@ export function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [quizOpen, setQuizOpen] = useState(false);
 
   const [maxScale, setMaxScale] = useState(1);
 
@@ -127,14 +129,15 @@ export function Hero() {
           </p>
 
           <div className="flex flex-wrap gap-4">
-            <a
-              href={localizedPath("/ai-pulse")}
+            <button
+              type="button"
+              onClick={() => setQuizOpen(true)}
               className="inline-flex items-center gap-2 bg-[#8129ff] hover:bg-[#9140ff] text-white font-semibold rounded-lg transition-all hover:scale-[1.02] px-[24px] py-[11px]"
               style={{ fontSize: "var(--text-body)" }}
             >
               {siteData.heroCta}
               <ArrowRight size={16} />
-            </a>
+            </button>
             <a
               href={localizedPath("/#kontakt")}
               className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/12 text-white font-medium px-6 py-3.5 rounded-lg transition-all"
@@ -178,6 +181,8 @@ export function Hero() {
           </button>
         </motion.div>
       </div>
+
+      <PulseCheckModal open={quizOpen} onOpenChange={setQuizOpen} />
     </section>
   );
 }

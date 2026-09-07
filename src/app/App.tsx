@@ -4,7 +4,6 @@ import { LangGuard, DEFAULT_LOCALE } from "./locale";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
-import { ProblemSection } from "./components/ProblemSection";
 import { AIPulseTeaser } from "./components/AIPulseTeaser";
 import { Services } from "./components/Services";
 import { HowWeWork } from "./components/HowWeWork";
@@ -56,7 +55,6 @@ function HomePage() {
       />
       <Navbar />
       <Hero />
-      <ProblemSection />
       <AIPulseTeaser />
       <Services />
       <HowWeWork />
