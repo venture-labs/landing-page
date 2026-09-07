@@ -130,6 +130,37 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/**
+ * PulseLines: each wave path is drawn two tiles wide, so shifting it by exactly
+ * one tile (1000 user units) loops seamlessly. Layers differ only in duration,
+ * which is what keeps the combined pattern from visibly repeating.
+ */
+@keyframes pulse-drift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-1000px);
+  }
+}
+
+@keyframes pulse-breathe {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(1.14);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-drift,
+  .pulse-breathe {
+    animation: none !important;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

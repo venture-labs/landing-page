@@ -8,6 +8,7 @@ import { Footer } from "@/app/components/Footer";
 import { PulseJourney } from "@/app/components/PulseJourney";
 import { SkillMatrix } from "@/app/components/SkillMatrix";
 import { PulseCheckModal } from "@/app/components/PulseCheckModal";
+import { PulseLines } from "@/app/components/ui/PulseLines";
 import { useLeistungenData } from "@/data/content";
 import { useLocale } from "@/app/locale";
 
@@ -25,9 +26,14 @@ function LeistungenHero({ onQuizOpen }: { onQuizOpen: () => void }) {
       className="relative pt-40 pb-32 overflow-hidden"
       style={{ background: "linear-gradient(180deg, #1E1C27 0%, #1E1C27 45%, #181620 100%)" }}
     >
-      <div className="absolute inset-0 pointer-events-none">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-[-250px] left-[-200px] w-[700px] h-[500px] rounded-full bg-[#8129ff]/10 blur-[120px]" />
         <div className="absolute top-[100px] right-[-150px] w-[500px] h-[400px] rounded-full bg-[#2b95f6]/8 blur-[120px]" />
+        <PulseLines
+          accent="#8129ff"
+          intensity={0.75}
+          className="absolute bottom-0 left-0 w-full h-[420px]"
+        />
       </div>
 
       <div className="relative max-w-[1400px] mx-auto px-6 lg:px-12">
@@ -107,13 +113,18 @@ function PulseCallout({ onQuizOpen }: { onQuizOpen: () => void }) {
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6 }}
-      className="py-24"
+      className="py-24 relative overflow-hidden"
       style={{
         background:
           "linear-gradient(135deg, rgba(43,149,246,0.10) 0%, rgba(163,24,248,0.10) 50%, rgba(253,167,0,0.08) 100%)",
       }}
     >
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 flex flex-col lg:flex-row lg:items-center justify-between gap-10">
+      <PulseLines
+        accent="#ffffff"
+        intensity={0.45}
+        className="absolute inset-0 w-full h-full pointer-events-none"
+      />
+      <div className="relative max-w-[1400px] mx-auto px-6 lg:px-12 flex flex-col lg:flex-row lg:items-center justify-between gap-10">
         <div className="flex flex-col gap-4 max-w-2xl">
           <h2
             className="font-semibold text-white leading-tight"

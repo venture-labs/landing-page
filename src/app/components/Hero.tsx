@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useSiteData } from "@/data/content";
 import { useLocale } from "@/app/locale";
 import { PulseCheckModal } from "@/app/components/PulseCheckModal";
+import { PulseLines } from "@/app/components/ui/PulseLines";
 import svgPaths from "@/imports/🖌Homepage/svg-oa0apfkpzr";
 import heroVideo from "@/assets/venturelabs reel.mp4";
 
@@ -13,6 +14,11 @@ function BackgroundBlobs() {
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       <div className="absolute top-[-200px] left-[-300px] w-[800px] h-[800px] rounded-full bg-[#8129ff]/10 blur-[120px]" />
       <div className="absolute top-[200px] right-[-200px] w-[600px] h-[600px] rounded-full bg-[#a318f8]/8 blur-[100px]" />
+      <PulseLines
+        accent="#a318f8"
+        intensity={0.75}
+        className="absolute top-[70px] left-0 w-full h-[360px]"
+      />
     </div>
   );
 }

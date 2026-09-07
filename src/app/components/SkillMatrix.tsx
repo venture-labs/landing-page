@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useLeistungenData, useServicesData } from "@/data/content";
 import { useLocale } from "@/app/locale";
 import { STEP_ACCENTS } from "@/app/components/PulseJourney";
+import { PulseLines } from "@/app/components/ui/PulseLines";
 import type { PulseStep, Service } from "@/data/de/services";
 
 const STEP_ORDER: PulseStep[] = ["check", "build", "care"];
@@ -143,8 +144,13 @@ export function SkillMatrix() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section className="bg-[#0e0d13] py-24" ref={ref} id="skills">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 flex flex-col gap-12">
+    <section className="bg-[#0e0d13] py-24 relative overflow-hidden" ref={ref} id="skills">
+      <PulseLines
+        accent={filter ? STEP_ACCENTS[filter] : "#8129ff"}
+        intensity={0.6}
+        className="absolute top-0 left-0 w-full h-[380px] pointer-events-none transition-all duration-700"
+      />
+      <div className="relative max-w-[1400px] mx-auto px-6 lg:px-12 flex flex-col gap-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}

@@ -3,15 +3,12 @@ import { useParams, Link } from "react-router";
 import { motion, useInView } from "motion/react";
 import { ArrowRight, Code2, Building2, Palette, Bot } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import headerAiExperience from "@/assets/service-headers/ai-experience.svg";
-import headerVentureBuilding from "@/assets/service-headers/venture-building.svg";
-import headerAiProducts from "@/assets/service-headers/ai-products.svg";
-import headerAiAutomation from "@/assets/service-headers/ai-automation.svg";
 import { StrengthSection } from "@/app/components/StrengthSection";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
 import { CtaButton } from "@/app/components/ui/CtaButton";
 import { PulseCheckModal } from "@/app/components/PulseCheckModal";
+import { PulseLines, type PulseLinesProps } from "@/app/components/ui/PulseLines";
 import { useServicesData, useServiceDetail } from "@/data/content";
 import { useLocale } from "@/app/locale";
 
@@ -25,11 +22,11 @@ const accentColors: Record<string, string> = {
   "venture-building": "#ef4444",
 };
 
-const heroGraphics: Record<string, string> = {
-  "ai-automation": headerAiAutomation,
-  "ai-products": headerAiProducts,
-  "ai-experience": headerAiExperience,
-  "venture-building": headerVentureBuilding,
+const signaturePresets: Record<string, PulseLinesProps["preset"]> = {
+  "ai-automation": "automation",
+  "ai-products": "products",
+  "ai-experience": "experience",
+  "venture-building": "venture",
 };
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -94,15 +91,20 @@ function DetailHero({ detail, accent, title }: { detail: any; accent: string; ti
           </CtaButton>
         </motion.div>
 
-        {/* ── HEADER GRAPHIC — full width, colored per service ── */}
-        <motion.img
+        {/* ── SIGNATURE — each service reads as its own waveform ── */}
+        <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          src={heroGraphics[detail.slug]}
-          alt=""
-          className="w-full h-auto px-6 lg:px-12 py-20"
-        />
+          transition={{ duration: 0.9, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          className="px-6 lg:px-12 py-16"
+        >
+          <PulseLines
+            preset={signaturePresets[detail.slug] ?? "ambient"}
+            accent={accent}
+            intensity={0.9}
+            className="w-full h-[220px] md:h-[300px] overflow-visible"
+          />
+        </motion.div>
 
         {/* ── STRENGTH SECTION — below the image ── */}
         <motion.div
