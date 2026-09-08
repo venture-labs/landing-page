@@ -348,7 +348,7 @@ export function PulseJourney({ compact = false }: { compact?: boolean }) {
   const scrollZoneRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: scrollZoneRef,
-    offset: ["start 0.85", "start 0.15"],
+    offset: ["start 0.95", "start -0.85"],
   });
   const stepKeys = coreServices.map((s) => s.key);
   useMotionValueEvent(scrollYProgress, "change", (v) => {
