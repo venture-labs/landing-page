@@ -9,7 +9,7 @@ export interface BlogPost {
   slug: string;
   title: string;
   excerpt: string;
-  topicSlug: "development" | "company-building" | "ui-ux" | "ai-consulting";
+  topicSlug: "ai-automation" | "ai-products" | "ai-experience" | "venture-building";
   topic: string;
   readTime: string;
   featured: boolean;
@@ -23,8 +23,8 @@ export const blogPosts: BlogPost[] = [
     "slug": "warum-mvps-floppen",
     "title": "Warum die meisten MVPs floppen – und wie du es besser machst",
     "excerpt": "Ein MVP ist kein halbfertiges Produkt – es ist ein Test. Wir zeigen, welche Fehler Teams am häufigsten machen und wie du mit weniger Aufwand mehr lernst.",
-    "topicSlug": "development",
-    "topic": "Produktentwicklung",
+    "topicSlug": "ai-products",
+    "topic": "AI Products",
     "readTime": "6 Min. Lesezeit",
     "featured": true,
     "publishedDate": "12. März 2026",
@@ -72,8 +72,8 @@ export const blogPosts: BlogPost[] = [
     "slug": "ki-agenten-use-cases",
     "title": "KI-Agenten im Unternehmensalltag: 5 Use Cases, die wirklich funktionieren",
     "excerpt": "Von automatisierten Support-Workflows bis zu internen Wissens-Assistenten: fünf KI-Anwendungen, die heute schon echten Mehrwert liefern – ohne Hype.",
-    "topicSlug": "ai-consulting",
-    "topic": "KI-Beratung & Implementierung",
+    "topicSlug": "ai-automation",
+    "topic": "AI Automation",
     "readTime": "8 Min. Lesezeit",
     "featured": true,
     "publishedDate": "28. April 2026",
@@ -121,8 +121,8 @@ export const blogPosts: BlogPost[] = [
     "slug": "design-systems-hebel",
     "title": "Design Systems: Der unterschätzte Hebel für schnelleres Wachstum",
     "excerpt": "Ein gutes Design System spart nicht nur Zeit im Design – es beschleunigt auch die Entwicklung. So baust du eins, das wirklich genutzt wird.",
-    "topicSlug": "ui-ux",
-    "topic": "UI & UX",
+    "topicSlug": "ai-experience",
+    "topic": "AI Experience",
     "readTime": "5 Min. Lesezeit",
     "featured": false,
     "publishedDate": "9. Februar 2026",
@@ -170,8 +170,8 @@ export const blogPosts: BlogPost[] = [
     "slug": "pitch-zu-produkt",
     "title": "Vom Pitch zum Produkt: Wie wir in 12 Wochen ein MVP bauen",
     "excerpt": "Ein Blick hinter die Kulissen unseres Company-Building-Prozesses – von der ersten Idee bis zum ersten zahlenden Kunden.",
-    "topicSlug": "company-building",
-    "topic": "Company Building",
+    "topicSlug": "venture-building",
+    "topic": "Venture Building",
     "readTime": "7 Min. Lesezeit",
     "featured": false,
     "publishedDate": "15. Januar 2026",
@@ -219,8 +219,8 @@ export const blogPosts: BlogPost[] = [
     "slug": "no-code-vs-custom",
     "title": "No-Code vs. Custom Development: Wann sich was lohnt",
     "excerpt": "No-Code-Tools werden immer mächtiger – aber sie sind nicht immer die richtige Wahl. Eine ehrliche Einordnung.",
-    "topicSlug": "development",
-    "topic": "Produktentwicklung",
+    "topicSlug": "ai-products",
+    "topic": "AI Products",
     "readTime": "4 Min. Lesezeit",
     "featured": false,
     "publishedDate": "3. Juni 2026",
@@ -268,8 +268,8 @@ export const blogPosts: BlogPost[] = [
     "slug": "user-research-schnell",
     "title": "User Research auf die Schnelle: 3 Methoden für enge Timelines",
     "excerpt": "Auch mit wenig Zeit und Budget lässt sich fundiertes Nutzerfeedback einholen. Drei Methoden, die sich in der Praxis bewährt haben.",
-    "topicSlug": "ui-ux",
-    "topic": "UI & UX",
+    "topicSlug": "ai-experience",
+    "topic": "AI Experience",
     "readTime": "5 Min. Lesezeit",
     "featured": false,
     "publishedDate": "22. Juni 2026",

@@ -8,14 +8,34 @@
     "hiring": "👉 We're hiring!",
     "videoPlay": "Play video",
     "videoPause": "Pause video",
-    "headlineHighlight": "digital products"
+    "headlineHighlight": "what's next"
   },
   "services": {
-    "heading": "Our services",
-    "subheading": "VentureLabs helps companies think, plan, and ship digital products faster — with a team of specialists in design, development, and AI."
+    "heading": "From opportunity to impact.",
+    "subheading": "Whether you want to improve existing processes, build a new product, or start a new business: we combine business, product, design, engineering, and AI.",
+    "exploreCta": "Explore"
+  },
+  "problem": {
+    "heading": "AI is changing how businesses work.",
+    "body": "Many businesses know AI is becoming relevant, but not where the biggest leverage lies. Venture Labs helps turn potential into concrete solutions."
+  },
+  "aiPulse": {
+    "body": "AI can improve processes, unlock new products, and change entire business models. We help you find where the biggest leverage in your business lies — and build the solution from there.",
+    "cta": "Take the AI Pulse Check now"
+  },
+  "aboutTeaser": {
+    "heading": "One team. From business to AI.",
+    "body": "Business understanding, product thinking, UX, engineering, and AI in one team. No handoffs between strategy, design, and development — just building together.",
+    "cta": "More about us"
+  },
+  "finalCta": {
+    "heading": "Have an AI opportunity in mind?",
+    "body": "Let's turn it into something that works.",
+    "primaryCta": "See our services",
+    "secondaryCta": "Talk to Venture Labs"
   },
   "projects": {
-    "heading": "Projects",
+    "heading": "Built for real business.",
     "subheading": "Our projects span every industry. Our clients range from startups to large enterprises. And it gets especially exciting when we're our own client.",
     "viewProject": "View project",
     "moreHeading": "More projects",
@@ -40,10 +60,10 @@
     "imprint": "Imprint",
     "privacy": "Privacy",
     "servicesLinks": {
-      "development": "Product Development",
-      "company-building": "Company Building",
-      "ui-ux": "UI & UX",
-      "ai-consulting": "AI Consulting & Implementation"
+      "ai-automation": "AI Automation",
+      "ai-products": "AI Products",
+      "ai-experience": "AI Experience",
+      "venture-building": "Venture Building"
     }
   },
   "leistungen": {
@@ -62,7 +82,10 @@
     "otherServicesHeading": "More services that complement your project",
     "contactQuestion": "Interested in working together on your project? Get in touch now.",
     "notFound": "Service not found.",
-    "backToOverview": "Back to overview"
+    "backToOverview": "Back to overview",
+    "pulseCta": "Take the Pulse Check",
+    "allSteps": "All steps",
+    "allServices": "All services in detail"
   },
   "cases": {
     "heroTitle": "Our projects",
@@ -106,21 +129,43 @@
     "heroTitle": "What's on your mind?",
     "heroSubtitle": "Pick the topics you're interested in – it helps us get back to you faster.",
     "topics": {
-      "development": {
-        "label": "Product Development",
-        "chips": ["Web App", "Mobile App", "SaaS Platform", "APIs & Integrations", "MVP"]
+      "ai-automation": {
+        "label": "AI Automation",
+        "chips": [
+          "AI Agents",
+          "Automation",
+          "Business Analytics",
+          "AI Consulting"
+        ]
       },
-      "company-building": {
-        "label": "Company Building",
-        "chips": ["MVP Build", "Business Model", "Go-to-Market", "Team Building"]
+      "ai-products": {
+        "label": "AI Products",
+        "chips": [
+          "Web App",
+          "Mobile App",
+          "SaaS Platform",
+          "APIs & Integrations",
+          "MVP"
+        ]
       },
-      "ui-ux": {
-        "label": "UI & UX",
-        "chips": ["Website", "Branding", "Design System", "Prototype", "Content"]
+      "ai-experience": {
+        "label": "AI Experience",
+        "chips": [
+          "Website",
+          "Branding",
+          "Design System",
+          "Prototype",
+          "Content"
+        ]
       },
-      "ai-consulting": {
-        "label": "AI Consulting & Implementation",
-        "chips": ["AI Agents", "Automation", "Business Analytics", "AI Consulting"]
+      "venture-building": {
+        "label": "Venture Building",
+        "chips": [
+          "MVP Build",
+          "Business Model",
+          "Go-to-Market",
+          "Team Building"
+        ]
       }
     },
     "directContact": "Direct Contact",

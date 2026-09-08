@@ -1,18 +1,23 @@
 ---
-slug: ai-consulting
+slug: ai-automation
 language: "en"
-order: 4
-title: "AI Consulting & Implementation"
-description: "Honest AI consulting from our software team, ongoing support implementing and running your AI agents."
+order: 1
+title: "AI Automation"
+description: "Rethinking existing processes: we turn manual business processes into intelligent, integrated workflows."
 gradient: "linear-gradient(-56.458deg, rgba(253, 167, 0, 0.8) 0%, rgba(253, 167, 0, 0) 100%)"
 icon: bot
-heroHeadline: "AI Consulting & Implementation"
-heroSubline: "We're the interface between your company and AI. Most companies know they should be using AI — they just don't know where to start. That's where we come in: we look at your business, find where AI agents make the biggest difference, and implement it. Not as a one-off project, but as ongoing support. We come from software development and company building, so we know how companies and products work — we now use that experience to help companies become AI-first."
-heroImage: "/uploads/services/ai-consulting-hero.png"
+usedIn: [check, build, care]
+proof: "Quotes that used to take three days now go out in minutes."
+heroHeadline: "Improve the business."
+heroSubline: "We automate processes where AI measurably saves time, cuts costs, and reduces errors."
+heroImage: "/uploads/services/ai-automation-hero.png"
 tags:
-  - "Assessment: where are you today, and where does AI actually pay off?"
-  - "Sub-projects: clean data infrastructure, reporting for leadership, automated customer interaction"
-  - "Ongoing operation: we monitor how the AI is used and continuously adjust processes and prompts"
+  - "AI agents & intelligent workflows"
+  - "Email & document process automation"
+  - "Knowledge & research systems"
+  - "Sales, service & operations automation"
+  - "Integration with ERP, CRM, DMS & existing tools"
+  - "Operation & continuous improvement"
 process:
   - number: "01"
     title: "Diagnose"
@@ -29,7 +34,7 @@ process:
 caseTitle: "MachineMaster"
 caseSlug: "machinemaster"
 caseSubtitle: "MachineMaster: AI in agricultural machinery sales."
-caseImage: "/uploads/services/ai-consulting-case.png"
+caseImage: "/uploads/services/ai-automation-case.png"
 caseStats:
   - value: "+230%"
     label: "More user interactions"
@@ -40,4 +45,5 @@ caseStats:
 caseDescription: "An AI-powered sales tool for dealers and field reps — from MVP in just 12 weeks."
 ctaHeadline: "AI that actually automates — not just a chatbot."
 ctaBody: "In a free intro call with our team, we'll talk honestly about where AI agents can already make a difference in your business today."
+ctaButtonLabel: "Find your automation opportunity"
 ---

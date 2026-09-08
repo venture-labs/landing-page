@@ -1,18 +1,23 @@
 ---
-slug: ui-ux
+slug: ai-experience
 language: "en"
 order: 3
-title: "UI & UX"
-description: "UX consulting in conversation, execution with AI-powered design systems that learn."
+title: "AI Experience"
+description: "Designing how people and AI work together: we design interfaces, workflows, and interactions for a new generation of digital products."
 gradient: "linear-gradient(44.336deg, rgba(43, 149, 246, 0.8) 0%, rgba(43, 149, 246, 0) 100%)"
 icon: palette
-heroHeadline: "UI & UX"
-heroSubline: "AI still needs a face people can understand. Even as more happens behind the scenes through AI, results stay inaccessible to users without a well-thought-out interface. We design UI & UX that translates complex AI processes into clear, usable interfaces — consistent, understandable, to the point. We come from classic web design and now bring that experience to where it's needed most: as the interface between people and AI."
-heroImage: "/uploads/services/ui-ux-hero.png"
+usedIn: [check, build]
+proof: "An interface that shows what the AI is doing — and why."
+heroHeadline: "Design the interaction."
+heroSubline: "New interfaces for how people and intelligent systems work together."
+heroImage: "/uploads/services/ai-experience-hero.png"
 tags:
-  - "Interface design for AI-powered products"
-  - "Unified dashboards for complex data"
-  - "Structure & user flows from first idea to rollout"
+  - "AI interaction design"
+  - "Agent UX & conversational interfaces"
+  - "UX for complex B2B processes"
+  - "Product design & prototyping"
+  - "Design systems"
+  - "Evaluation & optimization"
 process:
   - number: "01"
     title: "UX Research & Analysis"
@@ -32,7 +37,7 @@ process:
 caseTitle: "Brylliant"
 caseSlug: "brylliant"
 caseSubtitle: "Brylliant: the tool for perfect briefings."
-caseImage: "/uploads/services/ui-ux-case.png"
+caseImage: "/uploads/services/ai-experience-case.png"
 caseStats:
   - value: "2×"
     label: "Faster briefing approvals"
@@ -43,4 +48,5 @@ caseStats:
 caseDescription: "A scalable tool for efficient briefings, clean processes, and strategic clarity — designed in 6 weeks."
 ctaHeadline: "Design that doesn't stand still."
 ctaBody: "Let us show you in an honest intro call how thoughtful UX design and smart AI tools achieve more together."
+ctaButtonLabel: "Design your AI experience"
 ---

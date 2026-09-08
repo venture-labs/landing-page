@@ -1,19 +1,23 @@
 ---
 language: "de"
-slug: company-building
-order: 2
-title: "Company Building"
-description: "Geschäftsmodell-Beratung von Menschen, MVP-Umsetzung beschleunigt durch KI."
+slug: venture-building
+order: 4
+title: "Venture Building"
+description: "Aus Chancen neue Geschäfte machen: Wir validieren Geschäftsmodelle und bauen daraus funktionierende digitale Ventures."
 gradient: "linear-gradient(268.344deg, rgba(255, 0, 0, 0.8) 0%, rgba(255, 0, 0, 0) 100%)"
 icon: grid
-heroHeadline: "Company Building"
-heroSubline: "Wir bauen KI-first Unternehmen. Ein Unternehmen aufzubauen bedeutet immer noch: einen Businessplan schreiben, Prozesse entwerfen, ein Team aufstellen, von der Idee zum funktionierenden Unternehmen kommen. Der Unterschied heute: Der Fokus liegt auf Agentensystemen – KI übernimmt, wo sie kann, wir sorgen dafür, dass die Struktur stimmt. Wir kommen aus dem Company Building und wissen, wie Unternehmen entstehen: Software as a Service is dead – KI ist das nächste Kapitel, und wir bauen es mit dir."
-heroImage: "/uploads/services/company-building-hero.png"
+usedIn: [check, build, care]
+proof: "Aus einer Idee im Nebensatz wurde ein eigenes Geschäft."
+heroHeadline: "Create the new business."
+heroSubline: "Von der Opportunity zum validierten Geschäftsmodell und funktionierenden Venture."
+heroImage: "/uploads/services/venture-building-hero.png"
 tags:
-  - "Businessplan & Strategie"
-  - "Prozessdesign"
-  - "Aufbau von Agentensystemen als Kern des Unternehmens"
-  - "Begleitung von der Idee bis zum laufenden Betrieb"
+  - "Opportunity Discovery"
+  - "Geschäftsmodell & Strategie"
+  - "Markt- und Konzeptvalidierung"
+  - "MVP & Product Development"
+  - "AI-native Products"
+  - "Launch & Growth"
 process:
   - number: "01"
     title: "Idee & Vision"
@@ -33,7 +37,7 @@ process:
 caseTitle: "Moerschen"
 caseSlug: "moerschen"
 caseSubtitle: "Moerschen: Vom Relaunch zur Leadmaschine."
-caseImage: "/uploads/services/company-building-case.png"
+caseImage: "/uploads/services/venture-building-case.png"
 caseStats:
   - value: "+45%"
     label: "Mehr Kontaktanfragen"
@@ -44,4 +48,5 @@ caseStats:
 caseDescription: "Website-Relaunch mit klarer Nutzerführung und neuer Kommunikationsstrategie – in 8 Wochen live."
 ctaHeadline: "Dein Startup. Unsere Erfahrung. KI als Beschleuniger."
 ctaBody: "Lass uns im kostenlosen Erstgespräch herausfinden, wie wir dein Geschäftsmodell mit echter Erfahrung und smarter Automatisierung in die Realität umsetzen."
+ctaButtonLabel: "Build a new venture"
 ---

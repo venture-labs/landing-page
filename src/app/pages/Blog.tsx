@@ -10,17 +10,17 @@ import { useBlogData } from "@/data/content";
 import { type BlogPost } from "@/data/de/blog";
 
 const topicAccent: Record<string, string> = {
-  development: "#a318f8",
-  "company-building": "#ef4444",
-  "ui-ux": "#2b95f6",
-  "ai-consulting": "#fda700",
+  "ai-automation": "#fda700",
+  "ai-products": "#a318f8",
+  "ai-experience": "#2b95f6",
+  "venture-building": "#ef4444",
 };
 
 const topicIcon: Record<string, React.ReactNode> = {
-  development: <Code2 size={28} strokeWidth={1.5} className="text-white/80" />,
-  "company-building": <Building2 size={28} strokeWidth={1.5} className="text-white/80" />,
-  "ui-ux": <Palette size={28} strokeWidth={1.5} className="text-white/80" />,
-  "ai-consulting": <Bot size={28} strokeWidth={1.5} className="text-white/80" />,
+  "ai-automation": <Bot size={28} strokeWidth={1.5} className="text-white/80" />,
+  "ai-products": <Code2 size={28} strokeWidth={1.5} className="text-white/80" />,
+  "ai-experience": <Palette size={28} strokeWidth={1.5} className="text-white/80" />,
+  "venture-building": <Building2 size={28} strokeWidth={1.5} className="text-white/80" />,
 };
 
 /* ─── hero ───────────────────────────────────────────────────────────── */

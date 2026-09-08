@@ -26,19 +26,80 @@ export interface ServiceDetail {
   caseDescription: string;
   ctaHeadline: string;
   ctaBody: string;
+  ctaButtonLabel: string;
 }
 
 export const serviceDetails: ServiceDetail[] = [
   {
-    "slug": "development",
-    "heroHeadline": "Produktentwicklung mit KI-Agenten",
-    "heroSubline": "Wir beraten, was du brauchst. Die KI setzt es um. Ein Produkt zu bauen bedeutet immer noch dasselbe: verstehen, was gebraucht wird, es strukturieren und umsetzen. Was sich geändert hat, ist das Wie. Wir entwickeln primär mit KI-Agenten – Entwickler:innen kommen nur dort zum Einsatz, wo es wirklich nötig ist. Das Ergebnis: Produkte, die früher Monate gedauert haben, sind heute in Wochen einsatzbereit.",
-    "heroImage": "/uploads/services/development-hero.png",
+    "slug": "ai-automation",
+    "heroHeadline": "Improve the business.",
+    "heroSubline": "Wir automatisieren Prozesse dort, wo KI messbar Zeit, Kosten und Fehler reduziert.",
+    "heroImage": "/uploads/services/ai-automation-hero.png",
     "tags": [
-      "Fullstack-Entwicklung",
-      "API-Integration",
-      "Datenbankarchitektur",
-      "Agent Engineering – KI-gestützte Umsetzung"
+      "AI Agents & intelligente Workflows",
+      "Automatisierung von E-Mail- und Dokumentenprozessen",
+      "Wissens- und Recherche-Systeme",
+      "Automatisierung von Vertrieb, Service & Operations",
+      "Integration in ERP, CRM, DMS & bestehende Tools",
+      "Betrieb und kontinuierliche Weiterentwicklung"
+    ],
+    "process": [
+      {
+        "number": "01",
+        "title": "Diagnose",
+        "description": "Wir analysieren Daten, Prozesse, Team und Tools in 1–2 Tagen und zeigen, wo KI den größten Hebel bietet."
+      },
+      {
+        "number": "02",
+        "title": "Empfehlung",
+        "description": "Sie erhalten eine priorisierte Roadmap statt einer generischen Strategiepräsentation."
+      },
+      {
+        "number": "03",
+        "title": "Umsetzung",
+        "description": "Wir bauen die 1–3 wichtigsten Anwendungsfälle in einem 4-wöchigen Sprint."
+      },
+      {
+        "number": "04",
+        "title": "Begleitung",
+        "description": "Danach bleiben wir dran: monatliche Check-ins, ein Dashboard und vierteljährliche Reviews."
+      }
+    ],
+    "caseTitle": "MachineMaster",
+    "caseSlug": "machinemaster",
+    "caseSubtitle": "MachineMaster: KI im Vertrieb von Landmaschinen.",
+    "caseImage": "/uploads/services/ai-automation-case.png",
+    "caseStats": [
+      {
+        "value": "+230%",
+        "label": "Mehr Nutzerinteraktionen"
+      },
+      {
+        "value": "+10%",
+        "label": "Verkaufssteigerung"
+      },
+      {
+        "value": "5/5",
+        "label": "Kundenbewertungen"
+      }
+    ],
+    "caseDescription": "Ein KI-gestütztes Vertriebstool für Händler und Außendienst – vom MVP in nur 12 Wochen.",
+    "ctaHeadline": "KI, die wirklich automatisiert – nicht nur ein Chatbot.",
+    "ctaBody": "Im kostenlosen Erstgespräch mit unserem Team sprechen wir ehrlich darüber, wo KI-Agenten in deinem Business heute schon den Unterschied machen.",
+    "ctaButtonLabel": "Find your automation opportunity"
+  },
+  {
+    "slug": "ai-products",
+    "heroHeadline": "Build the product.",
+    "heroSubline": "Digitale Produkte, bei denen KI von Anfang an Teil des Produkts ist.",
+    "heroImage": "/uploads/services/ai-products-hero.png",
+    "tags": [
+      "Produktstrategie & Konzept",
+      "AI-native Produktentwicklung",
+      "Prototyping & MVPs",
+      "Web Apps & Business Software",
+      "AI-Architektur & Integrationen",
+      "Launch & kontinuierliche Weiterentwicklung"
     ],
     "process": [
       {
@@ -60,7 +121,7 @@ export const serviceDetails: ServiceDetail[] = [
     "caseTitle": "Tap2Link",
     "caseSlug": "tap2link",
     "caseSubtitle": "Tap2Link: Mehr als eine digitale Visitenkarte.",
-    "caseImage": "/uploads/services/development-case.png",
+    "caseImage": "/uploads/services/ai-products-case.png",
     "caseStats": [
       {
         "value": "+35%",
@@ -77,77 +138,21 @@ export const serviceDetails: ServiceDetail[] = [
     ],
     "caseDescription": "Ein digitales Serviceportal für komplexe B2B-Prozesse – in nur 8 Wochen von der Idee bis zum Launch.",
     "ctaHeadline": "Bereit für ein Produkt, das mitdenkt?",
-    "ctaBody": "Lass uns in einem ehrlichen Erstgespräch herausfinden, ob dein nächstes Produkt klassische Software oder ein selbstlernendes System braucht."
+    "ctaBody": "Lass uns in einem ehrlichen Erstgespräch herausfinden, ob dein nächstes Produkt klassische Software oder ein selbstlernendes System braucht.",
+    "ctaButtonLabel": "Build your product"
   },
   {
-    "slug": "company-building",
-    "heroHeadline": "Company Building",
-    "heroSubline": "Wir bauen KI-first Unternehmen. Ein Unternehmen aufzubauen bedeutet immer noch: einen Businessplan schreiben, Prozesse entwerfen, ein Team aufstellen, von der Idee zum funktionierenden Unternehmen kommen. Der Unterschied heute: Der Fokus liegt auf Agentensystemen – KI übernimmt, wo sie kann, wir sorgen dafür, dass die Struktur stimmt. Wir kommen aus dem Company Building und wissen, wie Unternehmen entstehen: Software as a Service is dead – KI ist das nächste Kapitel, und wir bauen es mit dir.",
-    "heroImage": "/uploads/services/company-building-hero.png",
+    "slug": "ai-experience",
+    "heroHeadline": "Design the interaction.",
+    "heroSubline": "Neue Interfaces für die Zusammenarbeit von Menschen und intelligenten Systemen.",
+    "heroImage": "/uploads/services/ai-experience-hero.png",
     "tags": [
-      "Businessplan & Strategie",
-      "Prozessdesign",
-      "Aufbau von Agentensystemen als Kern des Unternehmens",
-      "Begleitung von der Idee bis zum laufenden Betrieb"
-    ],
-    "process": [
-      {
-        "number": "01",
-        "title": "Idee & Vision",
-        "description": "Im persönlichen Gespräch schärfen wir deine Idee: echtes Problem, echte Zielgruppe, echter USP."
-      },
-      {
-        "number": "02",
-        "title": "Geschäftsmodell-Beratung",
-        "description": "Lean Canvas und Revenue-Modell entstehen im Dialog mit unserem Team – keine automatisierte Vorlage, sondern echte unternehmerische Erfahrung."
-      },
-      {
-        "number": "03",
-        "title": "MVP-Scope mit KI-Fokus",
-        "description": "Wir definieren, welche Prozesse dein Unternehmen von Anfang an automatisieren und mit KI-Agenten skalieren kann."
-      },
-      {
-        "number": "04",
-        "title": "Build & Automatisierung",
-        "description": "Unser Team baut dein MVP – Design, Entwicklung, Automatisierungen. KI übernimmt, was sich wiederholt, damit du dich aufs Wachstum konzentrierst."
-      },
-      {
-        "number": "05",
-        "title": "Traction & Skalierung",
-        "description": "Wir begleiten die ersten Nutzer, das erste Feedback, die ersten Umsätze – und helfen, KI-gestützte Prozesse in deinem eigenen Team zu verankern."
-      }
-    ],
-    "caseTitle": "Moerschen",
-    "caseSlug": "moerschen",
-    "caseSubtitle": "Moerschen: Vom Relaunch zur Leadmaschine.",
-    "caseImage": "/uploads/services/company-building-case.png",
-    "caseStats": [
-      {
-        "value": "+45%",
-        "label": "Mehr Kontaktanfragen"
-      },
-      {
-        "value": "8 Wo.",
-        "label": "Vom Kickoff bis Launch"
-      },
-      {
-        "value": "2×",
-        "label": "Schnellere Ansprechpartner-Suche"
-      }
-    ],
-    "caseDescription": "Website-Relaunch mit klarer Nutzerführung und neuer Kommunikationsstrategie – in 8 Wochen live.",
-    "ctaHeadline": "Dein Startup. Unsere Erfahrung. KI als Beschleuniger.",
-    "ctaBody": "Lass uns im kostenlosen Erstgespräch herausfinden, wie wir dein Geschäftsmodell mit echter Erfahrung und smarter Automatisierung in die Realität umsetzen."
-  },
-  {
-    "slug": "ui-ux",
-    "heroHeadline": "UI & UX",
-    "heroSubline": "KI braucht trotzdem ein Gesicht, das Menschen verstehen. Auch wenn im Hintergrund immer mehr durch KI läuft: Ohne ein durchdachtes Interface bleiben die Ergebnisse für Nutzer:innen unzugänglich. Wir gestalten UI & UX, die komplexe KI-Prozesse in klare, nutzbare Oberflächen übersetzt – einheitlich, verständlich, auf den Punkt. Wir kommen aus dem klassischen Webdesign und bringen diese Erfahrung jetzt dahin, wo sie heute gebraucht wird: als Schnittstelle zwischen Mensch und KI.",
-    "heroImage": "/uploads/services/ui-ux-hero.png",
-    "tags": [
-      "Interface-Design für KI-gestützte Produkte",
-      "Einheitliche Dashboards für komplexe Daten",
-      "Struktur & Nutzerführung von der ersten Idee bis zum Rollout"
+      "AI Interaction Design",
+      "Agent UX & Conversational Interfaces",
+      "UX für komplexe B2B-Prozesse",
+      "Product Design & Prototyping",
+      "Design Systems",
+      "Evaluation & Optimierung"
     ],
     "process": [
       {
@@ -179,7 +184,7 @@ export const serviceDetails: ServiceDetail[] = [
     "caseTitle": "Brylliant",
     "caseSlug": "brylliant",
     "caseSubtitle": "Brylliant: Das Tool für perfekte Briefings.",
-    "caseImage": "/uploads/services/ui-ux-case.png",
+    "caseImage": "/uploads/services/ai-experience-case.png",
     "caseStats": [
       {
         "value": "2×",
@@ -196,60 +201,70 @@ export const serviceDetails: ServiceDetail[] = [
     ],
     "caseDescription": "Ein skalierbares Tool für effiziente Briefings, saubere Prozesse und strategische Klarheit – designed in 6 Wochen.",
     "ctaHeadline": "Design, das nicht stehen bleibt.",
-    "ctaBody": "Lass uns in einem ehrlichen Erstgespräch zeigen, wie durchdachtes UX-Design und smarte KI-Tools zusammen mehr Wirkung erzielen."
+    "ctaBody": "Lass uns in einem ehrlichen Erstgespräch zeigen, wie durchdachtes UX-Design und smarte KI-Tools zusammen mehr Wirkung erzielen.",
+    "ctaButtonLabel": "Design your AI experience"
   },
   {
-    "slug": "ai-consulting",
-    "heroHeadline": "KI-Beratung & Implementierung",
-    "heroSubline": "Wir sind die Schnittstelle zwischen deinem Unternehmen und der KI. Die meisten Unternehmen wissen, dass sie KI einsetzen sollten – aber nicht, wo sie anfangen sollen. Genau da setzen wir an: Wir schauen uns dein Unternehmen an, finden heraus, wo KI-Agenten den größten Unterschied machen, und setzen das um. Nicht als einmaliges Projekt, sondern als laufende Begleitung. Wir kommen aus Softwareentwicklung und Company Building und wissen, wie Unternehmen und Produkte funktionieren – diese Erfahrung nutzen wir jetzt, um Unternehmen KI-first aufzustellen.",
-    "heroImage": "/uploads/services/ai-consulting-hero.png",
+    "slug": "venture-building",
+    "heroHeadline": "Create the new business.",
+    "heroSubline": "Von der Opportunity zum validierten Geschäftsmodell und funktionierenden Venture.",
+    "heroImage": "/uploads/services/venture-building-hero.png",
     "tags": [
-      "Bestandsaufnahme: Wo stehst du heute, wo lohnt sich KI wirklich?",
-      "Teilprojekte: saubere Datenhaltung, Auswertungen fürs Management, automatisierte Kundeninteraktion",
-      "Laufender Betrieb: Wir prüfen, wie die KI genutzt wird, und passen Prozesse und Prompts kontinuierlich an"
+      "Opportunity Discovery",
+      "Geschäftsmodell & Strategie",
+      "Markt- und Konzeptvalidierung",
+      "MVP & Product Development",
+      "AI-native Products",
+      "Launch & Growth"
     ],
     "process": [
       {
         "number": "01",
-        "title": "Diagnose",
-        "description": "Wir analysieren Daten, Prozesse, Team und Tools in 1–2 Tagen und zeigen, wo KI den größten Hebel bietet."
+        "title": "Idee & Vision",
+        "description": "Im persönlichen Gespräch schärfen wir deine Idee: echtes Problem, echte Zielgruppe, echter USP."
       },
       {
         "number": "02",
-        "title": "Empfehlung",
-        "description": "Sie erhalten eine priorisierte Roadmap statt einer generischen Strategiepräsentation."
+        "title": "Geschäftsmodell-Beratung",
+        "description": "Lean Canvas und Revenue-Modell entstehen im Dialog mit unserem Team – keine automatisierte Vorlage, sondern echte unternehmerische Erfahrung."
       },
       {
         "number": "03",
-        "title": "Umsetzung",
-        "description": "Wir bauen die 1–3 wichtigsten Anwendungsfälle in einem 4-wöchigen Sprint."
+        "title": "MVP-Scope mit KI-Fokus",
+        "description": "Wir definieren, welche Prozesse dein Unternehmen von Anfang an automatisieren und mit KI-Agenten skalieren kann."
       },
       {
         "number": "04",
-        "title": "Begleitung",
-        "description": "Danach bleiben wir dran: monatliche Check-ins, ein Dashboard und vierteljährliche Reviews."
+        "title": "Build & Automatisierung",
+        "description": "Unser Team baut dein MVP – Design, Entwicklung, Automatisierungen. KI übernimmt, was sich wiederholt, damit du dich aufs Wachstum konzentrierst."
+      },
+      {
+        "number": "05",
+        "title": "Traction & Skalierung",
+        "description": "Wir begleiten die ersten Nutzer, das erste Feedback, die ersten Umsätze – und helfen, KI-gestützte Prozesse in deinem eigenen Team zu verankern."
       }
     ],
-    "caseTitle": "MachineMaster",
-    "caseSlug": "machinemaster",
-    "caseSubtitle": "MachineMaster: KI im Vertrieb von Landmaschinen.",
-    "caseImage": "/uploads/services/ai-consulting-case.png",
+    "caseTitle": "Moerschen",
+    "caseSlug": "moerschen",
+    "caseSubtitle": "Moerschen: Vom Relaunch zur Leadmaschine.",
+    "caseImage": "/uploads/services/venture-building-case.png",
     "caseStats": [
       {
-        "value": "+230%",
-        "label": "Mehr Nutzerinteraktionen"
+        "value": "+45%",
+        "label": "Mehr Kontaktanfragen"
       },
       {
-        "value": "+10%",
-        "label": "Verkaufssteigerung"
+        "value": "8 Wo.",
+        "label": "Vom Kickoff bis Launch"
       },
       {
-        "value": "5/5",
-        "label": "Kundenbewertungen"
+        "value": "2×",
+        "label": "Schnellere Ansprechpartner-Suche"
       }
     ],
-    "caseDescription": "Ein KI-gestütztes Vertriebstool für Händler und Außendienst – vom MVP in nur 12 Wochen.",
-    "ctaHeadline": "KI, die wirklich automatisiert – nicht nur ein Chatbot.",
-    "ctaBody": "Im kostenlosen Erstgespräch mit unserem Team sprechen wir ehrlich darüber, wo KI-Agenten in deinem Business heute schon den Unterschied machen."
+    "caseDescription": "Website-Relaunch mit klarer Nutzerführung und neuer Kommunikationsstrategie – in 8 Wochen live.",
+    "ctaHeadline": "Dein Startup. Unsere Erfahrung. KI als Beschleuniger.",
+    "ctaBody": "Lass uns im kostenlosen Erstgespräch herausfinden, wie wir dein Geschäftsmodell mit echter Erfahrung und smarter Automatisierung in die Realität umsetzen.",
+    "ctaButtonLabel": "Build a new venture"
   }
 ];
