@@ -9,10 +9,10 @@ import { useLocale } from "@/app/locale";
 /* ─── data ───────────────────────────────────────────────────────────── */
 
 const topicCategories = [
-  { slug: "development", accent: "#a318f8" },
-  { slug: "company-building", accent: "#ef4444" },
-  { slug: "ui-ux", accent: "#2b95f6" },
-  { slug: "ai-consulting", accent: "#fda700" },
+  { slug: "ai-automation", accent: "#fda700" },
+  { slug: "ai-products", accent: "#a318f8" },
+  { slug: "ai-experience", accent: "#2b95f6" },
+  { slug: "venture-building", accent: "#ef4444" },
 ] as const;
 
 const teamContacts = [

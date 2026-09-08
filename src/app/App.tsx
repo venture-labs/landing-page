@@ -4,10 +4,13 @@ import { LangGuard, DEFAULT_LOCALE } from "./locale";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
-import { ProfileSection } from "./components/ProfileSection";
+import { AIPulseTeaser } from "./components/AIPulseTeaser";
 import { Services } from "./components/Services";
+import { PulseJourney } from "./components/PulseJourney";
 import { ProjectsFeatured } from "./components/ProjectsFeatured";
 import { ProjectsMore } from "./components/ProjectsMore";
+import { AboutTeaser } from "./components/AboutTeaser";
+import { FinalCTA } from "./components/FinalCTA";
 import { Footer } from "./components/Footer";
 import { Leistungen } from "./pages/Leistungen";
 import { LeistungenDetail } from "./pages/LeistungenDetail";
@@ -52,10 +55,13 @@ function HomePage() {
       />
       <Navbar />
       <Hero />
-      <ProfileSection />
+      <AIPulseTeaser />
+      <PulseJourney compact />
       <Services />
       <ProjectsFeatured />
       <ProjectsMore />
+      <AboutTeaser />
+      <FinalCTA />
       <Footer />
     </div>
   );
@@ -66,10 +72,10 @@ function RoutedErrorBoundary({ children }: { children: ReactNode }) {
   return <ErrorBoundary key={location.pathname}>{children}</ErrorBoundary>;
 }
 
-/** Redirects an old service slug (e.g. "webdesign") to its renamed slug, keeping the current :lang. */
-function LegacyServiceRedirect({ slug }: { slug: string }) {
+/** Redirects a retired path (e.g. "/ai-pulse") to its replacement, keeping the current :lang. */
+function LegacyRedirect({ to }: { to: string }) {
   const { lang } = useParams<{ lang: string }>();
-  return <Navigate to={`/${lang ?? DEFAULT_LOCALE}/leistungen/${slug}`} replace />;
+  return <Navigate to={`/${lang ?? DEFAULT_LOCALE}${to}`} replace />;
 }
 
 export default function App() {
@@ -102,22 +108,12 @@ export default function App() {
             </LangGuard>
           }
         />
-        <Route
-          path="/:lang/leistungen/webdesign"
-          element={
-            <LangGuard>
-              <LegacyServiceRedirect slug="ui-ux" />
-            </LangGuard>
-          }
-        />
-        <Route
-          path="/:lang/leistungen/ki-strategie"
-          element={
-            <LangGuard>
-              <LegacyServiceRedirect slug="ai-consulting" />
-            </LangGuard>
-          }
-        />
+        <Route path="/:lang/leistungen/webdesign" element={<LegacyRedirect to="/leistungen/ai-experience" />} />
+        <Route path="/:lang/leistungen/ki-strategie" element={<LegacyRedirect to="/leistungen/ai-automation" />} />
+        <Route path="/:lang/leistungen/ai-consulting" element={<LegacyRedirect to="/leistungen/ai-automation" />} />
+        <Route path="/:lang/leistungen/development" element={<LegacyRedirect to="/leistungen/ai-products" />} />
+        <Route path="/:lang/leistungen/ui-ux" element={<LegacyRedirect to="/leistungen/ai-experience" />} />
+        <Route path="/:lang/leistungen/company-building" element={<LegacyRedirect to="/leistungen/venture-building" />} />
         <Route
           path="/:lang/cases"
           element={
@@ -142,6 +138,7 @@ export default function App() {
             </LangGuard>
           }
         />
+        <Route path="/:lang/ai-pulse" element={<LegacyRedirect to="/leistungen" />} />
         <Route
           path="/:lang/blog"
           element={

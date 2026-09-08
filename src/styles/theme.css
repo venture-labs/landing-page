@@ -130,6 +130,57 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/**
+ * PulseLines: each wave path is drawn two tiles wide, so shifting it by exactly
+ * one tile (1000 user units) loops seamlessly. Layers differ only in duration,
+ * which is what keeps the combined pattern from visibly repeating.
+ */
+@keyframes pulse-drift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-1000px);
+  }
+}
+
+@keyframes pulse-breathe {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(1.14);
+  }
+}
+
+/**
+ * PulseCurve's travelling beat: the path carries a native SVG `pathLength="1000"`
+ * attribute, which renormalizes its geometric length to exactly 1000 units for
+ * stroke-dasharray/dashoffset purposes — so this dash math works unchanged no
+ * matter which waveform is active or how long it actually is.
+ */
+@keyframes pulse-curve-travel {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -1000;
+  }
+}
+
+.pulse-curve-travel {
+  animation: pulse-curve-travel 3.2s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-drift,
+  .pulse-breathe,
+  .pulse-curve-travel {
+    animation: none !important;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

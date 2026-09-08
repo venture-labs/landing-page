@@ -4,7 +4,8 @@ import { ArrowRight, Play, Pause } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useSiteData } from "@/data/content";
 import { useLocale } from "@/app/locale";
-import svgPaths from "@/imports/🖌Homepage/svg-oa0apfkpzr";
+import { PulseCheckModal } from "@/app/components/PulseCheckModal";
+import { PulseLines } from "@/app/components/ui/PulseLines";
 import heroVideo from "@/assets/venturelabs reel.mp4";
 
 function BackgroundBlobs() {
@@ -12,6 +13,11 @@ function BackgroundBlobs() {
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       <div className="absolute top-[-200px] left-[-300px] w-[800px] h-[800px] rounded-full bg-[#8129ff]/10 blur-[120px]" />
       <div className="absolute top-[200px] right-[-200px] w-[600px] h-[600px] rounded-full bg-[#a318f8]/8 blur-[100px]" />
+      <PulseLines
+        accent="#a318f8"
+        intensity={0.75}
+        className="absolute top-[70px] left-0 w-full h-[360px]"
+      />
     </div>
   );
 }
@@ -27,25 +33,18 @@ function HeroHeadline({
   return (
     <h1
       className="font-semibold text-white leading-[1.05] tracking-tight w-full"
-      style={{ fontSize: "var(--text-hero)" }}
+      style={{ fontSize: "calc(var(--text-hero) * 1.25)" }}
     >
       {parts[0]}
       <span className="relative inline-block">
         <span className="relative z-10 text-white">{highlight}</span>
-        <svg
-          className="absolute -bottom-2 left-0 w-full"
-          viewBox="0 0 400 16"
-          fill="none"
-          preserveAspectRatio="none"
-          style={{ height: "10px" }}
-        >
-          <path
-            d={svgPaths.p333f0a80}
-            stroke="#A318F8"
-            strokeLinecap="round"
-            strokeWidth="8"
-          />
-        </svg>
+        <motion.span
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute bottom-1 left-0 w-full h-[4px] rounded-full origin-left"
+          style={{ background: "linear-gradient(90deg, #2b95f6, #a318f8, #fda700)" }}
+        />
       </span>
       {parts[1]}
     </h1>
@@ -59,6 +58,7 @@ export function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [quizOpen, setQuizOpen] = useState(false);
 
   const [maxScale, setMaxScale] = useState(1);
 
@@ -93,7 +93,7 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-start pt-28 overflow-hidden bg-[#1E1C27]">
+    <section className="relative min-h-screen flex items-start pt-[9.8rem] overflow-hidden bg-[#1E1C27]">
       <BackgroundBlobs />
 
       <div
@@ -106,7 +106,7 @@ export function Hero() {
       />
 
       {/* Outer max-width wrapper — nothing grows beyond 1400px */}
-      <div className="relative z-10 w-full max-w-[1400px] mx-auto pb-20">
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto pb-40">
         {/* Text content with comfortable side padding */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -120,23 +120,24 @@ export function Hero() {
           />
 
           <p
-            className="text-white/60 font-light leading-relaxed max-w-2xl"
+            className="text-white/60 font-light leading-relaxed w-full lg:whitespace-nowrap"
             style={{ fontSize: "var(--text-body)" }}
           >
             {siteData.heroSubline}
           </p>
 
           <div className="flex flex-wrap gap-4">
-            <a
-              href={localizedPath("/#kontakt")}
+            <button
+              type="button"
+              onClick={() => setQuizOpen(true)}
               className="inline-flex items-center gap-2 bg-[#8129ff] hover:bg-[#9140ff] text-white font-semibold rounded-lg transition-all hover:scale-[1.02] px-[24px] py-[11px]"
               style={{ fontSize: "var(--text-body)" }}
             >
               {siteData.heroCta}
               <ArrowRight size={16} />
-            </a>
+            </button>
             <a
-              href={localizedPath("/cases")}
+              href={localizedPath("/#kontakt")}
               className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/12 text-white font-medium px-6 py-3.5 rounded-lg transition-all"
               style={{ fontSize: "var(--text-body)" }}
             >
@@ -152,7 +153,7 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
           style={{ scale, maxWidth: "calc(100% - 3rem)" }}
-          className="mt-10 relative w-full overflow-hidden bg-black mx-auto"
+          className="mt-[9.8rem] relative w-full overflow-hidden bg-black mx-auto"
         >
           <video
             ref={videoRef}
@@ -178,6 +179,8 @@ export function Hero() {
           </button>
         </motion.div>
       </div>
+
+      <PulseCheckModal open={quizOpen} onOpenChange={setQuizOpen} />
     </section>
   );
 }

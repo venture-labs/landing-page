@@ -3,15 +3,12 @@ import { useParams, Link } from "react-router";
 import { motion, useInView } from "motion/react";
 import { ArrowRight, Code2, Building2, Palette, Bot } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import headerUiUx from "@/assets/service-headers/ui-ux.svg";
-import headerCompanyBuilding from "@/assets/service-headers/company-building.svg";
-import headerDevelopment from "@/assets/service-headers/development.svg";
-import headerAiConsulting from "@/assets/service-headers/ai-consulting.svg";
 import { StrengthSection } from "@/app/components/StrengthSection";
-import { PulseSection } from "@/app/components/PulseSection";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
 import { CtaButton } from "@/app/components/ui/CtaButton";
+import { PulseCheckModal } from "@/app/components/PulseCheckModal";
+import { PulseLines, type PulseLinesProps } from "@/app/components/ui/PulseLines";
 import { useServicesData, useServiceDetail } from "@/data/content";
 import { useLocale } from "@/app/locale";
 
@@ -19,17 +16,17 @@ import { useLocale } from "@/app/locale";
 /* ─── helpers ────────────────────────────────────────────────────────── */
 
 const accentColors: Record<string, string> = {
-  development: "#a318f8",
-  "company-building": "#ef4444",
-  "ui-ux": "#2b95f6",
-  "ai-consulting": "#fda700",
+  "ai-automation": "#fda700",
+  "ai-products": "#a318f8",
+  "ai-experience": "#2b95f6",
+  "venture-building": "#ef4444",
 };
 
-const heroGraphics: Record<string, string> = {
-  development: headerDevelopment,
-  "company-building": headerCompanyBuilding,
-  "ui-ux": headerUiUx,
-  "ai-consulting": headerAiConsulting,
+const signaturePresets: Record<string, PulseLinesProps["preset"]> = {
+  "ai-automation": "automation",
+  "ai-products": "products",
+  "ai-experience": "experience",
+  "venture-building": "venture",
 };
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -41,7 +38,7 @@ const iconMap: Record<string, React.ReactNode> = {
 
 /* ─── hero ───────────────────────────────────────────────────────────── */
 
-function DetailHero({ detail, accent }: { detail: any; accent: string }) {
+function DetailHero({ detail, accent, title }: { detail: any; accent: string; title?: string }) {
   const { t } = useTranslation();
   const { localizedPath } = useLocale();
   return (
@@ -66,6 +63,14 @@ function DetailHero({ detail, accent }: { detail: any; accent: string }) {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-col gap-8 px-6 lg:px-12 pb-12"
         >
+          {title && (
+            <span
+              className="font-['sofia-pro',sans-serif] font-semibold uppercase tracking-wide"
+              style={{ fontSize: "var(--text-small)", color: accent }}
+            >
+              {title}
+            </span>
+          )}
           <h1
             className="font-['sofia-pro',sans-serif] font-semibold text-white leading-[1.05]"
             style={{ fontSize: "var(--text-hero)" }}
@@ -86,15 +91,20 @@ function DetailHero({ detail, accent }: { detail: any; accent: string }) {
           </CtaButton>
         </motion.div>
 
-        {/* ── HEADER GRAPHIC — full width, colored per service ── */}
-        <motion.img
+        {/* ── SIGNATURE — each service reads as its own waveform ── */}
+        <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          src={heroGraphics[detail.slug]}
-          alt=""
-          className="w-full h-auto px-6 lg:px-12 py-20"
-        />
+          transition={{ duration: 0.9, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          className="px-6 lg:px-12 py-16"
+        >
+          <PulseLines
+            preset={signaturePresets[detail.slug] ?? "ambient"}
+            accent={accent}
+            intensity={0.9}
+            className="w-full h-[220px] md:h-[300px] overflow-visible"
+          />
+        </motion.div>
 
         {/* ── STRENGTH SECTION — below the image ── */}
         <motion.div
@@ -309,6 +319,7 @@ function CtaBanner({ detail, accent }: { detail: any; accent: string }) {
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const { t } = useTranslation();
   const { localizedPath } = useLocale();
+  const [quizOpen, setQuizOpen] = useState(false);
 
   return (
     <motion.section
@@ -335,15 +346,20 @@ function CtaBanner({ detail, accent }: { detail: any; accent: string }) {
             {detail.ctaBody}
           </p>
         </div>
-        <CtaButton
-          href={localizedPath("/#kontakt")}
-          backgroundColor="white"
-          textColor="text-[#1E1C27]"
-          fontSize="var(--text-body)"
-        >
-          {t("leistungen.ctaContact")}
-        </CtaButton>
+        <div className="flex flex-wrap gap-4 shrink-0">
+          <CtaButton onClick={() => setQuizOpen(true)} backgroundColor="white" textColor="text-[#1E1C27]" fontSize="var(--text-body)">
+            {t("leistungen.pulseCta")}
+          </CtaButton>
+          <CtaButton
+            href={localizedPath("/#kontakt")}
+            backgroundColor="rgba(255,255,255,0.1)"
+            fontSize="var(--text-body)"
+          >
+            {detail.ctaButtonLabel || t("leistungen.ctaContact")}
+          </CtaButton>
+        </div>
       </div>
+      <PulseCheckModal open={quizOpen} onOpenChange={setQuizOpen} />
     </motion.section>
   );
 }
@@ -473,6 +489,7 @@ export function LeistungenDetail() {
   const { localizedPath } = useLocale();
 
   const detail = useServiceDetail(slug);
+  const services = useServicesData();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -492,6 +509,7 @@ export function LeistungenDetail() {
   }
 
   const accent = accentColors[detail.slug] ?? "#8129ff";
+  const serviceTitle = services.find((s) => s.slug === detail.slug)?.title;
 
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     if (!glowRef.current) return;
@@ -517,9 +535,8 @@ export function LeistungenDetail() {
         aria-hidden
       />
       <Navbar />
-      <DetailHero detail={detail as any} accent={accent} />
+      <DetailHero detail={detail as any} accent={accent} title={serviceTitle} />
       <ProcessSection detail={detail} accent={accent} />
-      {detail.slug === "ai-consulting" && <PulseSection accent={accent} />}
       <CaseSection detail={detail} accent={accent} />
       <CtaBanner detail={detail} accent={accent} />
       <OtherServices currentSlug={detail.slug} />

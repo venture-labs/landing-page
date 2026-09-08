@@ -1,15 +1,13 @@
-import { useMemo, useRef, useState } from "react";
-import { motion, useInView } from "motion/react";
+import { useMemo, useState } from "react";
 import { ArrowRight, Check } from "lucide-react";
 import { useLocale } from "@/app/locale";
 import { CtaButton } from "@/app/components/ui/CtaButton";
 
 /**
- * Pulse Check / Build / Care structure and the 10-question Pulse Score quiz,
- * transposed from the live pulse.venturelabs.team site (both content and
- * quiz logic captured directly from the running app, DE + EN). Not part of
- * the markdown content — this is a fixed product feature specific to the
- * "ai-consulting" service page, so it's plain code rather than CMS content.
+ * The 10-question Pulse Score quiz, transposed from the live
+ * pulse.venturelabs.team site (both content and quiz logic captured directly
+ * from the running app, DE + EN). Not part of the markdown content — the
+ * scoring is bound to the question set, so copy and logic live together here.
  *
  * The score narrative is verified for the two ends of the 0–100 range
  * ("Erste Anzeichen"/"Early Signs" at the low end, "Stabiler Puls"/"Steady
@@ -18,8 +16,8 @@ import { CtaButton } from "@/app/components/ui/CtaButton";
  * split between the two verified narratives rather than inventing more.
  */
 
-type Area = "data" | "process" | "team" | "tools" | "governance";
-const AREA_ORDER: Area[] = ["data", "process", "team", "tools", "governance"];
+export type Area = "data" | "process" | "team" | "tools" | "governance";
+export const AREA_ORDER: Area[] = ["data", "process", "team", "tools", "governance"];
 
 interface QuizQuestion {
   area: Area;
@@ -27,21 +25,7 @@ interface QuizQuestion {
   options: string[];
 }
 
-interface Copy {
-  pulseHeading: string;
-  pulseIntro: string;
-  steps: {
-    stepLabel: string;
-    title: string;
-    price: string;
-    description: string;
-    inputLabel: string;
-    input: string;
-    outputLabel: string;
-    output: string;
-    bullets: string[];
-    footnote: string;
-  }[];
+export interface Copy {
   areaLabels: Record<Area, string>;
   quizHeading: string;
   quizIntro: string;
@@ -59,55 +43,8 @@ interface Copy {
   questions: QuizQuestion[];
 }
 
-const COPY: Record<"de" | "en", Copy> = {
+export const COPY: Record<"de" | "en", Copy> = {
   de: {
-    pulseHeading: "Pulse Check, Build, Care",
-    pulseIntro:
-      "Jeder Schritt baut auf dem vorherigen auf. Du entscheidest nach jedem Schritt, ob es weitergeht – ganz ohne Verpflichtung zum nächsten.",
-    steps: [
-      {
-        stepLabel: "Schritt 1 · Einstieg",
-        title: "Pulse Check",
-        price: "Ab 2.900 €",
-        description:
-          "1–2 Tage strukturierte Analyse über deine Abteilungen hinweg, geliefert als priorisierte Roadmap.",
-        inputLabel: "Input",
-        input: "Deine aktuellen Prozesse, Daten und deine Tool-Landschaft – so, wie sie heute sind.",
-        outputLabel: "Output",
-        output: "Eine priorisierte Roadmap mit den 1–3 Anwendungsfällen mit dem größten Hebel.",
-        bullets: ["AI Vital Signs Report", "Priorisierter Opportunity-Backlog", "Kein 40-seitiger Bericht, den niemand liest"],
-        footnote: "Der einzige Schritt, den du direkt buchen kannst.",
-      },
-      {
-        stepLabel: "Schritt 2 · Falls sinnvoll",
-        title: "Pulse Build",
-        price: "Ab 15.000 €",
-        description:
-          "Sobald der Pulse Check zeigt, wo der größte Hebel liegt, setzen wir gemeinsam die 1–3 wichtigsten Anwendungsfälle um.",
-        inputLabel: "Input",
-        input: "Der priorisierte Anwendungsfall aus deinem Pulse Check.",
-        outputLabel: "Output",
-        output: "Eine funktionierende Lösung im Produktivbetrieb – kein Prototyp für die Schublade.",
-        bullets: [
-          "4 Wochen Standardumfang, erweiterbar auf 8",
-          "Dedizierter Entwickler, feste Ansprechperson während der gesamten Umsetzung",
-          "Festpreis mit klar definiertem Umfang – keine versteckten Kosten",
-        ],
-        footnote: "Wird nach deinem Pulse Check gemeinsam entschieden – kein eigenständiges Angebot.",
-      },
-      {
-        stepLabel: "Schritt 3 · Nach dem Build",
-        title: "Pulse Care",
-        price: "Ab 2.500 €/Monat",
-        description: "Sobald eine erste Lösung läuft, halten wir sie mit dir aktuell: 2 Termine pro Monat plus Dashboard-Zugriff.",
-        inputLabel: "Input",
-        input: "Die im Pulse Build gebaute Lösung.",
-        outputLabel: "Output",
-        output: "Eine Lösung, die läuft, überwacht wird und mit deinem Geschäft mitwächst.",
-        bullets: ["Monatliches Dashboard-Tracking", "Vierteljährliches Deep-Review", "Jährlicher Pulse-Check-Refresh"],
-        footnote: "Relevant, sobald wir gemeinsam etwas gebaut haben.",
-      },
-    ],
     areaLabels: {
       data: "Datenbasis",
       process: "Prozesse",
@@ -238,51 +175,6 @@ const COPY: Record<"de" | "en", Copy> = {
     ],
   },
   en: {
-    pulseHeading: "Pulse Check, Build, Care",
-    pulseIntro:
-      "Each step builds on the last. You decide after every step whether to continue — no obligation to move to the next one.",
-    steps: [
-      {
-        stepLabel: "Step 1 · Starting point",
-        title: "Pulse Check",
-        price: "Starting at €2,900",
-        description: "1–2 days of structured analysis across your departments, delivered as a prioritised roadmap.",
-        inputLabel: "Input",
-        input: "Your current processes, data, and tool stack — as they are today.",
-        outputLabel: "Output",
-        output: "A prioritised roadmap naming the 1–3 highest-leverage use cases.",
-        bullets: ["AI Vital Signs Report", "Prioritised opportunity backlog", "Not a 40-page report nobody reads"],
-        footnote: "The only step you book directly.",
-      },
-      {
-        stepLabel: "Step 2 · If it makes sense",
-        title: "Pulse Build",
-        price: "Starting at €15,000",
-        description: "Once your Pulse Check has shown where the leverage is, we build the 1–3 highest-priority use cases together.",
-        inputLabel: "Input",
-        input: "The priority use case from your Pulse Check.",
-        outputLabel: "Output",
-        output: "A working solution in production — not a prototype that sits on a shelf.",
-        bullets: [
-          "4-week standard scope, extendable to 8",
-          "A dedicated developer and a single point of contact throughout",
-          "Fixed price with a clearly defined scope — no hidden costs",
-        ],
-        footnote: "Decided together after your Pulse Check — not a standalone purchase.",
-      },
-      {
-        stepLabel: "Step 3 · After the build",
-        title: "Pulse Care",
-        price: "Starting at €2,500/month",
-        description: "Once a first solution is live, we keep it current with you: 2 scheduled calls a month plus dashboard access.",
-        inputLabel: "Input",
-        input: "The solution built during your Pulse Build.",
-        outputLabel: "Output",
-        output: "A solution that stays live, monitored, and current as your business evolves.",
-        bullets: ["Monthly dashboard tracking", "Quarterly deep review", "Annual Pulse Check refresh"],
-        footnote: "Relevant once we've built something together.",
-      },
-    ],
     areaLabels: {
       data: "Data Readiness",
       process: "Process Fit",
@@ -411,55 +303,9 @@ const COPY: Record<"de" | "en", Copy> = {
   },
 };
 
-function PulsePricing({ copy, accent }: { copy: Copy; accent: string }) {
-  return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      {copy.steps.map((step) => (
-        <div key={step.title} className="flex flex-col gap-5 p-7 rounded-xl border border-white/8 bg-white/[0.02]">
-          <div className="flex flex-col gap-1">
-            <span className="font-['sofia-pro',sans-serif] font-semibold uppercase tracking-wide" style={{ fontSize: "var(--text-small)", color: accent }}>
-              {step.stepLabel}
-            </span>
-            <h3 className="font-['sofia-pro',sans-serif] font-semibold text-white" style={{ fontSize: "var(--text-h2)" }}>
-              {step.title}
-            </h3>
-            <span className="font-['sofia-pro',sans-serif] font-semibold text-white/70" style={{ fontSize: "var(--text-body)" }}>
-              {step.price}
-            </span>
-          </div>
-          <p className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed" style={{ fontSize: "var(--text-body)" }}>
-            {step.description}
-          </p>
-          <div className="flex flex-col gap-2 text-white/50 font-['sofia-pro',sans-serif] font-light" style={{ fontSize: "var(--text-small)" }}>
-            <p>
-              <span className="text-white/70 font-semibold">{step.inputLabel}: </span>
-              {step.input}
-            </p>
-            <p>
-              <span className="text-white/70 font-semibold">{step.outputLabel}: </span>
-              {step.output}
-            </p>
-          </div>
-          <ul className="flex flex-col gap-2 mt-1">
-            {step.bullets.map((b) => (
-              <li key={b} className="flex items-start gap-2 text-white/70 font-['sofia-pro',sans-serif] font-light leading-snug" style={{ fontSize: "var(--text-small)" }}>
-                <Check size={13} style={{ color: accent }} strokeWidth={3} className="mt-0.5 shrink-0" />
-                {b}
-              </li>
-            ))}
-          </ul>
-          <p className="text-white/35 font-['sofia-pro',sans-serif] font-light italic mt-auto" style={{ fontSize: "var(--text-small)" }}>
-            {step.footnote}
-          </p>
-        </div>
-      ))}
-    </div>
-  );
-}
-
 type QuizState = { step: "intro" } | { step: "question"; index: number; answers: number[] } | { step: "result"; answers: number[] };
 
-function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
+export function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
   const [state, setState] = useState<QuizState>({ step: "intro" });
   const { localizedPath } = useLocale();
 
@@ -609,47 +455,5 @@ function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
         </div>
       </div>
     </div>
-  );
-}
-
-export function PulseSection({ accent }: { accent: string }) {
-  const { lang } = useLocale();
-  const copy = COPY[lang];
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-
-  return (
-    <section className="bg-[#181620] py-24" ref={ref}>
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 flex flex-col gap-24">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="flex flex-col gap-10"
-        >
-          <div className="flex flex-col gap-4">
-            <h2 className="font-['sofia-pro',sans-serif] font-semibold text-white leading-tight" style={{ fontSize: "var(--text-hero)" }}>
-              {copy.pulseHeading}
-            </h2>
-            <p className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed max-w-2xl" style={{ fontSize: "var(--text-body)" }}>
-              {copy.pulseIntro}
-            </p>
-          </div>
-          <PulsePricing copy={copy} accent={accent} />
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="flex flex-col gap-8 p-8 lg:p-12 rounded-2xl border border-white/8 bg-white/[0.015]"
-        >
-          <h3 className="font-['sofia-pro',sans-serif] font-semibold text-white leading-tight" style={{ fontSize: "var(--text-section)" }}>
-            {copy.quizHeading}
-          </h3>
-          <PulseQuiz copy={copy} accent={accent} />
-        </motion.div>
-      </div>
-    </section>
   );
 }

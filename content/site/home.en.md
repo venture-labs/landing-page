@@ -1,8 +1,8 @@
 ---
 language: "en"
-heroHeadline: "We build digital products for your business."
-heroSubline: "A small, focused team of strategy, design, and project management experts ships digital products that actually work — in just a few weeks."
-heroCta: "Book a call"
-heroCtaSecondary: "View projects"
+heroHeadline: "We build what's next."
+heroSubline: "We help businesses find, build and scale what AI makes possible."
+heroCta: "Take the AI Pulse Check now"
+heroCtaSecondary: "Contact"
 clientLogosLabel: "Trusted by these clients"
 ---

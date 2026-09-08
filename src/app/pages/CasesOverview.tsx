@@ -57,10 +57,10 @@ const iconMap = {
 };
 
 const serviceGradients: Record<string, string> = {
-  development: "linear-gradient(268.344deg, rgba(163, 24, 248, 0.15) 0%, rgba(163, 24, 248, 0) 100%)",
-  "company-building": "linear-gradient(268.344deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0) 100%)",
-  "ui-ux": "linear-gradient(44.336deg, rgba(43, 149, 246, 0.15) 0%, rgba(43, 149, 246, 0) 100%)",
-  "ai-consulting": "linear-gradient(-56.458deg, rgba(253, 167, 0, 0.15) 0%, rgba(253, 167, 0, 0) 100%)",
+  "ai-automation": "linear-gradient(-56.458deg, rgba(253, 167, 0, 0.15) 0%, rgba(253, 167, 0, 0) 100%)",
+  "ai-products": "linear-gradient(268.344deg, rgba(163, 24, 248, 0.15) 0%, rgba(163, 24, 248, 0) 100%)",
+  "ai-experience": "linear-gradient(44.336deg, rgba(43, 149, 246, 0.15) 0%, rgba(43, 149, 246, 0) 100%)",
+  "venture-building": "linear-gradient(268.344deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0) 100%)",
 };
 
 function ServiceTile({ service, index }: { service: any; index: number }) {
