@@ -125,7 +125,9 @@
     "readTimeLabel": "Lesezeit",
     "tableOfContents": "Inhaltsverzeichnis",
     "ctaText": "Fragen zum Thema? Wir sprechen gerne direkt.",
-    "ctaButton": "Kontakt aufnehmen"
+    "ctaButton": "Kontakt aufnehmen",
+    "pulseScoreHeading": "Wo liegt euer größter KI-Hebel?",
+    "pulseScoreBody": "Fünf Minuten, zehn Fragen, eine erste Einschätzung – kostenlos und unverbindlich."
   },
   "kontakt": {
     "heroTitle": "Was ist dein Anliegen?",

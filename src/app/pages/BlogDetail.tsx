@@ -1,25 +1,19 @@
-import { useEffect, useRef } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { useParams, Link } from "react-router";
 import { motion } from "motion/react";
-import { ArrowLeft, ArrowRight, Code2, Building2, Palette, Bot } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Mail, Phone } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
 import { useLocale } from "@/app/locale";
 import { useBlogDetail } from "@/data/content";
+import { PulseCheckModal } from "@/app/components/PulseCheckModal";
 
 const topicAccent: Record<string, string> = {
   "ai-automation": "#fda700",
   "ai-products": "#a318f8",
   "ai-experience": "#2b95f6",
   "venture-building": "#ef4444",
-};
-
-const topicIcon: Record<string, React.ReactNode> = {
-  "ai-automation": <Bot size={40} strokeWidth={1.5} className="text-white/80" />,
-  "ai-products": <Code2 size={40} strokeWidth={1.5} className="text-white/80" />,
-  "ai-experience": <Palette size={40} strokeWidth={1.5} className="text-white/80" />,
-  "venture-building": <Building2 size={40} strokeWidth={1.5} className="text-white/80" />,
 };
 
 function slugify(text: string) {
@@ -30,12 +24,26 @@ function slugify(text: string) {
     .replace(/(^-|-$)/g, "");
 }
 
+/** Renders `**bold**` spans within otherwise-plain block text. */
+function renderInline(text: string) {
+  return text.split(/\*\*(.+?)\*\*/g).map((part, i) =>
+    i % 2 === 1 ? (
+      <strong key={i} className="text-white font-semibold">
+        {part}
+      </strong>
+    ) : (
+      <Fragment key={i}>{part}</Fragment>
+    ),
+  );
+}
+
 export function BlogDetail() {
   const { slug } = useParams<{ slug: string }>();
   const { t } = useTranslation();
   const { localizedPath } = useLocale();
   const glowRef = useRef<HTMLDivElement>(null);
   const post = useBlogDetail(slug);
+  const [quizOpen, setQuizOpen] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -63,7 +71,7 @@ export function BlogDetail() {
 
   const accent = topicAccent[post.topicSlug] ?? "#8129ff";
   const headings = post.content
-    .filter((block) => block.type === "heading")
+    .filter((block): block is typeof block & { text: string } => block.type === "heading" && !!block.text)
     .map((block) => ({ text: block.text, id: slugify(block.text) }));
 
   return (
@@ -178,48 +186,104 @@ export function BlogDetail() {
 
             {/* ─── content ─────────────────────────────────────────── */}
             <div className="flex flex-col gap-8 min-w-0">
-              <div
-                className="w-full h-[280px] lg:h-[360px] flex items-center justify-center"
-                style={{ background: `linear-gradient(146deg, ${accent}33 0%, ${accent}08 100%)` }}
-              >
-                <div
-                  className="w-20 h-20 rounded-xl flex items-center justify-center"
-                  style={{ backgroundColor: `${accent}22`, border: `1px solid ${accent}44` }}
-                >
-                  {topicIcon[post.topicSlug]}
-                </div>
-              </div>
-
               <div className="flex flex-col gap-6 max-w-3xl">
-                {post.content.map((block, i) =>
-                  block.type === "heading" ? (
-                    <h2
-                      key={i}
-                      id={slugify(block.text)}
-                      className="font-['sofia-pro',sans-serif] font-semibold text-white leading-tight mt-4 scroll-mt-32"
-                      style={{ fontSize: "var(--text-h2)" }}
-                    >
-                      {block.text}
-                    </h2>
-                  ) : (
-                    <p
-                      key={i}
-                      className="text-white/70 font-['sofia-pro',sans-serif] font-light leading-relaxed"
-                      style={{ fontSize: "var(--text-body)" }}
-                    >
-                      {block.text}
-                    </p>
-                  ),
-                )}
+                {post.content.map((block, i) => {
+                  if (block.type === "heading" && block.text) {
+                    return (
+                      <h2
+                        key={i}
+                        id={slugify(block.text)}
+                        className="font-['sofia-pro',sans-serif] font-semibold text-white leading-tight mt-4 scroll-mt-32"
+                        style={{ fontSize: "var(--text-h2)" }}
+                      >
+                        {block.text}
+                      </h2>
+                    );
+                  }
+                  if (block.type === "list" && block.items) {
+                    return (
+                      <ul key={i} className="flex flex-col gap-3">
+                        {block.items.map((item, j) => (
+                          <li key={j} className="flex items-start gap-3">
+                            <Check size={15} strokeWidth={3} style={{ color: accent }} className="mt-1.5 shrink-0" />
+                            <span
+                              className="text-white/70 font-['sofia-pro',sans-serif] font-light leading-relaxed"
+                              style={{ fontSize: "var(--text-body)" }}
+                            >
+                              {renderInline(item)}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    );
+                  }
+                  if (block.type === "image" && block.src) {
+                    return (
+                      <div key={i} className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden my-2">
+                        <img
+                          src={block.src}
+                          alt={block.text ?? ""}
+                          className="absolute inset-0 w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0" style={{ boxShadow: `inset 0 0 0 1px ${accent}33` }} />
+                      </div>
+                    );
+                  }
+                  if (block.text) {
+                    return (
+                      <p
+                        key={i}
+                        className="text-white/70 font-['sofia-pro',sans-serif] font-light leading-relaxed"
+                        style={{ fontSize: "var(--text-body)" }}
+                      >
+                        {renderInline(block.text)}
+                      </p>
+                    );
+                  }
+                  return null;
+                })}
               </div>
 
-              <div className="flex flex-col gap-4 border-t border-white/10 pt-8 mt-4 max-w-3xl">
+              {/* ─── direct contact ──────────────────────────────────── */}
+              <div className="flex flex-col gap-5 border-t border-white/10 pt-8 mt-4 max-w-3xl">
                 <p
                   className="text-white/60 font-['sofia-pro',sans-serif] font-light"
                   style={{ fontSize: "var(--text-body)" }}
                 >
                   {t("blog.ctaText")}
                 </p>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-5 rounded-xl p-5 bg-white/[0.02]" style={{ boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.08)" }}>
+                  <div
+                    className="w-12 h-12 rounded-full flex items-center justify-center font-['sofia-pro',sans-serif] font-semibold shrink-0"
+                    style={{ backgroundColor: `${accent}22`, color: accent }}
+                  >
+                    CW
+                  </div>
+                  <div className="flex flex-col gap-0.5">
+                    <span className="text-white font-['sofia-pro',sans-serif] font-semibold" style={{ fontSize: "var(--text-body)" }}>
+                      Christian Wenzel
+                    </span>
+                    <span className="text-white/50 font-['sofia-pro',sans-serif] font-light" style={{ fontSize: "var(--text-small)" }}>
+                      {t("kontakt.team.christianRole")}
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-1.5 sm:ml-auto">
+                    <a
+                      href="tel:+49156778387064"
+                      className="inline-flex items-center gap-2 text-white/70 hover:text-white transition-colors"
+                      style={{ fontSize: "var(--text-small)" }}
+                    >
+                      <Phone size={13} /> +49 156778 387064
+                    </a>
+                    <a
+                      href="mailto:christian.wenzel@venturelabs.team"
+                      className="inline-flex items-center gap-2 text-white/70 hover:text-white transition-colors"
+                      style={{ fontSize: "var(--text-small)" }}
+                    >
+                      <Mail size={13} /> christian.wenzel@venturelabs.team
+                    </a>
+                  </div>
+                </div>
                 <Link
                   to={localizedPath("/kontakt")}
                   className="inline-flex items-center gap-2 w-fit font-['sofia-pro',sans-serif] font-semibold px-5 py-3 rounded-full transition-colors"
@@ -228,11 +292,39 @@ export function BlogDetail() {
                   {t("blog.ctaButton")} <ArrowRight size={16} />
                 </Link>
               </div>
+
+              {/* ─── pulse score ─────────────────────────────────────── */}
+              <div
+                className="flex flex-col gap-4 rounded-2xl p-8 max-w-3xl"
+                style={{ background: `linear-gradient(135deg, ${accent}1f 0%, ${accent}08 100%)`, boxShadow: `inset 0 0 0 1px ${accent}33` }}
+              >
+                <h3
+                  className="font-['sofia-pro',sans-serif] font-semibold text-white leading-tight"
+                  style={{ fontSize: "var(--text-h3)" }}
+                >
+                  {t("blog.pulseScoreHeading")}
+                </h3>
+                <p
+                  className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed"
+                  style={{ fontSize: "var(--text-body)" }}
+                >
+                  {t("blog.pulseScoreBody")}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setQuizOpen(true)}
+                  className="self-start inline-flex items-center gap-2 font-['sofia-pro',sans-serif] font-semibold px-5 py-3 rounded-full transition-transform hover:scale-[1.02]"
+                  style={{ backgroundColor: accent, color: "#0e0d13" }}
+                >
+                  {t("leistungen.pulseCta")} <ArrowRight size={16} />
+                </button>
+              </div>
             </div>
           </div>
         </motion.div>
       </section>
       <Footer />
+      <PulseCheckModal open={quizOpen} onOpenChange={setQuizOpen} />
     </div>
   );
 }

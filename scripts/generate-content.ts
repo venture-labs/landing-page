@@ -352,8 +352,13 @@ export function getCaseDetail(slug: string): CaseDetail | undefined {
     resolve(outDir, "blog.ts"),
     `${banner()}
 export interface BlogContentBlock {
-  type: "heading" | "paragraph";
-  text: string;
+  type: "heading" | "paragraph" | "list" | "image";
+  /** heading/paragraph text, or image alt text */
+  text?: string;
+  /** list items; each may contain **bold** lead-ins */
+  items?: string[];
+  /** image src (image blocks only) */
+  src?: string;
 }
 
 export interface BlogPost {
@@ -385,6 +390,8 @@ export const blogPosts: BlogPost[] = ${JSON.stringify(
         content: (p.content ?? []).map((b: any) => ({
           type: b!.type,
           text: b!.text,
+          items: b!.items,
+          src: b!.src,
         })),
       })),
       null,
