@@ -1,5 +1,12 @@
 import { useRef, useState } from "react";
-import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
+import {
+  AnimatePresence,
+  motion,
+  useInView,
+  useMotionValueEvent,
+  useReducedMotion,
+  useScroll,
+} from "motion/react";
 import { ArrowRight, Check } from "lucide-react";
 import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
@@ -214,33 +221,67 @@ function StepDetail({
         >
           {step.tagline}
         </h3>
-        <p
-          className="text-white/60 font-light leading-relaxed max-w-xl"
-          style={{ fontSize: "var(--text-body)" }}
-        >
-          {step.description}
-        </p>
-        {step.key === "check" ? (
-          <button
-            type="button"
-            onClick={onCheckCta}
-            className="self-start inline-flex items-center gap-2 font-semibold text-white rounded-lg px-6 py-3 transition-transform hover:scale-[1.02]"
-            style={{ fontSize: "var(--text-btn)", backgroundColor: accent }}
+        {!compact && (
+          <p
+            className="text-white/60 font-light leading-relaxed max-w-xl"
+            style={{ fontSize: "var(--text-body)" }}
           >
-            {step.ctaLabel}
-            <ArrowRight size={16} />
-          </button>
-        ) : (
-          <Link
-            to={localizedPath("/kontakt")}
-            className="self-start inline-flex items-center gap-2 font-semibold text-white rounded-lg px-6 py-3 transition-transform hover:scale-[1.02]"
-            style={{ fontSize: "var(--text-btn)", backgroundColor: accent }}
-          >
-            {step.ctaLabel}
-            <ArrowRight size={16} />
-          </Link>
+            {step.description}
+          </p>
         )}
+        {!compact &&
+          (step.key === "check" ? (
+            <button
+              type="button"
+              onClick={onCheckCta}
+              className="self-start inline-flex items-center gap-2 font-semibold text-white rounded-lg px-6 py-3 transition-transform hover:scale-[1.02]"
+              style={{ fontSize: "var(--text-btn)", backgroundColor: accent }}
+            >
+              {step.ctaLabel}
+              <ArrowRight size={16} />
+            </button>
+          ) : (
+            <Link
+              to={localizedPath("/kontakt")}
+              className="self-start inline-flex items-center gap-2 font-semibold text-white rounded-lg px-6 py-3 transition-transform hover:scale-[1.02]"
+              style={{ fontSize: "var(--text-btn)", backgroundColor: accent }}
+            >
+              {step.ctaLabel}
+              <ArrowRight size={16} />
+            </Link>
+          ))}
       </div>
+
+      {compact && (
+        <div className="flex flex-col justify-center gap-5">
+          <p
+            className="text-white/60 font-light leading-relaxed max-w-xl"
+            style={{ fontSize: "var(--text-body)" }}
+          >
+            {step.description}
+          </p>
+          {step.key === "check" ? (
+            <button
+              type="button"
+              onClick={onCheckCta}
+              className="self-start inline-flex items-center gap-2 font-semibold text-white rounded-lg px-6 py-3 transition-transform hover:scale-[1.02]"
+              style={{ fontSize: "var(--text-btn)", backgroundColor: accent }}
+            >
+              {step.ctaLabel}
+              <ArrowRight size={16} />
+            </button>
+          ) : (
+            <Link
+              to={localizedPath("/kontakt")}
+              className="self-start inline-flex items-center gap-2 font-semibold text-white rounded-lg px-6 py-3 transition-transform hover:scale-[1.02]"
+              style={{ fontSize: "var(--text-btn)", backgroundColor: accent }}
+            >
+              {step.ctaLabel}
+              <ArrowRight size={16} />
+            </Link>
+          )}
+        </div>
+      )}
 
       {!compact && (
         <div className="flex flex-col gap-6">
@@ -299,6 +340,24 @@ export function PulseJourney({ compact = false }: { compact?: boolean }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
+  // Scroll past the rail and the active step advances on its own — click
+  // still works and simply overrides until the next scroll. Tracked against
+  // the rail specifically (not the detail block below it): the detail's
+  // height changes with every step, which would shift the scroll trigger
+  // points themselves and make the mapping fight its own state changes.
+  const scrollZoneRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: scrollZoneRef,
+    offset: ["start 0.85", "start 0.15"],
+  });
+  const stepKeys = coreServices.map((s) => s.key);
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    if (v <= 0 || v >= 1 || stepKeys.length === 0) return;
+    const index = Math.min(stepKeys.length - 1, Math.floor(v * stepKeys.length));
+    const key = stepKeys[index];
+    setActiveKey((prev) => (prev === key ? prev : key));
+  });
+
   const active = coreServices.find((s) => s.key === activeKey) ?? coreServices[0];
   const accent = STEP_ACCENTS[activeKey];
 
@@ -333,28 +392,32 @@ export function PulseJourney({ compact = false }: { compact?: boolean }) {
           <PulseCurve activeKey={activeKey} accent={accent} />
         </motion.div>
 
-        <StepRail steps={coreServices} activeKey={activeKey} onSelect={setActiveKey} />
+        <div className="flex flex-col gap-12">
+          <div ref={scrollZoneRef}>
+            <StepRail steps={coreServices} activeKey={activeKey} onSelect={setActiveKey} />
+          </div>
 
-        <AnimatePresence mode="wait">
-          <StepDetail
-            key={active.key}
-            step={active}
-            accent={accent}
-            compact={compact}
-            onCheckCta={() => setQuizOpen(true)}
-          />
-        </AnimatePresence>
+          <AnimatePresence mode="wait">
+            <StepDetail
+              key={active.key}
+              step={active}
+              accent={accent}
+              compact={compact}
+              onCheckCta={() => setQuizOpen(true)}
+            />
+          </AnimatePresence>
 
-        {compact && (
-          <Link
-            to={localizedPath("/leistungen")}
-            className="self-start inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors"
-            style={{ fontSize: "var(--text-body)" }}
-          >
-            {t("leistungen.allServices")}
-            <ArrowRight size={15} />
-          </Link>
-        )}
+          {compact && (
+            <Link
+              to={localizedPath("/leistungen")}
+              className="self-start inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors"
+              style={{ fontSize: "var(--text-body)" }}
+            >
+              {t("leistungen.allServices")}
+              <ArrowRight size={15} />
+            </Link>
+          )}
+        </div>
       </div>
 
       <PulseCheckModal open={quizOpen} onOpenChange={setQuizOpen} />
