@@ -63,6 +63,21 @@ without touching the generated `src/data/{de,en}/cases.ts` / `caseDetails.ts`.
   image *content* in a way that would need updating (`CaseGridCard` uses `c.title` as `alt`,
   `CaseHero` uses `detail.heroHeadline`) — confirmed by reading all four files.
   Correct me at gate 1, otherwise I proceed with these.
+- **Amended after the Tester's `spec` verdict (2026-09-08):** at least one of the three rotated
+  card files does not carry the PNG file signature despite its `.png` name — the Tester's run of
+  `criterion 2: machinemaster-card.png is a valid PNG` failed while its byte-identity test
+  passed, i.e. the pre-fix `tap2link-card.png` bytes that now sit in `machinemaster-card.png` do
+  not start with `89 50 4E 47 0D 0A 1A 0A`. I could not re-read the raw bytes myself in this pass
+  (no shell available to this role; ripgrep skips binaries), so the *format* of those source
+  bytes is **unverified** beyond "not PNG-signed" — the fix does not depend on knowing which
+  format it actually is. Those exact bytes are already served under a `.png` filename on the live
+  site today (they are the wrong-but-visibly-rendering image this task fixes), so mislabeled
+  container bytes demonstrably render in the browser and this fix introduces no new risk class.
+  Consequence, and the single reading of criteria 1–3 below: **byte-identity to the named source
+  wins over container format for the three rotated files**; the PNG-signature requirement applies
+  only to `moerschen-card.png` (criterion 4), which is newly encoded and therefore under our
+  control. Normalising the other three to real PNGs would contradict the byte-identity mechanism
+  this whole fix rests on and is out of scope (see Out of scope).
 
 ## Context found
 - `public/uploads/cases/`: static, unprocessed image folder served by Vite as-is; contains the
@@ -88,7 +103,9 @@ the bytes under four existing filenames match what those filenames (and the mark
 already references them) claim they are. Do the replacement in the exact order given in the
 brief so no needed source is overwritten before it is copied out, using a temp file to carry the
 one value (`brylliant-card.png`'s current Tap2Link screenshot) that both needs to survive past
-step 2 and is needed again at step 4:
+step 2 and is needed again at step 4. Steps 1–5 are verbatim byte copies: the source bytes are
+moved unchanged, never re-encoded, converted, or stripped of metadata, so each destination file
+inherits its source's container format exactly.
 
 1. Copy current `brylliant-card.png` → `tmp-original-brylliant-card.png` (temp holder, not
    referenced by any markdown, deleted at the end).
@@ -117,7 +134,10 @@ Rejected alternative: leaving `moerschen-card.png` as a `.jpg` renamed to `.png`
 re-encoding (i.e. just relabeling the extension). Rejected because the file must be a *valid*
 PNG at that path, not a JPEG wearing a `.png` extension — browsers may still render a mislabeled
 JPEG via content-sniffing, but that is not "a valid PNG" and is explicitly ruled out by the
-brief.
+brief. This PNG-validity requirement is scoped to `moerschen-card.png` only — it is the one file
+this task *encodes*, so its format is ours to choose; the three files this task only *moves*
+(steps 1–5) keep their source bytes verbatim and are not format-normalised (see Assumptions and
+criteria 1–3).
 
 ## Files to change
 | File | Change | Why |
@@ -131,16 +151,28 @@ brief.
 No file under `content/`, `src/data/`, `src/app/`, or `vite.config.ts` changes.
 
 ## Acceptance criteria
-1. `public/uploads/cases/brylliant-card.png` is a valid PNG whose bytes are identical to the
-   bytes `moerschen-card.png` had immediately before this fix (the Brylliant laptop-briefing-tool
-   screenshot, "More efficiency and effectiveness for your marketing").
-2. `public/uploads/cases/machinemaster-card.png` is a valid PNG whose bytes are identical to the
-   bytes `tap2link-card.png` had immediately before this fix (the MachineMaster mobile hero,
-   "Absolute Pros at the big machines", red background).
-3. `public/uploads/cases/tap2link-card.png` is a valid PNG whose bytes are identical to the bytes
-   `brylliant-card.png` had immediately before this fix (the Tap2Link phone mockup, org "MyWay",
-   user "Weston Hooper", t2i logo).
-4. `public/uploads/cases/moerschen-card.png` is a valid PNG (correct PNG magic bytes), is not
+1. `public/uploads/cases/brylliant-card.png` is byte-for-byte identical to the bytes
+   `moerschen-card.png` held immediately before this fix (the Brylliant laptop-briefing-tool
+   screenshot, "More efficiency and effectiveness for your marketing"). The bytes are copied
+   verbatim — no re-encoding, no format conversion, no metadata rewriting — so the file's
+   container format is whatever the source's was. **No PNG-signature (magic-byte) assertion is
+   made for this file**; format is asserted only for `moerschen-card.png` (criterion 4). The
+   filename keeps its `.png` extension unchanged.
+2. `public/uploads/cases/machinemaster-card.png` is byte-for-byte identical to the bytes
+   `tap2link-card.png` held immediately before this fix (the MachineMaster mobile hero,
+   "Absolute Pros at the big machines", red background). Those source bytes are known **not** to
+   carry the PNG file signature; byte-identity is the requirement and it takes precedence — the
+   Implementer must **not** re-encode, convert, or otherwise alter them to make the content match
+   the `.png` extension. **No PNG-signature (magic-byte) assertion is made for this file.** The
+   filename keeps its `.png` extension unchanged.
+3. `public/uploads/cases/tap2link-card.png` is byte-for-byte identical to the bytes
+   `brylliant-card.png` held immediately before this fix (the Tap2Link phone mockup, org "MyWay",
+   user "Weston Hooper", t2i logo). The bytes are copied verbatim — no re-encoding, no format
+   conversion, no metadata rewriting. **No PNG-signature (magic-byte) assertion is made for this
+   file.** The filename keeps its `.png` extension unchanged.
+4. `public/uploads/cases/moerschen-card.png` is a valid PNG (first 8 bytes exactly
+   `89 50 4E 47 0D 0A 1A 0A`) — this is the **only** file in this task whose container format is
+   asserted, because it is the only one this task encodes rather than copies. It is not
    byte-identical to any of `brylliant-card.png`, `machinemaster-card.png`, or `tap2link-card.png`
    (old or new content), and is not byte-identical to its own pre-fix content; opening it shows
    the same laptop-with-Moerschen-website photo as `laptop_moerschen_screen.jpg`.
@@ -189,10 +221,10 @@ tree — confirmed by search). Per the repo's own test guidance, verification fo
 ## Tests to write
 | # | Kind | File | Under test | Fixtures / mocks |
 |---|---|---|---|---|
-| 1 | unit (file-content, `node --test`) | `tests/assets/case-card-images.test.mjs` (new file/dir — no existing test folder in this repo) | Byte-for-byte identity of `public/uploads/cases/brylliant-card.png` vs. the pre-fix content of `moerschen-card.png`, using a SHA-256 hash the Test Writer computes and hardcodes from the *current* (pre-fix) repo state before the Implementer runs | none — reads real files under `public/uploads/cases/` via `node:fs` + `node:crypto`, no mocks |
-| 2 | unit (file-content, `node --test`) | `tests/assets/case-card-images.test.mjs` | Byte-for-byte identity of `machinemaster-card.png` vs. pre-fix `tap2link-card.png` (hash hardcoded from current state) | none |
-| 3 | unit (file-content, `node --test`) | `tests/assets/case-card-images.test.mjs` | Byte-for-byte identity of `tap2link-card.png` vs. pre-fix `brylliant-card.png` (hash hardcoded from current state) | none |
-| 4 | unit (file-content, `node --test`) | `tests/assets/case-card-images.test.mjs` | `moerschen-card.png`: PNG magic-byte check (first 8 bytes == `89 50 4E 47 0D 0A 1A 0A`); hash differs from its own pre-fix hash and from the other three cards' post-fix hashes | none |
+| 1 | unit (file-content, `node --test`) | `tests/assets/case-card-images.test.mjs` (new file/dir — no existing test folder in this repo) | Byte-for-byte identity of `public/uploads/cases/brylliant-card.png` vs. the pre-fix content of `moerschen-card.png`, using a SHA-256 hash the Test Writer computes and hardcodes from the *current* (pre-fix) repo state before the Implementer runs. Assert the hash only — **do not** assert PNG magic bytes for this file (criterion 1) | none — reads real files under `public/uploads/cases/` via `node:fs` + `node:crypto`, no mocks |
+| 2 | unit (file-content, `node --test`) | `tests/assets/case-card-images.test.mjs` | Byte-for-byte identity of `machinemaster-card.png` vs. pre-fix `tap2link-card.png` (hash hardcoded from current state). Assert the hash only — **do not** assert PNG magic bytes for this file; its source bytes are not PNG-signed and byte-identity is the requirement (criterion 2) | none |
+| 3 | unit (file-content, `node --test`) | `tests/assets/case-card-images.test.mjs` | Byte-for-byte identity of `tap2link-card.png` vs. pre-fix `brylliant-card.png` (hash hardcoded from current state). Assert the hash only — **do not** assert PNG magic bytes for this file (criterion 3) | none |
+| 4 | unit (file-content, `node --test`) | `tests/assets/case-card-images.test.mjs` | `moerschen-card.png` — the **only** file with a format assertion: PNG magic-byte check (first 8 bytes == `89 50 4E 47 0D 0A 1A 0A`); hash differs from its own pre-fix hash and from the other three cards' post-fix hashes; PNG `IHDR` width/height equal the frame dimensions of `laptop_moerschen_screen.jpg` | none |
 | 5 | unit (file-content, `node --test`) | `tests/assets/case-card-images.test.mjs` | Untouched-file guard: hashes of `hero-machinemaster.png`, `hero-moereschen.png`, `tap2link-hero.png`, `case-machinemaster-{1,2,3}.png`, `case-moerschen-pic{1,2,3}.png`, `tap2link-mockup-{1,3}.png`, `card_tap2link.png`, `animation-card.png`, `neuer-look-card.png`, `scanservice-card.png` match hashes hardcoded from the current (pre-fix) state | none |
 | 6 | unit (file-content, `node --test`) | `tests/assets/case-card-images.test.mjs` | `tmp-original-brylliant-card.png` does not exist at `public/uploads/cases/` after the fix; `laptop_moerschen_screen.jpg` still exists and is byte-identical to its pre-fix content | none |
 | 7 | manual | n/a | `pnpm build` exits 0; `pnpm dev` + visual check of the 8 routes listed in Test plan step 3 | none — Tester runs commands and reports pass/fail per route explicitly |
@@ -214,11 +246,29 @@ conventions better — this is a Test Writer decision, not an Implementer one).
   verified manually by the Tester via `sha256sum`/`Get-FileHash` and reported explicitly, dropping
   the `tests/assets/case-card-images.test.mjs` file entirely. Not a blocker — flagging as a
   process choice, not a fact I'm unsure of.
+- At least one rotated card file (`machinemaster-card.png`, i.e. the pre-fix `tap2link-card.png`
+  bytes) carries a `.png` name over non-PNG bytes. Criteria 1–3 deliberately keep it that way:
+  the alternative reading — normalise the three rotated files to real PNGs so extension and
+  format agree — would break the byte-identity the whole fix is built on, change asset content
+  the requester never asked to change, and grow a one-line asset fix into a re-encoding pass. It
+  is therefore recorded under Out of scope as a separate follow-up, not folded into this task.
+  Not a blocker.
+- Whether the Netlify response headers for `public/` assets include `X-Content-Type-Options:
+  nosniff` is **unverified** — `netlify.toml` is a denied path for this role. This does not block:
+  browsers decode `<img>` payloads by content regardless of the declared subtype, and these exact
+  bytes are already served under a `.png` filename in production today and render (that visible
+  rendering is precisely the mismatched-image bug being fixed), so the fix changes which image is
+  served, not whether a mislabeled one can be displayed. The Tester's manual check of criteria
+  9–11 covers rendering end to end. Not a blocker.
 
 ## Out of scope
 - Renaming any file or editing any frontmatter in `content/cases/*.md`.
 - Regenerating or hand-editing `src/data/{de,en}/cases.ts` / `caseDetails.ts`.
 - Cleaning up the unused, unreferenced `card_tap2link.png` orphan asset.
+- Normalising the container format of the three rotated card files (`brylliant-card.png`,
+  `machinemaster-card.png`, `tap2link-card.png`) so their bytes match their `.png` extension —
+  including re-encoding the known non-PNG-signed `machinemaster-card.png` bytes. These files are
+  moved verbatim by this task; a format/extension audit of `public/uploads/` is a separate task.
 - Any change to `hero-*.png`, `case-*-pic*.png` / `case-*-1..3.png`, `tap2link-mockup-*.png`, or
   `tap2link-hero.png` — these already correctly represent their company and are spot-checked as
   untouched (criterion 7), not modified.
