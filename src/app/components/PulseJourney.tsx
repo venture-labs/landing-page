@@ -78,38 +78,42 @@ function PulseCurve({ activeKey, accent }: { activeKey: CoreService["key"]; acce
 
       <line x1="0" y1={BASELINE} x2={VIEW_W} y2={BASELINE} stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
 
-      {/* every waveform is drawn; only the active one is faded in */}
+      {/* every waveform is drawn; only the active one is faded in. The travelling
+          beat rides along on a native SVG `pathLength` normalization (not
+          motion's pathLength/pathOffset, which never animated reliably here) so
+          the dash math stays a fixed 0 → -1000 regardless of path geometry. */}
       {(Object.keys(PATHS) as CoreService["key"][]).map((key) => (
-        <motion.path
+        <motion.g
           key={key}
-          d={PATHS[key]}
-          animate={{ opacity: key === activeKey ? 0.3 : 0 }}
+          animate={{ opacity: key === activeKey ? 1 : 0 }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          fill="none"
-          stroke={STEP_ACCENTS[key]}
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          vectorEffect="non-scaling-stroke"
-        />
+        >
+          <path
+            d={PATHS[key]}
+            fill="none"
+            stroke={STEP_ACCENTS[key]}
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeOpacity={0.3}
+            vectorEffect="non-scaling-stroke"
+          />
+          {!reduceMotion && (
+            <path
+              d={PATHS[key]}
+              pathLength={1000}
+              fill="none"
+              stroke="url(#pulse-fade)"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeDasharray="180 820"
+              vectorEffect="non-scaling-stroke"
+              className="pulse-curve-travel"
+            />
+          )}
+        </motion.g>
       ))}
-
-      {/* the travelling beat that runs along the current waveform */}
-      {!reduceMotion && (
-        <motion.path
-          key={activeKey}
-          d={PATHS[activeKey]}
-          animate={{ pathOffset: [0, 1] }}
-          transition={{ duration: 3.2, ease: "linear", repeat: Infinity }}
-          fill="none"
-          stroke="url(#pulse-fade)"
-          strokeWidth="3"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          pathLength={0.18}
-          vectorEffect="non-scaling-stroke"
-        />
-      )}
     </svg>
   );
 }
@@ -305,7 +309,7 @@ export function PulseJourney({ compact = false }: { compact?: boolean }) {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="flex flex-col gap-4 max-w-2xl"
+          className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 lg:gap-12"
         >
           <h2
             className="font-semibold text-white leading-tight"
@@ -314,7 +318,7 @@ export function PulseJourney({ compact = false }: { compact?: boolean }) {
             {coreHeading}
           </h2>
           <p
-            className="text-white/60 font-light leading-relaxed"
+            className="text-white/60 font-light leading-relaxed max-w-md lg:text-right"
             style={{ fontSize: "var(--text-body)" }}
           >
             {coreIntro}

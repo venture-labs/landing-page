@@ -151,7 +151,7 @@ export function Services() {
           </h2>
           <p
             className="text-[#c0c0c0] font-light leading-snug max-w-3xl"
-            style={{ fontSize: "var(--text-h2)" }}
+            style={{ fontSize: "var(--text-body)" }}
           >
             {t("services.subheading")}
           </p>

@@ -6,7 +6,6 @@ import { useSiteData } from "@/data/content";
 import { useLocale } from "@/app/locale";
 import { PulseCheckModal } from "@/app/components/PulseCheckModal";
 import { PulseLines } from "@/app/components/ui/PulseLines";
-import svgPaths from "@/imports/🖌Homepage/svg-oa0apfkpzr";
 import heroVideo from "@/assets/venturelabs reel.mp4";
 
 function BackgroundBlobs() {
@@ -39,20 +38,13 @@ function HeroHeadline({
       {parts[0]}
       <span className="relative inline-block">
         <span className="relative z-10 text-white">{highlight}</span>
-        <svg
-          className="absolute -bottom-2 left-0 w-full"
-          viewBox="0 0 400 16"
-          fill="none"
-          preserveAspectRatio="none"
-          style={{ height: "10px" }}
-        >
-          <path
-            d={svgPaths.p333f0a80}
-            stroke="#A318F8"
-            strokeLinecap="round"
-            strokeWidth="8"
-          />
-        </svg>
+        <motion.span
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute bottom-1 left-0 w-full h-[4px] rounded-full origin-left"
+          style={{ background: "linear-gradient(90deg, #2b95f6, #a318f8, #fda700)" }}
+        />
       </span>
       {parts[1]}
     </h1>
