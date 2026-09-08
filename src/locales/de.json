@@ -11,12 +11,12 @@
     "headlineHighlight": "what's next"
   },
   "services": {
-    "heading": "From opportunity to impact.",
+    "heading": "Von der Chance zur Wirkung.",
     "subheading": "Ob du bestehende Prozesse verbessern, ein neues Produkt bauen oder ein neues Geschäft starten willst: Wir verbinden Business, Product, Design, Engineering und AI.",
     "exploreCta": "Explore"
   },
   "problem": {
-    "heading": "AI is changing how businesses work.",
+    "heading": "KI verändert, wie Unternehmen arbeiten.",
     "body": "Viele Unternehmen wissen, dass KI relevant wird – aber nicht, wo der größte Hebel liegt. Venture Labs hilft, aus Potenzial konkrete Lösungen zu machen."
   },
   "aiPulse": {
@@ -24,18 +24,18 @@
     "cta": "Pulse Score ermitteln"
   },
   "aboutTeaser": {
-    "heading": "One team. From business to AI.",
+    "heading": "Ein Team. Von Business bis AI.",
     "body": "Business-Verständnis, Product Thinking, UX, Engineering und AI in einem Team. Keine Übergaben zwischen Strategie, Design und Entwicklung – sondern gemeinsames Bauen.",
     "cta": "Mehr über uns"
   },
   "finalCta": {
-    "heading": "Have an AI opportunity in mind?",
-    "body": "Let's turn it into something that works.",
+    "heading": "Eine KI-Chance im Kopf?",
+    "body": "Lass uns daraus etwas Funktionierendes bauen.",
     "primaryCta": "Kostenloses Erstgespräch vereinbaren",
     "secondaryCta": "Leistungen ansehen"
   },
   "projects": {
-    "heading": "Built for real business.",
+    "heading": "Gebaut fürs echte Business.",
     "subheading": "Unsere Projekte ziehen sich durch alle Branchen. Zu unseren Kunden zählen Start-ups wie Großkonzerne. Und besonders spannend wird's, wenn wir unsere eigenen Kunden sind.",
     "viewProject": "Zum Projekt",
     "moreHeading": "Noch mehr Projekte",
