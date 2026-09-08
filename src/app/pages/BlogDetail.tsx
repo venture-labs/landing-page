@@ -95,11 +95,21 @@ export function BlogDetail() {
           </Link>
 
           <h1
-            className="font-['sofia-pro',sans-serif] font-semibold text-white leading-[1.15] mb-12 max-w-4xl"
+            className="font-['sofia-pro',sans-serif] font-semibold text-white leading-[1.15] mb-8 max-w-4xl"
             style={{ fontSize: "var(--text-hero)" }}
           >
             {post.title}
           </h1>
+
+          {post.image && (
+            <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden mb-12">
+              <img src={post.image} alt="" className="absolute inset-0 w-full h-full object-cover" />
+              <div
+                className="absolute inset-0"
+                style={{ boxShadow: `inset 0 0 0 1px ${accent}33` }}
+              />
+            </div>
+          )}
 
           <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-12">
             {/* ─── sidebar ─────────────────────────────────────────── */}

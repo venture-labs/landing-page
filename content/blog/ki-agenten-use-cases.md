@@ -4,6 +4,7 @@ language: "de"
 order: 2
 title: "KI-Agenten im Unternehmensalltag: 5 Use Cases, die wirklich funktionieren"
 excerpt: "Von automatisierten Support-Workflows bis zu internen Wissens-Assistenten: fünf KI-Anwendungen, die heute schon echten Mehrwert liefern – ohne Hype."
+image: "/uploads/blog/ki-agenten-use-cases.png"
 topicSlug: "ai-automation"
 topic: "AI Automation"
 readTime: "8 Min. Lesezeit"

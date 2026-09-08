@@ -4,6 +4,7 @@ language: "en"
 order: 1
 title: "Why most MVPs fail – and how to do better"
 excerpt: "An MVP isn't a half-finished product – it's a test. Here are the mistakes teams make most often, and how to learn more with less effort."
+image: "/uploads/blog/warum-mvps-floppen.png"
 topicSlug: "ai-products"
 topic: "AI Products"
 readTime: "6 min read"

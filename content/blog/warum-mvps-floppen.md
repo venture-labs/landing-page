@@ -4,6 +4,7 @@ language: "de"
 order: 1
 title: "Warum die meisten MVPs floppen – und wie du es besser machst"
 excerpt: "Ein MVP ist kein halbfertiges Produkt – es ist ein Test. Wir zeigen, welche Fehler Teams am häufigsten machen und wie du mit weniger Aufwand mehr lernst."
+image: "/uploads/blog/warum-mvps-floppen.png"
 topicSlug: "ai-products"
 topic: "AI Products"
 readTime: "6 Min. Lesezeit"

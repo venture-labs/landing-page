@@ -4,6 +4,7 @@ language: "de"
 order: 6
 title: "User Research auf die Schnelle: 3 Methoden für enge Timelines"
 excerpt: "Auch mit wenig Zeit und Budget lässt sich fundiertes Nutzerfeedback einholen. Drei Methoden, die sich in der Praxis bewährt haben."
+image: "/uploads/blog/user-research-schnell.png"
 topicSlug: "ai-experience"
 topic: "AI Experience"
 readTime: "5 Min. Lesezeit"

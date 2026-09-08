@@ -360,6 +360,7 @@ export interface BlogPost {
   slug: string;
   title: string;
   excerpt: string;
+  image: string;
   topicSlug: "ai-automation" | "ai-products" | "ai-experience" | "venture-building";
   topic: string;
   readTime: string;
@@ -374,6 +375,7 @@ export const blogPosts: BlogPost[] = ${JSON.stringify(
         slug: p.slug,
         title: p.title,
         excerpt: p.excerpt,
+        image: p.image,
         topicSlug: p.topicSlug,
         topic: p.topic,
         readTime: p.readTime,

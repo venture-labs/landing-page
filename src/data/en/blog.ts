@@ -9,6 +9,7 @@ export interface BlogPost {
   slug: string;
   title: string;
   excerpt: string;
+  image: string;
   topicSlug: "ai-automation" | "ai-products" | "ai-experience" | "venture-building";
   topic: string;
   readTime: string;
@@ -23,6 +24,7 @@ export const blogPosts: BlogPost[] = [
     "slug": "warum-mvps-floppen",
     "title": "Why most MVPs fail – and how to do better",
     "excerpt": "An MVP isn't a half-finished product – it's a test. Here are the mistakes teams make most often, and how to learn more with less effort.",
+    "image": "/uploads/blog/warum-mvps-floppen.png",
     "topicSlug": "ai-products",
     "topic": "AI Products",
     "readTime": "6 min read",
@@ -72,6 +74,7 @@ export const blogPosts: BlogPost[] = [
     "slug": "ki-agenten-use-cases",
     "title": "AI agents in everyday business: 5 use cases that actually work",
     "excerpt": "From automated support workflows to internal knowledge assistants: five AI applications delivering real value today – no hype attached.",
+    "image": "/uploads/blog/ki-agenten-use-cases.png",
     "topicSlug": "ai-automation",
     "topic": "AI Automation",
     "readTime": "8 min read",
@@ -121,6 +124,7 @@ export const blogPosts: BlogPost[] = [
     "slug": "design-systems-hebel",
     "title": "Design systems: the underrated lever for faster growth",
     "excerpt": "A good design system doesn't just save time in design – it speeds up development too. Here's how to build one people actually use.",
+    "image": "/uploads/blog/design-systems-hebel.png",
     "topicSlug": "ai-experience",
     "topic": "AI Experience",
     "readTime": "5 min read",
@@ -170,6 +174,7 @@ export const blogPosts: BlogPost[] = [
     "slug": "pitch-zu-produkt",
     "title": "From pitch to product: how we build an MVP in 12 weeks",
     "excerpt": "A behind-the-scenes look at our company-building process – from first idea to first paying customer.",
+    "image": "/uploads/blog/pitch-zu-produkt.png",
     "topicSlug": "venture-building",
     "topic": "Venture Building",
     "readTime": "7 min read",
@@ -219,6 +224,7 @@ export const blogPosts: BlogPost[] = [
     "slug": "no-code-vs-custom",
     "title": "No-code vs. custom development: when each one pays off",
     "excerpt": "No-code tools keep getting more powerful – but they're not always the right choice. An honest breakdown.",
+    "image": "/uploads/blog/no-code-vs-custom.png",
     "topicSlug": "ai-products",
     "topic": "AI Products",
     "readTime": "4 min read",
@@ -268,6 +274,7 @@ export const blogPosts: BlogPost[] = [
     "slug": "user-research-schnell",
     "title": "Fast user research: 3 methods for tight timelines",
     "excerpt": "Even with little time and budget, you can gather solid user feedback. Three methods that hold up in practice.",
+    "image": "/uploads/blog/user-research-schnell.png",
     "topicSlug": "ai-experience",
     "topic": "AI Experience",
     "readTime": "5 min read",

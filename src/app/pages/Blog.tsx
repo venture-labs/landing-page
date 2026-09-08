@@ -64,6 +64,23 @@ function BlogHero() {
 
 function PostTile({ post, tall }: { post: BlogPost; tall: boolean }) {
   const accent = topicAccent[post.topicSlug] ?? "#8129ff";
+
+  if (post.image) {
+    return (
+      <div className={`relative overflow-hidden ${tall ? "h-[260px] lg:h-[340px]" : "h-[180px]"}`}>
+        <img
+          src={post.image}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+        />
+        <div
+          className="absolute inset-0"
+          style={{ background: `linear-gradient(180deg, transparent 55%, ${accent}22 100%)` }}
+        />
+      </div>
+    );
+  }
+
   return (
     <div
       className={`relative overflow-hidden flex items-center justify-center ${tall ? "h-[260px] lg:h-[340px]" : "h-[180px]"}`}

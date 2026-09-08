@@ -4,6 +4,7 @@ language: "de"
 order: 5
 title: "No-Code vs. Custom Development: Wann sich was lohnt"
 excerpt: "No-Code-Tools werden immer mächtiger – aber sie sind nicht immer die richtige Wahl. Eine ehrliche Einordnung."
+image: "/uploads/blog/no-code-vs-custom.png"
 topicSlug: "ai-products"
 topic: "AI Products"
 readTime: "4 Min. Lesezeit"

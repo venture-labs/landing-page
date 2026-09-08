@@ -4,6 +4,7 @@ language: "en"
 order: 5
 title: "No-code vs. custom development: when each one pays off"
 excerpt: "No-code tools keep getting more powerful – but they're not always the right choice. An honest breakdown."
+image: "/uploads/blog/no-code-vs-custom.png"
 topicSlug: "ai-products"
 topic: "AI Products"
 readTime: "4 min read"

@@ -4,6 +4,7 @@ language: "de"
 order: 3
 title: "Design Systems: Der unterschätzte Hebel für schnelleres Wachstum"
 excerpt: "Ein gutes Design System spart nicht nur Zeit im Design – es beschleunigt auch die Entwicklung. So baust du eins, das wirklich genutzt wird."
+image: "/uploads/blog/design-systems-hebel.png"
 topicSlug: "ai-experience"
 topic: "AI Experience"
 readTime: "5 Min. Lesezeit"

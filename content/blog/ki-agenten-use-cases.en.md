@@ -4,6 +4,7 @@ language: "en"
 order: 2
 title: "AI agents in everyday business: 5 use cases that actually work"
 excerpt: "From automated support workflows to internal knowledge assistants: five AI applications delivering real value today – no hype attached."
+image: "/uploads/blog/ki-agenten-use-cases.png"
 topicSlug: "ai-automation"
 topic: "AI Automation"
 readTime: "8 min read"
