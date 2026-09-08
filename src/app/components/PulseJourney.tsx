@@ -371,7 +371,7 @@ export function PulseJourney({ compact = false }: { compact?: boolean }) {
           className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 lg:gap-12"
         >
           <h2
-            className="font-semibold text-white leading-tight"
+            className="font-semibold text-white leading-[1.15]"
             style={{ fontSize: "var(--text-hero)" }}
           >
             {coreHeading}

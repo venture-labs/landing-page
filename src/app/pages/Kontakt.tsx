@@ -324,7 +324,7 @@ function KontaktHero({
           className="flex flex-col gap-6 max-w-2xl"
         >
           <h1
-            className="font-['sofia-pro',sans-serif] font-semibold text-white leading-[1.05]"
+            className="font-['sofia-pro',sans-serif] font-semibold text-white leading-[1.15]"
             style={{ fontSize: "var(--text-hero)" }}
           >
             {t("kontakt.heroTitle")}

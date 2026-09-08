@@ -95,7 +95,7 @@ export function BlogDetail() {
           </Link>
 
           <h1
-            className="font-['sofia-pro',sans-serif] font-semibold text-white leading-[110%] mb-12 max-w-4xl"
+            className="font-['sofia-pro',sans-serif] font-semibold text-white leading-[1.15] mb-12 max-w-4xl"
             style={{ fontSize: "var(--text-hero)" }}
           >
             {post.title}

@@ -51,7 +51,7 @@ function LeistungenHero({ onQuizOpen }: { onQuizOpen: () => void }) {
           </span>
 
           <h1
-            className="font-semibold text-white leading-[1.05]"
+            className="font-semibold text-white leading-[1.15]"
             style={{ fontSize: "var(--text-hero)" }}
           >
             {data.heroTitlePrefix}{" "}

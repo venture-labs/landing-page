@@ -32,7 +32,7 @@ function HeroHeadline({
   const parts = headline.split(highlight);
   return (
     <h1
-      className="font-semibold text-white leading-[1.05] tracking-tight w-full"
+      className="font-semibold text-white leading-[1.15] tracking-tight w-full"
       style={{ fontSize: "calc(var(--text-hero) * 1.25)" }}
     >
       {parts[0]}

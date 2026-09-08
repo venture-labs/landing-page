@@ -144,7 +144,7 @@ export function Services() {
           className="flex flex-col gap-10 mb-16"
         >
           <h2
-            className=" font-semibold text-white leading-none"
+            className=" font-semibold text-white leading-[1.15]"
             style={{ fontSize: "var(--text-hero)" }}
           >
             {t("services.heading")}

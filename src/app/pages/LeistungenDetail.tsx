@@ -72,7 +72,7 @@ function DetailHero({ detail, accent, title }: { detail: any; accent: string; ti
             </span>
           )}
           <h1
-            className="font-['sofia-pro',sans-serif] font-semibold text-white leading-[1.05]"
+            className="font-['sofia-pro',sans-serif] font-semibold text-white leading-[1.15]"
             style={{ fontSize: "var(--text-hero)" }}
           >
             {detail.heroHeadline}

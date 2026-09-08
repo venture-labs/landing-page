@@ -27,7 +27,7 @@ function UeberUnsHero({ data }: { data: ReturnType<typeof useAboutData> }) {
           className="flex flex-col gap-8 max-w-3xl"
         >
           <h1
-            className="font-['sofia-pro',sans-serif] font-semibold text-white leading-[1.05]"
+            className="font-['sofia-pro',sans-serif] font-semibold text-white leading-[1.15]"
             style={{ fontSize: "var(--text-hero)" }}
           >
             {data.heroTitle}

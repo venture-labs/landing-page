@@ -20,7 +20,7 @@ export function FinalCTA() {
           className="flex flex-col items-start gap-8"
         >
           <h2
-            className="font-semibold text-white leading-tight max-w-2xl"
+            className="font-semibold text-white leading-[1.15] max-w-2xl"
             style={{ fontSize: "var(--text-hero)" }}
           >
             {t("finalCta.heading")}
