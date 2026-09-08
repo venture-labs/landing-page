@@ -21,7 +21,7 @@
   },
   "aiPulse": {
     "body": "AI can improve processes, unlock new products, and change entire business models. We help you find where the biggest leverage in your business lies — and build the solution from there.",
-    "cta": "Take the AI Pulse Check now"
+    "cta": "Get my Pulse Score"
   },
   "aboutTeaser": {
     "heading": "One team. From business to AI.",
@@ -31,8 +31,8 @@
   "finalCta": {
     "heading": "Have an AI opportunity in mind?",
     "body": "Let's turn it into something that works.",
-    "primaryCta": "See our services",
-    "secondaryCta": "Talk to Venture Labs"
+    "primaryCta": "Book a free intro call",
+    "secondaryCta": "See our services"
   },
   "projects": {
     "heading": "Built for real business.",
@@ -85,7 +85,7 @@
     "contactQuestion": "Interested in working together on your project? Get in touch now.",
     "notFound": "Service not found.",
     "backToOverview": "Back to overview",
-    "pulseCta": "Take the Pulse Check",
+    "pulseCta": "Get my Pulse Score",
     "allSteps": "All steps",
     "allServices": "All services in detail"
   },

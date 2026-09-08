@@ -20,7 +20,7 @@ coreServices:
       - 'An AI opportunity map instead of buzzword bingo'
       - '3–5 use cases, ranked by impact'
       - 'No 40-page report nobody reads'
-    ctaLabel: 'Take the Pulse Check'
+    ctaLabel: 'Get my Pulse Score'
   - key: build
     step: '02'
     label: 'Build'

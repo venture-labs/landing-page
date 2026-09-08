@@ -62,7 +62,7 @@ export const leistungenData: LeistungenData = {
       "3–5 use cases, ranked by impact",
       "No 40-page report nobody reads"
     ],
-    "ctaLabel": "Take the Pulse Check"
+    "ctaLabel": "Get my Pulse Score"
   },
   {
     "key": "build",

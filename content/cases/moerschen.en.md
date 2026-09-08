@@ -3,7 +3,7 @@ slug: moerschen
 language: "en"
 order: 3
 title: "Moerschen – website relaunch for better communication"
-subtitle: "A digital service portal for complex B2B processes in just 8 weeks."
+subtitle: "Website relaunch with clear user guidance and a new communication strategy — live in 8 weeks."
 featured: true
 imagePosition: right
 stats:

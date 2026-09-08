@@ -20,7 +20,7 @@ export const featuredCases: FeaturedCase[] = [
   {
     "slug": "tap2link",
     "title": "Tap2Link – more than a digital business card.",
-    "subtitle": "A digital service portal for complex B2B processes in just 8 weeks.",
+    "subtitle": "A multifunctional app for events, services and teams — from idea to launch in 16 weeks.",
     "imagePosition": "right",
     "stats": [
       "+230% user interaction",
@@ -44,7 +44,7 @@ export const featuredCases: FeaturedCase[] = [
   {
     "slug": "moerschen",
     "title": "Moerschen – website relaunch for better communication",
-    "subtitle": "A digital service portal for complex B2B processes in just 8 weeks.",
+    "subtitle": "Website relaunch with clear user guidance and a new communication strategy — live in 8 weeks.",
     "imagePosition": "right",
     "stats": [
       "45% more contact inquiries via the website",

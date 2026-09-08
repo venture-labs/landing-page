@@ -3,7 +3,7 @@ language: "de"
 slug: tap2link
 order: 1
 title: "Tap2Link – Mehr als eine digitale Visitenkarte."
-subtitle: "Ein digitales Serviceportal für komplexe B2B-Prozesse in nur 8 Wochen."
+subtitle: "Eine multifunktionale App für Events, Services und Teams – in 16 Wochen von der Idee zum Launch."
 featured: true
 imagePosition: right
 stats:
@@ -13,7 +13,7 @@ stats:
 image: "/uploads/cases/tap2link-card.png"
 category: "Digitale Kontakt- & Serviceecosysteme"
 heroHeadline: "Multifunktionale App für Events, Services & Teams"
-heroSubline: "Ein digitales Serviceportal für komplexe B2B-Prozesse in nur 8 Wochen."
+heroSubline: "Eine multifunktionale App für Events, Services und Teams – in 16 Wochen von der Idee zum Launch."
 heroImage: "/uploads/cases/tap2link-hero.png"
 description: "Tap2Link ist eine vollständig neue, multifunktionale Plattform für Events, Services und Teams. Wir haben die Anwendung von Grund auf mit modernem Design und nutzerfreundlicher Oberfläche entwickelt."
 background: "Die ursprüngliche Plattform war technisch veraltet und konnte die wachsenden Anforderungen der Nutzer nicht erfüllen. Das Unternehmen benötigte eine Komplettneubau mit neuem Design-System."

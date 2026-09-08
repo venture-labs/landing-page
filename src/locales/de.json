@@ -21,7 +21,7 @@
   },
   "aiPulse": {
     "body": "AI kann Prozesse verbessern, neue Produkte ermöglichen und ganze Geschäftsmodelle verändern. Wir helfen dir herauszufinden, wo der größte Hebel in deinem Unternehmen liegt – und bauen daraus die Lösung.",
-    "cta": "Jetzt AI Pulse Check machen"
+    "cta": "Pulse Score ermitteln"
   },
   "aboutTeaser": {
     "heading": "One team. From business to AI.",
@@ -31,8 +31,8 @@
   "finalCta": {
     "heading": "Have an AI opportunity in mind?",
     "body": "Let's turn it into something that works.",
-    "primaryCta": "Leistungen ansehen",
-    "secondaryCta": "Talk to Venture Labs"
+    "primaryCta": "Kostenloses Erstgespräch vereinbaren",
+    "secondaryCta": "Leistungen ansehen"
   },
   "projects": {
     "heading": "Built for real business.",
@@ -85,7 +85,7 @@
     "contactQuestion": "Interessiert an einer Zusammenarbeit für dein Projekt? Nimm jetzt Kontakt auf.",
     "notFound": "Service nicht gefunden.",
     "backToOverview": "Zurück zur Übersicht",
-    "pulseCta": "Pulse Check machen",
+    "pulseCta": "Pulse Score ermitteln",
     "allSteps": "Alle Schritte",
     "allServices": "Alle Leistungen im Detail"
   },

@@ -3,7 +3,7 @@ slug: tap2link
 language: "en"
 order: 1
 title: "Tap2Link – more than a digital business card."
-subtitle: "A digital service portal for complex B2B processes in just 8 weeks."
+subtitle: "A multifunctional app for events, services and teams — from idea to launch in 16 weeks."
 featured: true
 imagePosition: right
 stats:
@@ -13,7 +13,7 @@ stats:
 image: "/uploads/cases/tap2link-card.png"
 category: "Digital contact & service ecosystems"
 heroHeadline: "Multifunctional app for events, services & teams"
-heroSubline: "A digital service portal for complex B2B processes in just 8 weeks."
+heroSubline: "A multifunctional app for events, services and teams — from idea to launch in 16 weeks."
 heroImage: "/uploads/cases/tap2link-hero.png"
 description: "Tap2Link is an entirely new, multifunctional platform for events, services, and teams. We built the application from scratch with modern design and a user-friendly interface."
 background: "The original platform was technically outdated and couldn't meet users' growing demands. The company needed a complete rebuild with a new design system."

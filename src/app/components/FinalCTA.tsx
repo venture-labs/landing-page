@@ -32,11 +32,11 @@ export function FinalCTA() {
             {t("finalCta.body")}
           </p>
           <div className="flex flex-wrap gap-4">
-            <CtaButton href={localizedPath("/leistungen")} backgroundColor="#8129ff">
+            <CtaButton href={localizedPath("/kontakt")} backgroundColor="#8129ff">
               {t("finalCta.primaryCta")}
             </CtaButton>
             <a
-              href={localizedPath("/#kontakt")}
+              href={localizedPath("/leistungen")}
               className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/12 text-white font-medium px-6 py-3.5 rounded-lg transition-all"
               style={{ fontSize: "var(--text-body)" }}
             >
