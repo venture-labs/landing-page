@@ -36,6 +36,18 @@ const PNG_MAGIC = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
 const isPng = (name) =>
   readFileSync(join(CASES_DIR, name)).subarray(0, 8).equals(PNG_MAGIC);
 
+/** The task's base commit — the "immediately before this fix" state criteria 1-3 refer to. */
+const BASE_COMMIT = () =>
+  execFileSync('git', ['merge-base', 'dev', 'HEAD'], { cwd: REPO_ROOT, encoding: 'utf8' }).trim();
+
+/** A file's bytes as of the base commit. */
+const preFixBytes = (name) =>
+  execFileSync('git', ['show', `${BASE_COMMIT()}:public/uploads/cases/${name}`], {
+    cwd: REPO_ROOT,
+    encoding: 'buffer',
+    maxBuffer: 64 * 1024 * 1024,
+  });
+
 /** Bytes as they were at the base commit, before the Implementer ran. */
 const PRE_FIX_SHA256 = {
   'brylliant-card.png': '7e972b1ae8b3e1a9436d88b8f00f3b2c0a47039332c2cc8e23ce0768b78af714',
@@ -71,9 +83,9 @@ test('criterion 1: brylliant-card.png holds the pre-fix moerschen-card.png bytes
   );
 });
 
-test('criterion 1: brylliant-card.png is a valid PNG', () => {
-  assert.ok(isPng('brylliant-card.png'), 'brylliant-card.png must start with the PNG magic bytes');
-});
+// Criterion 1 makes NO PNG-signature assertion: the bytes are copied verbatim, so the
+// container format is whatever the source's was. What the spec DOES require is that the
+// copy is verbatim - asserted by the hash above and by the format-inheritance test below.
 
 // --- criterion 2 ---------------------------------------------------------------
 
@@ -85,10 +97,14 @@ test('criterion 2: machinemaster-card.png holds the pre-fix tap2link-card.png by
   );
 });
 
-test('criterion 2: machinemaster-card.png is a valid PNG', () => {
-  assert.ok(
+test('criterion 2: machinemaster-card.png keeps its non-PNG source bytes, un-normalised', () => {
+  // The spec (amended 2026-09-08) states these source bytes do not carry the PNG signature and
+  // that the Implementer must NOT re-encode or convert them to match the .png extension.
+  // This asserts the prohibition, i.e. that no format normalisation was slipped in.
+  assert.equal(
     isPng('machinemaster-card.png'),
-    'machinemaster-card.png must start with the PNG magic bytes',
+    false,
+    'machinemaster-card.png must still hold the verbatim, non-PNG-signed source bytes - re-encoding it to a real PNG is explicitly out of scope',
   );
 });
 
@@ -102,8 +118,25 @@ test('criterion 3: tap2link-card.png holds the pre-fix brylliant-card.png bytes'
   );
 });
 
-test('criterion 3: tap2link-card.png is a valid PNG', () => {
-  assert.ok(isPng('tap2link-card.png'), 'tap2link-card.png must start with the PNG magic bytes');
+// Criterion 3 likewise makes no PNG-signature assertion - see the note under criterion 1.
+
+test('criteria 1-3: each rotated card inherits its source file signature verbatim', () => {
+  // "The bytes are copied verbatim - no re-encoding, no format conversion, no metadata
+  // rewriting - so the file's container format is whatever the source's was."
+  const rotations = [
+    ['brylliant-card.png', 'moerschen-card.png'],
+    ['machinemaster-card.png', 'tap2link-card.png'],
+    ['tap2link-card.png', 'brylliant-card.png'],
+  ];
+  for (const [destination, source] of rotations) {
+    const actual = readFileSync(join(CASES_DIR, destination)).subarray(0, 8);
+    const expected = preFixBytes(source).subarray(0, 8);
+    assert.deepEqual(
+      [...actual],
+      [...expected],
+      `${destination} must carry the container signature of the pre-fix ${source} it was copied from`,
+    );
+  }
 });
 
 // --- criterion 4 ---------------------------------------------------------------
