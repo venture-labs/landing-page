@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
 import { useLocale } from "@/app/locale";
+import { EVENTS, trackEvent } from "@/app/analytics";
 
 /* ─── data ───────────────────────────────────────────────────────────── */
 
@@ -179,6 +180,9 @@ function ContactForm({ selectedTopics }: { selectedTopics: string[] }) {
 
     const subject = encodeURIComponent(`Kontaktanfrage von ${name || "der Website"}`);
     const body = encodeURIComponent(bodyLines.join("\n"));
+    // Fires once the browser's native `required` validation has passed, i.e. on
+    // the handoff to the mail client — not on a delivered mail.
+    trackEvent(EVENTS.contactSent);
     window.location.href = `mailto:contact@venturelabs.team?subject=${subject}&body=${body}`;
   }
 

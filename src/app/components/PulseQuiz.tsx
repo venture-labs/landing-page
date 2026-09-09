@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { ArrowRight, Check } from "lucide-react";
 import { useLocale } from "@/app/locale";
+import { EVENTS, trackEvent } from "@/app/analytics";
 import { CtaButton } from "@/app/components/ui/CtaButton";
 
 /**
@@ -328,6 +329,7 @@ export function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
     if (state.index + 1 < copy.questions.length) {
       setState({ step: "question", index: state.index + 1, answers });
     } else {
+      trackEvent(EVENTS.quizCompleted);
       setState({ step: "result", answers });
     }
   }
@@ -339,7 +341,10 @@ export function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
           {copy.quizIntro}
         </p>
         <button
-          onClick={() => setState({ step: "question", index: 0, answers: [] })}
+          onClick={() => {
+            trackEvent(EVENTS.quizStarted);
+            setState({ step: "question", index: 0, answers: [] });
+          }}
           className="inline-flex items-center gap-2 text-white font-['sofia-pro',sans-serif] font-semibold px-6 py-3 rounded-lg transition-all hover:scale-[1.02]"
           style={{ fontSize: "var(--text-btn)", backgroundColor: accent }}
         >
