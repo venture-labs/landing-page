@@ -1,7 +1,15 @@
 import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
 import { useLocale } from "@/app/locale";
+import { EVENTS, trackEvent } from "@/app/analytics";
 import svgPaths from "@/imports/🖌Homepage/svg-oa0apfkpzr";
+
+interface FooterLink {
+  label: string;
+  href: string;
+  /** Plausible custom event fired when the link is clicked. */
+  track?: string;
+}
 
 function FooterLogo() {
   return (
@@ -35,7 +43,7 @@ export function Footer() {
   const { t } = useTranslation();
   const { localizedPath } = useLocale();
 
-  const footerColumns = [
+  const footerColumns: { title: string; links: FooterLink[] }[] = [
     {
       title: t("footer.servicesTitle"),
       links: [
@@ -65,7 +73,7 @@ export function Footer() {
     {
       title: t("footer.contactTitle"),
       links: [
-        { label: t("footer.bookCall"), href: localizedPath("/kontakt") },
+        { label: t("footer.bookCall"), href: localizedPath("/kontakt"), track: EVENTS.callLinkClicked },
         { label: "contact@venturelabs.team", href: "mailto:contact@venturelabs.team" },
       ],
     },
@@ -99,6 +107,7 @@ export function Footer() {
                     {link.href.startsWith("/") && !link.href.includes("#") ? (
                       <Link
                         to={link.href}
+                        onClick={link.track ? () => trackEvent(link.track!) : undefined}
                         className="text-white/40 hover:text-white/80 transition-colors font-light"
                         style={{ fontSize: "var(--text-small)" }}
                       >

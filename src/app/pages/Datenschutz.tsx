@@ -64,6 +64,11 @@ function DatenschutzDe() {
       <div>
         <h2>V. Cookies</h2>
         <p>Diese Seite setzt keine eigenen Analyse- oder Marketing-Cookies.</p>
+        <p>
+          Zur Reichweitenmessung kommt Plausible Analytics zum Einsatz — ein cookiefreier Webanalyse-Dienst mit
+          Serverstandort in der EU, der keine personenbezogenen Daten speichert und keine geräteübergreifenden
+          Profile bildet (Art. 6 Abs. 1 lit. f DSGVO).
+        </p>
       </div>
 
       <div>
@@ -172,6 +177,10 @@ function DatenschutzEn() {
       <div>
         <h2>V. Cookies</h2>
         <p>This site does not set its own analytics or marketing cookies.</p>
+        <p>
+          Traffic statistics are collected with Plausible Analytics, a cookie-free, EU-hosted web analytics service
+          that stores no personal data and builds no cross-device profiles (Art. 6(1)(f) GDPR).
+        </p>
       </div>
 
       <div>

@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "tsx scripts/generate-content.ts && vite build && tsx scripts/prerender.ts",
-    "dev": "tsx scripts/generate-content.ts && vite"
+    "dev": "tsx scripts/generate-content.ts && vite",
+    "check:analytics": "tsx scripts/check-analytics.ts"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",
