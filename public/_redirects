@@ -1,0 +1,4 @@
+# The /ai-pulse page was retired; the services page replaces it.
+# App.tsx still redirects it client-side, this makes it a server-side 301.
+/de/ai-pulse  /de/leistungen  301
+/en/ai-pulse  /en/leistungen  301
