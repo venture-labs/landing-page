@@ -1,7 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
-/* Sofia Pro Font Stack — von Typekit + Fallback */
+/* Figtree — self-hosted (SIL OFL 1.1, licence text at /fonts/figtree/OFL.txt).
+   Replaces Sofia Pro (Adobe Fonts / Typekit kit nyh3brn, licence ends 2026-09-30).
+   Decision: Christian, 2026-09-06 (design/PROJECT.md, design/CHECKLIST.md "Main site → fonts");
+   confirmed by Martin 2026-09-11 (case E) — keep Figtree, but it must not be loaded from Adobe. */
+@font-face {
+  font-family: 'Figtree';
+  src: url('/fonts/figtree/Figtree-Variable.woff2') format('woff2-variations'),
+       url('/fonts/figtree/Figtree-Variable.woff2') format('woff2');
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Figtree';
+  src: url('/fonts/figtree/Figtree-Italic-Variable.woff2') format('woff2-variations'),
+       url('/fonts/figtree/Figtree-Italic-Variable.woff2') format('woff2');
+  font-weight: 300 900;
+  font-style: italic;
+  font-display: swap;
+}
+
 :root {
-  --font-sofia-pro: 'sofia-pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  --font-figtree: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
 }
