@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsx scripts/generate-content.ts && vite build && tsx scripts/prerender.ts",
     "dev": "tsx scripts/generate-content.ts && vite",
-    "check:analytics": "tsx scripts/check-analytics.ts"
+    "check:analytics": "tsx scripts/check-analytics.ts",
+    "check:area-pages": "tsx scripts/check-area-pages.ts"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",

@@ -3,7 +3,6 @@ import { useParams, Link } from "react-router";
 import { motion, useInView } from "motion/react";
 import { ArrowRight, Code2, Building2, Palette, Bot } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { StrengthSection } from "@/app/components/StrengthSection";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
 import { CtaButton } from "@/app/components/ui/CtaButton";
@@ -105,16 +104,6 @@ function DetailHero({ detail, accent, title }: { detail: any; accent: string; ti
             className="w-full h-[220px] md:h-[300px] overflow-visible"
           />
         </motion.div>
-
-        {/* ── STRENGTH SECTION — below the image ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="mx-6 lg:mx-8 mt-8 mb-0 overflow-hidden"
-        >
-          <StrengthSection />
-        </motion.div>
       </div>
     </section>
   );
@@ -133,7 +122,6 @@ function ProcessStep({
 }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
-  const [open, setOpen] = useState(index === 0);
 
   return (
     <motion.div
@@ -141,48 +129,30 @@ function ProcessStep({
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.06 }}
-      className="border-t border-white/8 cursor-pointer"
-      onClick={() => setOpen((v) => !v)}
+      className="border-t border-white/8"
     >
       <div className="flex items-center gap-8 py-7">
         <span
           className="font-['sofia-pro',sans-serif] font-semibold shrink-0 w-16 tabular-nums"
-          style={{ fontSize: "clamp(2.25rem, 3.75vw, 3.75rem)", color: open ? accent : "rgba(255,255,255,0.2)" }}
+          style={{ fontSize: "clamp(2.25rem, 3.75vw, 3.75rem)", color: accent }}
         >
           {step.number}
         </span>
         <h3
-          className="flex-1 font-['sofia-pro',sans-serif] font-semibold text-white transition-colors"
+          className="flex-1 font-['sofia-pro',sans-serif] font-semibold text-white"
           style={{ fontSize: "var(--text-h3)" }}
         >
           {step.title}
         </h3>
-        <div
-          className="shrink-0 w-8 h-8 rounded-full border flex items-center justify-center transition-all duration-300"
-          style={{
-            borderColor: open ? accent : "rgba(255,255,255,0.15)",
-            color: open ? accent : "rgba(255,255,255,0.4)",
-            transform: open ? "rotate(45deg)" : "rotate(0deg)",
-          }}
-        >
-          <ArrowRight size={14} />
-        </div>
       </div>
-      {open && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          exit={{ opacity: 0, height: 0 }}
-          className="pl-20 pb-8"
+      <div className="pl-20 pb-8">
+        <p
+          className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed max-w-2xl"
+          style={{ fontSize: "var(--text-body)" }}
         >
-          <p
-            className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed max-w-2xl"
-            style={{ fontSize: "var(--text-body)" }}
-          >
-            {step.description}
-          </p>
-        </motion.div>
-      )}
+          {step.description}
+        </p>
+      </div>
     </motion.div>
   );
 }
