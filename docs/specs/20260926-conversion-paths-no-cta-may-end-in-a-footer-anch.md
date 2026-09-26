@@ -64,6 +64,20 @@ wiring and copy only, no new screen.
 
 Correct me at gate 1, otherwise I proceed with these.
 
+**Gate 1 is closed — approved as written.** Christian approved this spec on 2026-09-26 (white_check_mark
+reaction on the gate-1 post, ts `1790395283.397669` in `#dev-agent`, applied by the front desk at
+19:05 because the Dev Manager did not pick the reaction up). Consequences for the assumptions above:
+
+- No phone number was named, so the "removed" branch of the phone assumption is now a settled
+  decision, not an assumption: the block is removed in both strips and replaced by the booking link.
+- The navbar change (booking link as the primary purple button, `Kontakt` / `Contact` added to
+  `src/data/navigation.ts`) is approved as described.
+- The task runs **whole, not split** — no slicing, all fourteen mapping rows in one change and one PR.
+- It runs as a **night run on 2026-09-26/27**: the run ends in a **PR against `dev`, not merged**, and
+  its outcome is reported in the **morning list**. Nobody is awake to answer mid-run, so a stop
+  condition ends the run and is written up in the morning list instead of waiting for an answer
+  (see "Stop conditions").
+
 ## Context found
 
 - `src/app/locale.tsx` — `localizedPath("/#kontakt", "de")` returns `/de#kontakt`; this is the helper
@@ -157,6 +171,10 @@ rendered `href` matches `^/(de|en)#(kontakt|projekte)$` — the criterion as the
 Rejected: asserting against `dist/**/index.html` (the prerender writes head tags only; the body is
 an empty root div, so a static scan would pass on a fully broken site).
 
+Gate 1 approved the task whole, so all fourteen rows above land in one change, on one branch, in one
+PR against `dev`. The run stops at the PR: it is opened and left unmerged for Christian to read in the
+morning (gate 3 is his merge on GitHub, no agent involved).
+
 ## Files to change
 
 | File | Change | Why |
@@ -226,6 +244,10 @@ an empty root div, so a static scan would pass on a fully broken site).
 22. `pnpm build` exits 0 and prerenders the same number of URLs as before the change;
     `pnpm exec tsx scripts/check-seo.ts` exits 0.
 23. `package.json` gains no runtime or dev dependency.
+24. When the run ends, one PR exists from `fix/conversion-paths-no-cta-may-end-in-a-footer-anch` into
+    `dev`, state **open** and **not merged**, containing every change above in one branch (the task ran
+    whole, so no partial PR and no second branch). `dev` and `main` are unchanged apart from that PR's
+    source branch existing on the remote.
 
 ## Test plan
 
@@ -256,6 +278,10 @@ page → `Jetzt anfragen` → contact form. Every Playwright run must abort requ
 `**://plausible.io/**` and `**://calendar.app.google/**` (the same `page.route` pattern already used
 for Plausible), so nothing leaves the machine and no real booking page is hit.
 
+Because this is a night run, the full command list above runs unattended before the PR is opened, and
+every exit code lands in the morning list; a red command is a stop condition, not something to retry
+past (see "Stop conditions").
+
 ## What to click
 
 1. `/de`, navbar: "Gespräch buchen" opens the Google booking page in a **new tab** and venturelabs.team
@@ -269,6 +295,9 @@ for Plausible), so nothing leaves the machine and no real booking page is hit.
    einfach an".
 5. `/de` with the keyboard only (Tab from the top of the page): the navbar booking button takes focus
    with a visible ring before any page content.
+
+Christian works this list on the deploy preview in the morning, from the PR — the run does not wait
+for it.
 
 ## Verification and evidence
 
@@ -285,13 +314,24 @@ for Plausible), so nothing leaves the machine and no real booking page is hit.
 - Two screenshots from the preview: the navbar at 1440 px with the booking button focused via Tab
   (focus ring visible), and at 390 px with the menu open showing the booking link.
 - One screenshot of `/de/kontakt`'s bottom strip showing the booking link and the mail link, no phone.
+- The PR (criterion 24): paste the PR URL, its base (`dev`) and head branch, its state (`open`), and
+  `merged: false` as read back from GitHub after opening it — not from the command that created it.
+  The branch is pushed with an explicit refspec
+  (`git push origin fix/conversion-paths-no-cta-may-end-in-a-footer-anch:fix/conversion-paths-no-cta-may-end-in-a-footer-anch`);
+  confirm `git log origin/dev -1` is the same commit before and after.
 - The close-out states, in one line each: the sitemap URL count before/after, the number of `<a>`
   elements checked across all sitemap URLs by the new spec, and the four goal counts observed.
+- **Morning list** (the night run's report, one short block): the PR link; one line per command above
+  with its exit code; the three screenshots; the "What to click" list carried over as Christian's
+  remaining gate-3 check; and any stop condition that fired, named, with what was left undone. If no
+  stop condition fired, the morning list says so explicitly.
 
 ## Will not do
 
-- No push, merge, rebase or checkout; `main` and `dev` are not touched. The branch
-  `fix/conversion-paths-no-cta-may-end-in-a-footer-anch` is already checked out.
+- No merge and no `checkout`/`rebase`; `main` and `dev` are never written to. The single exception the
+  gate-1 note authorises is pushing the already-checked-out branch
+  `fix/conversion-paths-no-cta-may-end-in-a-footer-anch` to `origin` with an explicit refspec and
+  opening one PR against `dev`. The PR is left open — merging it is Christian's, on GitHub, at gate 3.
 - No edit to `netlify.toml`, `.github/workflows/`, `.env*` or `src/data/{de,en}/` (denied paths /
   generated output).
 - No invented phone digits, and no change to the numbers in `Impressum.tsx`, `Datenschutz.tsx` or
@@ -305,22 +345,34 @@ for Plausible), so nothing leaves the machine and no real booking page is hit.
 - No lead capture added to the quiz and no server-side contact form — both are known gaps, neither is
   in this task.
 - No register rewrite (`du` → `ihr`), no translation of the English CTA labels.
+- No overnight message to Christian expecting an answer, and no waiting on one: the night run either
+  finishes at the open PR or stops and writes the reason into the morning list.
 
 ## Stop conditions
 
-- Christian names a confirmed public phone number at gate 1 → stop removing the block and use that
-  number in both strips instead.
-- The booking URL in the brief turns out to be wrong or replaced → stop; the URL is a single constant
-  but it is his to name.
-- Removing the navbar's "Kontakt aufnehmen" button (replacing it with the booking button plus a
-  "Kontakt" nav item) is not what was wanted → stop before touching `Navbar.tsx` /
-  `src/data/navigation.ts`.
-- Any service's `caseSlug` is missing, empty, or resolves to a case with no detail page → stop and
-  ask; do not fall back to `/:lang/cases` or leave the anchor in place.
+Gate 1 settled the questions these first three used to guard, so they now read as facts to hold to
+rather than answers to wait for; the remaining ones end the night run. Because nobody is awake,
+"stop" means: leave the work as it stands (commit what is coherent, or nothing), do **not** work
+around it, and name it in the morning list.
+
+- The phone block is removed in both strips — gate 1 named no number. If a confirmed number turns up
+  in the repo or knowledge base during the work, do not use it: stop and put it in the morning list.
+- The booking URL `https://calendar.app.google/SsabAjwxnbUjhoGo8` is his, as approved. If it turns out
+  to be wrong or replaced, stop; it is a single constant but not the Implementer's to change.
+- The navbar change is approved as described (booking button primary, `Kontakt` added to
+  `src/data/navigation.ts`). If it cannot be done without a new component or a layout change, stop —
+  that would be a design question, and this task is `design: none`.
+- Any service's `caseSlug` is missing, empty, or resolves to a case with no detail page → stop; do not
+  fall back to `/:lang/cases` or leave the anchor in place.
 - Making `tests/e2e/analytics.spec.ts` pass would require weakening what a goal asserts (fewer than
   one fire, or a goal removed) → stop; the goals are the acceptance, not the obstacle.
 - The new `CtaButton` `<Link>` branch breaks any existing call site (`AboutTeaser`, `AIPulseTeaser`)
   → stop and report rather than reverting to `<a>` silently for internal links.
+- `pnpm build` or `scripts/check-seo.ts` exits non-zero and the cause is not in this change's files →
+  stop; do not push or open the PR on a red build.
+- The push or the PR against `dev` fails, or opening it would target anything other than `dev` → stop;
+  the branch stays local and the morning list says the PR is missing and why. Never retry against
+  another base.
 
 ## Risks and open questions
 
@@ -330,7 +382,8 @@ for Plausible), so nothing leaves the machine and no real booking page is hit.
   Christian to name the digits, then a one-line follow-up task.
 - The audit's observation that `FinalCTA`'s *primary* (purple) styling sits on the softer CTA
   ("Leistungen ansehen") while "Talk to Venture Labs" is the secondary is **not** fixed here — only
-  the destination changes. Pulling the style swap in is a one-line change if he wants it at gate 1.
+  the destination changes. Gate 1 approved the spec as written and did not pull the style swap in, so
+  it stays out; it remains a one-line change for a later task if he wants it.
 - `content/site/leistungen.md`'s `contactCallout` ("Ruf uns an oder schreib uns") still invites a call
   on `/:lang/leistungen`, a page that has no phone link either before or after this change. It is
   copy, it belongs to the D2 slice, and it is left alone.
@@ -346,6 +399,10 @@ for Plausible), so nothing leaves the machine and no real booking page is hit.
 - The two `tel:` strings are removed from the rendered site, but `src/imports/` (Figma exports) still
   contains `+49 156 78 387064` in unrendered code. Left untouched on purpose; noted so a later grep
   does not read as a regression.
+- The night run means the five "What to click" checks happen after the PR is open, not before, so the
+  PR can be open with a visual detail still unconfirmed. That is the intended shape of this run
+  (whole, PR against `dev`, no merge, morning list), not a gap — but the morning list must carry the
+  click list forward so it is not silently skipped.
 
 ## Out of scope
 
@@ -357,3 +414,5 @@ for Plausible), so nothing leaves the machine and no real booking page is hit.
   adding `callLinkClicked` call sites.
 - A booking widget embedded on the site; the Google Calendar page stays an outbound link.
 - Anything on `pulse.venturelabs.team` / the `pulse-landing-page` repo.
+- Merging the PR, deploying, or touching the Netlify site `vl-home` — gate 3 is Christian's merge on
+  GitHub.
