@@ -57,7 +57,7 @@ function CaseHero({ detail }: { detail: any }) {
             {detail.heroSubline}
           </p>
           <CtaButton
-            href={localizedPath("/#kontakt")}
+            href={localizedPath("/kontakt")}
             backgroundColor={accentColor}
           >
             {t("cases.requestNow")}
@@ -279,7 +279,7 @@ function CTASection() {
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           <CtaButton
-            href={localizedPath("/#kontakt")}
+            href={localizedPath("/kontakt")}
             backgroundColor={accentColor}
           >
             {t("cases.contactButton")}
