@@ -3,7 +3,6 @@ import { useParams, Link } from "react-router";
 import { motion, useInView } from "motion/react";
 import { ArrowRight, Code2, Building2, Palette, Bot } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { StrengthSection } from "@/app/components/StrengthSection";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
 import { CtaButton } from "@/app/components/ui/CtaButton";
@@ -104,16 +103,6 @@ function DetailHero({ detail, accent, title }: { detail: any; accent: string; ti
             intensity={0.9}
             className="w-full h-[220px] md:h-[300px] overflow-visible"
           />
-        </motion.div>
-
-        {/* ── STRENGTH SECTION — below the image ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="mx-6 lg:mx-8 mt-8 mb-0 overflow-hidden"
-        >
-          <StrengthSection />
         </motion.div>
       </div>
     </section>
