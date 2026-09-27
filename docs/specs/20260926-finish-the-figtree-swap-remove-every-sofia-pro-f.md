@@ -61,11 +61,22 @@ finding F2 (section 1d) and task goal D3 (section 5).
 - **There is no test framework in this repo** — `package.json` has `build`, `dev` and
   `check:analytics` only, and no vitest/jest dependency. Verification is a grep, `pnpm build`, and
   a human check on a local preview. Adding a test runner is not part of this fix.
+- **No role in this task pushes anything, and no role opens the pull request.** The task brief every
+  role in this pipeline receives says "never checkout, rebase, merge, or push", and nothing in the
+  repo's `CLAUDE.md`, the workspace `CLAUDE.md` or
+  `knowledge-base/architecture/deployment.md` grants an agent session a push on `landing-page`
+  (deployment.md: merges happen "only by PR on GitHub"). The deliverable of this task is therefore
+  the **commit on the local branch in this worktree**. Putting the branch on `origin` and opening the
+  pull request against `dev` is the hand-over step *after* the pipeline (the Dev Manager, or Christian
+  on GitHub); the merge itself is gate 3. Amended 2026-09-27 after the Tester's `spec` verdict: the
+  earlier wording made "branch pushed, one open unmerged PR" an acceptance criterion the roles were
+  forbidden to satisfy.
 - **Preview**: `pnpm dev` on `http://localhost:5173`. Whether Netlify builds a branch deploy for a
   `fix/*` branch on `vl-home` is *unverified* — the knowledge base documents branch deploys for
-  `dev` (`https://dev--vl-home.netlify.app`) only. Gate 3 runs on the local preview unless a branch
-  URL turns out to exist; since the branch is now pushed for the pull request, whether such a URL
-  appeared is checked once and named on the morning list.
+  `dev` (`https://dev--vl-home.netlify.app`) only. It makes no difference to this run: because the
+  branch is never pushed from inside the task, no branch deploy can exist while it runs, so every
+  preview check in "What to click" happens on the local `pnpm dev` server at
+  `http://localhost:5173`.
 
 Correct me at gate 1, otherwise I proceed with these.
 
@@ -118,8 +129,13 @@ or copy moves.
 Gate 1 (Christian, 2026-09-26, reaction on the gate-1 post in `#dev-agent`) approved this spec as
 written and decided the task runs **whole, not split**: all 129 occurrences in the 11 files in one
 change, on one branch, in one pull request — no per-file or per-page slicing. It runs as the night
-run of 2026-09-26/27 and lands as a **pull request against `dev` that is left unmerged**; the merge
-is gate 3, a human on GitHub. The result is reported on the morning list.
+run of 2026-09-26/27. What the task itself produces is the **commit on the local branch
+`fix/finish-the-figtree-swap-remove-every-sofia-pro-f` in this worktree**: no role in this task
+pushes it and no role opens the pull request, because the brief every role runs under forbids every
+push. The intended landing path is unchanged — one **pull request against `dev`, left unmerged**,
+opened in the hand-over step after the pipeline (the Dev Manager, or Christian on GitHub), and the
+merge is gate 3, a human on GitHub. The result, together with the copy-pasteable commands for that
+hand-over, is reported on the morning list.
 
 **Rejected: promoting `--font-figtree` into a `@theme` block and replacing the 129 classes with a
 new `font-figtree` utility.** It would work — Tailwind 4 emits `@theme` custom properties into
@@ -197,16 +213,28 @@ No other file is touched. In particular: no file under `src/styles/`, `src/impor
     on the touched pages changes: no heading, label or button text, no colour, no weight, no
     element appears or disappears.
 15. `src/imports/**` is byte-identical to `dev`.
-16. All 129 deletions ship as one change on the branch `fix/finish-the-figtree-swap-remove-every-sofia-pro-f`
-    (whole, not split), every commit message starting with
-    `20260926-finish-the-figtree-swap-remove-every-sofia-pro-f: ` and ending its body with
-    `Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>`.
-17. That branch is pushed to `origin` with an explicit refspec, and exactly one pull request exists
-    with base `dev` and head `fix/finish-the-figtree-swap-remove-every-sofia-pro-f`, in state open
-    and unmerged, whose URL is named in the close-out and on the morning list.
-18. `dev` and `main` carry no commit from this task: after a `git fetch origin`, `origin/dev` and
-    `origin/main` point at the same SHAs as the ones recorded before the push, and the pull request
-    from criterion 17 is not merged.
+16. All 129 deletions ship as one change **committed on the local branch**
+    `fix/finish-the-figtree-swap-remove-every-sofia-pro-f` in this worktree (whole, not split):
+    `git log dev..HEAD --format='%H %s'` lists at least one commit, every commit message starting
+    with `20260926-finish-the-figtree-swap-remove-every-sofia-pro-f: ` and ending its body with
+    `Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>`, and `git status --porcelain` shows a
+    clean tree (nothing left uncommitted).
+17. **Nothing is pushed and no pull request is opened by this task.** `git ls-remote --heads origin`
+    lists **no** head named `fix/finish-the-figtree-swap-remove-every-sofia-pro-f`, and
+    `gh pr list --repo venture-labs/landing-page --head fix/finish-the-figtree-swap-remove-every-sofia-pro-f`
+    returns **no** pull request. Both empty results are the expected pass — an absent remote branch
+    and an absent PR are *correct* here, never a failure. (Amended 2026-09-27: the earlier version of
+    this criterion required a pushed branch and an open PR, which the task brief's "never … push"
+    forbids every role from producing.)
+18. `origin/dev` and `origin/main` are untouched: `git rev-parse origin/dev origin/main` after a
+    `git fetch origin` prints the same two SHAs as the ones recorded at the start of the run, no
+    local `dev` or `main` was checked out or moved in this worktree (`git reflog` for this worktree
+    shows no checkout other than the task branch), and no commit of this task is reachable from
+    either (`git branch -r --contains HEAD` lists no `origin/dev` and no `origin/main`).
+19. The close-out and the morning-list entry state explicitly that the branch is committed locally
+    and **not** pushed, name the head commit SHA, and carry the two copy-pasteable hand-over commands
+    from "Verification and evidence" (the explicit-refspec push and the `gh pr create` against `dev`)
+    so the Dev Manager or Christian can land it without reconstructing them.
 
 ## Test plan
 
@@ -224,9 +252,12 @@ runner dependency), and this fix does not add one. What runs:
    the questions.
 4. **Link check** — the routes above are opened directly (not only via in-app navigation) so the
    prerendered shells are exercised too.
-5. **The branch and PR check** — criteria 16–18: commit-message format, the push with an explicit
-   refspec, the open unmerged pull request against `dev`, and the unchanged `origin/dev` /
-   `origin/main` SHAs.
+5. **The branch check** — criteria 16–19: the commit exists on the local task branch with the
+   required message format and a clean tree; `git ls-remote --heads origin` shows **no** task branch
+   and `gh pr list --head fix/…` **no** pull request (both empty by design, because no role pushes);
+   `origin/dev` and `origin/main` unmoved; and the close-out carries the hand-over commands. A Tester
+   who finds the branch pushed or a PR open must report that as a failure of criterion 17, not as
+   success.
 
 The Tester reports each of the five explicitly, per the repo's testing note, and those reports are
 what the morning list carries.
@@ -320,37 +351,65 @@ the quiz modal open, the quiz result screen, `/de/leistungen/ai-automation`, `/d
 `/de/datenschutz`, `/en/impressum`, `/en/datenschutz`, `/de/kontakt`, `/de/ueber-uns`, `/de/cases`,
 `/de/blog` and one case and one blog detail page.
 
-**Branch, push and pull request** (criteria 16–18). Record the base SHAs *before* pushing, so
-criterion 18 has a number to compare against:
+**Branch and commit read-back** (criteria 16, 18). Record the base SHAs at the start of the run, so
+criterion 18 has a number to compare against, and again at the end:
 
 ```
 Windows — Git Bash:
-cd /c/ai/dev-worktrees/venturelabs/landing/20260926-finish-the-figtree-swap-remove-every-sofia-pro-f && git fetch origin && git rev-parse origin/dev origin/main && git log --format='%H %s%n%b' -1
+cd /c/ai/dev-worktrees/venturelabs/landing/20260926-finish-the-figtree-swap-remove-every-sofia-pro-f && git fetch origin && git rev-parse origin/dev origin/main && git status --porcelain && git log dev..HEAD --format='%H %s%n%b'
 ```
-What it does: fetches, prints the current `origin/dev` and `origin/main` SHAs (paste both into the
-close-out) and prints this task's commit so the message format in criterion 16 can be read.
+What it does: fetches (read-only), prints the current `origin/dev` and `origin/main` SHAs (paste both
+into the close-out), shows the tree is clean, and prints every commit this branch adds on top of
+`dev` so the message format in criterion 16 can be read. Expect a clean `git status --porcelain`
+(no output) and at least one commit whose subject starts with the task id.
 
 ```
 Windows — Git Bash:
-cd /c/ai/dev-worktrees/venturelabs/landing/20260926-finish-the-figtree-swap-remove-every-sofia-pro-f && git push origin HEAD:refs/heads/fix/finish-the-figtree-swap-remove-every-sofia-pro-f ; echo "exit=$?"
+cd /c/ai/dev-worktrees/venturelabs/landing/20260926-finish-the-figtree-swap-remove-every-sofia-pro-f && git branch -r --contains HEAD ; echo "exit=$?"
 ```
-What it does: pushes this branch only, with an explicit refspec, to `origin`. Expect `exit=0`. No
-other ref is pushed; `dev` and `main` are never a push target.
+What it does: lists remote branches that already contain this task's commit. Expect **no output** —
+neither `origin/dev` nor `origin/main` carries it. Criterion 18.
+
+**Proof that nothing was pushed** (criterion 17):
 
 ```
 Windows — Git Bash:
-cd /c/ai/dev-worktrees/venturelabs/landing/20260926-finish-the-figtree-swap-remove-every-sofia-pro-f && gh pr create --base dev --head fix/finish-the-figtree-swap-remove-every-sofia-pro-f --title "20260926-finish-the-figtree-swap-remove-every-sofia-pro-f: remove every sofia-pro font class so elements inherit Figtree" --body "Spec: docs/specs/20260926-finish-the-figtree-swap-remove-every-sofia-pro-f.md. Removes 129 stale font-['sofia-pro',sans-serif] classes in 11 files. Do not merge without gate 3." ; echo "exit=$?"
+cd /c/ai/dev-worktrees/venturelabs/landing/20260926-finish-the-figtree-swap-remove-every-sofia-pro-f && git ls-remote --heads origin | grep "finish-the-figtree-swap" ; echo "exit=$?"
 ```
-What it does: opens the pull request against `dev` and prints its URL. Whether the GitHub CLI is
-installed and authenticated on this machine is *unverified*; if it is not, open the PR in the
-browser on GitHub with the same base, head, title and body instead, and record the URL either way.
+What it does: asks `origin` for a head matching this task's branch name. Expect **no output** and
+`exit=1` — the branch must not be on `origin`, because no role in this task pushes. Paste the
+`exit=` line.
 
 ```
 Windows — Git Bash:
-cd /c/ai/dev-worktrees/venturelabs/landing/20260926-finish-the-figtree-swap-remove-every-sofia-pro-f && git fetch origin && git rev-parse origin/dev origin/main
+cd /c/ai/dev-worktrees/venturelabs/landing/20260926-finish-the-figtree-swap-remove-every-sofia-pro-f && gh pr list --repo venture-labs/landing-page --head fix/finish-the-figtree-swap-remove-every-sofia-pro-f ; echo "exit=$?"
 ```
-What it does: re-reads the base SHAs after the push. Expect the exact same two SHAs as before
-(criterion 18). The pull request stays open and unmerged — nobody merges it as part of this task.
+What it does: lists pull requests whose head is this branch. Expect **no pull request** ("no pull
+requests match your search"). If the GitHub CLI is not installed or not authenticated, say so
+plainly in the close-out — `gh` being unavailable does not block this task, because there is no PR
+to create from inside it. Criterion 17.
+
+**Hand-over commands — for the Dev Manager or Christian AFTER the pipeline, run by no role in this
+task** (criterion 19: both lines are quoted verbatim in the close-out and on the morning list):
+
+```
+Windows — Git Bash:
+cd /c/ai/dev-worktrees/venturelabs/landing/20260926-finish-the-figtree-swap-remove-every-sofia-pro-f && git push origin HEAD:refs/heads/fix/finish-the-figtree-swap-remove-every-sofia-pro-f
+
+macOS — Terminal (zsh): not available (this worktree exists on the Windows PC only)
+```
+What it does: pushes this one branch, with an explicit refspec, to `origin`. Expect a new remote
+branch and no other ref touched; `dev` and `main` are never a push target.
+
+```
+Windows — Git Bash:
+cd /c/ai/dev-worktrees/venturelabs/landing/20260926-finish-the-figtree-swap-remove-every-sofia-pro-f && gh pr create --base dev --head fix/finish-the-figtree-swap-remove-every-sofia-pro-f --title "20260926-finish-the-figtree-swap-remove-every-sofia-pro-f: remove every sofia-pro font class so elements inherit Figtree" --body "Spec: docs/specs/20260926-finish-the-figtree-swap-remove-every-sofia-pro-f.md. Removes 129 stale font-['sofia-pro',sans-serif] classes in 11 files. Do not merge without gate 3."
+
+macOS — Terminal (zsh): not available (this worktree exists on the Windows PC only)
+```
+What it does: opens the pull request against `dev` and prints its URL. The pull request then stays
+open and unmerged until gate 3 — a human on GitHub. Alternatively open it in the browser on GitHub
+with the same base, head, title and body.
 
 **Screenshots the close-out must show** (before/after pairs, same viewport):
 - the quiz modal, question step, at 1440 px — the audit's primary complaint;
@@ -365,17 +424,21 @@ The Reviewer additionally confirms criterion 15 by checking `src/imports/` is ab
 criterion 5 by eye.
 
 **The morning list entry** (this is a night run, 2026-09-26/27, so the report is read hours later
-without the session present) names, in this order: the pull request URL and that it is open and
-unmerged, the `exit=` lines of the two greps, the `pnpm build` exit code, the `dist/` grep result,
+without the session present) names, in this order: the head commit SHA on
+`fix/finish-the-figtree-swap-remove-every-sofia-pro-f` and that the branch is committed locally and
+**not** pushed (no remote branch, no pull request — by design), the two hand-over commands above
+verbatim, the `exit=` lines of the two greps, the `pnpm build` exit code, the `dist/` grep result,
 which of the computed-style read-backs came back all-Figtree and which did not, the screenshot set,
-and the before/after `origin/dev` SHA.
+and the unchanged `origin/dev` / `origin/main` SHAs.
 
 ## Will not do
 
-- No merge of the pull request, and no direct commit or push to `dev` or `main`: the only push is
-  the feature branch `fix/finish-the-figtree-swap-remove-every-sofia-pro-f` to `origin`, with an
-  explicit refspec. Merging into `dev` is gate 3, a human on GitHub, after the morning list.
-- No branch switch, no rebase, no force-push, no rewriting of commits already pushed.
+- No push of any ref, by any role in this task — not the feature branch, not a tag, nothing. The
+  branch stays in this worktree; putting it on `origin` and opening the pull request against `dev`
+  is the hand-over step after the pipeline, and merging into `dev` is gate 3, a human on GitHub,
+  after the morning list.
+- No direct commit to `dev` or `main`, and no checkout of either in this worktree.
+- No branch switch, no rebase, no force-push, no rewriting of commits.
 - No splitting of the change into several branches or pull requests — gate 1 decided it runs whole.
 - No change to `netlify.toml`, `.github/workflows/`, or any deploy configuration.
 - No change to any file under `src/styles/` — no new `@theme` block, no new Tailwind utility, no
@@ -387,8 +450,8 @@ and the before/after `origin/dev` SHA.
 - No copy, wording, register (`du`/`ihr`) or price change of any kind.
 - No work on the audit's other findings (F1 phone number, F3 hero video, F4 process accordion,
   F5 StrengthSection, F7 Jobs link) — each is its own task.
-- No restart of any supervised process; nothing posted outside except the pull request against
-  `dev` and this task's own entry on the morning list.
+- No restart of any supervised process; nothing posted outside except this task's own entry on the
+  morning list.
 
 ## Stop conditions
 
@@ -406,13 +469,12 @@ and the before/after `origin/dev` SHA.
 - `pnpm build` fails for a reason not plainly caused by these edits (a content-generation or
   prerender error, a missing dependency) → stop and report; do not "fix" the build as part of this
   task.
-- The push is rejected, or the branch already exists on `origin` with commits this worktree does
-  not have → stop and report; never force-push and never resolve it by touching `dev`.
-- The pull request cannot be created (no GitHub CLI, no auth, a branch-protection or permission
-  error) → stop after the push, report the branch name and the exact error, and leave the PR for a
-  human to open. A pushed branch without a PR is a reportable partial result, not a failure to hide.
-- Anything suggests merging, or `origin/dev` / `origin/main` moved during the run → stop and ask;
-  the merge is gate 3 and never this task's.
+- Anything in this spec, a later instruction or a Tester finding seems to ask for a push, a pull
+  request or a merge from inside the run → stop and report instead of pushing; the branch is handed
+  over unpushed and the hand-over commands are quoted in the close-out. A criterion that would need
+  a push to pass is a spec defect, not something to satisfy by pushing.
+- The task branch turns out to exist on `origin` already, or `origin/dev` / `origin/main` moved
+  during the run → stop and report; never force-push and never resolve it by touching `dev`.
 - Any urge to also remove the unused Google Fonts `@import`s, compress the hero video, or fix
   another audit finding while in the file → stop, note it, leave it.
 
@@ -435,15 +497,20 @@ and the before/after `origin/dev` SHA.
   `font-['Sofia_Pro:SemiBold']` classes in unimported Figma exports. Criterion 1 is deliberately
   case-sensitive. Anyone running `grep -i sofia` will see hits and must read this bullet before
   filing a defect.
-- **Preview URL unverified.** Whether Netlify builds a branch deploy for `fix/*` on `vl-home` is not
-  something I could check from the repo. The push for the pull request is the first chance to see
-  one; if a branch URL exists, it goes on the morning list, and if it does not, the gate-3 walk of
-  "What to click" runs on `pnpm dev` at `http://localhost:5173` — which, for a night run, means the
-  click checks happen in the morning, not before the PR is opened.
-- **Night run, no one watching.** The PR is opened and left open; the 14 computed-style read-backs
-  and the click checks are what a human sees in the morning. The morning list therefore has to carry
-  the evidence in full (see "Verification and evidence"), because nobody will re-run the session to
-  ask what it saw.
+- **Who pushes the branch and opens the PR is a hand-over, not part of this task (non-blocking).**
+  Criterion 17 now requires that nothing is pushed from inside the run, because the role brief
+  forbids it. That leaves the work sitting on a local branch until the Dev Manager or Christian runs
+  the two hand-over commands. If Christian would rather the Dev Manager push and open the PR
+  automatically at the end of every task, that is a pipeline decision outside this spec — it changes
+  how the cluster lands work, not what this fix does. Until then, the morning list is the hand-over.
+- **No branch deploy for this run.** Because nothing is pushed, there is no `fix/*` Netlify preview
+  URL to check, and whether `vl-home` would even build one is *unverified*. The gate-3 walk of "What
+  to click" therefore runs on `pnpm dev` at `http://localhost:5173` — which, for a night run, means
+  the click checks happen in the morning.
+- **Night run, no one watching.** The branch is committed and left unpushed; the 14 computed-style
+  read-backs and the click checks are what a human sees in the morning. The morning list therefore
+  has to carry the evidence in full plus the hand-over commands (see "Verification and evidence"),
+  because nobody will re-run the session to ask what it saw.
 - **129 hand edits, no type safety.** TypeScript will not catch a mangled class string; only the
   grep gate (criteria 2, 6) and the eye will. That is the main reason criteria 5 and 6 are written
   as mechanical checks on the diff rather than as "looks fine".
@@ -461,4 +528,5 @@ and the before/after `origin/dev` SHA.
 - The `pulse-landing-page` repo, which still renders in Poppins — a separate site and a separate
   task (F9).
 - Updating the audit document's count from ~20 to 129.
-- Merging the pull request or deploying to `vl-home` — gate 3, a human on GitHub.
+- Pushing the branch, opening the pull request, merging it or deploying to `vl-home` — the push and
+  the PR are the hand-over step after this pipeline, the merge is gate 3, a human on GitHub.
