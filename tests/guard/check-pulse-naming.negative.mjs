@@ -85,6 +85,25 @@ const CASES = [
     identifies: "content/site/leistungen.en.md",
   },
   {
+    name: "a duration other than 30 minutes next to the first conversation (criterion 19)",
+    file: "content/site/leistungen.md",
+    find: "besprechen wir im Erstgespräch:",
+    replace: "besprechen wir im Erstgespräch von 45 Minuten:",
+    expectCriteria: ["19"],
+    identifies: "content/site/leistungen.md",
+  },
+  {
+    name: "a benign rewording of an owned string (criterion 20)",
+    // No price, no free claim, no duration — only a deviation from the string
+    // Approach §3 ships. Criterion 3 requires the guard to fail on that too,
+    // which is what makes criterion 20 mechanically asserted rather than read.
+    file: "content/site/leistungen.en.md",
+    find: "an instant result across five areas",
+    replace: "an instant result across all five areas",
+    expectCriteria: ["20"],
+    identifies: "content/site/leistungen.en.md",
+  },
+  {
     name: 'a quiz label that says "Pulse Check" again (criteria 4-5 and 7)',
     file: "content/site/home.md",
     find: "heroCta: Kostenlosen Pulse Score starten",
