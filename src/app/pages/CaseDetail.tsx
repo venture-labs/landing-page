@@ -39,19 +39,19 @@ function CaseHero({ detail }: { detail: any }) {
           className="flex flex-col gap-8 px-6 lg:px-12 pb-12"
         >
           <p
-            className="font-['sofia-pro',sans-serif] font-light"
+            className="font-light"
             style={{ fontSize: "var(--text-body)", color: accentColor }}
           >
             {t("cases.caseStudyLabel")} {(detail.category ?? "").split(" ").slice(0, 3).join(" ")}
           </p>
           <h1
-            className="font-['sofia-pro',sans-serif] font-semibold text-white leading-[1.05]"
+            className="font-semibold text-white leading-[1.05]"
             style={{ fontSize: "var(--text-hero)" }}
           >
             {detail.heroHeadline}
           </h1>
           <p
-            className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed max-w-2xl"
+            className="text-white/60 font-light leading-relaxed max-w-2xl"
             style={{ fontSize: "var(--text-body)" }}
           >
             {detail.heroSubline}
@@ -95,7 +95,7 @@ function OverviewSection({ detail }: { detail: any }) {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="font-['sofia-pro',sans-serif] font-semibold text-white mb-12"
+          className="font-semibold text-white mb-12"
           style={{ fontSize: "var(--text-h2)" }}
         >
           {t("cases.overviewHeading")}
@@ -109,13 +109,13 @@ function OverviewSection({ detail }: { detail: any }) {
           className="mb-16"
         >
           <h3
-            className="text-white/80 font-['sofia-pro',sans-serif] font-light mb-6"
+            className="text-white/80 font-light mb-6"
             style={{ fontSize: "var(--text-body)" }}
           >
             {t("cases.whatWeDid")}
           </h3>
           <p
-            className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed max-w-3xl"
+            className="text-white/60 font-light leading-relaxed max-w-3xl"
             style={{ fontSize: "var(--text-body)" }}
           >
             {detail.description}
@@ -130,13 +130,13 @@ function OverviewSection({ detail }: { detail: any }) {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <h3
-              className="text-white font-['sofia-pro',sans-serif] font-semibold mb-4"
+              className="text-white font-semibold mb-4"
               style={{ fontSize: "var(--text-card)" }}
             >
               {t("cases.background")}
             </h3>
             <p
-              className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed"
+              className="text-white/60 font-light leading-relaxed"
               style={{ fontSize: "var(--text-body)" }}
             >
               {detail.background}
@@ -149,13 +149,13 @@ function OverviewSection({ detail }: { detail: any }) {
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             <h3
-              className="text-white font-['sofia-pro',sans-serif] font-semibold mb-4"
+              className="text-white font-semibold mb-4"
               style={{ fontSize: "var(--text-card)" }}
             >
               {t("cases.problem")}
             </h3>
             <p
-              className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed"
+              className="text-white/60 font-light leading-relaxed"
               style={{ fontSize: "var(--text-body)" }}
             >
               {detail.problem}
@@ -168,13 +168,13 @@ function OverviewSection({ detail }: { detail: any }) {
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <h3
-              className="text-white font-['sofia-pro',sans-serif] font-semibold mb-4"
+              className="text-white font-semibold mb-4"
               style={{ fontSize: "var(--text-card)" }}
             >
               {t("cases.solution")}
             </h3>
             <p
-              className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed"
+              className="text-white/60 font-light leading-relaxed"
               style={{ fontSize: "var(--text-body)" }}
             >
               {detail.solution}
@@ -199,7 +199,7 @@ function ResultsSection({ detail }: { detail: any }) {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="font-['sofia-pro',sans-serif] font-semibold text-white mb-12"
+          className="font-semibold text-white mb-12"
           style={{ fontSize: "var(--text-h2)" }}
         >
           {t("cases.resultsHeading")}
@@ -216,13 +216,13 @@ function ResultsSection({ detail }: { detail: any }) {
               className="text-center"
             >
               <p
-                className="font-['sofia-pro',sans-serif] font-semibold text-white mb-2"
+                className="font-semibold text-white mb-2"
                 style={{ fontSize: "var(--text-hero)", color: accentColor }}
               >
                 {stat.value}
               </p>
               <p
-                className="text-white/60 font-['sofia-pro',sans-serif] font-light"
+                className="text-white/60 font-light"
                 style={{ fontSize: "var(--text-body)" }}
               >
                 {stat.label}
@@ -265,7 +265,7 @@ function CTASection() {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="font-['sofia-pro',sans-serif] font-semibold text-white mb-8"
+          className="font-semibold text-white mb-8"
           style={{ fontSize: "var(--text-card)" }}
         >
           {t("cases.ctaQuestion")}
@@ -290,7 +290,7 @@ function CTASection() {
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-white/60 font-['sofia-pro',sans-serif] font-light mt-8"
+          className="text-white/60 font-light mt-8"
           style={{ fontSize: "var(--text-body)" }}
         >
           {t("cases.freeConsult")}

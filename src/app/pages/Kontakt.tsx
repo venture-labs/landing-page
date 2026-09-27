@@ -56,7 +56,7 @@ function TopicPicker({
             className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 bg-white/[0.03] border border-white/8 rounded-xl p-6"
           >
             <span
-              className="font-['sofia-pro',sans-serif] font-semibold text-white/40 shrink-0 w-full sm:w-40"
+              className="font-semibold text-white/40 shrink-0 w-full sm:w-40"
               style={{ fontSize: "var(--text-small)" }}
             >
               {label}
@@ -69,7 +69,7 @@ function TopicPicker({
                     key={chip}
                     type="button"
                     onClick={() => onToggle(chip)}
-                    className="font-['sofia-pro',sans-serif] font-light rounded-full px-4 py-2 border transition-all"
+                    className="font-light rounded-full px-4 py-2 border transition-all"
                     style={{
                       fontSize: "var(--text-small)",
                       backgroundColor: active ? `${cat.accent}22` : "transparent",
@@ -97,7 +97,7 @@ function DirectContact() {
   return (
     <div className="flex flex-col gap-8">
       <h3
-        className="font-['sofia-pro',sans-serif] font-semibold text-white"
+        className="font-semibold text-white"
         style={{ fontSize: "var(--text-card)" }}
       >
         {t("kontakt.directContact")}
@@ -106,27 +106,27 @@ function DirectContact() {
         {teamContacts.map((person) => (
           <div key={person.name} className="flex items-start gap-4">
             <div
-              className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 font-['sofia-pro',sans-serif] font-semibold text-white"
+              className="w-12 h-12 rounded-full flex items-center justify-center shrink-0 font-semibold text-white"
               style={{ backgroundColor: person.color, fontSize: "var(--text-small)" }}
             >
               {person.initials}
             </div>
             <div className="flex flex-col gap-1">
               <p
-                className="font-['sofia-pro',sans-serif] font-semibold text-white"
+                className="font-semibold text-white"
                 style={{ fontSize: "var(--text-small)" }}
               >
                 {person.name}
               </p>
               <p
-                className="text-white/50 font-['sofia-pro',sans-serif] font-light"
+                className="text-white/50 font-light"
                 style={{ fontSize: "var(--text-small)" }}
               >
                 {t(`kontakt.team.${person.roleKey}`)}
               </p>
               <a
                 href={`mailto:${person.email}`}
-                className="text-[#a318f8] hover:text-white font-['sofia-pro',sans-serif] font-light transition-colors"
+                className="text-[#a318f8] hover:text-white font-light transition-colors"
                 style={{ fontSize: "var(--text-small)" }}
               >
                 {person.email}
@@ -134,7 +134,7 @@ function DirectContact() {
               {person.phone && (
                 <a
                   href={`tel:${person.phone.replace(/\s+/g, "")}`}
-                  className="text-white/50 hover:text-white font-['sofia-pro',sans-serif] font-light transition-colors"
+                  className="text-white/50 hover:text-white font-light transition-colors"
                   style={{ fontSize: "var(--text-small)" }}
                 >
                   {person.phone}
@@ -151,7 +151,7 @@ function DirectContact() {
 /* ─── form ───────────────────────────────────────────────────────────── */
 
 const fieldClasses =
-  "w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/40 font-['sofia-pro',sans-serif] font-light outline-none transition-colors focus:border-[#8129ff]";
+  "w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/40 font-light outline-none transition-colors focus:border-[#8129ff]";
 
 function ContactForm({ selectedTopics }: { selectedTopics: string[] }) {
   const { t } = useTranslation();
@@ -190,7 +190,7 @@ function ContactForm({ selectedTopics }: { selectedTopics: string[] }) {
     <form onSubmit={handleSubmit} className="flex flex-col gap-10">
       <div className="flex flex-col gap-4">
         <h3
-          className="font-['sofia-pro',sans-serif] font-semibold text-white"
+          className="font-semibold text-white"
           style={{ fontSize: "var(--text-card)" }}
         >
           {t("kontakt.formHeading")}
@@ -207,7 +207,7 @@ function ContactForm({ selectedTopics }: { selectedTopics: string[] }) {
 
       <div className="flex flex-col gap-4">
         <h3
-          className="font-['sofia-pro',sans-serif] font-semibold text-white"
+          className="font-semibold text-white"
           style={{ fontSize: "var(--text-card)" }}
         >
           {t("kontakt.dataHeading")}
@@ -240,7 +240,7 @@ function ContactForm({ selectedTopics }: { selectedTopics: string[] }) {
 
       <div className="flex flex-col gap-4">
         <h3
-          className="font-['sofia-pro',sans-serif] font-semibold text-white"
+          className="font-semibold text-white"
           style={{ fontSize: "var(--text-card)" }}
         >
           {t("kontakt.contactHeading")}
@@ -264,7 +264,7 @@ function ContactForm({ selectedTopics }: { selectedTopics: string[] }) {
 
       <div className="flex flex-col gap-4">
         <h4
-          className="font-['sofia-pro',sans-serif] font-semibold text-white"
+          className="font-semibold text-white"
           style={{ fontSize: "var(--text-small)" }}
         >
           {t("kontakt.privacyHeading")}
@@ -276,7 +276,7 @@ function ContactForm({ selectedTopics }: { selectedTopics: string[] }) {
             className="mt-1 w-4 h-4 shrink-0 accent-[#8129ff]"
           />
           <span
-            className="text-white/50 font-['sofia-pro',sans-serif] font-light leading-relaxed"
+            className="text-white/50 font-light leading-relaxed"
             style={{ fontSize: "var(--text-small)" }}
           >
             {t("kontakt.privacyText")}{" "}
@@ -291,13 +291,13 @@ function ContactForm({ selectedTopics }: { selectedTopics: string[] }) {
       <div className="flex flex-col gap-3">
         <button
           type="submit"
-          className="w-full bg-[#8129ff] hover:bg-[#a318f8] text-white font-['sofia-pro',sans-serif] font-semibold rounded-lg px-6 py-4 transition-all hover:scale-[1.01]"
+          className="w-full bg-[#8129ff] hover:bg-[#a318f8] text-white font-semibold rounded-lg px-6 py-4 transition-all hover:scale-[1.01]"
           style={{ fontSize: "var(--text-body)" }}
         >
           {t("kontakt.submit")}
         </button>
         <p
-          className="text-white/30 font-['sofia-pro',sans-serif] font-light"
+          className="text-white/30 font-light"
           style={{ fontSize: "var(--text-small)" }}
         >
           {t("kontakt.submitHint")}
@@ -331,13 +331,13 @@ function KontaktHero({
           className="flex flex-col gap-6 max-w-2xl"
         >
           <h1
-            className="font-['sofia-pro',sans-serif] font-semibold text-white leading-[1.05]"
+            className="font-semibold text-white leading-[1.05]"
             style={{ fontSize: "var(--text-hero)" }}
           >
             {t("kontakt.heroTitle")}
           </h1>
           <p
-            className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed"
+            className="text-white/60 font-light leading-relaxed"
             style={{ fontSize: "var(--text-body)" }}
           >
             {t("kontakt.heroSubtitle")}
@@ -402,7 +402,7 @@ function CtaStrip() {
     >
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 flex flex-col lg:flex-row lg:items-center justify-between gap-10">
         <p
-          className="text-white/50 font-['sofia-pro',sans-serif] font-light max-w-xl"
+          className="text-white/50 font-light max-w-xl"
           style={{ fontSize: "var(--text-body)" }}
         >
           {t("kontakt.ctaQuestion")}
@@ -410,14 +410,14 @@ function CtaStrip() {
         <div className="flex flex-col gap-3">
           <a
             href="tel:+491487418f6"
-            className="font-['sofia-pro',sans-serif] font-semibold text-[#8129ff] hover:text-[#a318f8] transition-colors"
+            className="font-semibold text-[#8129ff] hover:text-[#a318f8] transition-colors"
             style={{ fontSize: "clamp(1.2rem, 2vw, 1.75rem)" }}
           >
             +49 148 74 18 f6
           </a>
           <a
             href="mailto:contact@venturelabs.team"
-            className="font-['sofia-pro',sans-serif] font-semibold text-[#8129ff] hover:text-[#a318f8] transition-colors"
+            className="font-semibold text-[#8129ff] hover:text-[#a318f8] transition-colors"
             style={{ fontSize: "clamp(1.2rem, 2vw, 1.75rem)" }}
           >
             contact@venturelabs.team

@@ -18,7 +18,7 @@ export function PulseCheckModal({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-[#181620] border-white/10 text-white sm:max-w-3xl max-h-[85vh] overflow-y-auto">
         <DialogTitle
-          className="font-['sofia-pro',sans-serif] font-semibold text-white leading-tight"
+          className="font-semibold text-white leading-tight"
           style={{ fontSize: "var(--text-h2)" }}
         >
           {copy.quizHeading}
