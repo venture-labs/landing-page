@@ -332,3 +332,15 @@ no price is visible on any of the four routes.
   `/#kontakt`, and quiz lead capture (audit D1 and the quiz-leads topic).
 - Updating `knowledge-base/domains/website-content.md`, the glossary or `design/CHECKLIST.md`
   (different repo; audit D7).
+
+
+## Review answers (Christian, 2026-09-27)
+
+Question from the Tester round:
+still a `spec` verdict after the Architect's amend round
+• criterion: No duration/free claim for the first conversation under `content/`, `src/locales/`, `src/app/` **or** `dist/`
+  test: spec's own `rg` → **2 matches** + 1 in `dist/assets/index-*.js`
+  result: fail
+  Tester's verdict: spec
+
+Answer: A - the spec is wrong: criterion 19 is scoped too wide. Decision (front desk on Christian's words of 2026-09-27, VL-5-S2 gate 1): the site may keep saying the first conversation is free - `content/services/ai-automation.md:47` and `content/services/venture-building.md:50` ("Im kostenlosen Erstgespräch …") predate this task and stay untouched, and so does their compiled copy in dist/. What this task must NOT introduce is (1) a DURATION for the first conversation ("30 Minuten", "halbe Stunde" - Christian has not fixed that yet) and (2) any NEW free/price claim in the strings this task changes (Approach 1 and 3). Rewrite criterion 19 to: "No string added or changed by this task states a duration or a price for the first conversation; the two pre-existing 'kostenlosen Erstgespräch' mentions in content/services/*.md are out of scope and unchanged." Adjust scripts/check-pulse-naming.ts accordingly (assert on the task's own strings and on the absence of a duration claim repo-wide, not on the word kostenlos repo-wide).
