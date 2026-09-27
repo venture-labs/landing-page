@@ -24,6 +24,15 @@ instead. A mechanical check is added so no price string can come back onto the s
 - Christian's reply reverses the audit's own recommendation (`§1c`, `§2c`): the price anchor is
   **not** wanted. Nothing in this task publishes `2.900 €`, `15.000 €` or `2.500 €/Monat`, and no
   replacement number ("ab", "von–bis", "Tagessatz", budget range) appears anywhere.
+- **Confirmed at gate 1 (Christian, 2026-09-27), no longer assumptions:** the price topic is ignored
+  entirely — no prices anywhere; the free 10-question self-test is the **Pulse Score**; it is free;
+  the **Pulse Check** is the paid diagnosis, and the paid step leads to `/:lang/kontakt`.
+- **A free 30-minute video call is an option Christian is still considering and has NOT decided**
+  (gate 1, 2026-09-27). Therefore no string shipped by this task names a duration for the first
+  conversation or calls it free: the wording stays exactly the `Erstgespräch` / `first call` plus
+  `unverbindlich` / `no obligation` copy written out in Approach §3, character for character. If he
+  confirms the free 30-minute call later, that is a follow-up copy change in its own task, not this
+  one.
 - **There is no price on venturelabs.team today.** Verified: the only `€` strings in this repo are
   in `src/theme.css` (a font-size token named `--text-price`) and in two Figma export files,
   `src/imports/🖌Homepage/index.tsx` and `src/imports/🖌Homepage-1/index.tsx`, which no module
@@ -36,9 +45,9 @@ instead. A mechanical check is added so no price string can come back onto the s
   them there is a sibling task and not done here. Until it runs, the three prices stay live on
   pulse.venturelabs.team.
 - "A clear path into the sales conversation" means the existing in-site contact route
-  `/:lang/kontakt` — the same target the Pulse Build and Pulse Care cards already use. The Google
-  Calendar booking URL is deliberately not introduced here; adding a booking link is task D1 of the
-  audit.
+  `/:lang/kontakt` — the same target the Pulse Build and Pulse Care cards already use (confirmed at
+  gate 1). The Google Calendar booking URL is deliberately not introduced here; adding a booking
+  link is task D1 of the audit.
 - The free quiz keeps four entry points (home hero, home AI-Pulse teaser, `/leistungen` hero,
   `/leistungen` closing block). Its fifth, the Check card inside `#ablauf`, is dropped rather than
   relabelled: a free-quiz button on the card of the paid product is the confusion this task exists
@@ -107,7 +116,10 @@ remove the now-unused `onCheckCta` prop, the `quizOpen` state, the `PulseCheckMo
 render. The Check card's label comes from content and becomes `Über den Pulse Check sprechen` /
 `Talk about a Pulse Check`, matching the existing `Über einen Build sprechen` / `Betreuung besprechen`.
 
-**3 — the copy (this is the deliverable; ship these strings verbatim).**
+**3 — the copy (this is the deliverable; ship these strings verbatim).** Christian has not decided
+the free 30-minute video call, so these strings say `Erstgespräch` / `first call` and
+`unverbindlich` / `no obligation` and name no duration and no "kostenlos" for that call — ship them
+exactly as written here.
 
 `content/site/leistungen.md` (de):
 - `coreIntro`: `Jeder Schritt baut auf dem vorherigen auf. Nach jedem entscheidest du, ob es weitergeht – ohne Verpflichtung zum nächsten. Was ein Schritt bei dir kostet, besprechen wir im Erstgespräch: konkret auf deinen Umfang gerechnet, unverbindlich.`
@@ -129,8 +141,10 @@ is untouched.
 `"check:naming": "tsx scripts/check-pulse-naming.ts"` in `package.json`. It asserts, over
 `content/**`, `src/locales/*.json`, `src/data/{de,en}/**` and — when `dist/` exists — over
 `dist/**/*.js` and `dist/**/index.html`: no currency amount matching `/\d[\d.,]*\s*(€|EUR|Euro)\b/`;
-no quiz-opening label containing "Pulse Check"; neither forbidden sentence anywhere; and that
-`src/app/components/PulseJourney.tsx` no longer imports `PulseCheckModal`.
+no claim about the first conversation matching `/30\s*-?\s*min|kostenlose[sn]?\s+(erst)?gespräch|free\s+(30|call)/i`
+(the undecided free 30-minute call must not appear); no quiz-opening label containing "Pulse Check";
+neither forbidden sentence anywhere; and that `src/app/components/PulseJourney.tsx` no longer imports
+`PulseCheckModal`.
 
 **Rejected:** (a) keeping a secondary "Kostenlosen Pulse Score starten" link on the Check card — a
 free-quiz link on the paid product's card is a smaller version of the same collision, and four
@@ -139,7 +153,9 @@ and `15.000 €` — they never render and never reach the bundle, so deleting ~
 would be unrelated churn (see Out of scope); (c) renaming `PulseCheckModal.tsx` to
 `PulseScoreModal.tsx` and the i18n key `leistungen.pulseCta` — developer-facing only, five import
 sites, no visitor-visible gain; (d) adding the booking URL as the new sales path — that is audit
-task D1 and would collide with it.
+task D1 and would collide with it; (e) naming the first conversation a free 30-minute video call —
+Christian is still considering it and has not confirmed it (gate 1, 2026-09-27), so the site keeps
+the `Erstgespräch` / `unverbindlich` wording.
 
 ## Files to change
 | File | Change | Why |
@@ -154,13 +170,13 @@ task D1 and would collide with it.
 | `src/app/components/PulseJourney.tsx` | drop the `check` CTA branch (all three link to `/:lang/kontakt`); remove `onCheckCta`, `quizOpen`, the `PulseCheckModal` import and render | the paid step must not open the free quiz |
 | `tests/e2e/analytics.spec.ts` | `openQuiz()` selector → the new hero label | the label it selects is renamed |
 | `tests/e2e/analytics-noop.spec.ts` | same selector change (line 71) | same |
-| `scripts/check-pulse-naming.ts` (new) | the mechanical assertions listed in Approach §4 | the repo has no test runner; this is its established substitute |
+| `scripts/check-pulse-naming.ts` (new) | the mechanical assertions listed in Approach §4, including the no-free-30-minute-call assertion | the repo has no test runner; this is its established substitute |
 | `package.json` | add `"check:naming": "tsx scripts/check-pulse-naming.ts"` | how the Tester runs the assertions |
 
 ## Acceptance criteria
 1. No currency amount (regex `/\d[\d.,]*\s*(€|EUR|Euro)\b/`) exists in any file under `content/`, `src/locales/`, or `src/data/de/` and `src/data/en/`.
 2. After `pnpm build`, no file under `dist/` (neither `dist/**/*.js` nor `dist/**/index.html`) contains a currency amount matching that regex.
-3. `pnpm check:naming` exits 0 and prints one `PASS` line per assertion; it exits non-zero with a `FAIL` line naming the offending file when a price string or a forbidden label is introduced.
+3. `pnpm check:naming` exits 0 and prints one `PASS` line per assertion; it exits non-zero with a `FAIL` line naming the offending file when a price string, a forbidden label or a free/30-minute-call claim is introduced.
 4. The home hero button that opens the quiz is labelled `Kostenlosen Pulse Score starten` on `/de` and `Start your free Pulse Score` on `/en`.
 5. The home AI-Pulse teaser button, the `/leistungen` hero button and the `/leistungen` closing-block button that open the quiz carry those same two labels in their locale.
 6. The quiz dialog's accessible name contains `Pulse Score` and does not contain `Pulse Check`, in both locales.
@@ -176,13 +192,16 @@ task D1 and would collide with it.
 16. Both Playwright specs in `tests/e2e/` pass against a local preview, including `Quiz Started` firing exactly once from the home-hero path after the label rename, and the run still records zero cookies.
 17. No file under `src/data/de/` or `src/data/en/` is edited by hand; every change there comes from `pnpm build` regenerating them from `content/`.
 18. No file outside this repository and this worktree is changed — in particular nothing under `C:\code\venturelabs\pulse-landing-page`.
+19. No string anywhere under `content/`, `src/locales/` or `src/app/` names a duration for the first conversation or calls it free: `rg -ni "30\s*-?\s*min|kostenlose[sn]?\s+(erst)?gespräch|free\s+(30|call)" content src/locales src/app` returns no match, and neither does the same search over `dist/` after `pnpm build`.
+20. `coreIntro` and `ctaBody` in `content/site/leistungen.md` and `content/site/leistungen.en.md` match the strings in Approach §3 character for character — the first conversation is `Erstgespräch` / `a first call` with `unverbindlich` / `no obligation`, with no duration and no free-call claim added.
 
 ## Test plan
 The repo has no test runner; its checks are `pnpm build` (content generation → `vite build` →
 prerender of every route), the `tsx` assertion scripts (`pnpm check:analytics`, and the new
 `pnpm check:naming`), and the two ad-hoc Playwright specs in `tests/e2e/` run as documented in
 `tests/e2e/playwright.config.ts`. The Test Writer owns the assertions inside
-`scripts/check-pulse-naming.ts` and any selector updates in the two specs.
+`scripts/check-pulse-naming.ts` — including the no-free-30-minute-call assertion — and any selector
+updates in the two specs.
 
 Windows — Git Bash:
 ```
@@ -200,10 +219,10 @@ cd /c/ai/dev-worktrees/venturelabs/landing/20260926-the-real-prices-on-the-main-
 macOS — Terminal (zsh): not available (this worktree exists only on the Windows PC).
 
 What it does: the first builds the site and regenerates `src/data/{de,en}/` from `content/`; the
-second prints a PASS/FAIL line per assertion for the naming and no-price criteria plus the existing
-analytics criteria, and exits non-zero on any FAIL; the third serves the production build on
-http://localhost:4173; the fourth runs the funnel and cookieless specs against it with the `list`
-reporter.
+second prints a PASS/FAIL line per assertion for the naming, no-price and no-free-call criteria plus
+the existing analytics criteria, and exits non-zero on any FAIL; the third serves the production
+build on http://localhost:4173; the fourth runs the funnel and cookieless specs against it with the
+`list` reporter.
 
 The Tester then verifies end to end in the browser at :4173, at 1440 px and 390 px, on `/de`, `/en`,
 `/de/leistungen`, `/en/leistungen`: the four quiz buttons' labels, the dialog heading, the Check
@@ -213,7 +232,7 @@ no price is visible on any of the four routes.
 ## What to click
 1. On `/de`, click the hero button: it must read "Kostenlosen Pulse Score starten" and the dialog that opens must be headed "AI Pulse Score: Wie gesund ist dein KI-Einsatz?".
 2. Scroll to "Check. Build. Care." on `/de` and click the Pulse Check card's button: it must land on `/de/kontakt` — no dialog, no footer jump.
-3. Read the `#ablauf` intro on `/de/leistungen`: it must answer the cost question with the first call, and no price, "ab" or € may appear anywhere on that page.
+3. Read the `#ablauf` intro on `/de/leistungen`: it must answer the cost question with the Erstgespräch, and no price, "ab", €, call duration or "kostenloses Gespräch" may appear anywhere on that page.
 4. Read the closing block on `/de/leistungen` and `/en/leistungen`: "kostet nichts" / "costs nothing" must sit on the Pulse Score, and the Pulse Check must be named as the next step.
 5. On `/en`, complete the quiz once from the teaser button to the result screen: the flow still works and no screen calls the paid Pulse Check free.
 
@@ -231,6 +250,11 @@ no price is visible on any of the four routes.
 - Criteria 17-18: `git status --porcelain` from this worktree (only the files in the table, plus
   build-regenerated `src/data/**`) and `git -C C:\code\venturelabs\pulse-landing-page status
   --porcelain` showing a clean tree.
+- Criterion 19: paste the empty output of the `rg -ni "30\s*-?\s*min|…"` search over `content`,
+  `src/locales`, `src/app` and over `dist/` after the build, plus the `check:naming` PASS line that
+  asserts it.
+- Criterion 20: paste the four shipped strings (`coreIntro` and `ctaBody`, both locales) from the diff
+  so they can be compared to Approach §3 word for word.
 
 ## Will not do
 - No push, no merge, no PR, no branch other than the one already checked out; `dev` and `main` are
@@ -240,6 +264,8 @@ no price is visible on any of the four routes.
 - No edit to `netlify.toml`, `.github/workflows/`, or by hand to `src/data/de/` and `src/data/en/`.
 - No new runtime or dev dependency; no test runner added; Playwright stays a `pnpm dlx` runner.
 - No price, discount, budget range, day rate or funding claim added anywhere, in any locale.
+- No statement anywhere that the first conversation is free or lasts 30 minutes (no "kostenloses
+  Erstgespräch", "30 Minuten", "free 30-minute video call") — Christian has not decided it.
 - No fix to the phone number, the footer anchors (`/#kontakt`, `/#projekte`), the `sofia-pro`
   classes, the hero video or the process accordion — those are audit tasks D1, D3, D4 and D5.
 - No deploy, no restart, nothing sent to a customer or posted outside the task's own thread.
@@ -249,6 +275,8 @@ no price is visible on any of the four routes.
   without a hero or closing-block quiz button) → stop and ask before shipping it.
 - Any copy beyond the strings listed in Approach §3 and §1 appears to need changing → stop and ask;
   the copy is the deliverable and is Christian's call.
+- The copy seems to need a duration or a "free" claim for the first conversation to read well → stop
+  and ask; the free 30-minute call is Christian's undecided option, never an Implementer's choice.
 - A price string turns out to be rendered somewhere this spec did not find (a case study, a blog
   post, a meta description) → stop, report where, and ask before rewriting content this task did
   not scope.
@@ -258,6 +286,11 @@ no price is visible on any of the four routes.
   dependency) → report the specs as not run, with the reason, instead of adding a dependency.
 
 ## Risks and open questions
+- **The free 30-minute video call as the first conversation is Christian's open option** (gate 1,
+  2026-09-27), deliberately not built here. If he confirms it, the `coreIntro` and `ctaBody` strings
+  and the `/kontakt` page copy get a follow-up copy task; criterion 19 and the `check:naming`
+  assertion that enforces it would then be relaxed in that task, not in this one. Nothing in this
+  spec blocks that later change.
 - **The prices stay live on pulse.venturelabs.team** until a sibling task runs in
   `pulse-landing-page` (`PAGE_STRINGS.*.tier1Price/tier2Price/tier3Price`, `tier1Note`, the
   `#pricing` section). This spec cannot cover it: no worktree or branch for that repo was
@@ -270,7 +303,8 @@ no price is visible on any of the four routes.
 - The audit argued the opposite of this decision (§1c: for a Händler comparing us to an agency that
   quotes on request, the published price is the differentiator; §2e: "Die Preise stehen auf der
   Seite" was the prepared answer to "Was kostet das am Ende wirklich?"). Christian decided against
-  it on 2026-09-26; recorded here so the trade-off is not silently lost, not to reopen it.
+  it on 2026-09-26 and reconfirmed on 2026-09-27 ("ignore the price topic entirely"); recorded here
+  so the trade-off is not silently lost, not to reopen it.
 - With no price, the `coreIntro` sentence is effectively "on request". That is the weaker sales
   position the audit warned about; the mitigation in this spec is that the conversation is offered
   explicitly and unconditionally rather than left implicit.
@@ -287,6 +321,8 @@ no price is visible on any of the four routes.
 - Publishing the three real prices anywhere — reversed by Christian at gate 1; the original brief's
   price half, the `pricingLede`/`tier*Bullets` transfer and the "was es nicht ist" lines are dropped,
   not deferred into this task.
+- Stating the first conversation as a free 30-minute video call — Christian's undecided option at
+  gate 1; a follow-up copy task once he confirms it.
 - Removing the prices from `pulse-landing-page` / pulse.venturelabs.team (other repo, needs its own
   task and worktree).
 - Deleting the two unused Figma export files that contain old prices.
