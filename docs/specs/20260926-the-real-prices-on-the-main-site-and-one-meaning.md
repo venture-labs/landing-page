@@ -8,188 +8,188 @@ base: dev
 design: none
 ---
 
-# The three real Pulse prices in the shared Check-Build-Care section, and one meaning for "Pulse Check"
+# No prices on the site: one meaning for "Pulse Check", and every step ends in the sales conversation
 
 ## Goal
-Put the three already-published prices (`Pulse Check ab 2.900 €`, `Pulse Build ab 15.000 €`,
-`Pulse Care ab 2.500 €/Monat`) into the Check-Build-Care section (`PulseJourney`, id `#ablauf`)
-that the home page and `/:lang/leistungen` share, together with the framing lines that already
-exist on `pulse.venturelabs.team` (`pricingLede`, `tier1Note`, `tier*Bullets`) and one
-"was es nicht ist" line per step. In the same change, end the naming collision: the free
-10-question self-test is called **Pulse Score** in every visitor-facing label and in the quiz
-dialog title, "Pulse Check" means only the paid 2-day diagnosis, and the `/leistungen` closing
-block is rewritten around the free Pulse Score with the paid Pulse Check as the next step. All
-copy stays in `content/` and `src/locales/{de,en}.json`; German first, English alongside with the
-same numbers.
+Christian reversed the original goal at gate 1 (2026-09-26, #dev-agent): no prices are to be shown
+on the website, the price we do show is to be removed, and the sales conversation is what the site
+offers instead. This task therefore delivers the half of the original brief that stands without
+prices: the free 10-question self-test is called **Pulse Score** in every visitor-facing label and
+in the quiz dialog heading, "Pulse Check" means only the paid diagnosis, the sentence *"Der Pulse
+Check dauert fünf Minuten und kostet nichts."* disappears from the `/:lang/leistungen` closing
+block, and the paid Pulse Check step stops opening the free quiz and leads into a conversation
+instead. A mechanical check is added so no price string can come back onto the site unnoticed.
 
 ## Assumptions
-- The offer is unchanged: exactly the three prices above, no "Erster Hebel ab 9.900 €" and no
-  "Care Light ab 890 €/Monat" (audit 2c part 2 / decision D-b is explicitly not part of this task).
-- Register stays `du`, as every string in `content/site/leistungen.md` uses today. The subdomain's
-  `Sie` lines are transposed to `du` when they move over. ADR 0001's `ihr`/`euch` decision (audit
-  D-g) is still unsettled and is not resolved here.
-- "Sees all three prices without a click" means the price sits on the **step rail** (all three
-  tiles are always rendered, on the home page and on `/leistungen`), not only in the detail panel
-  of the active step.
-- The paid Check card must no longer send a visitor to the free quiz as its primary action: its
-  primary CTA becomes `/:lang/kontakt` like Build and Care, with a secondary text link that opens
-  the Pulse Score quiz, so the quiz entry point in `#ablauf` is kept, not deleted.
-- The exact German and English strings listed under "Approach" are the copy to ship. They are
-  taken verbatim from `pulse-landing-page/index.html` `PAGE_STRINGS` where such a line exists, and
-  register-adjusted only where that file says `Sie`.
-- The home page keeps `<PulseJourney compact />`: bullets and Input/Output stay hidden there; the
-  price, the price note and the "was es nicht ist" line render in the always-visible left column,
-  so they show on both pages.
-- No new dependency. Playwright stays a `pnpm dlx` ad-hoc runner as `tests/e2e/playwright.config.ts`
-  documents; the two existing specs are updated only where they select the renamed hero button.
-- `scripts/prerender.ts` writes head tags only (no SSR of the body), so a price criterion cannot be
-  proven by grepping `dist/**/index.html`; it is proven in a browser and in the built JS bundle.
-- Christian's OK to publish 2.900 € under his own name (audit topic "NOTES") is assumed given —
-  the number is already public on `pulse.venturelabs.team`; this task only moves it, unverified as
-  an explicit approval.
+- Christian's reply reverses the audit's own recommendation (`§1c`, `§2c`): the price anchor is
+  **not** wanted. Nothing in this task publishes `2.900 €`, `15.000 €` or `2.500 €/Monat`, and no
+  replacement number ("ab", "von–bis", "Tagessatz", budget range) appears anywhere.
+- **There is no price on venturelabs.team today.** Verified: the only `€` strings in this repo are
+  in `src/theme.css` (a font-size token named `--text-price`) and in two Figma export files,
+  `src/imports/🖌Homepage/index.tsx` and `src/imports/🖌Homepage-1/index.tsx`, which no module
+  imports (only their `svg-*.ts` siblings are imported) and which therefore never render and never
+  enter the bundle. The audit says the same in §1c ("No price anywhere on venturelabs.team"). So
+  "remove the price that we have" has nothing to remove in this repo — it applies to
+  `pulse.venturelabs.team`.
+- **The live prices sit in the other repo** (`pulse-landing-page`, `PAGE_STRINGS.*.tier*Price`,
+  section `#pricing`). No worktree or branch was provisioned for it in this task brief, so removing
+  them there is a sibling task and not done here. Until it runs, the three prices stay live on
+  pulse.venturelabs.team.
+- "A clear path into the sales conversation" means the existing in-site contact route
+  `/:lang/kontakt` — the same target the Pulse Build and Pulse Care cards already use. The Google
+  Calendar booking URL is deliberately not introduced here; adding a booking link is task D1 of the
+  audit.
+- The free quiz keeps four entry points (home hero, home AI-Pulse teaser, `/leistungen` hero,
+  `/leistungen` closing block). Its fifth, the Check card inside `#ablauf`, is dropped rather than
+  relabelled: a free-quiz button on the card of the paid product is the confusion this task exists
+  to end. On the home page the hero button sits directly above that section.
+- Register stays `du`, as every string in `content/site/leistungen.md` uses today; ADR 0001's
+  `ihr`/`euch` decision (audit D-g) is still open and is not resolved here.
+- The exact German and English strings under "Approach" are the copy to ship; they are this task's
+  actual deliverable and are Christian's to correct at gate 1.
+- The repo has no test runner. Following the pattern the analytics task established
+  (`scripts/check-analytics.ts` + `pnpm check:analytics`), the machine-checkable criteria are
+  asserted by a new `scripts/check-pulse-naming.ts` run as `pnpm check:naming` — no new dependency
+  (`tsx` is already a devDependency).
+- The task id and branch name still say "the real prices". That is now a misnomer; the id is not
+  renamed, because ids are never renumbered.
 Correct me at gate 1, otherwise I proceed with these.
 
 ## Context found
-- `src/app/components/PulseJourney.tsx`: the shared Check-Build-Care section (`<section id="ablauf">`).
-  `StepRail` renders all three step tiles (`step` · `label` + `title`); `StepDetail` renders only the
-  active step (meta pill, tagline, description, CTA; Input/Output + bullets only when `compact` is
-  false). `compact` is true on the home page (`src/app/App.tsx:59`) and false on `/leistungen`
-  (`src/app/pages/Leistungen.tsx:234`). The Check step's CTA calls `onCheckCta`, which opens
-  `PulseCheckModal` — i.e. the paid step's button opens the free quiz today.
-- `content/site/leistungen.md` / `.en.md`: `coreHeading`, `coreIntro`, `coreServices[]`
-  (`key, step, label, title, tagline, meta, description, input, output, bullets, ctaLabel`), plus
-  the closing block `ctaHeading` / `ctaBody`. `ctaBody` (de:59, en:59) carries the sentence to
-  delete: *"Der Pulse Check dauert fünf Minuten und kostet nichts."*
-- `scripts/generate-content.ts:404-416`: declares the `CoreService` interface written into
-  `src/data/{de,en}/leistungen.ts`; line 444 emits `coreServices` with `JSON.stringify` of the raw
-  frontmatter, so new frontmatter fields are carried through automatically but must be added to
-  that interface to be typed.
-- `content/site/home.md:5` / `home.en.md:5`: `heroCta` = `Jetzt AI Pulse Check machen` /
-  `Take the AI Pulse Check now` — the free quiz button in `src/app/components/Hero.tsx:136`.
-- `src/locales/de.json:24` `aiPulse.cta` and `:86` `leistungen.pulseCta` (en.json same lines):
-  the other three free-quiz buttons — `AIPulseTeaser.tsx:50`, `Leistungen.tsx:84` and `:149`,
-  `LeistungenDetail.tsx:351`. All open `PulseCheckModal`.
-- `src/app/components/PulseCheckModal.tsx:24`: the dialog title renders `COPY[lang].quizHeading`
-  from `src/app/components/PulseQuiz.tsx` (de:56 "Wie gesund ist dein KI-Einsatz?", en:186 "How
-  healthy is your AI use?") — the quiz's own copy store, not i18next.
-- `src/app/components/PulseQuiz.tsx:64/81` and `:193/210`: "Pulse Check" already means the *paid*
-  next step in the result copy — correct after this change, left as is.
-- `src/data/navigation.ts`: the navbar has no quiz item, so "nav" in the brief needs no change
-  there; the navbar's only action is `nav.contact`.
-- `tests/e2e/analytics.spec.ts:44` and `tests/e2e/analytics-noop.spec.ts:71`: both open the quiz via
-  `getByRole("button", { name: "Jetzt AI Pulse Check machen" })` — they break on the rename.
-- `C:\code\venturelabs\pulse-landing-page\index.html:591-613` (de) and `:656-678` (en): the source
-  of `pricingLede`, `tier1Price/tier2Price/tier3Price`, `tier1Note` and `tier*Bullets`.
-- `C:\code\venturelabs\knowledge-base\marketing\website-agency-topics-2026-09-26.md` §1a(b), §2c
-  part 1 and §2d: the finding (the paid product is advertised as free), the "put what exists on the
-  main site, unchanged" decision, and the "was es nicht ist" lines.
+- `src/app/components/PulseJourney.tsx`: the shared Check-Build-Care section (`<section id="ablauf">`),
+  rendered `compact` on the home page (`src/app/App.tsx:59`) and full on `/leistungen`
+  (`src/app/pages/Leistungen.tsx:234`). In `StepDetail` (`:223-242`) the `check` step renders a
+  `<button onClick={onCheckCta}>` that opens `PulseCheckModal` — i.e. the paid step's CTA opens the
+  free quiz — while `build` and `care` render a `<Link to={localizedPath("/kontakt")}>`. The modal,
+  its `quizOpen` state (`:298`) and its import (`:8`) exist only for that one branch (`:344`, `:360`).
+- `content/site/leistungen.md:59` / `leistungen.en.md:59` — `ctaBody`: *"Der Pulse Check dauert fünf
+  Minuten und kostet nichts. …"* / *"The Pulse Check takes five minutes and costs nothing. …"*, the
+  sentence the audit calls the most expensive finding in the document (§1a(b)): our paid entry
+  product is advertised as free. Rendered by `PulseCallout` in `src/app/pages/Leistungen.tsx:103-159`,
+  which already has exactly the two buttons this rewrite needs: the quiz (`leistungen.pulseCta`) and
+  `/kontakt` (`leistungen.ctaContact`).
+- `content/site/leistungen.md:23` `ctaLabel: 'Pulse Check machen'` / `.en.md:23` `'Take the Pulse
+  Check'` — the label of that quiz-opening button on the paid card.
+- `content/site/home.md:5` / `home.en.md:5` `heroCta` = `Jetzt AI Pulse Check machen` / `Take the AI
+  Pulse Check now`, rendered by `src/app/components/Hero.tsx:136` on a button that opens the quiz.
+- `src/locales/de.json:24` `aiPulse.cta` and `:86` `leistungen.pulseCta` (same lines in `en.json`):
+  the other three quiz-opening labels — `AIPulseTeaser.tsx:50`, `Leistungen.tsx:84` (hero) and
+  `:149` (closing block), `LeistungenDetail.tsx:351`. All four say "Pulse Check" today.
+- `src/app/components/PulseCheckModal.tsx:24` renders `COPY[lang].quizHeading` from
+  `src/app/components/PulseQuiz.tsx` (de `:56` "Wie gesund ist dein KI-Einsatz?", en `:187`) — the
+  quiz's own copy store, not i18next; it is the dialog's accessible name.
+- `src/app/components/PulseQuiz.tsx:64/81` and `:193/210`: the result copy already uses "Pulse Check"
+  for the *paid* next step ("Genau hier würde ein Pulse Check ansetzen.") — correct after this
+  change, left untouched.
+- `src/data/navigation.ts`: four nav items, no quiz entry — the brief's "nav" needs no change there.
+- `tests/e2e/analytics.spec.ts:44` and `tests/e2e/analytics-noop.spec.ts:71` open the quiz via
+  `getByRole("button", { name: "Jetzt AI Pulse Check machen" })`; both break on the rename.
+- `scripts/check-analytics.ts` + `package.json:9` `check:analytics`: the repo's established
+  stand-in for a test runner — a `tsx` script printing `PASS  [n] …` / `FAIL  [n] …` and exiting
+  non-zero. `scripts/generate-content.ts:404-416` types `CoreService`; no field is added here.
+- `C:\code\venturelabs\knowledge-base\marketing\website-agency-topics-2026-09-26.md` §1a(b), §1c,
+  §2d and §5 D2: the naming collision, the (now reversed) price-anchor recommendation, and the
+  original task goal.
 
 ## Approach
-Extend the existing content-driven pattern; no new component, no layout invention.
+Copy and one CTA target change, inside the existing content pipeline; no new component, no layout
+change, no design round.
 
-**1 — three new per-step content fields.** Add `price` (required), `priceNote` (optional) and
-`notIncluded` (required) to each entry of `coreServices` in both `content/site/leistungen.md` and
-`content/site/leistungen.en.md`, and add them to the `CoreService` interface in
-`scripts/generate-content.ts` (`price: string; priceNote?: string; notIncluded: string;`). The
-emitter already passes unknown frontmatter keys through, so only the interface changes.
+**1 — one name for the free quiz.** Every visitor-facing label that opens `PulseCheckModal` becomes
+`Kostenlosen Pulse Score starten` / `Start your free Pulse Score`: `heroCta` in `content/site/home.md`
+and `home.en.md`, `aiPulse.cta` and `leistungen.pulseCta` in `src/locales/{de,en}.json`. The dialog
+heading (`PulseQuiz.tsx` `COPY.de.quizHeading` / `COPY.en.quizHeading`) becomes
+`AI Pulse Score: Wie gesund ist dein KI-Einsatz?` / `AI Pulse Score: how healthy is your AI use?`.
 
-**2 — render in `PulseJourney.tsx`.** In `StepRail`, add the price under the step title in every
-tile (so all three prices are on screen with no click, on both pages, in both `compact` modes). In
-`StepDetail`'s left column — which renders in `compact` too — show the price next to the `meta`
-pill, `priceNote` beneath it when present, and the `notIncluded` line as one muted line with the
-existing `Check`-icon row pattern inverted (an `X` icon from `lucide-react`, already a dependency).
-The strings themselves start with "Kein …" / "Not …", so no extra UI label string is needed.
+**2 — the paid card leads into the conversation.** In `PulseJourney.tsx` `StepDetail`, delete the
+`step.key === "check"` branch so all three steps render the same `<Link to={localizedPath("/kontakt")}>`;
+remove the now-unused `onCheckCta` prop, the `quizOpen` state, the `PulseCheckModal` import and its
+render. The Check card's label comes from content and becomes `Über den Pulse Check sprechen` /
+`Talk about a Pulse Check`, matching the existing `Über einen Build sprechen` / `Betreuung besprechen`.
 
 **3 — the copy (this is the deliverable; ship these strings verbatim).**
 
 `content/site/leistungen.md` (de):
-- `coreIntro`: `Jeder Schritt baut auf dem vorherigen auf. Nach jedem entscheidest du, ob es weitergeht – ganz ohne Verpflichtung zum nächsten. Und die Preise unten sind die echten Preise – nicht „auf Anfrage".`
-- check: `price: 'ab 2.900 €'`, `priceNote: 'Der einzige Schritt, den du direkt buchst.'`,
-  `notIncluded: 'Kein 40-seitiger Bericht, den niemand liest.'`,
-  `bullets: ['AI Vital Signs Report', 'Priorisierter Opportunity-Backlog']`,
-  `ctaLabel: 'Pulse Check anfragen'`
-- build: `price: 'ab 15.000 €'`, `notIncluded: 'Kein Prototyp für die Schublade.'`,
-  `bullets: ['4 Wochen Standardumfang, erweiterbar auf 8', 'Dedizierter Entwickler, feste Ansprechperson während der gesamten Umsetzung', 'Festpreis mit klar definiertem Umfang – keine versteckten Kosten']`;
-  `description` ends `… Fester Umfang, feste Leute, echtes Produktivsystem.` (the trailing "statt
-  Prototyp für die Schublade" moves into `notIncluded`, so the card says it once); `ctaLabel` unchanged
-- care: `price: 'ab 2.500 €/Monat'`, `notIncluded: 'Kein Retainer für Meetings.'`,
-  `bullets: ['Monatliches Dashboard-Tracking', 'Vierteljährliches Deep-Review', 'Jährlicher Pulse-Check-Refresh']`;
-  `ctaLabel` unchanged
-- `ctaHeading` unchanged (`Noch unklar, wo du stehst?`); `ctaBody`:
-  `Der AI Pulse Score dauert fünf Minuten und kostet nichts: 10 Fragen, sofort ein Ergebnis über fünf Bereiche. Willst du danach genau wissen, wo der größte Hebel liegt, ist der Pulse Check ab 2.900 € der nächste Schritt.`
+- `coreIntro`: `Jeder Schritt baut auf dem vorherigen auf. Nach jedem entscheidest du, ob es weitergeht – ohne Verpflichtung zum nächsten. Was ein Schritt bei dir kostet, besprechen wir im Erstgespräch: konkret auf deinen Umfang gerechnet, unverbindlich.`
+- check `ctaLabel`: `Über den Pulse Check sprechen`
+- `ctaHeading` unchanged (`Noch unklar, wo du stehst?`)
+- `ctaBody`: `Der AI Pulse Score dauert fünf Minuten und kostet nichts: 10 Fragen, sofort ein Ergebnis über fünf Bereiche. Willst du danach genau wissen, wo dein größter Hebel liegt, ist der Pulse Check der nächste Schritt – was er bei dir umfasst, besprechen wir im Erstgespräch.`
 
-`content/site/leistungen.en.md` (en), same structure:
-- `coreIntro`: `Each step builds on the one before. After each, you decide whether to continue — no obligation to take the next one. And the prices below are the real prices — not "available on request".`
-- check: `price: 'from €2,900'`, `priceNote: 'The only step you book directly.'`,
-  `notIncluded: 'Not a 40-page report nobody reads.'`,
-  `bullets: ['AI Vital Signs Report', 'Prioritised opportunity backlog']`,
-  `ctaLabel: 'Request the Pulse Check'`
-- build: `price: 'from €15,000'`, `notIncluded: 'Not a prototype for the drawer.'`,
-  `bullets: ['4-week standard scope, extendable to 8', 'A dedicated developer and a single point of contact throughout', 'Fixed price with a clearly defined scope — no hidden costs']`;
-  `description` ends `… Fixed scope, dedicated people, a real production system.`
-- care: `price: 'from €2,500/month'`, `notIncluded: 'Not a retainer for meetings.'`,
-  `bullets: ['Monthly dashboard tracking', 'Quarterly deep review', 'Annual Pulse Check refresh']`
-- `ctaBody`: `The AI Pulse Score takes five minutes and costs nothing: 10 questions, an instant result across five areas. When you then want to know exactly where your biggest lever is, the Pulse Check from €2,900 is the next step.`
+`content/site/leistungen.en.md` (en):
+- `coreIntro`: `Each step builds on the one before. After each, you decide whether to continue — no obligation to take the next one. What a step costs in your case is something we work out in a first call: based on your actual scope, with no obligation.`
+- check `ctaLabel`: `Talk about a Pulse Check`
+- `ctaBody`: `The AI Pulse Score takes five minutes and costs nothing: 10 questions, an instant result across five areas. If you then want to know exactly where your biggest lever is, the Pulse Check is the next step — what it covers in your case is something we work out in a first call.`
 
-**4 — one name for the free quiz.** Every visitor-facing label that opens `PulseCheckModal` becomes
-`Kostenlosen Pulse Score starten` (de) / `Start your free Pulse Score` (en): `heroCta` in
-`content/site/home.md` and `home.en.md`, `aiPulse.cta` and `leistungen.pulseCta` in
-`src/locales/{de,en}.json`. The dialog title (`PulseQuiz.tsx` `COPY.*.quizHeading`) becomes
-`AI Pulse Score: Wie gesund ist dein KI-Einsatz?` / `AI Pulse Score: how healthy is your AI use?`.
-The Check card's primary CTA becomes a `Link` to `localizedPath("/kontakt")` (same pattern as Build
-and Care) and a secondary text link below it, labelled `t("leistungen.pulseCta")`, opens the quiz —
-so `onCheckCta` and `PulseCheckModal` stay in `PulseJourney`, only the roles swap.
+Note the free/paid split in that block: "kostet nichts" now attaches to the **Pulse Score**, which is
+free, and the Pulse Check is named as the paid next step without a number. `build` and `care` content
+is untouched.
 
-**Rejected:** (a) leaving the Check card's button on the quiz and only renaming it — a
-"Kostenlosen Pulse Score starten" button under a card that says `ab 2.900 €` reintroduces the same
-free/paid confusion one level down; (b) adding a new pricing section or component — the section
-already exists on both pages and a new one needs a design round; (c) a top-level `pricingLede`
-field — `coreIntro` already renders in that exact place, so it is rewritten instead of duplicated;
-(d) renaming `PulseCheckModal.tsx` → `PulseScoreModal.tsx` — five import sites for no visitor-visible
-gain (see Out of scope).
+**4 — a guard against prices coming back.** New `scripts/check-pulse-naming.ts`, modelled on
+`scripts/check-analytics.ts` (same `PASS`/`FAIL` output, same non-zero exit), wired as
+`"check:naming": "tsx scripts/check-pulse-naming.ts"` in `package.json`. It asserts, over
+`content/**`, `src/locales/*.json`, `src/data/{de,en}/**` and — when `dist/` exists — over
+`dist/**/*.js` and `dist/**/index.html`: no currency amount matching `/\d[\d.,]*\s*(€|EUR|Euro)\b/`;
+no quiz-opening label containing "Pulse Check"; neither forbidden sentence anywhere; and that
+`src/app/components/PulseJourney.tsx` no longer imports `PulseCheckModal`.
+
+**Rejected:** (a) keeping a secondary "Kostenlosen Pulse Score starten" link on the Check card — a
+free-quiz link on the paid product's card is a smaller version of the same collision, and four
+entry points remain; (b) deleting the two unused Figma export files that contain `0 €`, `3.000 €`
+and `15.000 €` — they never render and never reach the bundle, so deleting ~5.000 lines of export
+would be unrelated churn (see Out of scope); (c) renaming `PulseCheckModal.tsx` to
+`PulseScoreModal.tsx` and the i18n key `leistungen.pulseCta` — developer-facing only, five import
+sites, no visitor-visible gain; (d) adding the booking URL as the new sales path — that is audit
+task D1 and would collide with it.
 
 ## Files to change
 | File | Change | Why |
 |---|---|---|
-| `content/site/leistungen.md` | `coreIntro` rewritten to the pricing lede; `price`/`priceNote`/`notIncluded` added per step; `bullets` replaced with the pulse-site tier bullets; build `description` trimmed; check `ctaLabel` → `Pulse Check anfragen`; `ctaBody` rewritten | German prices and framing, closing block around the free Pulse Score |
-| `content/site/leistungen.en.md` | the same fields with the English strings above | English carries the same numbers |
+| `content/site/leistungen.md` | `coreIntro` gains the "cost in a first call" sentence; check `ctaLabel` → `Über den Pulse Check sprechen`; `ctaBody` rewritten around the free Pulse Score | deletes the "Pulse Check is free" claim, offers the conversation instead of a price |
+| `content/site/leistungen.en.md` | the same three fields with the English strings above | English carries the same meaning |
 | `content/site/home.md` | `heroCta` → `Kostenlosen Pulse Score starten` | the hero button opens the free quiz |
 | `content/site/home.en.md` | `heroCta` → `Start your free Pulse Score` | same, English |
 | `src/locales/de.json` | `aiPulse.cta` and `leistungen.pulseCta` → `Kostenlosen Pulse Score starten` | the other three quiz buttons |
 | `src/locales/en.json` | the same two keys → `Start your free Pulse Score` | same, English |
-| `scripts/generate-content.ts` | `CoreService` gains `price: string; priceNote?: string; notIncluded: string;` | the generated data must be typed for the component |
-| `src/app/components/PulseJourney.tsx` | price in every `StepRail` tile; price + `priceNote` + `notIncluded` in `StepDetail`'s left column; Check CTA → `/:lang/kontakt`, secondary quiz link added | three prices without a click, one meaning per name |
-| `src/app/components/PulseQuiz.tsx` | `COPY.de.quizHeading` / `COPY.en.quizHeading` name the Pulse Score | the modal heading must not imply the paid Check |
+| `src/app/components/PulseQuiz.tsx` | `COPY.de.quizHeading` / `COPY.en.quizHeading` name the Pulse Score | the dialog's accessible name must not say "Pulse Check" |
+| `src/app/components/PulseJourney.tsx` | drop the `check` CTA branch (all three link to `/:lang/kontakt`); remove `onCheckCta`, `quizOpen`, the `PulseCheckModal` import and render | the paid step must not open the free quiz |
 | `tests/e2e/analytics.spec.ts` | `openQuiz()` selector → the new hero label | the label it selects is renamed |
 | `tests/e2e/analytics-noop.spec.ts` | same selector change (line 71) | same |
+| `scripts/check-pulse-naming.ts` (new) | the mechanical assertions listed in Approach §4 | the repo has no test runner; this is its established substitute |
+| `package.json` | add `"check:naming": "tsx scripts/check-pulse-naming.ts"` | how the Tester runs the assertions |
 
 ## Acceptance criteria
-1. On `/de` and on `/de/leistungen`, with no click, hover or scroll interaction with the step rail, the rendered text of the `#ablauf` section contains `ab 2.900 €`, `ab 15.000 €` and `ab 2.500 €/Monat`, each inside the tile of `Pulse Check`, `Pulse Build` and `Pulse Care` respectively.
-2. On `/en` and on `/en/leistungen`, the same three tiles contain `from €2,900`, `from €15,000` and `from €2,500/month`.
-3. The `#ablauf` intro paragraph on both pages ends with `Und die Preise unten sind die echten Preise – nicht „auf Anfrage".` (de) / `And the prices below are the real prices — not "available on request".` (en).
-4. With `Pulse Check` selected (the default), the detail panel on `/de` **and** on `/de/leistungen` shows `ab 2.900 €`, the note `Der einzige Schritt, den du direkt buchst.` and the line `Kein 40-seitiger Bericht, den niemand liest.`
-5. Selecting `Pulse Build` shows the line `Kein Prototyp für die Schublade.` and selecting `Pulse Care` shows `Kein Retainer für Meetings.`; the English pages show the three English equivalents from the Approach section.
-6. On `/de/leistungen` the three bullet lists equal, string for string, the `bullets` arrays given in the Approach section (2 items for Check, 3 for Build, 3 for Care); on `/en/leistungen` their English equivalents.
-7. The Check card's primary CTA is a link to `/de/kontakt` (`/en/kontakt` on the English page) labelled `Pulse Check anfragen` / `Request the Pulse Check`, and no longer opens the quiz dialog.
-8. A secondary text link inside the Check card, labelled `Kostenlosen Pulse Score starten` / `Start your free Pulse Score`, opens the quiz dialog.
-9. Every button that opens the quiz dialog — home hero, home AI-Pulse teaser, `/leistungen` hero, `/leistungen` closing block, `/leistungen/:slug` closing block, and the Check-card link from criterion 8 — is labelled `Kostenlosen Pulse Score starten` on `de` and `Start your free Pulse Score` on `en`.
-10. The quiz dialog's title contains the string `Pulse Score` and does not contain `Pulse Check`, in both locales.
-11. `rg -n "Pulse Check" content/site/home.md content/site/home.en.md src/locales/de.json src/locales/en.json` returns no match.
-12. `rg -n "Der Pulse Check dauert fünf Minuten" content src` and `rg -n "The Pulse Check takes five minutes" content src` both return no match.
-13. The `/leistungen` closing paragraph names the free AI Pulse Score first and the paid `Pulse Check ab 2.900 €` / `Pulse Check from €2,900` as the next step, in both locales.
+1. No currency amount (regex `/\d[\d.,]*\s*(€|EUR|Euro)\b/`) exists in any file under `content/`, `src/locales/`, or `src/data/de/` and `src/data/en/`.
+2. After `pnpm build`, no file under `dist/` (neither `dist/**/*.js` nor `dist/**/index.html`) contains a currency amount matching that regex.
+3. `pnpm check:naming` exits 0 and prints one `PASS` line per assertion; it exits non-zero with a `FAIL` line naming the offending file when a price string or a forbidden label is introduced.
+4. The home hero button that opens the quiz is labelled `Kostenlosen Pulse Score starten` on `/de` and `Start your free Pulse Score` on `/en`.
+5. The home AI-Pulse teaser button, the `/leistungen` hero button and the `/leistungen` closing-block button that open the quiz carry those same two labels in their locale.
+6. The quiz dialog's accessible name contains `Pulse Score` and does not contain `Pulse Check`, in both locales.
+7. `rg -n "Pulse Check" content/site/home.md content/site/home.en.md src/locales/de.json src/locales/en.json` returns no match.
+8. `rg -n "Der Pulse Check dauert fünf Minuten" content src` and `rg -n "The Pulse Check takes five minutes" content src` both return no match.
+9. On `/de/leistungen` and `/en/leistungen` the closing paragraph names the free AI Pulse Score first ("kostet nichts" / "costs nothing" attached to the Score) and names the Pulse Check as the next step, with no number, no currency and no "ab".
+10. In the `#ablauf` section, on `/de`, `/en`, `/de/leistungen` and `/en/leistungen`, selecting `Pulse Check` shows a CTA labelled `Über den Pulse Check sprechen` / `Talk about a Pulse Check` that is a link to `/de/kontakt` / `/en/kontakt`; clicking it navigates there and opens no dialog.
+11. No element inside the `#ablauf` section opens the quiz dialog on any route, and `src/app/components/PulseJourney.tsx` contains no reference to `PulseCheckModal`.
+12. The quiz is still reachable and completable from all four remaining entry points (home hero, home AI-Pulse teaser, `/leistungen` hero, `/leistungen` closing block) and still renders its result screen.
+13. The `#ablauf` intro paragraph on both pages ends with the "first call" sentence given in Approach §3, in its locale.
 14. No visitor-facing German or English string introduced or changed by this task is hardcoded in a file under `src/app/`, except in the `COPY` object of `PulseQuiz.tsx`, which is that quiz's established copy store.
-15. `pnpm install --prefer-offline && pnpm build` exits 0 with no new TypeScript error, and `PulseJourney.tsx` reads `price`, `priceNote` and `notIncluded` off the generated `CoreService` type without a cast to `any`.
-16. Both Playwright specs in `tests/e2e/` pass against a local preview, including `Quiz Started` firing exactly once from the home-hero path after the label rename.
-17. No file under `src/data/de/` or `src/data/en/` is edited by hand (they are regenerated by the build), and no price other than the three named above appears anywhere in `content/` or `src/`.
+15. `pnpm install --prefer-offline && pnpm build` exits 0 with no new TypeScript error and no unused-import or unused-variable error in `PulseJourney.tsx`.
+16. Both Playwright specs in `tests/e2e/` pass against a local preview, including `Quiz Started` firing exactly once from the home-hero path after the label rename, and the run still records zero cookies.
+17. No file under `src/data/de/` or `src/data/en/` is edited by hand; every change there comes from `pnpm build` regenerating them from `content/`.
+18. No file outside this repository and this worktree is changed — in particular nothing under `C:\code\venturelabs\pulse-landing-page`.
 
 ## Test plan
-The repo has no test runner in `package.json`; the checks that exist are `pnpm build` (content
-generation → `vite build` → prerender of every route) and the two ad-hoc Playwright specs in
-`tests/e2e/`, run as documented in `tests/e2e/playwright.config.ts`.
+The repo has no test runner; its checks are `pnpm build` (content generation → `vite build` →
+prerender of every route), the `tsx` assertion scripts (`pnpm check:analytics`, and the new
+`pnpm check:naming`), and the two ad-hoc Playwright specs in `tests/e2e/` run as documented in
+`tests/e2e/playwright.config.ts`. The Test Writer owns the assertions inside
+`scripts/check-pulse-naming.ts` and any selector updates in the two specs.
 
 Windows — Git Bash:
 ```
 cd /c/ai/dev-worktrees/venturelabs/landing/20260926-the-real-prices-on-the-main-site-and-one-meaning && pnpm install --prefer-offline && pnpm build
+```
+```
+cd /c/ai/dev-worktrees/venturelabs/landing/20260926-the-real-prices-on-the-main-site-and-one-meaning && pnpm check:naming && pnpm check:analytics
 ```
 ```
 cd /c/ai/dev-worktrees/venturelabs/landing/20260926-the-real-prices-on-the-main-site-and-one-meaning && pnpm exec vite preview --port 4173
@@ -197,92 +197,102 @@ cd /c/ai/dev-worktrees/venturelabs/landing/20260926-the-real-prices-on-the-main-
 ```
 cd /c/ai/dev-worktrees/venturelabs/landing/20260926-the-real-prices-on-the-main-site-and-one-meaning && pnpm dlx --package @playwright/test playwright test --config tests/e2e/playwright.config.ts
 ```
-macOS — Terminal (zsh): not applicable (this worktree only exists on the Windows PC).
+macOS — Terminal (zsh): not available (this worktree exists only on the Windows PC).
 
-What it does: the first builds the site (regenerating `src/data/{de,en}/` from `content/`); the
-second serves the production build on http://localhost:4173; the third runs the four funnel specs
-plus the cookieless check against it and prints a pass/fail list.
+What it does: the first builds the site and regenerates `src/data/{de,en}/` from `content/`; the
+second prints a PASS/FAIL line per assertion for the naming and no-price criteria plus the existing
+analytics criteria, and exits non-zero on any FAIL; the third serves the production build on
+http://localhost:4173; the fourth runs the funnel and cookieless specs against it with the `list`
+reporter.
 
-The Tester then verifies end to end in the browser at :4173 on a 1440-wide and a 390-wide viewport:
-`/de`, `/en`, `/de/leistungen`, `/en/leistungen` — the three prices on the rail without a click,
-each step's "was es nicht ist" line after selecting that step, the Check card's two actions, the
-quiz dialog title, and the rewritten closing block.
+The Tester then verifies end to end in the browser at :4173, at 1440 px and 390 px, on `/de`, `/en`,
+`/de/leistungen`, `/en/leistungen`: the four quiz buttons' labels, the dialog heading, the Check
+card's link target, that `#ablauf` opens no dialog anywhere, the rewritten closing block, and that
+no price is visible on any of the four routes.
 
 ## What to click
-1. Open `/de` on the preview, scroll to "Check. Build. Care." and read the three tiles without clicking: all three prices must be legible at 390 px too (they must not be truncated or wrapped into the step title).
-2. Click `Pulse Build`, then `Pulse Care` in the step rail: each shows exactly one "Kein …" line, and the price above it matches the tile.
-3. In the Check card, click the secondary link "Kostenlosen Pulse Score starten": the quiz dialog opens and its heading names the Pulse Score, not a Pulse Check.
-4. Click the Check card's primary button: it lands on `/de/kontakt`, not on the quiz.
-5. Switch to `/en/leistungen` and read the closing block: the free Pulse Score is offered first and the paid Pulse Check from €2,900 is named as the next step — no sentence says the Pulse Check is free.
+1. On `/de`, click the hero button: it must read "Kostenlosen Pulse Score starten" and the dialog that opens must be headed "AI Pulse Score: Wie gesund ist dein KI-Einsatz?".
+2. Scroll to "Check. Build. Care." on `/de` and click the Pulse Check card's button: it must land on `/de/kontakt` — no dialog, no footer jump.
+3. Read the `#ablauf` intro on `/de/leistungen`: it must answer the cost question with the first call, and no price, "ab" or € may appear anywhere on that page.
+4. Read the closing block on `/de/leistungen` and `/en/leistungen`: "kostet nichts" / "costs nothing" must sit on the Pulse Score, and the Pulse Check must be named as the next step.
+5. On `/en`, complete the quiz once from the teaser button to the result screen: the flow still works and no screen calls the paid Pulse Check free.
 
 ## Verification and evidence
-- Criteria 1-6, 13: a screenshot of `#ablauf` on `/de` and on `/de/leistungen` at 1440 px with all
-  three prices visible, plus one of `/en/leistungen`'s closing block, in the close-out.
-- Criteria 1-2 mechanically: after `pnpm build`, `rg -o "ab 2\.900 €|ab 15\.000 €|ab 2\.500 €/Monat|from €2,900|from €15,000|from €2,500/month" dist/assets/*.js | sort -u` lists all six strings
-  (the prerendered HTML carries head tags only, so the bundle is where the strings are provable).
-- Criteria 11-12: paste the exact `rg` commands and their empty output into the close-out.
-- Criterion 14: `git diff --stat` plus a read of the `src/app/` hunks — the only literal copy in
-  them is inside `PulseQuiz.tsx`'s `COPY`.
-- Criterion 15: the tail of the `pnpm build` output, exit code shown.
+- Criteria 1-3, 7, 8, 11: paste the full `pnpm check:naming` output (every `PASS` line, exit code 0)
+  and the two empty `rg` outputs into the close-out.
+- Criteria 4-6, 9, 10, 13: screenshots of the `/de` hero, the open quiz dialog, the `#ablauf` Pulse
+  Check card on `/de/leistungen` and the `/en/leistungen` closing block.
+- Criterion 10 additionally: the browser URL after clicking the Check card's CTA, shown as
+  `/de/kontakt`.
+- Criterion 12: the Playwright run covers the home hero path; the other three entry points are
+  covered by the click-list plus one screenshot of the result screen reached from `/en`.
+- Criterion 15: the tail of the `pnpm build` output with its exit code.
 - Criterion 16: the Playwright `list` reporter output, all specs passing, pasted.
-- Criterion 17: `git status --porcelain src/data` shows only generated-file changes from the build,
-  and `git diff` on those paths is not committed by hand as a copy edit.
+- Criteria 17-18: `git status --porcelain` from this worktree (only the files in the table, plus
+  build-regenerated `src/data/**`) and `git -C C:\code\venturelabs\pulse-landing-page status
+  --porcelain` showing a clean tree.
 
 ## Will not do
-- No push, no merge, no PR to `dev` or `main`; no branch other than the one already checked out.
-- No edit to `netlify.toml`, `.github/workflows/`, or anything under `src/data/de/` and `src/data/en/`
-  by hand.
-- No change in the `pulse-landing-page` repo or in `C:\code\venturelabs` (the knowledge base and the
-  audit doc are read-only here).
-- No new dependency, no new npm script, no Playwright in `package.json`.
-- No new price, discount, package or funding claim beyond the three prices and the lines quoted
-  above; nothing is sent to a customer or published live.
-- No fix to the phone number, the footer anchors, the `sofia-pro` classes, the hero video or the
-  accordion — those are tasks D1, D3, D4 and D5.
+- No push, no merge, no PR, no branch other than the one already checked out; `dev` and `main` are
+  untouched.
+- No change in `pulse-landing-page`, in `C:\code\venturelabs` or in any other repo — the knowledge
+  base and the audit doc are read-only here.
+- No edit to `netlify.toml`, `.github/workflows/`, or by hand to `src/data/de/` and `src/data/en/`.
+- No new runtime or dev dependency; no test runner added; Playwright stays a `pnpm dlx` runner.
+- No price, discount, budget range, day rate or funding claim added anywhere, in any locale.
+- No fix to the phone number, the footer anchors (`/#kontakt`, `/#projekte`), the `sofia-pro`
+  classes, the hero video or the process accordion — those are audit tasks D1, D3, D4 and D5.
+- No deploy, no restart, nothing sent to a customer or posted outside the task's own thread.
 
 ## Stop conditions
-- A framing line the brief names (`pricingLede`, `tier1Note`, a `tier*Bullets` entry) cannot be found
-  verbatim in `pulse-landing-page/index.html` → stop and ask rather than paraphrase.
-- The Check card's CTA change turns out to remove the only quiz entry point on a route (e.g. a page
-  that renders `PulseJourney` without a hero button) → stop and ask before shipping a route with no
-  way into the quiz.
-- `pnpm build` fails for a reason outside these files (a lockfile or native-build issue) → stop and
-  report; do not change `pnpm-workspace.yaml` or the lockfile to get past it.
-- The Playwright run needs anything beyond `pnpm dlx` (a browser download that is blocked, a new
+- The change would remove the last quiz entry point on a route (e.g. a route renders `PulseJourney`
+  without a hero or closing-block quiz button) → stop and ask before shipping it.
+- Any copy beyond the strings listed in Approach §3 and §1 appears to need changing → stop and ask;
+  the copy is the deliverable and is Christian's call.
+- A price string turns out to be rendered somewhere this spec did not find (a case study, a blog
+  post, a meta description) → stop, report where, and ask before rewriting content this task did
+  not scope.
+- `pnpm build` fails for a reason outside these files (lockfile, native build) → stop and report; do
+  not touch `pnpm-workspace.yaml` or the lockfile to get past it.
+- The Playwright run needs anything beyond `pnpm dlx` (a blocked browser download, a new
   dependency) → report the specs as not run, with the reason, instead of adding a dependency.
-- Any copy change beyond the strings listed in Approach appears necessary → stop and ask; the copy
-  is the deliverable and is Christian's call.
 
 ## Risks and open questions
-- Replacing the Check bullets with the pulse-site ones drops `AI Opportunity Map statt Buzzword-Bingo`
-  and `3–5 Use Cases, sortiert nach Wirkung` from the main site. The two sites also disagree on the
-  count (main: "3–5 Use Cases"; subdomain: "1–3 Anwendungsfälle mit dem größten Hebel"). This task
-  removes the conflicting main-site claim rather than deciding the true number — if Christian wants
-  a use-case count on the card, he should name it at gate 1.
-- The design round for the AI Pulse page (audit T1, `design/STATUS.md`: variants 1a/1b/1c drafted,
-  awaiting Christian) may replace this section later; the content fields added here survive that,
-  the `PulseJourney` layout may not.
-- Register: `du` here, `Sie` on the subdomain, `ihr`/`euch` in ADR 0001. Audit decision D-g is open;
-  this task does not resolve it, so the two sites stay inconsistent in register.
-- `pulse.venturelabs.team` keeps showing the same offer with the same prices, indexable (audit D8).
-  Publishing prices on the main site makes that duplicate more visible, not less.
-- Criteria 1-10 are verified in a browser (Playwright ad hoc or the click-list), not by a committed
-  automated test, because the repo has no test runner and prerender emits head tags only. The
-  manual check is the "What to click" list plus the Tester's viewport pass described in the Test plan.
-- Claim risk is reduced, not eliminated: the quiz result copy still says a Pulse Check "würde
-  ansetzen" without naming its price. That is accurate but unpriced; naming the price there is out
-  of scope.
+- **The prices stay live on pulse.venturelabs.team** until a sibling task runs in
+  `pulse-landing-page` (`PAGE_STRINGS.*.tier1Price/tier2Price/tier3Price`, `tier1Note`, the
+  `#pricing` section). This spec cannot cover it: no worktree or branch for that repo was
+  provisioned. Recommendation: the Dev Manager files it as its own task, otherwise "we show no
+  prices" is only half true and the subdomain is the half that is indexed.
+- Two unused Figma export files (`src/imports/🖌Homepage/index.tsx`, `src/imports/🖌Homepage-1/index.tsx`)
+  still contain `0 €`, `3.000 €` and `15.000 €`. They are dead code — no module imports them, so
+  they never render and never reach `dist/` (criterion 2 proves the bundle stays clean). A `git grep €`
+  will still find them until a cleanup task deletes them.
+- The audit argued the opposite of this decision (§1c: for a Händler comparing us to an agency that
+  quotes on request, the published price is the differentiator; §2e: "Die Preise stehen auf der
+  Seite" was the prepared answer to "Was kostet das am Ende wirklich?"). Christian decided against
+  it on 2026-09-26; recorded here so the trade-off is not silently lost, not to reopen it.
+- With no price, the `coreIntro` sentence is effectively "on request". That is the weaker sales
+  position the audit warned about; the mitigation in this spec is that the conversation is offered
+  explicitly and unconditionally rather than left implicit.
+- Criteria 4-6, 9, 10, 12 and 13 are proven in a browser plus the string-level assertions in
+  `check-pulse-naming.ts`, not by a committed browser test, because the repo has no test runner and
+  `scripts/prerender.ts` emits head tags only (the body is client-rendered). The manual check is the
+  "What to click" list plus the Tester's viewport pass.
+- Register stays inconsistent across the two sites (`du` here, `Sie` on the subdomain, `ihr`/`euch`
+  in ADR 0001). Audit decision D-g is open and untouched by this task.
+- The pending design round for the AI Pulse page (audit T1, `design/STATUS.md`) may later replace
+  the `#ablauf` section entirely; the copy shipped here survives that, the component does not.
 
 ## Out of scope
-- Renaming `PulseCheckModal.tsx` to `PulseScoreModal.tsx` and its five import sites (developer-facing
-  only; worth a follow-up task).
-- The retailer price ladder (`Erster Hebel ab 9.900 €`, `Care Light ab 890 €/Monat`) and the
-  Forschungszulage note — both need Christian's decision (audit D-b, 2c part 2).
-- `tier2Note` / `tier3Note` from the pulse site; the brief names `tier1Note` only.
-- A new `/:lang/ai-pulse` page, the `pulse.venturelabs.team` redirect and the subdomain's `noindex`
-  (ADR 0001, audit D8).
-- Lead capture in the quiz, the booking link in the navbar, and every CTA that ends in a footer
-  anchor (audit D1) — including `LeistungenDetail.tsx:354`'s `/#kontakt`, which this task leaves
-  untouched.
-- Updating `knowledge-base/domains/website-content.md` or the design `CHECKLIST.md` (audit D7, a
-  different repo).
+- Publishing the three real prices anywhere — reversed by Christian at gate 1; the original brief's
+  price half, the `pricingLede`/`tier*Bullets` transfer and the "was es nicht ist" lines are dropped,
+  not deferred into this task.
+- Removing the prices from `pulse-landing-page` / pulse.venturelabs.team (other repo, needs its own
+  task and worktree).
+- Deleting the two unused Figma export files that contain old prices.
+- Renaming `PulseCheckModal.tsx` → `PulseScoreModal.tsx` and the i18n key `leistungen.pulseCta` →
+  `pulseScoreCta` (developer-facing only).
+- The booking link in the navbar, the footer/hero anchor CTAs, `LeistungenDetail.tsx:354`'s
+  `/#kontakt`, and quiz lead capture (audit D1 and the quiz-leads topic).
+- Updating `knowledge-base/domains/website-content.md`, the glossary or `design/CHECKLIST.md`
+  (different repo; audit D7).
