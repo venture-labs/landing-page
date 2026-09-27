@@ -467,3 +467,19 @@ around it, and name it in the morning list.
 - Pushing the task branch, opening the PR, merging it, deploying, or touching the Netlify site
   `vl-home`: the run delivers the committed local branch, the push and the PR are the landing step
   after the role rounds, and gate 3 is Christian's merge on GitHub.
+
+
+## Review answers (Christian, 2026-09-27)
+
+Question from the Tester round:
+still a `spec` verdict after the Architect's amend round
+• criterion: branch state; `git diff --name-only dev...HEAD` lists only table files + the spec
+  test: git read-back (not a test file, per the spec's own test plan)
+  result: fail
+  Tester's verdict: spec
+• criterion: (not given)
+  test: criterion 24 (git read-back, no test file)
+  Tester's verdict: spec
+  output: **. Two halves, both unchanged by the amendment `fe192650`:
+
+Answer: A - criterion 24 is read as the Tester proposes: the branch's diff against its real base origin/dev (git diff --name-only origin/dev...HEAD), and the file table additionally allows src/app/locale.tsx, tests/e2e/analytics-noop.spec.ts and test files added by the Tester round (all three are forced by criteria 2 and 20). Nothing in the code changes; no new Implementer round needed - continue to review and PR. Night run 2026-09-26/27, front desk night driver on Christian's go: gate 1b follows the Tester's recommended reading.
