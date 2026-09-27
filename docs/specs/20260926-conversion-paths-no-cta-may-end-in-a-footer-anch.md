@@ -90,6 +90,19 @@ against `dev` is recorded as the landing step **after** the role rounds, under "
 evidence" (that a landing step exists and performs the push is **unverified** — the cluster's own code
 is outside this worktree's read range).
 
+**Amended again 2026-09-27 (gate 1b, Christian's answer A) after a second Tester verdict `spec` on
+criterion 24.** Christian settled the criterion exactly as the Tester proposed. Nothing in the code
+changes as a result — no new Implementer round; the run continues to review and PR. Two things move:
+
+- The branch diff is taken against the branch's **real base on the remote**,
+  `git diff --name-only origin/dev...HEAD`, not against the bare ref `dev`.
+- The allowed file list in criterion 24 additionally admits `src/app/locale.tsx`,
+  `tests/e2e/analytics-noop.spec.ts` and test files added by the Tester round. All three are forced by
+  criteria already in this spec: criterion 2 bans the substring `/#kontakt` anywhere under `src/`,
+  which includes the doc-comment example on `localizedPath()` in `src/app/locale.tsx`, and criterion
+  20 requires `tests/e2e/analytics-noop.spec.ts` to pass. They are therefore listed in "Files to
+  change" below as well.
+
 ## Context found
 
 - `src/app/locale.tsx` — `localizedPath("/#kontakt", "de")` returns `/de#kontakt`; this is the helper
@@ -205,11 +218,14 @@ GitHub, no agent involved).
 | `src/app/pages/CaseDetail.tsx` | two CTAs → `/:lang/kontakt` | criterion: no anchor href on any route |
 | `src/app/pages/UeberUns.tsx` | CTA → `/:lang/kontakt`, label via `t("nav.contact")` | same, plus a German string on an English route |
 | `src/app/pages/Kontakt.tsx` | `CtaStrip` phone block → booking link | F1: the broken public phone number |
+| `src/app/locale.tsx` | doc-comment example on `localizedPath()` only (no longer `/#kontakt`); the `/#` branch itself stays | criterion 2 bans the substring anywhere under `src/`, comments included (added at gate 1b) |
 | `src/locales/de.json` | add `nav.bookCall`; rewrite `kontakt.ctaQuestion` | new label; copy must not ask for a call that is gone |
 | `src/locales/en.json` | same two, English | locale parity |
 | `tests/links/no-anchor-ctas.test.mjs` | new `node --test` file: source-level scan | mechanical, dependency-free gate |
 | `tests/e2e/conversion-paths.spec.ts` | new Playwright spec: rendered hrefs over every sitemap URL, keyboard reach, booking goals | the criteria as written, proven in a browser |
 | `tests/e2e/analytics.spec.ts` | update the two tests that click the footer `Gespräch buchen` link and assert `/de/kontakt` | the link's destination changed; the goal must still fire once |
+| `tests/e2e/analytics-noop.spec.ts` | update as far as criterion 20 requires it to pass | criterion 20 names this spec explicitly (added at gate 1b) |
+| test files added by the Tester round under `tests/` | whatever that round needs to prove criteria 2 and 20 | the Tester may add tests; those files are part of the expected diff (added at gate 1b) |
 
 ## Acceptance criteria
 
@@ -261,9 +277,12 @@ GitHub, no agent involved).
 24. When the run ends, the whole change sits as one or more commits on the already-checked-out local
     branch `fix/conversion-paths-no-cta-may-end-in-a-footer-anch` in this worktree, and nothing is
     left uncommitted: `git rev-parse --abbrev-ref HEAD` prints exactly that branch name,
-    `git status --porcelain` prints nothing, and `git diff --name-only dev...HEAD` lists only files
-    from the "Files to change" table plus this spec file — one branch, one coherent change, no second
-    branch and no partial commit series. Every commit subject on that branch begins with
+    `git status --porcelain` prints nothing, and `git diff --name-only origin/dev...HEAD` — taken
+    against the branch's real base on the remote, not against a bare `dev` ref — lists only files
+    from the "Files to change" table plus this spec file, where the table explicitly includes
+    `src/app/locale.tsx`, `tests/e2e/analytics-noop.spec.ts` and test files added by the Tester round
+    under `tests/`. One branch, one coherent change, no second branch and no partial commit series.
+    Every commit subject on that branch begins with
     `20260926-conversion-paths-no-cta-may-end-in-a-footer-anch: `.
 25. No role in this run touches the remote or another branch. At the end of the run
     `git ls-remote origin refs/heads/dev` still prints the commit `origin/dev` was at when the run
@@ -286,8 +305,9 @@ from `dist/sitemap.xml` and reusing the `withRecorder` / `callsFor` helpers' app
 `analytics.spec.ts`.
 
 Criteria 24 and 25 are not a test file: they are git read-backs the Tester runs in the worktree and
-pastes (the four commands named in the criteria). No test may attempt a `push` or a PR query to prove
-them.
+pastes (the commands named in the criteria — for criterion 24 `git rev-parse --abbrev-ref HEAD`,
+`git status --porcelain` and `git diff --name-only origin/dev...HEAD`). No test may attempt a `push`
+or a PR query to prove them.
 
 Commands (Git Bash, from the worktree root):
 
@@ -344,8 +364,10 @@ The run does not wait for it.
   (focus ring visible), and at 390 px with the menu open showing the booking link.
 - One screenshot of `/de/kontakt`'s bottom strip showing the booking link and the mail link, no phone.
 - The branch (criterion 24): paste `git rev-parse --abbrev-ref HEAD`, an empty `git status --porcelain`,
-  `git log --oneline dev..HEAD` (every subject prefixed with the task id) and
-  `git diff --name-only dev...HEAD`.
+  `git log --oneline origin/dev..HEAD` (every subject prefixed with the task id) and
+  `git diff --name-only origin/dev...HEAD`. That diff is compared against the "Files to change" table
+  including its gate-1b additions (`src/app/locale.tsx`, `tests/e2e/analytics-noop.spec.ts`, test
+  files added by the Tester round) plus this spec file; nothing else may appear in it.
 - The remote is untouched (criterion 25): paste `git ls-remote origin refs/heads/dev` (still
   `b9e75048…`) and `git ls-remote origin refs/heads/main`. An empty
   `git ls-remote origin refs/heads/fix/conversion-paths-no-cta-may-end-in-a-footer-anch` is the
@@ -453,6 +475,10 @@ around it, and name it in the morning list.
   PR can be open with a visual detail still unconfirmed. That is the intended shape of this run
   (whole, PR against `dev`, no merge, morning list), not a gap — but the morning list must carry the
   click list forward so it is not silently skipped.
+- Criterion 24's file list is now an allow-list with three gate-1b additions, so a *further* file the
+  Implementer or Tester needed and nobody foresaw would still read as a failure. That is deliberate —
+  an unexpected file in the diff is exactly what the criterion is for — but the right response is a
+  line in the morning list naming the file and why, not a silent pass.
 
 ## Out of scope
 
@@ -483,3 +509,7 @@ still a `spec` verdict after the Architect's amend round
   output: **. Two halves, both unchanged by the amendment `fe192650`:
 
 Answer: A - criterion 24 is read as the Tester proposes: the branch's diff against its real base origin/dev (git diff --name-only origin/dev...HEAD), and the file table additionally allows src/app/locale.tsx, tests/e2e/analytics-noop.spec.ts and test files added by the Tester round (all three are forced by criteria 2 and 20). Nothing in the code changes; no new Implementer round needed - continue to review and PR. Night run 2026-09-26/27, front desk night driver on Christian's go: gate 1b follows the Tester's recommended reading.
+
+Folded into the spec: the gate-1b note in "Assumptions", three added rows in "Files to change",
+criterion 24, the criterion-24 bullets in "Test plan" and "Verification and evidence", and one new
+note under "Risks and open questions". Everything else is unchanged; `status: ready`.
