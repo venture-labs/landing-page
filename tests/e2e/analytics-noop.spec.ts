@@ -20,6 +20,9 @@ import { test, expect, type Page } from "@playwright/test";
 
 const OPTION_BUTTONS = '[role="dialog"] button.text-left';
 
+/** The booking page every "book a call" link points at since 2026-09-26. */
+const BOOKING_URL = "https://calendar.app.google/SsabAjwxnbUjhoGo8";
+
 /**
  * The one console error this app already produces on `dev`, unrelated to
  * analytics: React logs it when the Radix Dialog in PulseCheckModal hands a ref
@@ -82,10 +85,15 @@ test.describe("trackEvent no-ops safely without the Plausible stub", () => {
     await page.locator('input[type="checkbox"]').check();
     await page.getByRole("button", { name: "Absenden" }).click();
 
-    // Footer book-a-call link.
+    // Footer book-a-call link. It opens the booking page in a new tab, so the
+    // request is aborted and the tab is closed again — /de stays open.
     await page.goto("/de");
-    await page.getByRole("link", { name: "Gespräch buchen" }).click();
-    await expect(page).toHaveURL(/\/de\/kontakt$/);
+    await page.context().route("**://calendar.app.google/**", (route) => route.abort());
+    const popupPromise = page.waitForEvent("popup").catch(() => null);
+    await page.locator(`footer a[href="${BOOKING_URL}"]`).click();
+    const popup = await popupPromise;
+    if (popup) await popup.close();
+    await expect(page).toHaveURL(/\/de$/);
 
     // The stub really was absent, so every trackEvent() above hit the
     // `window.plausible?.()` guard — otherwise this proves nothing.

@@ -4,6 +4,8 @@ import { motion } from "motion/react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router";
 import { useLocale } from "@/app/locale";
+import { EVENTS, trackEvent } from "@/app/analytics";
+import { BOOKING_URL } from "@/app/links";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { navigationDE, navigationEN } from "@/data/navigation";
 import svgPaths from "@/imports/🖌Homepage/svg-oa0apfkpzr";
@@ -92,13 +94,16 @@ export function Navbar() {
 
         <div className="hidden lg:flex items-center gap-6">
           <LanguageSwitcher />
-          <Link
-            to={localizedPath("/kontakt")}
+          <a
+            href={BOOKING_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackEvent(EVENTS.callLinkClicked)}
             className="flex items-center gap-2 bg-[#8129ff] hover:bg-[#9140ff] text-white font-semibold px-5 py-2.5 rounded-lg transition-colors"
             style={{ fontSize: "var(--text-btn)" }}
           >
-            {t("nav.contact")}
-          </Link>
+            {t("nav.bookCall")}
+          </a>
         </div>
 
         <button
@@ -126,14 +131,19 @@ export function Navbar() {
           <div className="mt-2">
             <LanguageSwitcher />
           </div>
-          <Link
-            to={localizedPath("/kontakt")}
+          <a
+            href={BOOKING_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="mt-2 inline-flex items-center justify-center bg-[#8129ff] text-white font-semibold px-5 py-3 rounded-lg"
             style={{ fontSize: "var(--text-btn)" }}
-            onClick={() => setOpen(false)}
+            onClick={() => {
+              trackEvent(EVENTS.callLinkClicked);
+              setOpen(false);
+            }}
           >
-            {t("nav.contact")}
-          </Link>
+            {t("nav.bookCall")}
+          </a>
         </motion.div>
       )}
     </header>

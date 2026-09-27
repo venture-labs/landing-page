@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { ArrowRight, Check } from "lucide-react";
-import { useLocale } from "@/app/locale";
 import { EVENTS, trackEvent } from "@/app/analytics";
+import { BOOKING_URL } from "@/app/links";
 import { CtaButton } from "@/app/components/ui/CtaButton";
 
 /**
@@ -308,7 +308,6 @@ type QuizState = { step: "intro" } | { step: "question"; index: number; answers:
 
 export function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
   const [state, setState] = useState<QuizState>({ step: "intro" });
-  const { localizedPath } = useLocale();
 
   const scores = useMemo(() => {
     if (state.step !== "result") return null;
@@ -447,7 +446,12 @@ export function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
           {copy.ctaBody}
         </p>
         <div className="flex flex-wrap items-center gap-4 mt-1">
-          <CtaButton href={localizedPath("/#kontakt")} backgroundColor={accent} showArrow={false}>
+          <CtaButton
+            href={BOOKING_URL}
+            onClick={() => trackEvent(EVENTS.callLinkClicked)}
+            backgroundColor={accent}
+            showArrow={false}
+          >
             {copy.ctaButton}
           </CtaButton>
           <button

@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useTransform } from "motion/react";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { ArrowRight, Play, Pause } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router";
 import { useSiteData } from "@/data/content";
 import { useLocale } from "@/app/locale";
 import { PulseCheckModal } from "@/app/components/PulseCheckModal";
 import { PulseLines } from "@/app/components/ui/PulseLines";
-import heroVideo from "@/assets/venturelabs reel.mp4";
+import heroVideo from "@/assets/venturelabs-reel.mp4";
+import heroPoster from "@/assets/hero-poster.jpg";
 
 function BackgroundBlobs() {
   return (
@@ -57,7 +59,8 @@ export function Hero() {
   const { localizedPath } = useLocale();
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const reduceMotion = useReducedMotion();
+  const [isPlaying, setIsPlaying] = useState(false);
   const [quizOpen, setQuizOpen] = useState(false);
 
   const [maxScale, setMaxScale] = useState(1);
@@ -76,19 +79,50 @@ export function Hero() {
     return () => window.removeEventListener("resize", updateMaxScale);
   }, []);
 
+  // The video is preload="none", so play() is what starts its download. Wait for the poster to
+  // be on screen first, so the first paint costs no video byte. Under prefers-reduced-motion the
+  // video is never fetched at all — the poster stays until the visitor presses the control.
+  useEffect(() => {
+    if (reduceMotion) return;
+
+    let cancelled = false;
+    let frame = 0;
+
+    const start = () => {
+      if (cancelled) return;
+      frame = requestAnimationFrame(() => {
+        videoRef.current?.play().catch(() => setIsPlaying(false));
+      });
+    };
+
+    // Same hashed URL as the <video poster>, so this resolves against that request instead of
+    // adding a second one.
+    const poster = new Image();
+    poster.onload = start;
+    poster.onerror = () => window.addEventListener("load", start, { once: true });
+    poster.src = heroPoster;
+
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(frame);
+      window.removeEventListener("load", start);
+    };
+  }, [reduceMotion]);
+
   const { scrollY } = useScroll();
   const scale = useTransform(scrollY, [0, 600], [1, maxScale], {
     clamp: true,
   });
 
   const togglePlay = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
+    const video = videoRef.current;
+    if (!video) return;
+    // The element's own play/pause events drive isPlaying, so the icon can never disagree
+    // with reality; a rejected play promise just leaves the control on "play".
+    if (video.paused) {
+      video.play().catch(() => setIsPlaying(false));
+    } else {
+      video.pause();
     }
   };
 
@@ -136,13 +170,13 @@ export function Hero() {
               {siteData.heroCta}
               <ArrowRight size={16} />
             </button>
-            <a
-              href={localizedPath("/#kontakt")}
+            <Link
+              to={localizedPath("/kontakt")}
               className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/12 text-white font-medium px-6 py-3.5 rounded-lg transition-all"
               style={{ fontSize: "var(--text-body)" }}
             >
               {siteData.heroCtaSecondary}
-            </a>
+            </Link>
           </div>
         </motion.div>
 
@@ -158,18 +192,22 @@ export function Hero() {
           <video
             ref={videoRef}
             src={heroVideo}
+            poster={heroPoster}
             className="w-full object-cover"
             style={{ minHeight: "480px", maxHeight: "640px" }}
-            autoPlay
             muted
             loop
             playsInline
-            preload="metadata"
+            preload="none"
+            onPlay={() => setIsPlaying(true)}
+            onPause={() => setIsPlaying(false)}
           />
           <button
             aria-label={isPlaying ? t("hero.videoPause") : t("hero.videoPlay")}
             onClick={togglePlay}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex md:hidden items-center justify-center w-20 h-20 rounded-full bg-white/50 hover:bg-white/70 transition-colors backdrop-blur-sm"
+            className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center w-20 h-20 rounded-full bg-white/50 hover:bg-white/70 transition-colors backdrop-blur-sm ${
+              isPlaying ? "md:hidden" : ""
+            }`}
           >
             {isPlaying ? (
               <Pause size={28} fill="white" className="ml-0 text-white" />

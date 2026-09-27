@@ -10,6 +10,8 @@ import { PulseCheckModal } from "@/app/components/PulseCheckModal";
 import { PulseLines, type PulseLinesProps } from "@/app/components/ui/PulseLines";
 import { useServicesData, useServiceDetail } from "@/data/content";
 import { useLocale } from "@/app/locale";
+import { EVENTS, trackEvent } from "@/app/analytics";
+import { BOOKING_URL } from "@/app/links";
 
 
 /* ─── helpers ────────────────────────────────────────────────────────── */
@@ -83,7 +85,7 @@ function DetailHero({ detail, accent, title }: { detail: any; accent: string; ti
             {detail.heroSubline}
           </p>
           <CtaButton
-            href={localizedPath("/#kontakt")}
+            href={localizedPath("/kontakt")}
             backgroundColor={accent}
           >
             {t("leistungen.requestNow")}
@@ -268,7 +270,7 @@ function CaseSection({ detail, accent }: { detail: any; accent: string }) {
               {detail.caseDescription}
             </p>
             <Link
-              to={localizedPath("/#projekte")}
+              to={localizedPath(`/cases/${detail.caseSlug}`)}
               className="self-start inline-flex items-center gap-2 text-white/70 hover:text-white font-light transition-colors"
               style={{ fontSize: "var(--text-body)" }}
             >
@@ -288,7 +290,6 @@ function CtaBanner({ detail, accent }: { detail: any; accent: string }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const { t } = useTranslation();
-  const { localizedPath } = useLocale();
   const [quizOpen, setQuizOpen] = useState(false);
 
   return (
@@ -321,7 +322,8 @@ function CtaBanner({ detail, accent }: { detail: any; accent: string }) {
             {t("leistungen.pulseCta")}
           </CtaButton>
           <CtaButton
-            href={localizedPath("/#kontakt")}
+            href={BOOKING_URL}
+            onClick={() => trackEvent(EVENTS.callLinkClicked)}
             backgroundColor="rgba(255,255,255,0.1)"
             fontSize="var(--text-body)"
           >
@@ -431,11 +433,14 @@ function ContactStrip() {
         </p>
         <div className="flex flex-col gap-3">
           <a
-            href="tel:+491487418f6"
+            href={BOOKING_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackEvent(EVENTS.callLinkClicked)}
             className="font-semibold text-[#8129ff] hover:text-[#a318f8] transition-colors"
             style={{ fontSize: "clamp(1.2rem, 2vw, 1.75rem)" }}
           >
-            +49 148 74 18 f6
+            {t("nav.bookCall")}
           </a>
           <a
             href="mailto:contact@venturelabs.team"

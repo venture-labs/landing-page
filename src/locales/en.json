@@ -1,6 +1,7 @@
 {
   "nav": {
     "contact": "Get in touch",
+    "bookCall": "Book a call",
     "menuOpen": "Open menu",
     "menuClose": "Close menu"
   },
@@ -187,6 +188,6 @@
     "privacyLinkLabel": "privacy policy",
     "submit": "Send",
     "submitHint": "Opens your email app with a pre-filled message to us.",
-    "ctaQuestion": "Want a free initial consultation? We're happy to help. Just call or write to us – we'll get back to you."
+    "ctaQuestion": "Want a free initial consultation? We're happy to help. Book a call directly or write to us – we'll get back to you."
   }
 }
