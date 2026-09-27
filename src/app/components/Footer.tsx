@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
 import { useLocale } from "@/app/locale";
 import { EVENTS, trackEvent } from "@/app/analytics";
+import { BOOKING_URL } from "@/app/links";
 import svgPaths from "@/imports/🖌Homepage/svg-oa0apfkpzr";
 
 interface FooterLink {
@@ -73,7 +74,7 @@ export function Footer() {
     {
       title: t("footer.contactTitle"),
       links: [
-        { label: t("footer.bookCall"), href: localizedPath("/kontakt"), track: EVENTS.callLinkClicked },
+        { label: t("footer.bookCall"), href: BOOKING_URL, track: EVENTS.callLinkClicked },
         { label: "contact@venturelabs.team", href: "mailto:contact@venturelabs.team" },
       ],
     },
@@ -116,6 +117,10 @@ export function Footer() {
                     ) : (
                       <a
                         href={link.href}
+                        onClick={link.track ? () => trackEvent(link.track!) : undefined}
+                        {...(link.href.startsWith("http")
+                          ? { target: "_blank", rel: "noopener noreferrer" }
+                          : {})}
                         className="text-white/40 hover:text-white/80 transition-colors font-light"
                         style={{ fontSize: "var(--text-small)" }}
                       >

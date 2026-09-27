@@ -1,6 +1,7 @@
 {
   "nav": {
     "contact": "Kontakt aufnehmen",
+    "bookCall": "Gespräch buchen",
     "menuOpen": "Menü öffnen",
     "menuClose": "Menü schließen"
   },
@@ -187,6 +188,6 @@
     "privacyLinkLabel": "Datenschutzbestimmungen",
     "submit": "Absenden",
     "submitHint": "Öffnet dein E-Mail-Programm mit einer vorausgefüllten Nachricht an uns.",
-    "ctaQuestion": "Du möchtest eine kostenlose Erstberatung? Wir helfen dir gerne weiter. Ruf einfach an oder schreib uns, wir melden uns bei dir."
+    "ctaQuestion": "Du möchtest eine kostenlose Erstberatung? Wir helfen dir gerne weiter. Buch dir direkt ein Gespräch oder schreib uns, wir melden uns bei dir."
   }
 }

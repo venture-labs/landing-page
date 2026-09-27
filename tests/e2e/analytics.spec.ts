@@ -9,7 +9,10 @@
  * `window.plausible = g`), so the request is aborted: the assertions then test
  * our own call sites only, and nothing leaves the machine.
  */
-import { test, expect, type Page } from "@playwright/test";
+import { test, expect, type Locator, type Page } from "@playwright/test";
+
+/** The booking page every "book a call" link points at since 2026-09-26. */
+const BOOKING_URL = "https://calendar.app.google/SsabAjwxnbUjhoGo8";
 
 declare global {
   interface Window {
@@ -20,7 +23,20 @@ declare global {
 /** Option buttons inside the quiz dialog (excludes the Radix close button). */
 const OPTION_BUTTONS = '[role="dialog"] button.text-left';
 
+/**
+ * Clicks a booking link. It carries target="_blank", so the click opens a new
+ * tab; the request to the booking page is aborted and the tab is closed again,
+ * leaving the assertions on the page the click came from.
+ */
+async function clickBookingLink(page: Page, link: Locator): Promise<void> {
+  const popupPromise = page.waitForEvent("popup").catch(() => null);
+  await link.click();
+  const popup = await popupPromise;
+  if (popup) await popup.close();
+}
+
 async function withRecorder(page: Page): Promise<void> {
+  await page.context().route("**://calendar.app.google/**", (route) => route.abort());
   await page.route("**://plausible.io/**", (route) => route.abort());
   await page.addInitScript(() => {
     window.__plausibleCalls = [];
@@ -98,9 +114,13 @@ test.describe("Plausible funnel events", () => {
 
   test('the footer book-a-call link fires "Call Link Clicked" once', async ({ page }) => {
     await page.goto("/de");
-    await page.getByRole("link", { name: "Gespräch buchen" }).click();
+    const footerLink = page.locator(`footer a[href="${BOOKING_URL}"]`);
+    await expect(footerLink).toHaveCount(1);
 
-    await expect(page).toHaveURL(/\/de\/kontakt$/);
+    await clickBookingLink(page, footerLink);
+
+    // The booking page opens in a new tab, so venturelabs.team stays open.
+    await expect(page).toHaveURL(/\/de$/);
     expect(await callsFor(page, "Call Link Clicked")).toBe(1);
   });
 
@@ -115,7 +135,7 @@ test.describe("Plausible funnel events", () => {
     await page.getByRole("button", { name: "Absenden" }).click();
 
     await page.goto("/de");
-    await page.getByRole("link", { name: "Gespräch buchen" }).click();
+    await clickBookingLink(page, page.locator(`footer a[href="${BOOKING_URL}"]`));
 
     expect(await context.cookies()).toEqual([]);
   });

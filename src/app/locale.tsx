@@ -10,7 +10,7 @@ function isLocale(value: string | undefined): value is Locale {
   return value === "de" || value === "en";
 }
 
-/** Turns a content-authored path ("/leistungen", "/#kontakt", "/") into a locale-prefixed route. */
+/** Turns a content-authored path ("/leistungen", "/#ablauf", "/") into a locale-prefixed route. */
 export function localizedPath(path: string, lang: Locale): string {
   if (path.startsWith("/#")) return `/${lang}${path.slice(1)}`;
   if (path === "/") return `/${lang}`;
