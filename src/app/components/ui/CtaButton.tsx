@@ -22,7 +22,7 @@ export function CtaButton({
   fontSize = 'var(--text-btn)'
 }: CtaButtonProps) {
   const hoverClasses = backgroundColor === 'white' ? 'hover:bg-white/90' : '';
-  const className = `self-start inline-flex items-center justify-center gap-2 font-['sofia-pro',sans-serif] font-semibold px-[24px] py-[11px] rounded-lg transition-all hover:scale-[1.02] ${textColor} ${hoverClasses}`;
+  const className = `self-start inline-flex items-center justify-center gap-2 font-semibold px-[24px] py-[11px] rounded-lg transition-all hover:scale-[1.02] ${textColor} ${hoverClasses}`;
   const style = {
     fontSize,
     ...(backgroundColor && { backgroundColor })

@@ -52,8 +52,8 @@ export function BlogDetail() {
     return (
       <div className="min-h-screen bg-[#0e0d13] text-white flex items-center justify-center">
         <div className="text-center">
-          <p className="text-white/50 font-['sofia-pro',sans-serif] mb-4">{t("blog.notFound")}</p>
-          <Link to={localizedPath("/blog")} className="text-[#8129ff] hover:underline font-['sofia-pro',sans-serif]">
+          <p className="text-white/50 mb-4">{t("blog.notFound")}</p>
+          <Link to={localizedPath("/blog")} className="text-[#8129ff] hover:underline">
             {t("blog.backToOverview")}
           </Link>
         </div>
@@ -95,7 +95,7 @@ export function BlogDetail() {
           </Link>
 
           <h1
-            className="font-['sofia-pro',sans-serif] font-semibold text-white leading-[110%] mb-12 max-w-4xl"
+            className="font-semibold text-white leading-[110%] mb-12 max-w-4xl"
             style={{ fontSize: "var(--text-hero)" }}
           >
             {post.title}
@@ -105,14 +105,14 @@ export function BlogDetail() {
             {/* ─── sidebar ─────────────────────────────────────────── */}
             <aside className="lg:sticky lg:top-32 lg:self-start flex flex-col gap-8">
               <span
-                className="font-['sofia-pro',sans-serif] font-semibold px-3 py-1 rounded-full w-fit"
+                className="font-semibold px-3 py-1 rounded-full w-fit"
                 style={{ fontSize: "var(--text-small)", color: accent, backgroundColor: `${accent}1a` }}
               >
                 {post.topic}
               </span>
 
               <p
-                className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed"
+                className="text-white/60 font-light leading-relaxed"
                 style={{ fontSize: "var(--text-small)" }}
               >
                 {post.excerpt}
@@ -120,26 +120,26 @@ export function BlogDetail() {
 
               <div className="flex flex-col gap-4 border-t border-white/10 pt-6">
                 <div>
-                  <p className="text-white/40 font-['sofia-pro',sans-serif] font-light text-xs uppercase tracking-wide mb-1">
+                  <p className="text-white/40 font-light text-xs uppercase tracking-wide mb-1">
                     {t("blog.publishedLabel")}
                   </p>
-                  <p className="text-white/80 font-['sofia-pro',sans-serif]" style={{ fontSize: "var(--text-small)" }}>
+                  <p className="text-white/80" style={{ fontSize: "var(--text-small)" }}>
                     {post.publishedDate}
                   </p>
                 </div>
                 <div>
-                  <p className="text-white/40 font-['sofia-pro',sans-serif] font-light text-xs uppercase tracking-wide mb-1">
+                  <p className="text-white/40 font-light text-xs uppercase tracking-wide mb-1">
                     {t("blog.byLabel")}
                   </p>
-                  <p className="text-white/80 font-['sofia-pro',sans-serif]" style={{ fontSize: "var(--text-small)" }}>
+                  <p className="text-white/80" style={{ fontSize: "var(--text-small)" }}>
                     {post.author}
                   </p>
                 </div>
                 <div>
-                  <p className="text-white/40 font-['sofia-pro',sans-serif] font-light text-xs uppercase tracking-wide mb-1">
+                  <p className="text-white/40 font-light text-xs uppercase tracking-wide mb-1">
                     {t("blog.readTimeLabel")}
                   </p>
-                  <p className="text-white/80 font-['sofia-pro',sans-serif]" style={{ fontSize: "var(--text-small)" }}>
+                  <p className="text-white/80" style={{ fontSize: "var(--text-small)" }}>
                     {post.readTime}
                   </p>
                 </div>
@@ -147,7 +147,7 @@ export function BlogDetail() {
 
               {headings.length > 0 && (
                 <div className="flex flex-col gap-3 border-t border-white/10 pt-6">
-                  <p className="text-white/40 font-['sofia-pro',sans-serif] font-light text-xs uppercase tracking-wide mb-1">
+                  <p className="text-white/40 font-light text-xs uppercase tracking-wide mb-1">
                     {t("blog.tableOfContents")}
                   </p>
                   <nav className="flex flex-col gap-2">
@@ -155,7 +155,7 @@ export function BlogDetail() {
                       <a
                         key={h.id}
                         href={`#${h.id}`}
-                        className="text-white/60 hover:text-white transition-colors font-['sofia-pro',sans-serif] font-light leading-snug"
+                        className="text-white/60 hover:text-white transition-colors font-light leading-snug"
                         style={{ fontSize: "var(--text-small)" }}
                       >
                         {h.text}
@@ -186,7 +186,7 @@ export function BlogDetail() {
                     <h2
                       key={i}
                       id={slugify(block.text)}
-                      className="font-['sofia-pro',sans-serif] font-semibold text-white leading-tight mt-4 scroll-mt-32"
+                      className="font-semibold text-white leading-tight mt-4 scroll-mt-32"
                       style={{ fontSize: "var(--text-h2)" }}
                     >
                       {block.text}
@@ -194,7 +194,7 @@ export function BlogDetail() {
                   ) : (
                     <p
                       key={i}
-                      className="text-white/70 font-['sofia-pro',sans-serif] font-light leading-relaxed"
+                      className="text-white/70 font-light leading-relaxed"
                       style={{ fontSize: "var(--text-body)" }}
                     >
                       {block.text}
@@ -205,14 +205,14 @@ export function BlogDetail() {
 
               <div className="flex flex-col gap-4 border-t border-white/10 pt-8 mt-4 max-w-3xl">
                 <p
-                  className="text-white/60 font-['sofia-pro',sans-serif] font-light"
+                  className="text-white/60 font-light"
                   style={{ fontSize: "var(--text-body)" }}
                 >
                   {t("blog.ctaText")}
                 </p>
                 <Link
                   to={localizedPath("/kontakt")}
-                  className="inline-flex items-center gap-2 w-fit font-['sofia-pro',sans-serif] font-semibold px-5 py-3 rounded-full transition-colors"
+                  className="inline-flex items-center gap-2 w-fit font-semibold px-5 py-3 rounded-full transition-colors"
                   style={{ backgroundColor: accent, color: "#0e0d13" }}
                 >
                   {t("blog.ctaButton")} <ArrowRight size={16} />
