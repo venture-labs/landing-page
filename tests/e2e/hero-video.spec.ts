@@ -9,10 +9,11 @@
  * requested before the poster is on screen, that playback then starts by itself, and that a
  * prefers-reduced-motion visitor never downloads the clip — only exists in a running browser.
  *
- * Criterion 13 (cold load under 4 MB in total) is deliberately NOT asserted here: the page still
- * transfers 8,623,233 B at 390 px, 6,865,921 B of it the seven case-card PNGs in public/uploads/,
- * whose trimming the same spec puts out of scope. That criterion is open for Christian, and a red
- * test asserting it would only hide the rest of this file.
+ * Criterion 13 is not asserted here. The spec's amendment of 2026-09-27 rewrote it to the video's
+ * own transfer (exactly one .mp4 request, at most 3 MiB) plus a reported page total, and that form
+ * is measured by tests/e2e/hero-video-cold-load.mjs, which runs with nothing but Chrome and node.
+ * The page still transfers ~8.62 MB at 390 px, 6,865,921 B of it the seven case-card PNGs in
+ * public/uploads/, whose trimming the same spec puts out of scope as a named follow-up.
  */
 import { test, expect, type Page } from "@playwright/test";
 
