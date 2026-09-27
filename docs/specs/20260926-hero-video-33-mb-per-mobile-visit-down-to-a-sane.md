@@ -36,6 +36,21 @@ respecting `prefers-reduced-motion`. The long-lived immutable cache header is pr
 
 Correct me at gate 1, otherwise I proceed with these.
 
+## Gate 1 outcome (approved 2026-09-26)
+Approved by Christian Wenzel with a `white_check_mark` reaction on the gate-1 post (ts
+`1790395564.787189`, `#dev-agent`) — a structured signal on that specific post, applied by the
+front desk 2026-09-26 19:05 because the Dev Manager did not pick the reaction up. No assumption
+above was corrected; all stand as written. Two execution instructions come with the approval:
+
+- **Whole, not split.** The task runs as one change, exactly as specified here — no slicing, and no
+  narrowing of the goal or of the acceptance criteria.
+- **Night run 2026-09-26/27: PR against dev, no merge, morning list.** The run happens overnight,
+  unattended. It ends with the feature branch pushed and a pull request open against `dev`,
+  explicitly **not** merged, plus a short morning list for Christian: the measured numbers, what is
+  still unproven (criterion 15), and the one human `netlify.toml` step. Merging is gate 3 — a human
+  on GitHub, in the morning. Because nobody is awake to answer, every stop condition below ends the
+  run and goes onto the morning list instead of guessing.
+
 ## Context found
 - `src/app/components/Hero.tsx` (lines 54-186): imports `heroVideo from "@/assets/venturelabs reel.mp4"`, renders `<video autoPlay muted loop playsInline preload="metadata">` with no `poster`; `isPlaying` is initialised to `true` and only ever changed by `togglePlay()`, so the icon can already disagree with reality; the play/pause button is `flex md:hidden`.
 - `src/assets/venturelabs reel.mp4`: the 37.4 MB asset; the only `.mp4` in the repo.
@@ -82,6 +97,12 @@ paused, so a reduced-motion or paused desktop visitor has a way to start the vid
 path). The exact block a human pastes is in "Verification and evidence"; no role attempts it and
 no role routes around it via `public/_headers`.
 
+**5. Landing (night run).** The whole change is committed on
+`fix/hero-video-33-mb-per-mobile-visit-down-to-a-sane` — one commit, or a small series, in the
+task's commit format — then pushed to `origin` with an explicit refspec and opened as a pull
+request against `dev` carrying the evidence from "Verification and evidence" in its body. The PR
+stays open and unmerged; the run's last act is the morning list.
+
 ## Files to change
 | File | Change | Why |
 |---|---|---|
@@ -107,6 +128,10 @@ no role routes around it via `public/_headers`.
 14. `pnpm build` completes and `dist/assets/` contains exactly one content-hashed `.mp4` of the same ≤ 3 MB size, plus the hashed poster.
 15. After the `netlify.toml` block below has been applied by a human, the deployed video URL responds with `Cache-Control: public, max-age=31536000, immutable`, and a repeat visit to `/de/` serves the video from cache rather than re-transferring it. Until the header is applied, this criterion is reported as "pending human paste" and is not counted as failed.
 16. No role has modified `netlify.toml`, `public/_headers`, or any file under `src/data/{de,en}/`.
+17. Every change of this task sits on `fix/hero-video-33-mb-per-mobile-visit-down-to-a-sane`, in commits whose subject starts `20260926-hero-video-33-mb-per-mobile-visit-down-to-a-sane:` and whose body ends with the `Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>` line.
+18. That branch is pushed to `origin` and exactly one pull request against base `dev` exists for it, whose body carries the evidence listed under "Verification and evidence".
+19. When the run ends, the pull request is **open and unmerged**, and `origin/dev` and `origin/main` carry no commit from this task (`git log origin/dev --oneline -5` shows no task commit; nothing was merged, rebased or force-pushed).
+20. The run ends with a morning list for Christian that states, in one short block: the measured video size, the measured cold-load total, the PR link, which criteria are proven, criterion 15 as "pending human paste", and the `netlify.toml` block as the one human step.
 
 ## Test plan
 There is no test suite in this repo. Verification is mechanical commands plus a measured preview,
@@ -117,6 +142,8 @@ each reported explicitly:
 - `git grep -n "venturelabs reel"` — criterion 4 (expect no output).
 - A DOM read-back on the running preview for the `<video>` attributes — criterion 6.
 - `pnpm dev` (http://localhost:5173) with Chrome DevTools: device 390 × 844, Network tab with "Disable cache", reload `/de/` — request order (criteria 7, 8), total transferred (criterion 13). Repeat with Rendering → "Emulate CSS prefers-reduced-motion: reduce" (criteria 9, 10).
+- `git log --format='%s%n%b' origin/dev..HEAD` and `git status --short` — criterion 17 (commit format, nothing uncommitted).
+- `gh pr view --json url,baseRefName,state,mergedAt` plus `git log origin/dev --oneline -5` — criteria 18, 19 (base `dev`, state OPEN, `mergedAt` null, no task commit on `dev`).
 - The Tester states the measured total transferred bytes and the measured video file size as numbers, not as "looks fine".
 
 ## What to click
@@ -127,7 +154,8 @@ each reported explicitly:
 5. Scroll down from the hero: the video still scales up with the scroll exactly as before.
 
 ## Verification and evidence
-The close-out must show, as literal output or numbers:
+The close-out — which for this night run *is* the morning list — must show, as literal output or
+numbers:
 
 - `pnpm build` exit code 0 and the emitted asset line for the `.mp4`.
 - The byte size of `src/assets/venturelabs-reel.mp4` and of `src/assets/hero-poster.jpg`.
@@ -135,7 +163,9 @@ The close-out must show, as literal output or numbers:
 - The empty result of `git grep -n "venturelabs reel"`.
 - A screenshot of the DevTools Network panel for a cold `/de/` load at 390 × 844 showing the **total transferred** figure (< 4 MB) and the video request appearing *after* the poster.
 - A screenshot of the hero with reduced motion emulated, showing the poster plus a visible play control.
+- The pull request URL, its base branch (`dev`), its state (`OPEN`, `mergedAt: null`), and the `git log origin/dev --oneline -5` output showing no task commit on `dev` — the proof that the night run pushed and opened, but did not merge.
 - The `netlify.toml` block below, quoted verbatim in the report as the one remaining human step.
+- A morning list of at most ten lines: the two measured numbers, the PR link, "criterion 15: pending human paste", the `netlify.toml` step, and anything that stopped (with the criterion it leaves unproven). No conclusion is claimed that the outputs above do not show.
 
 Commands for the Implementer / Tester (worktree paths, run from the worktree root):
 
@@ -177,12 +207,14 @@ from this session). After the deploy, criterion 15 is checked with:
 
 ## Will not do
 - Edit `netlify.toml`, or route around the guard with `public/_headers`, `_redirects` or a build-time header injection.
-- Push, merge, rebase, or touch `main`, `dev`, or any other branch than `fix/hero-video-33-mb-per-mobile-visit-down-to-a-sane`.
+- Merge the pull request, merge anything into `dev` or `main`, rebase, force-push, or commit to any branch other than `fix/hero-video-33-mb-per-mobile-visit-down-to-a-sane`. Pushing that feature branch and opening the PR against `dev` is explicitly part of this night run (gate 1 note, 2026-09-26); merging it is gate 3, a human on GitHub.
 - Trigger a Netlify deploy, change a Netlify site setting, or touch the `pulse-landing-page` repo.
 - Re-cut, trim, re-order or re-colour the clip; change what the hero says or which sections the start page has.
 - Add a dependency (no video player library, no lazy-load library), change the Vite plugins, or touch `src/data/{de,en}/`.
 - Rewrite git history to drop the old 37 MB blob.
 - Edit any component other than `Hero.tsx`.
+- Split the task into slices, or defer any acceptance criterion to a follow-up task — gate 1 said whole, not split.
+- Wake anybody during the night run, or wait for an answer: a stop condition below ends the run and goes on the morning list instead.
 
 ## Stop conditions
 - `ffmpeg`/`ffprobe` is not available on the machine → stop and report; do not commit an uncompressed or hand-shrunk file, and do not upload the clip to an online converter.
@@ -191,6 +223,8 @@ from this session). After the deploy, criterion 15 is checked with:
 - The cold-load measurement at 390 px is still ≥ 4 MB after the video is under 3 MB → stop and report the remaining top-five requests by size; trimming other assets is a separate task.
 - `pnpm build` or `pnpm install` fails for a reason unrelated to this change → report it, do not "fix" unrelated files.
 - Any step appears to require writing `netlify.toml` → stop, that file is a guard boundary, not an obstacle.
+- The push or the PR creation fails (auth, protected branch, missing `origin/dev`) → stop with the commits left local on the feature branch, and say so on the morning list; never merge locally, never push to `dev` or `main` instead, never open the PR against another base.
+- A criterion is still unproven when the night run ends → the morning list names it as unproven; nothing is merged and nothing is reported as done to make the list look clean.
 
 ## Risks and open questions
 - `netlify.toml` cannot be read by any role in this task, so whether it already carries a conflicting `Cache-Control` rule is **unverified**. If it does, the paste instruction above ("edit that rule instead") is what protects criterion 15.
@@ -199,6 +233,7 @@ from this session). After the deploy, criterion 15 is checked with:
 - Re-encoding an already-compressed 37.4 MB H.264 file is lossy-on-lossy; the dark gradient-heavy footage is the kind that bands first. The frame-grab evidence exists so this is judged, not assumed.
 - The 37 MB blob stays in git history, so a fresh clone stays large. Out of scope here (history rewrite is a repo-wide decision).
 - After the fix a mobile visitor still downloads ~3 MB shortly after first paint. That is inside the stated 4 MB budget and deliberate; a "tap to play" hero that never autoloads would be a design decision, not a bug fix.
+- The night run's judgement calls on encode quality (artefacts, banding) happen with nobody awake to look at the frame grab. The stop conditions resolve that by stopping rather than shipping; the cost is a possible morning list that says "encode needs your eyes" instead of a finished PR.
 
 ## Out of scope
 - A second `<source>` in WebM/AV1, or separate mobile and desktop encodes.
