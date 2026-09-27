@@ -29,13 +29,18 @@ set is bit-for-bit the same as today. The lockfile is touched only if pnpm itsel
   1574-1593, 2945-2960, 3797-3806, 4130-4132, 4590-4593) and its `settings:` block records
   `autoInstallPeers`/`excludeLinksFromLockfile` and `overrides:` but *not*
   `supportedArchitectures`. The setting filters what is extracted into `node_modules`, not what is
-  resolved. Unverified against a real run — the Tester's `--frozen-lockfile` run is the proof.
-- `current` is a value pnpm accepts for `os`, `cpu` and `libc` (pnpm docs); the exact minimum pnpm
-  version is unverified, and the locally installed pnpm plus Netlify's pnpm accepting it is proven
-  by the runs in "Verification and evidence", not asserted here.
+  resolved. **Confirmed by the run (2026-09-27, decision 6-S1-Q1)**: the flag-free
+  `pnpm install --frozen-lockfile` did not print `ERR_PNPM_OUTDATED_LOCKFILE`, so `pnpm-lock.yaml`
+  stays untouched.
+- `current` is a value pnpm accepts for `os`, `cpu` and `libc` (pnpm docs). **Confirmed by the run
+  (2026-09-27)**: pnpm 10.30.3 accepted `current` for all three keys on Windows without a
+  complaint. The exact minimum pnpm version remains unverified, and Netlify's pnpm accepting it is
+  proven by the Netlify run in "Verification and evidence", not asserted here.
 - Adding `current` to `libc` is harmless on Windows and macOS even though those platforms have no
   libc: pnpm only applies the libc filter to packages that declare a `libc` field, and the Windows
-  and macOS binaries declare none. Unverified; if the install disagrees, see "Stop conditions".
+  and macOS binaries declare none. **Confirmed for Windows with pnpm 10.30.3 (2026-09-27)**; still
+  unverified for macOS and for the glibc side on Netlify — if an install there disagrees, see
+  "Stop conditions".
 - The Tester/Implementer **may run `pnpm install --frozen-lockfile` once in this worktree**, even
   though the task note says not to install: the worktree has its own real `node_modules`
   (`installMode install`, not a junction link), and that exact command is the acceptance criterion
@@ -45,11 +50,12 @@ set is bit-for-bit the same as today. The lockfile is touched only if pnpm itsel
   Windows binaries are present right now; the meaningful check is that they are still present after
   a flag-free `--frozen-lockfile` install, which prunes anything outside the supported set.
 - "No other file changed" means: on this branch, the only changed tracked file is
-  `pnpm-workspace.yaml` (plus this spec file under `docs/specs/`, and `pnpm-lock.yaml` only in the
-  case described under "Stop conditions"). No source, content, script, `.npmrc` or `package.json`
-  edit is part of this task.
+  `pnpm-workspace.yaml` (plus this spec file under `docs/specs/`). `pnpm-lock.yaml` is **not**
+  changed — the lockfile exception under "Stop conditions" did not fire (decision 6-S1-Q1). No
+  source, content, script, `.npmrc` or `package.json` edit is part of this task.
 - The Netlify preview is checked by a human after the PR is opened; no agent pushes or merges, so
-  the preview-green criterion is a gate-3 close-out item, not something the Tester can produce.
+  the preview-green criterion (and with it the remaining glibc check) is a gate-3 close-out item,
+  not something the Tester can produce.
 Correct me at gate 1, otherwise I proceed with these.
 
 ## Context found
@@ -107,7 +113,7 @@ documented `pnpm install` (repo `CLAUDE.md`) that does not work, and every new c
 | File | Change | Why |
 |---|---|---|
 | `pnpm-workspace.yaml` | Append `- current` to `supportedArchitectures.os`, `.cpu` and `.libc` | The single place the platform filter is defined; makes a flag-free frozen-lockfile install fetch the host platform's binaries |
-| `pnpm-lock.yaml` | No change expected; only if pnpm refuses `--frozen-lockfile` after the edit (see "Stop conditions") | The goal allows a lockfile update "only if pnpm requires it" |
+| `pnpm-lock.yaml` | **No change.** Confirmed 2026-09-27 (decision 6-S1-Q1): no stop condition fired, pnpm accepted `--frozen-lockfile` after the edit, so the lockfile stays untouched | The goal allows a lockfile update "only if pnpm requires it" — pnpm did not require it |
 
 ## Acceptance criteria
 1. `pnpm-workspace.yaml` → `supportedArchitectures.os` contains exactly `linux`, `darwin`, `current`.
@@ -117,16 +123,15 @@ documented `pnpm install` (repo `CLAUDE.md`) that does not work, and every new c
    `darwin`, `x64`, `arm64`, `glibc`) is removed, renamed or reordered, and `packages`, `overrides`
    and `allowBuilds` are byte-identical to `dev`.
 5. `pnpm install --frozen-lockfile` (no `--os`, no `--cpu`, no other flag) run in the task worktree
-   exits 0.
+   exits 0 and does not print `ERR_PNPM_OUTDATED_LOCKFILE`.
 6. After that install, on this Windows host, `node_modules/@rollup/rollup-win32-x64-msvc` and
    `node_modules/@esbuild/win32-x64` both exist as directories containing their native binary.
 7. `pnpm build` exits 0 after that install and writes `dist/index.html` plus one HTML shell per
    prerendered route.
 8. `pnpm check:analytics` exits 0 after that build and prints no `FAIL` line.
 9. `git status --porcelain` on the branch lists no modified tracked file other than
-   `pnpm-workspace.yaml` (plus the new `docs/specs/<task-id>.md`, and `pnpm-lock.yaml` only under
-   the "Stop conditions" exception, which must then be reported in the close-out).
-10. `.npmrc` and `package.json` are byte-identical to `dev`.
+   `pnpm-workspace.yaml` (plus the new `docs/specs/<task-id>.md`).
+10. `.npmrc`, `package.json` and `pnpm-lock.yaml` are byte-identical to `dev`.
 11. The Netlify build of this branch (branch deploy / deploy preview, site `vl-home`) finishes
     green and its build log shows the pnpm install step succeeding without architecture flags.
 12. The deployed preview serves the German start page at `/de` and the English one at `/en` with no
@@ -152,7 +157,8 @@ directories; 11-12 by a human on the Netlify preview after the PR is opened ("Wh
 
 ## What to click
 1. Netlify → site `vl-home` → the deploy for branch `fix/pnpm-supportedarchitectures-include-the-current-`:
-   state is "Published"/green, and the install step in the log shows no `--os`/`--cpu` flag.
+   state is "Published"/green, and the install step in the log shows no `--os`/`--cpu` flag and no
+   libc/glibc complaint.
 2. Open the preview URL `/de`: the start page renders fully (hero, sections, footer) — not a blank
    page or an error overlay.
 3. Open the preview URL `/en`: the English start page renders, confirming the prerender step ran
@@ -164,10 +170,11 @@ directories; 11-12 by a human on the Netlify preview after the PR is opened ("Wh
   `pnpm-workspace.yaml` (10 lines) verbatim.
 - Criterion 4 + 9 + 10: the close-out pastes the full output of `git diff --stat dev` and of
   `git status --porcelain`. Expected: one modified file (`pnpm-workspace.yaml`, +3 lines, -0) plus
-  the new spec file.
-- Criterion 5: the close-out states the exit code of `pnpm install --frozen-lockfile` and the exact
-  command line used, so it is visible that no architecture flag was passed. If pnpm printed
-  `ERR_PNPM_OUTDATED_LOCKFILE`, that is a stop condition, not a step to work around.
+  the new spec file, and no `pnpm-lock.yaml` line.
+- Criterion 5: the close-out states the exit code of `pnpm install --frozen-lockfile`, the pnpm
+  version used, and the exact command line, so it is visible that no architecture flag was passed.
+  Recorded on 2026-09-27: pnpm 10.30.3 accepted `current` for `os`, `cpu` and `libc` on Windows and
+  printed no `ERR_PNPM_OUTDATED_LOCKFILE` — i.e. neither lockfile-related stop condition fired.
 - Criterion 6: the close-out shows the read-back of the two directories, e.g. the output of
   `Get-ChildItem node_modules/@rollup/rollup-win32-x64-msvc, node_modules/@esbuild/win32-x64`
   (PowerShell), naming the `.node`/`.exe` binary found in each.
@@ -177,7 +184,8 @@ directories; 11-12 by a human on the Netlify preview after the PR is opened ("Wh
   unfixed state failing to keep the win32 binaries, i.e. the before/after that shows the fix is the
   cause. Only run this in a scratch copy, never by reverting the worktree mid-verification.
 - Criteria 11-12: after the PR is opened by a human, the close-out carries the Netlify deploy URL
-  and deploy state, and one screenshot of the preview `/de` start page.
+  and deploy state, and one screenshot of the preview `/de` start page. This Netlify run is also
+  the remaining glibc check (decision 6-S1-Q1) and belongs to gate 3.
 - Reviewer: confirms the change is additive-only and that nothing in `package.json`, `.npmrc` or
   `pnpm-lock.yaml` moved.
 
@@ -185,8 +193,8 @@ directories; 11-12 by a human on the Netlify preview after the PR is opened ("Wh
 - No `git push`, no PR creation, no merge, no rebase; `main` and `dev` are untouched.
 - No change in the agent-cluster repo — dropping `--os=current --cpu=current` from the Dev Manager's
   install command is the front desk's own follow-up, in its own repo, after this lands.
-- No `pnpm update`, no `pnpm dedupe`, no dependency version bump, no lockfile regeneration except
-  the single narrow case in "Stop conditions".
+- No `pnpm update`, no `pnpm dedupe`, no dependency version bump, and **no lockfile regeneration at
+  all**: the narrow "Stop conditions" exception did not fire, so `pnpm-lock.yaml` stays untouched.
 - No edit to `package.json` (including the `@esbuild/darwin-arm64` / `@rollup/rollup-darwin-arm64`
   devDependencies) or `.npmrc`.
 - No new test runner, no new check script, no CI workflow change (`.github/workflows` and
@@ -196,15 +204,16 @@ directories; 11-12 by a human on the Netlify preview after the PR is opened ("Wh
 
 ## Stop conditions
 - `pnpm install --frozen-lockfile` fails with `ERR_PNPM_OUTDATED_LOCKFILE`: stop and report before
-  touching the lockfile. The goal permits a lockfile update "only if pnpm requires it", so the
-  allowed next step is one `pnpm install --no-frozen-lockfile`, then re-running
-  `--frozen-lockfile` — but only after the close-out has said so, and only if the resulting
-  `pnpm-lock.yaml` diff changes no resolved version of any package. Any lockfile diff that moves a
-  version stops the task and goes to Christian.
+  touching the lockfile. **Did not fire on 2026-09-27** (decision 6-S1-Q1) — it stays here only as a
+  guard for a re-run. If it ever does fire, the allowed next step is one
+  `pnpm install --no-frozen-lockfile`, then re-running `--frozen-lockfile` — but only after the
+  close-out has said so, and only if the resulting `pnpm-lock.yaml` diff changes no resolved version
+  of any package. Any lockfile diff that moves a version stops the task and goes to Christian.
 - The install fails with a complaint about the `current` value (unknown value, or a libc/detect
-  failure on Windows or macOS): stop and report the exact error. Do **not** silently drop `current`
-  from `libc`, and do not substitute `win32` for `current` — that is a spec change and Christian's
-  call.
+  failure on Windows or macOS): stop and report the exact error. **Did not fire on Windows with pnpm
+  10.30.3 (2026-09-27)**; it still applies to the Netlify/glibc install. Do **not** silently drop
+  `current` from `libc`, and do not substitute `win32` for `current` — that is a spec change and
+  Christian's call.
 - `pnpm install --frozen-lockfile` succeeds but `pnpm build` still fails on a missing native
   module: stop and report which module, with the error; the premise of the fix is then wrong.
 - Any file outside `pnpm-workspace.yaml` (and this spec) turns out to need a change to satisfy a
@@ -216,10 +225,10 @@ directories; 11-12 by a human on the Netlify preview after the PR is opened ("Wh
 - Criteria 11 and 12 cannot be produced by an agent: nobody pushes, so the Netlify preview only
   exists once a human opens the PR. They are covered by "What to click" and close out at gate 3,
   not by the Tester. The Tester says explicitly that it could not verify them.
-- The libc list is the one genuinely unverified piece: `current` for `libc` on a platform without a
-  libc (Windows, macOS) is expected to be inert, but neither pnpm's behaviour nor its version
-  requirement was read from source here. A green install on Windows plus a green Netlify (glibc)
-  build together cover both branches of that risk.
+- The libc list was the one genuinely unverified piece. The Windows half is now settled: pnpm 10.30.3
+  accepted `libc: [glibc, current]` on Windows without a complaint (2026-09-27). What remains is the
+  glibc side — a green Netlify (linux/glibc) build — which is the human's gate-3 close-out item, plus
+  macOS, which no run in this task covers.
 - Widening the install set means a Windows install now also downloads the linux and darwin binaries
   (they were already downloaded on macOS/Linux). Cost is disk and install time only; Netlify's set
   does not grow, so the production build time is unaffected.
