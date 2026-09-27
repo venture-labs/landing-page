@@ -542,3 +542,15 @@ still a `spec` verdict after the Architect's amend round
   Tester's verdict: spec
 
 Answer: A - criterion 18 is read as (a): no local dev/main branch was checked out or moved and origin/dev + origin/main are untouched - which holds. The reflog's 'rebase (start): checkout origin/dev' entries come from the Dev Manager's own fresh-base rebase before the Implementer (freshBase.ts), not from a role; they do not violate the criterion. Continue to review and PR. Night run 2026-09-26/27, front desk night driver on Christian's go: gate 1b follows the Tester's own reading.
+
+
+## Review answers (Christian, 2026-09-27)
+
+Question from the Tester round:
+still a `spec` verdict after the Architect's amend round
+• criterion: `origin/dev` / `origin/main` untouched, no `dev`/`main` checkout in this worktree
+  test: `origin/dev`=`b9e75048`, `origin/main`=`a3fe95f9` (both unmoved); `git branch -r --contains HEAD` empty; local `dev` still `87bd24df`. **But** the worktree reflog carries `rebase (start): checkout origin/dev` + two `rebase (pick)` entries
+  result: fail (literal reflog clause only)
+  Tester's verdict: spec
+
+Answer: A - criterion 18 is read as (a): no local dev/main branch was checked out or moved and origin/dev + origin/main are untouched - which holds. The reflog's 'rebase (start): checkout origin/dev' entries come from the Dev Manager's own fresh-base rebase before the Implementer (freshBase.ts), not from a role; they do not violate the criterion. Continue to review and PR. Night run 2026-09-26/27, front desk night driver on Christian's go: gate 1b follows the Tester's own reading.
