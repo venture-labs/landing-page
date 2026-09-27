@@ -20,7 +20,7 @@ coreServices:
       - 'AI Opportunity Map statt Buzzword-Bingo'
       - '3–5 Use Cases, sortiert nach Wirkung'
       - 'Kein 40-Seiten-Report, den niemand liest'
-    ctaLabel: 'Pulse Check machen'
+    ctaLabel: 'Über den Pulse Check sprechen'
   - key: build
     step: '02'
     label: 'Bauen'
