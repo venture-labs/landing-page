@@ -71,7 +71,7 @@ test.describe("trackEvent no-ops safely without the Plausible stub", () => {
     const stubbed = await page.evaluate(() => typeof window.plausible);
 
     // Quiz: start + all ten answers.
-    await page.getByRole("button", { name: "Jetzt AI Pulse Check machen" }).first().click();
+    await page.getByRole("button", { name: "Kostenlosen Pulse Score starten" }).first().click();
     await expect(page.locator('[role="dialog"]')).toBeVisible();
     await page.getByRole("button", { name: /Meinen Pulse Score prüfen/ }).click();
     for (let i = 0; i < 10; i++) await page.locator(OPTION_BUTTONS).first().click();

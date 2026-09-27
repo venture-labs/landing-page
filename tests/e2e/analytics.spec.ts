@@ -57,7 +57,7 @@ async function openQuiz(page: Page): Promise<void> {
   await page.goto("/de");
   // The home page has two buttons with this label (Hero and AIPulseTeaser);
   // both open the same PulseCheckModal, so the first one is enough.
-  await page.getByRole("button", { name: "Jetzt AI Pulse Check machen" }).first().click();
+  await page.getByRole("button", { name: "Kostenlosen Pulse Score starten" }).first().click();
   await expect(page.locator('[role="dialog"]')).toBeVisible();
 }
 

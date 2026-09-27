@@ -242,7 +242,7 @@ test.describe("every repointed CTA lands where it says", () => {
     page,
   }) => {
     await page.goto("/de");
-    await page.getByRole("button", { name: "Jetzt AI Pulse Check machen" }).first().click();
+    await page.getByRole("button", { name: "Kostenlosen Pulse Score starten" }).first().click();
     await page.getByRole("button", { name: /Meinen Pulse Score prüfen/ }).click();
     for (let i = 0; i < 10; i++) {
       await page.locator(OPTION_BUTTONS).first().click();

@@ -5,7 +5,6 @@ import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
 import { useLeistungenData } from "@/data/content";
 import { useLocale } from "@/app/locale";
-import { PulseCheckModal } from "@/app/components/PulseCheckModal";
 import type { CoreService } from "@/data/de/leistungen";
 
 export const STEP_ACCENTS: Record<CoreService["key"], string> = {
@@ -181,12 +180,10 @@ function StepDetail({
   step,
   accent,
   compact,
-  onCheckCta,
 }: {
   step: CoreService;
   accent: string;
   compact: boolean;
-  onCheckCta: () => void;
 }) {
   const { localizedPath } = useLocale();
 
@@ -220,26 +217,14 @@ function StepDetail({
         >
           {step.description}
         </p>
-        {step.key === "check" ? (
-          <button
-            type="button"
-            onClick={onCheckCta}
-            className="self-start inline-flex items-center gap-2 font-semibold text-white rounded-lg px-6 py-3 transition-transform hover:scale-[1.02]"
-            style={{ fontSize: "var(--text-btn)", backgroundColor: accent }}
-          >
-            {step.ctaLabel}
-            <ArrowRight size={16} />
-          </button>
-        ) : (
-          <Link
-            to={localizedPath("/kontakt")}
-            className="self-start inline-flex items-center gap-2 font-semibold text-white rounded-lg px-6 py-3 transition-transform hover:scale-[1.02]"
-            style={{ fontSize: "var(--text-btn)", backgroundColor: accent }}
-          >
-            {step.ctaLabel}
-            <ArrowRight size={16} />
-          </Link>
-        )}
+        <Link
+          to={localizedPath("/kontakt")}
+          className="self-start inline-flex items-center gap-2 font-semibold text-white rounded-lg px-6 py-3 transition-transform hover:scale-[1.02]"
+          style={{ fontSize: "var(--text-btn)", backgroundColor: accent }}
+        >
+          {step.ctaLabel}
+          <ArrowRight size={16} />
+        </Link>
       </div>
 
       {!compact && (
@@ -295,7 +280,6 @@ export function PulseJourney({ compact = false }: { compact?: boolean }) {
   const { localizedPath } = useLocale();
   const { t } = useTranslation();
   const [activeKey, setActiveKey] = useState<CoreService["key"]>("check");
-  const [quizOpen, setQuizOpen] = useState(false);
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -336,13 +320,7 @@ export function PulseJourney({ compact = false }: { compact?: boolean }) {
         <StepRail steps={coreServices} activeKey={activeKey} onSelect={setActiveKey} />
 
         <AnimatePresence mode="wait">
-          <StepDetail
-            key={active.key}
-            step={active}
-            accent={accent}
-            compact={compact}
-            onCheckCta={() => setQuizOpen(true)}
-          />
+          <StepDetail key={active.key} step={active} accent={accent} compact={compact} />
         </AnimatePresence>
 
         {compact && (
@@ -356,8 +334,6 @@ export function PulseJourney({ compact = false }: { compact?: boolean }) {
           </Link>
         )}
       </div>
-
-      <PulseCheckModal open={quizOpen} onOpenChange={setQuizOpen} />
     </section>
   );
 }
