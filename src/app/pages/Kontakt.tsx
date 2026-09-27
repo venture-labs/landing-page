@@ -6,6 +6,7 @@ import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
 import { useLocale } from "@/app/locale";
 import { EVENTS, trackEvent } from "@/app/analytics";
+import { BOOKING_URL } from "@/app/links";
 
 /* ─── data ───────────────────────────────────────────────────────────── */
 
@@ -409,11 +410,14 @@ function CtaStrip() {
         </p>
         <div className="flex flex-col gap-3">
           <a
-            href="tel:+491487418f6"
+            href={BOOKING_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackEvent(EVENTS.callLinkClicked)}
             className="font-['sofia-pro',sans-serif] font-semibold text-[#8129ff] hover:text-[#a318f8] transition-colors"
             style={{ fontSize: "clamp(1.2rem, 2vw, 1.75rem)" }}
           >
-            +49 148 74 18 f6
+            {t("nav.bookCall")}
           </a>
           <a
             href="mailto:contact@venturelabs.team"

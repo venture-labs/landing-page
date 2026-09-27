@@ -3,6 +3,7 @@ export const navigationDE = [
   { label: "Leistungen", href: "/leistungen" },
   { label: "Über uns", href: "/ueber-uns" },
   { label: "Blog", href: "/blog" },
+  { label: "Kontakt", href: "/kontakt" },
 ];
 
 export const navigationEN = [
@@ -10,4 +11,5 @@ export const navigationEN = [
   { label: "Services", href: "/leistungen" },
   { label: "About", href: "/ueber-uns" },
   { label: "Blog", href: "/blog" },
+  { label: "Contact", href: "/kontakt" },
 ];

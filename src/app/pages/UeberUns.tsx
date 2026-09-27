@@ -1,6 +1,8 @@
 import { useRef } from "react";
 import { motion, useInView } from "motion/react";
 import { Users, Lightbulb, Target, Zap } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
 import { useLocale } from "@/app/locale";
@@ -249,6 +251,7 @@ function CtaSection({ data }: { data: ReturnType<typeof useAboutData> }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const { localizedPath } = useLocale();
+  const { t } = useTranslation();
 
   return (
     <motion.section
@@ -268,13 +271,13 @@ function CtaSection({ data }: { data: ReturnType<typeof useAboutData> }) {
           </p>
         </div>
         <div className="flex flex-wrap gap-3">
-          <a
-            href={localizedPath("/#kontakt")}
+          <Link
+            to={localizedPath("/kontakt")}
             className="inline-flex items-center gap-2 bg-[#8129ff] hover:bg-[#a318f8] border border-[#8129ff] text-white font-['sofia-pro',sans-serif] font-semibold px-[24px] py-[11px] rounded-lg transition-all"
             style={{ fontSize: "var(--text-btn)" }}
           >
-            Kontakt aufnehmen
-          </a>
+            {t("nav.contact")}
+          </Link>
         </div>
       </div>
     </motion.section>
