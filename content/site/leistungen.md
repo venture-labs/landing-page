@@ -5,7 +5,7 @@ heroTitlePrefix: 'Drei Schritte.'
 heroTitleHighlight: 'Ein Puls.'
 heroSubheading: 'Erst schauen, was wirklich los ist. Dann bauen, was den größten Unterschied macht. Und dann dranbleiben. Alles andere sind Details.'
 coreHeading: 'Check. Build. Care.'
-coreIntro: 'Jeder Schritt baut auf dem vorherigen auf. Nach jedem entscheidest du, ob es weitergeht – ohne Verpflichtung zum nächsten.'
+coreIntro: 'Jeder Schritt baut auf dem vorherigen auf. Nach jedem entscheidest du, ob es weitergeht – ohne Verpflichtung zum nächsten. Was ein Schritt bei dir kostet, besprechen wir im Erstgespräch: konkret auf deinen Umfang gerechnet, unverbindlich.'
 coreServices:
   - key: check
     step: '01'
@@ -56,7 +56,7 @@ skillStepLabels:
   build: 'Build'
   care: 'Care'
 ctaHeading: 'Noch unklar, wo du stehst?'
-ctaBody: 'Der Pulse Check dauert fünf Minuten und kostet nichts. Danach weißt du mehr als nach dem nächsten Strategie-Workshop.'
+ctaBody: 'Der AI Pulse Score dauert fünf Minuten und kostet nichts: 10 Fragen, sofort ein Ergebnis über fünf Bereiche. Willst du danach genau wissen, wo dein größter Hebel liegt, ist der Pulse Check der nächste Schritt – was er bei dir umfasst, besprechen wir im Erstgespräch.'
 contactCallout: 'Du suchst ehrliche Beratung statt Buzzwords? Ruf uns an oder schreib uns – wir hören zu, bevor wir bauen.'
 strengthHeadline: "Unsere Stärke:\nDigitale Produktentwicklung"
 strengthDescription: 'Wir begleiten dich von der ersten Vision bis zur Umsetzung – mit einem interdisziplinären Team aus Strategie, Design und Technologie. Unser Ziel: Produkte, die technisch robust, ästhetisch überzeugend und für Nutzer:innen relevant sind. Dabei arbeiten wir agil, nutzerzentriert und nutzen modernste Tools – von No-Code bis KI – um schneller zu Ergebnissen zu kommen.'
