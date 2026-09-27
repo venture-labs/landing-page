@@ -22,7 +22,7 @@
   },
   "aiPulse": {
     "body": "AI can improve processes, unlock new products, and change entire business models. We help you find where the biggest leverage in your business lies — and build the solution from there.",
-    "cta": "Take the AI Pulse Check now"
+    "cta": "Start your free Pulse Score"
   },
   "aboutTeaser": {
     "heading": "One team. From business to AI.",
@@ -84,7 +84,7 @@
     "contactQuestion": "Interested in working together on your project? Get in touch now.",
     "notFound": "Service not found.",
     "backToOverview": "Back to overview",
-    "pulseCta": "Take the Pulse Check",
+    "pulseCta": "Start your free Pulse Score",
     "allSteps": "All steps",
     "allServices": "All services in detail"
   },

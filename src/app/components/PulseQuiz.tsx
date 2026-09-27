@@ -53,7 +53,7 @@ export const COPY: Record<"de" | "en", Copy> = {
       tools: "Tool-Stack",
       governance: "Governance & Risiko",
     },
-    quizHeading: "Wie gesund ist dein KI-Einsatz?",
+    quizHeading: "AI Pulse Score: Wie gesund ist dein KI-Einsatz?",
     quizIntro:
       "Beantworte 10 kurze Fragen zu fünf Bereichen und erhalte sofort deinen Pulse Score sowie eine kurze, persönliche Einschätzung.",
     startCta: "Meinen Pulse Score prüfen →",
@@ -183,7 +183,7 @@ export const COPY: Record<"de" | "en", Copy> = {
       tools: "Tool Stack Maturity",
       governance: "Governance & Risk",
     },
-    quizHeading: "How healthy is your AI use?",
+    quizHeading: "AI Pulse Score: how healthy is your AI use?",
     quizIntro: "Answer 10 quick questions across five dimensions and get an instant Pulse Score plus a short personalised benchmark.",
     startCta: "Check my Pulse Score →",
     questionLabel: (n) => `Question ${n} of 10`,
