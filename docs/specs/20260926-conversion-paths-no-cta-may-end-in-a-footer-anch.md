@@ -78,6 +78,18 @@ reaction on the gate-1 post, ts `1790395283.397669` in `#dev-agent`, applied by 
   condition ends the run and is written up in the morning list instead of waiting for an answer
   (see "Stop conditions").
 
+**Amended 2026-09-27 after a Tester verdict `spec` on criterion 24.** Christian's gate-1 intent is
+unchanged — the change lands as one open, unmerged PR against `dev`, and nothing is merged anywhere —
+but the criterion read "when the run ends, one PR exists", while every role's brief in this worktree
+says "never checkout, rebase, merge, or push; main and the base branch(es) just named are off limits".
+No role in the run may therefore create that PR, no test could prove it, and the Tester correctly read
+an untouched `origin/dev` (`b9e75048`) and an empty `git ls-remote origin fix/…` as a failure of a
+criterion nobody was allowed to satisfy. Criterion 24 is now the branch state a role does produce and
+can verify; criterion 25 pins that nothing on the remote moved; pushing the branch and opening the PR
+against `dev` is recorded as the landing step **after** the role rounds, under "Verification and
+evidence" (that a landing step exists and performs the push is **unverified** — the cluster's own code
+is outside this worktree's read range).
+
 ## Context found
 
 - `src/app/locale.tsx` — `localizedPath("/#kontakt", "de")` returns `/de#kontakt`; this is the helper
@@ -172,8 +184,10 @@ Rejected: asserting against `dist/**/index.html` (the prerender writes head tags
 an empty root div, so a static scan would pass on a fully broken site).
 
 Gate 1 approved the task whole, so all fourteen rows above land in one change, on one branch, in one
-PR against `dev`. The run stops at the PR: it is opened and left unmerged for Christian to read in the
-morning (gate 3 is his merge on GitHub, no agent involved).
+PR against `dev`. The run itself stops at the committed local branch — no role in this worktree may
+`push`, `checkout`, `rebase` or `merge` — and the landing step afterwards pushes that branch and opens
+the one PR against `dev`, left unmerged for Christian to read in the morning (gate 3 is his merge on
+GitHub, no agent involved).
 
 ## Files to change
 
@@ -244,10 +258,20 @@ morning (gate 3 is his merge on GitHub, no agent involved).
 22. `pnpm build` exits 0 and prerenders the same number of URLs as before the change;
     `pnpm exec tsx scripts/check-seo.ts` exits 0.
 23. `package.json` gains no runtime or dev dependency.
-24. When the run ends, one PR exists from `fix/conversion-paths-no-cta-may-end-in-a-footer-anch` into
-    `dev`, state **open** and **not merged**, containing every change above in one branch (the task ran
-    whole, so no partial PR and no second branch). `dev` and `main` are unchanged apart from that PR's
-    source branch existing on the remote.
+24. When the run ends, the whole change sits as one or more commits on the already-checked-out local
+    branch `fix/conversion-paths-no-cta-may-end-in-a-footer-anch` in this worktree, and nothing is
+    left uncommitted: `git rev-parse --abbrev-ref HEAD` prints exactly that branch name,
+    `git status --porcelain` prints nothing, and `git diff --name-only dev...HEAD` lists only files
+    from the "Files to change" table plus this spec file — one branch, one coherent change, no second
+    branch and no partial commit series. Every commit subject on that branch begins with
+    `20260926-conversion-paths-no-cta-may-end-in-a-footer-anch: `.
+25. No role in this run touches the remote or another branch. At the end of the run
+    `git ls-remote origin refs/heads/dev` still prints the commit `origin/dev` was at when the run
+    started (`b9e75048…`, as read by the Tester on 2026-09-26), `git ls-remote origin refs/heads/main`
+    is likewise unchanged, and no `git push`, `checkout`, `rebase` or `merge` has been run from this
+    worktree. Whether the task branch exists on `origin` is explicitly **not** a criterion of this
+    run: an empty `git ls-remote origin refs/heads/fix/conversion-paths-no-cta-may-end-in-a-footer-anch`
+    is the expected state at the end of the role rounds and is never a failure.
 
 ## Test plan
 
@@ -260,6 +284,10 @@ New: `tests/links/no-anchor-ctas.test.mjs` (`node --test`, no dependency) for cr
 from `dist/sitemap.xml` and reusing the `withRecorder` / `callsFor` helpers' approach from
 `analytics.spec.ts` for the goal assertions. Updated: the two footer-link tests in
 `analytics.spec.ts`.
+
+Criteria 24 and 25 are not a test file: they are git read-backs the Tester runs in the worktree and
+pastes (the four commands named in the criteria). No test may attempt a `push` or a PR query to prove
+them.
 
 Commands (Git Bash, from the worktree root):
 
@@ -278,9 +306,9 @@ page → `Jetzt anfragen` → contact form. Every Playwright run must abort requ
 `**://plausible.io/**` and `**://calendar.app.google/**` (the same `page.route` pattern already used
 for Plausible), so nothing leaves the machine and no real booking page is hit.
 
-Because this is a night run, the full command list above runs unattended before the PR is opened, and
-every exit code lands in the morning list; a red command is a stop condition, not something to retry
-past (see "Stop conditions").
+Because this is a night run, the full command list above runs unattended before the branch is handed
+over for landing, and every exit code lands in the morning list; a red command is a stop condition,
+not something to retry past (see "Stop conditions").
 
 ## What to click
 
@@ -296,8 +324,9 @@ past (see "Stop conditions").
 5. `/de` with the keyboard only (Tab from the top of the page): the navbar booking button takes focus
    with a visible ring before any page content.
 
-Christian works this list on the deploy preview in the morning, from the PR — the run does not wait
-for it.
+Christian works this list in the morning on the deploy preview of the PR, once the landing step has
+pushed the branch and opened it; until then the list is carried forward unchecked in the morning list.
+The run does not wait for it.
 
 ## Verification and evidence
 
@@ -314,24 +343,39 @@ for it.
 - Two screenshots from the preview: the navbar at 1440 px with the booking button focused via Tab
   (focus ring visible), and at 390 px with the menu open showing the booking link.
 - One screenshot of `/de/kontakt`'s bottom strip showing the booking link and the mail link, no phone.
-- The PR (criterion 24): paste the PR URL, its base (`dev`) and head branch, its state (`open`), and
-  `merged: false` as read back from GitHub after opening it — not from the command that created it.
-  The branch is pushed with an explicit refspec
-  (`git push origin fix/conversion-paths-no-cta-may-end-in-a-footer-anch:fix/conversion-paths-no-cta-may-end-in-a-footer-anch`);
-  confirm `git log origin/dev -1` is the same commit before and after.
+- The branch (criterion 24): paste `git rev-parse --abbrev-ref HEAD`, an empty `git status --porcelain`,
+  `git log --oneline dev..HEAD` (every subject prefixed with the task id) and
+  `git diff --name-only dev...HEAD`.
+- The remote is untouched (criterion 25): paste `git ls-remote origin refs/heads/dev` (still
+  `b9e75048…`) and `git ls-remote origin refs/heads/main`. An empty
+  `git ls-remote origin refs/heads/fix/conversion-paths-no-cta-may-end-in-a-footer-anch` is the
+  expected result and is reported as such, not as a failure.
+- The PR is the **landing step after the role rounds**, not a role's work and not an acceptance
+  criterion: no Implementer, Tester or Reviewer pushes the branch or opens it, because their brief
+  forbids `push`, `checkout`, `rebase` and `merge` in this worktree. Whoever lands it pushes with an
+  explicit refspec
+  (`git push origin fix/conversion-paths-no-cta-may-end-in-a-footer-anch:fix/conversion-paths-no-cta-may-end-in-a-footer-anch`)
+  and opens one PR with base `dev`, left **open** and **not merged**; the evidence then is the PR URL,
+  its base and head branch, its state `open` and `merged: false` read back from GitHub after opening
+  it — not from the command that created it — plus `git ls-remote origin refs/heads/dev` unchanged.
+  That such a landing step exists in the cluster is **unverified** from this worktree; if it does not
+  run, the morning list says the branch is ready and unpushed (see "Risks and open questions").
 - The close-out states, in one line each: the sitemap URL count before/after, the number of `<a>`
   elements checked across all sitemap URLs by the new spec, and the four goal counts observed.
-- **Morning list** (the night run's report, one short block): the PR link; one line per command above
-  with its exit code; the three screenshots; the "What to click" list carried over as Christian's
+- **Morning list** (the night run's report, one short block): the branch name with its commit
+  subjects, and the PR link if the landing step has already opened it (if not: one line saying the
+  branch is committed and unpushed, and that the PR is outstanding); one line per command above with
+  its exit code; the three screenshots; the "What to click" list carried over as Christian's
   remaining gate-3 check; and any stop condition that fired, named, with what was left undone. If no
   stop condition fired, the morning list says so explicitly.
 
 ## Will not do
 
-- No merge and no `checkout`/`rebase`; `main` and `dev` are never written to. The single exception the
-  gate-1 note authorises is pushing the already-checked-out branch
-  `fix/conversion-paths-no-cta-may-end-in-a-footer-anch` to `origin` with an explicit refspec and
-  opening one PR against `dev`. The PR is left open — merging it is Christian's, on GitHub, at gate 3.
+- No `push`, `checkout`, `rebase` or `merge` from this worktree by any role in the run — not of `main`,
+  not of `dev`, and not of the task branch to `origin`. The run ends with the change committed on the
+  local branch `fix/conversion-paths-no-cta-may-end-in-a-footer-anch`. Pushing that branch and opening
+  one PR against `dev` is the landing step outside the role rounds; the PR is left open — merging it is
+  Christian's, on GitHub, at gate 3.
 - No edit to `netlify.toml`, `.github/workflows/`, `.env*` or `src/data/{de,en}/` (denied paths /
   generated output).
 - No invented phone digits, and no change to the numbers in `Impressum.tsx`, `Datenschutz.tsx` or
@@ -346,7 +390,7 @@ for it.
   in this task.
 - No register rewrite (`du` → `ihr`), no translation of the English CTA labels.
 - No overnight message to Christian expecting an answer, and no waiting on one: the night run either
-  finishes at the open PR or stops and writes the reason into the morning list.
+  finishes at the committed branch or stops and writes the reason into the morning list.
 
 ## Stop conditions
 
@@ -370,9 +414,10 @@ around it, and name it in the morning list.
   → stop and report rather than reverting to `<a>` silently for internal links.
 - `pnpm build` or `scripts/check-seo.ts` exits non-zero and the cause is not in this change's files →
   stop; do not push or open the PR on a red build.
-- The push or the PR against `dev` fails, or opening it would target anything other than `dev` → stop;
-  the branch stays local and the morning list says the PR is missing and why. Never retry against
-  another base.
+- A criterion or a check seems to require a `push`, a PR, or a write to `dev`/`main` → stop and report
+  it as a spec problem. That is outside every role's brief in this worktree: leave the commits on the
+  local branch and name the outstanding PR in the morning list. Never push to satisfy a criterion, and
+  never retry against another base.
 
 ## Risks and open questions
 
@@ -399,6 +444,11 @@ around it, and name it in the morning list.
 - The two `tel:` strings are removed from the rendered site, but `src/imports/` (Figma exports) still
   contains `+49 156 78 387064` in unrendered code. Left untouched on purpose; noted so a later grep
   does not read as a regression.
+- The gate-1 intent is a PR open on `dev` by the morning, but no role in this run may push, so the PR
+  depends on a landing step whose existence I could not verify (the cluster's own code is outside this
+  worktree's read range). If it does not run, the branch is complete and unpushed, the deploy preview
+  does not exist, and the five "What to click" checks cannot be done — the morning list must then say
+  the PR is outstanding rather than report the run as fully closed.
 - The night run means the five "What to click" checks happen after the PR is open, not before, so the
   PR can be open with a visual detail still unconfirmed. That is the intended shape of this run
   (whole, PR against `dev`, no merge, morning list), not a gap — but the morning list must carry the
@@ -414,5 +464,6 @@ around it, and name it in the morning list.
   adding `callLinkClicked` call sites.
 - A booking widget embedded on the site; the Google Calendar page stays an outbound link.
 - Anything on `pulse.venturelabs.team` / the `pulse-landing-page` repo.
-- Merging the PR, deploying, or touching the Netlify site `vl-home` — gate 3 is Christian's merge on
-  GitHub.
+- Pushing the task branch, opening the PR, merging it, deploying, or touching the Netlify site
+  `vl-home`: the run delivers the committed local branch, the push and the PR are the landing step
+  after the role rounds, and gate 3 is Christian's merge on GitHub.
