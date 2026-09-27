@@ -32,13 +32,13 @@ function CasesHero() {
           className="flex flex-col gap-8 max-w-3xl"
         >
           <h1
-            className="font-['sofia-pro',sans-serif] font-semibold text-white leading-[1.05]"
+            className="font-semibold text-white leading-[1.05]"
             style={{ fontSize: "var(--text-hero)" }}
           >
             {t("cases.heroTitle")}
           </h1>
           <p
-            className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed max-w-2xl"
+            className="text-white/60 font-light leading-relaxed max-w-2xl"
             style={{ fontSize: "var(--text-body)" }}
           >
             {t("cases.heroSubheading")}

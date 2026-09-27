@@ -43,13 +43,13 @@ function BlogHero() {
           className="flex flex-col gap-6 max-w-3xl"
         >
           <h1
-            className="font-['sofia-pro',sans-serif] font-semibold text-white leading-[1.05]"
+            className="font-semibold text-white leading-[1.05]"
             style={{ fontSize: "var(--text-hero)" }}
           >
             {t("blog.heroTitle")}
           </h1>
           <p
-            className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed max-w-2xl"
+            className="text-white/60 font-light leading-relaxed max-w-2xl"
             style={{ fontSize: "var(--text-body)" }}
           >
             {t("blog.heroSubtitle")}
@@ -101,32 +101,32 @@ function FeaturedPostCard({ post, index }: { post: BlogPost; index: number }) {
         <div className="bg-[#1c1a27] p-8 flex flex-col gap-4">
           <div className="flex items-center gap-3">
             <span
-              className="font-['sofia-pro',sans-serif] font-semibold px-3 py-1 rounded-full"
+              className="font-semibold px-3 py-1 rounded-full"
               style={{ fontSize: "var(--text-small)", color: accent, backgroundColor: `${accent}1a` }}
             >
               {post.topic}
             </span>
             <span
-              className="text-white/40 font-['sofia-pro',sans-serif] font-light"
+              className="text-white/40 font-light"
               style={{ fontSize: "var(--text-small)" }}
             >
               {post.readTime}
             </span>
           </div>
           <h3
-            className="font-['sofia-pro',sans-serif] font-semibold text-white leading-tight group-hover:text-white/80 transition-colors"
+            className="font-semibold text-white leading-tight group-hover:text-white/80 transition-colors"
             style={{ fontSize: "var(--text-card)" }}
           >
             {post.title}
           </h3>
           <p
-            className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed max-w-2xl"
+            className="text-white/60 font-light leading-relaxed max-w-2xl"
             style={{ fontSize: "var(--text-body)" }}
           >
             {post.excerpt}
           </p>
           <span
-            className="inline-flex items-center gap-2 font-['sofia-pro',sans-serif] font-semibold mt-2"
+            className="inline-flex items-center gap-2 font-semibold mt-2"
             style={{ fontSize: "var(--text-small)", color: accent }}
           >
             {t("blog.readArticle")} <ArrowRight size={14} />
@@ -156,32 +156,32 @@ function NormalPostCard({ post, index }: { post: BlogPost; index: number }) {
         <div className="bg-[#1c1a27] p-6 flex flex-col gap-3 flex-1">
           <div className="flex items-center gap-3">
             <span
-              className="font-['sofia-pro',sans-serif] font-semibold px-3 py-1 rounded-full"
+              className="font-semibold px-3 py-1 rounded-full"
               style={{ fontSize: "var(--text-small)", color: accent, backgroundColor: `${accent}1a` }}
             >
               {post.topic}
             </span>
             <span
-              className="text-white/40 font-['sofia-pro',sans-serif] font-light"
+              className="text-white/40 font-light"
               style={{ fontSize: "var(--text-small)" }}
             >
               {post.readTime}
             </span>
           </div>
           <h3
-            className="font-['sofia-pro',sans-serif] font-semibold text-white leading-snug group-hover:text-white/80 transition-colors"
+            className="font-semibold text-white leading-snug group-hover:text-white/80 transition-colors"
             style={{ fontSize: "1.15rem" }}
           >
             {post.title}
           </h3>
           <p
-            className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed flex-1"
+            className="text-white/60 font-light leading-relaxed flex-1"
             style={{ fontSize: "var(--text-small)" }}
           >
             {post.excerpt}
           </p>
           <span
-            className="inline-flex items-center gap-2 font-['sofia-pro',sans-serif] font-semibold mt-1"
+            className="inline-flex items-center gap-2 font-semibold mt-1"
             style={{ fontSize: "var(--text-small)", color: accent }}
           >
             {t("blog.readArticle")} <ArrowRight size={13} />

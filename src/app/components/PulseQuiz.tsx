@@ -336,7 +336,7 @@ export function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
   if (state.step === "intro") {
     return (
       <div className="flex flex-col gap-6 items-start">
-        <p className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed max-w-xl" style={{ fontSize: "var(--text-body)" }}>
+        <p className="text-white/60 font-light leading-relaxed max-w-xl" style={{ fontSize: "var(--text-body)" }}>
           {copy.quizIntro}
         </p>
         <button
@@ -344,7 +344,7 @@ export function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
             trackEvent(EVENTS.quizStarted);
             setState({ step: "question", index: 0, answers: [] });
           }}
-          className="inline-flex items-center gap-2 text-white font-['sofia-pro',sans-serif] font-semibold px-6 py-3 rounded-lg transition-all hover:scale-[1.02]"
+          className="inline-flex items-center gap-2 text-white font-semibold px-6 py-3 rounded-lg transition-all hover:scale-[1.02]"
           style={{ fontSize: "var(--text-btn)", backgroundColor: accent }}
         >
           {copy.startCta}
@@ -358,10 +358,10 @@ export function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
     return (
       <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-2">
-          <span className="font-['sofia-pro',sans-serif] font-semibold uppercase tracking-wide" style={{ fontSize: "var(--text-small)", color: accent }}>
+          <span className="font-semibold uppercase tracking-wide" style={{ fontSize: "var(--text-small)", color: accent }}>
             {copy.questionLabel(state.index + 1)} · {copy.areaLabels[q.area]}
           </span>
-          <h3 className="font-['sofia-pro',sans-serif] font-semibold text-white leading-snug max-w-2xl" style={{ fontSize: "var(--text-h2)" }}>
+          <h3 className="font-semibold text-white leading-snug max-w-2xl" style={{ fontSize: "var(--text-h2)" }}>
             {q.question}
           </h3>
         </div>
@@ -370,7 +370,7 @@ export function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
             <button
               key={option}
               onClick={() => selectOption(i)}
-              className="text-left px-5 py-4 rounded-lg border border-white/10 text-white/80 hover:text-white hover:border-white/30 transition-colors font-['sofia-pro',sans-serif] font-light leading-snug"
+              className="text-left px-5 py-4 rounded-lg border border-white/10 text-white/80 hover:text-white hover:border-white/30 transition-colors font-light leading-snug"
               style={{ fontSize: "var(--text-body)" }}
             >
               {option}
@@ -393,44 +393,44 @@ export function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
   return (
     <div className="flex flex-col gap-10">
       <div className="flex flex-col gap-3">
-        <p className="font-['sofia-pro',sans-serif] font-light text-white/50" style={{ fontSize: "var(--text-small)" }}>
+        <p className="font-light text-white/50" style={{ fontSize: "var(--text-small)" }}>
           {copy.resultReady}
         </p>
         <div className="flex items-end gap-3">
-          <span className="font-['sofia-pro',sans-serif] font-semibold" style={{ fontSize: "var(--text-hero)", color: accent }}>
+          <span className="font-semibold" style={{ fontSize: "var(--text-hero)", color: accent }}>
             {band.label}
           </span>
         </div>
         <div className="flex items-baseline gap-2">
-          <span className="font-['sofia-pro',sans-serif] font-semibold text-white" style={{ fontSize: "var(--text-hero)" }}>
+          <span className="font-semibold text-white" style={{ fontSize: "var(--text-hero)" }}>
             {scores.score}
           </span>
-          <span className="text-white/50 font-['sofia-pro',sans-serif] font-light" style={{ fontSize: "var(--text-body)" }}>
+          <span className="text-white/50 font-light" style={{ fontSize: "var(--text-body)" }}>
             {copy.scoreLabel}
           </span>
         </div>
-        <p className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed max-w-2xl" style={{ fontSize: "var(--text-body)" }}>
+        <p className="text-white/60 font-light leading-relaxed max-w-2xl" style={{ fontSize: "var(--text-body)" }}>
           {band.narrative}
         </p>
-        <p className="text-white/70 font-['sofia-pro',sans-serif] font-light leading-relaxed max-w-2xl" style={{ fontSize: "var(--text-body)" }}>
+        <p className="text-white/70 font-light leading-relaxed max-w-2xl" style={{ fontSize: "var(--text-body)" }}>
           {copy.weakestSentence(copy.areaLabels[scores.weakest[0]], copy.areaLabels[scores.weakest[1]])}
         </p>
       </div>
 
       <div className="flex flex-col gap-4">
-        <h4 className="font-['sofia-pro',sans-serif] font-semibold text-white" style={{ fontSize: "var(--text-body)" }}>
+        <h4 className="font-semibold text-white" style={{ fontSize: "var(--text-body)" }}>
           {copy.breakdownHeading}
         </h4>
         <div className="flex flex-col gap-3 max-w-xl">
           {AREA_ORDER.map((area) => (
             <div key={area} className="flex items-center gap-4">
-              <span className="text-white/60 font-['sofia-pro',sans-serif] font-light w-40 shrink-0" style={{ fontSize: "var(--text-small)" }}>
+              <span className="text-white/60 font-light w-40 shrink-0" style={{ fontSize: "var(--text-small)" }}>
                 {copy.areaLabels[area]}
               </span>
               <div className="flex-1 h-2 rounded-full bg-white/8 overflow-hidden">
                 <div className="h-full rounded-full" style={{ width: `${(scores.byArea[area] / 6) * 100}%`, backgroundColor: accent }} />
               </div>
-              <span className="text-white/50 font-['sofia-pro',sans-serif] font-light w-10 text-right" style={{ fontSize: "var(--text-small)" }}>
+              <span className="text-white/50 font-light w-10 text-right" style={{ fontSize: "var(--text-small)" }}>
                 {scores.byArea[area]}/6
               </span>
             </div>
@@ -439,10 +439,10 @@ export function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
       </div>
 
       <div className="flex flex-col gap-4 p-7 rounded-xl border border-white/8 bg-white/[0.02] max-w-2xl">
-        <h4 className="font-['sofia-pro',sans-serif] font-semibold text-white" style={{ fontSize: "var(--text-h2)" }}>
+        <h4 className="font-semibold text-white" style={{ fontSize: "var(--text-h2)" }}>
           {copy.ctaHeading}
         </h4>
-        <p className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed" style={{ fontSize: "var(--text-body)" }}>
+        <p className="text-white/60 font-light leading-relaxed" style={{ fontSize: "var(--text-body)" }}>
           {copy.ctaBody}
         </p>
         <div className="flex flex-wrap items-center gap-4 mt-1">
@@ -456,7 +456,7 @@ export function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
           </CtaButton>
           <button
             onClick={() => setState({ step: "intro" })}
-            className="inline-flex items-center gap-1 text-white/50 hover:text-white transition-colors font-['sofia-pro',sans-serif] font-light"
+            className="inline-flex items-center gap-1 text-white/50 hover:text-white transition-colors font-light"
             style={{ fontSize: "var(--text-small)" }}
           >
             {copy.restart} <ArrowRight size={12} />

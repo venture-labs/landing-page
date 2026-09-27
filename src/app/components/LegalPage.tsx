@@ -9,13 +9,13 @@ export function LegalPage({ title, children }: { title: string; children: ReactN
       <Navbar />
       <main className="max-w-3xl mx-auto px-6 lg:px-12 pt-40 pb-32">
         <h1
-          className="font-['sofia-pro',sans-serif] font-semibold text-white mb-12"
+          className="font-semibold text-white mb-12"
           style={{ fontSize: "var(--text-h2)" }}
         >
           {title}
         </h1>
         <div
-          className="flex flex-col gap-6 text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed
+          className="flex flex-col gap-6 text-white/60 font-light leading-relaxed
             [&_h2]:text-white [&_h2]:font-medium [&_h2]:mt-4 [&_h2]:mb-1 [&_h2]:text-[length:var(--text-h3)]
             [&_address]:not-italic [&_a]:text-[#a318f8] [&_a]:hover:underline"
           style={{ fontSize: "var(--text-body)" }}

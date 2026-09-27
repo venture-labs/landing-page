@@ -66,20 +66,20 @@ function DetailHero({ detail, accent, title }: { detail: any; accent: string; ti
         >
           {title && (
             <span
-              className="font-['sofia-pro',sans-serif] font-semibold uppercase tracking-wide"
+              className="font-semibold uppercase tracking-wide"
               style={{ fontSize: "var(--text-small)", color: accent }}
             >
               {title}
             </span>
           )}
           <h1
-            className="font-['sofia-pro',sans-serif] font-semibold text-white leading-[1.05]"
+            className="font-semibold text-white leading-[1.05]"
             style={{ fontSize: "var(--text-hero)" }}
           >
             {detail.heroHeadline}
           </h1>
           <p
-            className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed max-w-2xl"
+            className="text-white/60 font-light leading-relaxed max-w-2xl"
             style={{ fontSize: "var(--text-body)" }}
           >
             {detail.heroSubline}
@@ -135,13 +135,13 @@ function ProcessStep({
     >
       <div className="flex items-center gap-8 py-7">
         <span
-          className="font-['sofia-pro',sans-serif] font-semibold shrink-0 w-16 tabular-nums"
+          className="font-semibold shrink-0 w-16 tabular-nums"
           style={{ fontSize: "clamp(2.25rem, 3.75vw, 3.75rem)", color: accent }}
         >
           {step.number}
         </span>
         <h3
-          className="flex-1 font-['sofia-pro',sans-serif] font-semibold text-white"
+          className="flex-1 font-semibold text-white"
           style={{ fontSize: "var(--text-h3)" }}
         >
           {step.title}
@@ -149,7 +149,7 @@ function ProcessStep({
       </div>
       <div className="pl-20 pb-8">
         <p
-          className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed max-w-2xl"
+          className="text-white/60 font-light leading-relaxed max-w-2xl"
           style={{ fontSize: "var(--text-body)" }}
         >
           {step.description}
@@ -177,7 +177,7 @@ function ProcessSection({
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="font-['sofia-pro',sans-serif] font-semibold text-white mb-16 leading-[1.1]"
+          className="font-semibold text-white mb-16 leading-[1.1]"
           style={{ fontSize: "var(--text-section)" }}
         >
           {t("leistungen.processHeading")}
@@ -208,7 +208,7 @@ function CaseSection({ detail, accent }: { detail: any; accent: string }) {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="font-['sofia-pro',sans-serif] font-semibold text-white mb-16"
+          className="font-semibold text-white mb-16"
           style={{ fontSize: "var(--text-section)" }}
         >
           {t("leistungen.exampleCase")} {detail.caseTitle}
@@ -227,13 +227,13 @@ function CaseSection({ detail, accent }: { detail: any; accent: string }) {
               className={`flex flex-col gap-2 p-8 ${i < 2 ? "border-r border-white/8" : ""}`}
             >
               <span
-                className="font-['sofia-pro',sans-serif] font-semibold"
+                className="font-semibold"
                 style={{ fontSize: "var(--text-hero)", color: accent }}
               >
                 {stat.value}
               </span>
               <span
-                className="text-white/60 font-['sofia-pro',sans-serif] font-light"
+                className="text-white/60 font-light"
                 style={{ fontSize: "var(--text-body)" }}
               >
                 {stat.label}
@@ -258,20 +258,20 @@ function CaseSection({ detail, accent }: { detail: any; accent: string }) {
           </div>
           <div className="flex flex-col gap-6">
             <h3
-              className="font-['sofia-pro',sans-serif] font-semibold text-white leading-tight"
+              className="font-semibold text-white leading-tight"
               style={{ fontSize: "var(--text-h2)" }}
             >
               {detail.caseSubtitle}
             </h3>
             <p
-              className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed"
+              className="text-white/60 font-light leading-relaxed"
               style={{ fontSize: "var(--text-body)" }}
             >
               {detail.caseDescription}
             </p>
             <Link
               to={localizedPath(`/cases/${detail.caseSlug}`)}
-              className="self-start inline-flex items-center gap-2 text-white/70 hover:text-white font-['sofia-pro',sans-serif] font-light transition-colors"
+              className="self-start inline-flex items-center gap-2 text-white/70 hover:text-white font-light transition-colors"
               style={{ fontSize: "var(--text-body)" }}
             >
               {t("leistungen.viewCase")}
@@ -305,13 +305,13 @@ function CtaBanner({ detail, accent }: { detail: any; accent: string }) {
       <div className="relative max-w-[1400px] mx-auto px-6 lg:px-12 flex flex-col lg:flex-row items-center justify-between gap-12">
         <div className="flex flex-col gap-4 max-w-2xl">
           <h2
-            className="font-['sofia-pro',sans-serif] font-semibold text-white leading-tight"
+            className="font-semibold text-white leading-tight"
             style={{ fontSize: "var(--text-section)" }}
           >
             {detail.ctaHeadline}
           </h2>
           <p
-            className="text-white/80 font-['sofia-pro',sans-serif] font-light leading-relaxed"
+            className="text-white/80 font-light leading-relaxed"
             style={{ fontSize: "var(--text-body)" }}
           >
             {detail.ctaBody}
@@ -353,7 +353,7 @@ function OtherServices({ currentSlug }: { currentSlug: string }) {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="font-['sofia-pro',sans-serif] font-semibold text-white mb-12"
+          className="font-semibold text-white mb-12"
           style={{ fontSize: "var(--text-section)" }}
         >
           {t("leistungen.otherServicesHeading")}
@@ -381,20 +381,20 @@ function OtherServices({ currentSlug }: { currentSlug: string }) {
                   </div>
                   <div className="flex flex-col gap-2">
                     <h3
-                      className="font-['sofia-pro',sans-serif] font-semibold text-white"
+                      className="font-semibold text-white"
                       style={{ fontSize: "var(--text-body)" }}
                     >
                       {s.title}
                     </h3>
                     <p
-                      className="text-white/50 font-['sofia-pro',sans-serif] font-light leading-snug"
+                      className="text-white/50 font-light leading-snug"
                       style={{ fontSize: "var(--text-small)" }}
                     >
                       {s.description}
                     </p>
                   </div>
                   <span
-                    className="inline-flex items-center gap-1 font-['sofia-pro',sans-serif] font-semibold mt-auto"
+                    className="inline-flex items-center gap-1 font-semibold mt-auto"
                     style={{ fontSize: "var(--text-small)", color: acc }}
                   >
                     {t("leistungen.learnMore")} <ArrowRight size={13} />
@@ -426,7 +426,7 @@ function ContactStrip() {
     >
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 flex flex-col lg:flex-row lg:items-center justify-between gap-10">
         <p
-          className="text-white/50 font-['sofia-pro',sans-serif] font-light max-w-xl"
+          className="text-white/50 font-light max-w-xl"
           style={{ fontSize: "var(--text-body)" }}
         >
           {t("leistungen.contactQuestion")}
@@ -437,14 +437,14 @@ function ContactStrip() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackEvent(EVENTS.callLinkClicked)}
-            className="font-['sofia-pro',sans-serif] font-semibold text-[#8129ff] hover:text-[#a318f8] transition-colors"
+            className="font-semibold text-[#8129ff] hover:text-[#a318f8] transition-colors"
             style={{ fontSize: "clamp(1.2rem, 2vw, 1.75rem)" }}
           >
             {t("nav.bookCall")}
           </a>
           <a
             href="mailto:contact@venturelabs.team"
-            className="font-['sofia-pro',sans-serif] font-semibold text-[#8129ff] hover:text-[#a318f8] transition-colors"
+            className="font-semibold text-[#8129ff] hover:text-[#a318f8] transition-colors"
             style={{ fontSize: "clamp(1.2rem, 2vw, 1.75rem)" }}
           >
             contact@venturelabs.team
@@ -474,8 +474,8 @@ export function LeistungenDetail() {
     return (
       <div className="min-h-screen bg-[#0e0d13] text-white flex items-center justify-center">
         <div className="text-center">
-          <p className="text-white/50 font-['sofia-pro',sans-serif] mb-4">{t("leistungen.notFound")}</p>
-          <Link to={localizedPath("/leistungen")} className="text-[#8129ff] hover:underline font-['sofia-pro',sans-serif]">
+          <p className="text-white/50 mb-4">{t("leistungen.notFound")}</p>
+          <Link to={localizedPath("/leistungen")} className="text-[#8129ff] hover:underline">
             {t("leistungen.backToOverview")}
           </Link>
         </div>

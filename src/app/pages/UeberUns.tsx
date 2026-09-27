@@ -29,13 +29,13 @@ function UeberUnsHero({ data }: { data: ReturnType<typeof useAboutData> }) {
           className="flex flex-col gap-8 max-w-3xl"
         >
           <h1
-            className="font-['sofia-pro',sans-serif] font-semibold text-white leading-[1.05]"
+            className="font-semibold text-white leading-[1.05]"
             style={{ fontSize: "var(--text-hero)" }}
           >
             {data.heroTitle}
           </h1>
           <p
-            className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed max-w-2xl"
+            className="text-white/60 font-light leading-relaxed max-w-2xl"
             style={{ fontSize: "var(--text-body)" }}
           >
             {data.heroSubheading}
@@ -63,7 +63,7 @@ function MissionSection({ data }: { data: ReturnType<typeof useAboutData> }) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
         <div>
           <h2
-            className="font-['sofia-pro',sans-serif] font-semibold text-white"
+            className="font-semibold text-white"
             style={{ fontSize: "var(--text-h2)" }}
           >
             {data.missionTitle}
@@ -71,7 +71,7 @@ function MissionSection({ data }: { data: ReturnType<typeof useAboutData> }) {
         </div>
         <div>
           <p
-            className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed"
+            className="text-white/60 font-light leading-relaxed"
             style={{ fontSize: "var(--text-body)" }}
           >
             {data.missionText}
@@ -107,7 +107,7 @@ function ValuesSection({ data }: { data: ReturnType<typeof useAboutData> }) {
         initial={{ opacity: 0, y: 20 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.65, delay: 0.1 }}
-        className="font-['sofia-pro',sans-serif] font-semibold text-white mb-16"
+        className="font-semibold text-white mb-16"
         style={{ fontSize: "var(--text-h2)" }}
       >
         {data.valuesTitle}
@@ -130,13 +130,13 @@ function ValuesSection({ data }: { data: ReturnType<typeof useAboutData> }) {
             </div>
             <div className="flex flex-col gap-3">
               <h3
-                className="font-['sofia-pro',sans-serif] font-semibold text-white"
+                className="font-semibold text-white"
                 style={{ fontSize: "var(--text-card)" }}
               >
                 {item.title}
               </h3>
               <p
-                className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed"
+                className="text-white/60 font-light leading-relaxed"
                 style={{ fontSize: "var(--text-body)" }}
               >
                 {item.description}
@@ -167,7 +167,7 @@ function ProcessSection({ data }: { data: ReturnType<typeof useAboutData> }) {
         initial={{ opacity: 0, y: 20 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.65, delay: 0.1 }}
-        className="font-['sofia-pro',sans-serif] font-semibold text-white mb-16"
+        className="font-semibold text-white mb-16"
         style={{ fontSize: "var(--text-h2)" }}
       >
         {data.processTitle}
@@ -184,20 +184,20 @@ function ProcessSection({ data }: { data: ReturnType<typeof useAboutData> }) {
           >
             <div className="flex flex-col gap-4">
               <p
-                className="font-['sofia-pro',sans-serif] font-semibold text-white/40"
+                className="font-semibold text-white/40"
                 style={{ fontSize: "var(--text-h2)" }}
               >
                 {step.number}
               </p>
               <h3
-                className="font-['sofia-pro',sans-serif] font-semibold text-white"
+                className="font-semibold text-white"
                 style={{ fontSize: "var(--text-card)" }}
               >
                 {step.title}
               </h3>
             </div>
             <p
-              className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed"
+              className="text-white/60 font-light leading-relaxed"
               style={{ fontSize: "var(--text-body)" }}
             >
               {step.description}
@@ -226,7 +226,7 @@ function TeamSection({ data }: { data: ReturnType<typeof useAboutData> }) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
         <div>
           <h2
-            className="font-['sofia-pro',sans-serif] font-semibold text-white"
+            className="font-semibold text-white"
             style={{ fontSize: "var(--text-h2)" }}
           >
             {data.teamTitle}
@@ -234,7 +234,7 @@ function TeamSection({ data }: { data: ReturnType<typeof useAboutData> }) {
         </div>
         <div>
           <p
-            className="text-white/60 font-['sofia-pro',sans-serif] font-light leading-relaxed"
+            className="text-white/60 font-light leading-relaxed"
             style={{ fontSize: "var(--text-body)" }}
           >
             {data.teamDescription}
@@ -264,7 +264,7 @@ function CtaSection({ data }: { data: ReturnType<typeof useAboutData> }) {
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 flex flex-col lg:flex-row lg:items-center justify-between gap-10">
         <div className="flex flex-col gap-4 max-w-xl">
           <p
-            className="text-white font-['sofia-pro',sans-serif] font-semibold"
+            className="text-white font-semibold"
             style={{ fontSize: "var(--text-h2)" }}
           >
             {data.cta}
@@ -273,7 +273,7 @@ function CtaSection({ data }: { data: ReturnType<typeof useAboutData> }) {
         <div className="flex flex-wrap gap-3">
           <Link
             to={localizedPath("/kontakt")}
-            className="inline-flex items-center gap-2 bg-[#8129ff] hover:bg-[#a318f8] border border-[#8129ff] text-white font-['sofia-pro',sans-serif] font-semibold px-[24px] py-[11px] rounded-lg transition-all"
+            className="inline-flex items-center gap-2 bg-[#8129ff] hover:bg-[#a318f8] border border-[#8129ff] text-white font-semibold px-[24px] py-[11px] rounded-lg transition-all"
             style={{ fontSize: "var(--text-btn)" }}
           >
             {t("nav.contact")}
