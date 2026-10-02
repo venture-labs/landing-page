@@ -1,3 +1,5 @@
 .env
 node_modules
 dist
+# Dev Manager task specs are not versioned (cluster decision 2026-10-02)
+/docs/specs/
