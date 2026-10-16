@@ -137,15 +137,27 @@ test.describe("criterion 3: Check/Build/Care CTAs carry their topic", () => {
   for (const topic of STEPS) {
     test(`criterion 3: /de/kontakt?topic=${topic} preselects the matching chip`, async ({ page }) => {
       await page.goto(`/de/kontakt?topic=${topic}`);
-      const activeChips = await page.$$eval("button", (btns) =>
-        btns
-          .filter((b) => {
-            const bg = getComputedStyle(b).backgroundColor;
-            return bg !== "rgba(0, 0, 0, 0)" && b.className.includes("rounded-full");
-          })
-          .map((b) => b.textContent?.trim())
-      );
-      expect(activeChips.length, `exactly one chip must be preselected for ?topic=${topic}`).toBe(1);
+      // The preselection is applied by a useEffect (Kontakt.tsx) that reads
+      // the ?topic= query param after mount, and the chip's background
+      // transitions in via a CSS "transition-all" class — so a single
+      // synchronous read right after goto() can race both the effect and the
+      // transition and observe zero active chips even though the app is
+      // correct a moment later. expect.poll() retries instead of a one-shot
+      // read, the same fix already applied twice above in this file.
+      await expect
+        .poll(
+          async () =>
+            page.$$eval("button", (btns) =>
+              btns
+                .filter((b) => {
+                  const bg = getComputedStyle(b).backgroundColor;
+                  return bg !== "rgba(0, 0, 0, 0)" && b.className.includes("rounded-full");
+                })
+                .map((b) => b.textContent?.trim())
+            ),
+          `exactly one chip must be preselected for ?topic=${topic}`
+        )
+        .toHaveLength(1);
     });
   }
 });
