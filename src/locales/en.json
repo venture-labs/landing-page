@@ -167,6 +167,24 @@
           "Go-to-Market",
           "Team Building"
         ]
+      },
+      "check": {
+        "label": "Check",
+        "chips": [
+          "Check"
+        ]
+      },
+      "build": {
+        "label": "Build",
+        "chips": [
+          "Build"
+        ]
+      },
+      "care": {
+        "label": "Care",
+        "chips": [
+          "Care"
+        ]
       }
     },
     "directContact": "Direct Contact",
@@ -186,8 +204,14 @@
     "privacyHeading": "Privacy policy",
     "privacyText": "By submitting this form, you agree that the data you provide will be used to process your request and that you accept our",
     "privacyLinkLabel": "privacy policy",
+    "privacyTextSuffix": "",
     "submit": "Send",
     "submitHint": "Opens your email app with a pre-filled message to us.",
     "ctaQuestion": "Want a free initial consultation? We're happy to help. Book a call directly or write to us – we'll get back to you."
+  },
+  "notFound": {
+    "heading": "Page not found",
+    "message": "This page doesn't exist (anymore). Our services overview might be what you're looking for.",
+    "cta": "Go to Services"
   }
 }
