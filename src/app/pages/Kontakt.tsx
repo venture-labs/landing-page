@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-import { Link } from "react-router";
+import { useEffect, useRef, useState } from "react";
+import { Link, useSearchParams } from "react-router";
 import { motion, useInView } from "motion/react";
 import { useTranslation } from "react-i18next";
 import { Navbar } from "@/app/components/Navbar";
@@ -15,7 +15,16 @@ const topicCategories = [
   { slug: "ai-products", accent: "#a318f8" },
   { slug: "ai-experience", accent: "#2b95f6" },
   { slug: "venture-building", accent: "#ef4444" },
+  // The three Pulse funnel steps — linked from the Check/Build/Care CTAs
+  // under /leistungen#ablauf via "?topic=check|build|care". Same accents as
+  // PulseJourney's STEP_ACCENTS, so the colour stays recognisable across pages.
+  { slug: "check", accent: "#2b95f6" },
+  { slug: "build", accent: "#a318f8" },
+  { slug: "care", accent: "#fda700" },
 ] as const;
+
+/** The `?topic=` slugs that preselect a Pulse funnel chip (item 6). */
+const PULSE_TOPIC_SLUGS = ["check", "build", "care"] as const;
 
 const teamContacts = [
   {
@@ -284,7 +293,7 @@ function ContactForm({ selectedTopics }: { selectedTopics: string[] }) {
             <Link to={localizedPath("/datenschutz")} className="text-white/70 underline hover:text-white transition-colors">
               {t("kontakt.privacyLinkLabel")}
             </Link>
-            .
+            {t("kontakt.privacyTextSuffix", { defaultValue: "" })}.
           </span>
         </label>
       </div>
@@ -435,14 +444,27 @@ function CtaStrip() {
 /* ─── page ───────────────────────────────────────────────────────────── */
 
 export function Kontakt() {
+  const { t } = useTranslation();
   const glowRef = useRef<HTMLDivElement>(null);
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
+  const [searchParams] = useSearchParams();
 
   function toggleTopic(chip: string) {
     setSelectedTopics((prev) =>
       prev.includes(chip) ? prev.filter((c) => c !== chip) : [...prev, chip]
     );
   }
+
+  // Item 6 — the Check/Build/Care CTAs pass their topic on as "?topic=", and
+  // that preselects the matching Pulse chip here.
+  useEffect(() => {
+    const topic = searchParams.get("topic");
+    if (!topic || !PULSE_TOPIC_SLUGS.includes(topic as (typeof PULSE_TOPIC_SLUGS)[number])) return;
+    const chips = t(`kontakt.topics.${topic}.chips`, { returnObjects: true }) as string[];
+    const chip = chips[0];
+    if (!chip) return;
+    setSelectedTopics((prev) => (prev.includes(chip) ? prev : [...prev, chip]));
+  }, [searchParams, t]);
 
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     if (!glowRef.current) return;
