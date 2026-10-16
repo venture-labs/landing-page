@@ -207,10 +207,11 @@ export function Leistungen() {
     window.scrollTo(0, 0);
   }, []);
 
-  // The quiz gets its own URL so old pulse.venturelabs.team "#quiz" links can
-  // be pointed at "/de/leistungen#pulse-score" and land on an open dialog.
+  // The quiz gets its own URL ("#pulse-score"). The old pulse.venturelabs.team
+  // "#quiz" fragment is carried unchanged across the S10 subdomain redirect
+  // (a fragment cannot be rewritten server-side), so it is answered here too.
   useEffect(() => {
-    if (location.hash === "#pulse-score") {
+    if (location.hash === "#pulse-score" || location.hash === "#quiz") {
       setQuizOpen(true);
     }
   }, [location.hash]);

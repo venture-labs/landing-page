@@ -306,8 +306,29 @@ export const COPY: Record<"de" | "en", Copy> = {
 
 type QuizState = { step: "intro" } | { step: "question"; index: number; answers: number[] } | { step: "result"; answers: number[] };
 
-export function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
+export function PulseQuiz({
+  copy,
+  accent,
+  onStepChange,
+}: {
+  copy: Copy;
+  accent: string;
+  /** Lets the surrounding dialog react to the current step (e.g. shrink its
+   * always-visible title for the result step so the booking CTA fits above
+   * the fold). */
+  onStepChange?: (step: QuizState["step"]) => void;
+}) {
   const [state, setState] = useState<QuizState>({ step: "intro" });
+
+  // Notify the parent synchronously, in the same event-handler tick as the
+  // local step change (not via a useEffect, which would commit one render
+  // late and let the dialog paint one frame with the previous step's layout
+  // — e.g. the full-size title still showing while the result view is
+  // already laid out, pushing the booking CTA below the fold for that frame).
+  function update(next: QuizState) {
+    onStepChange?.(next.step);
+    setState(next);
+  }
 
   const scores = useMemo(() => {
     if (state.step !== "result") return null;
@@ -330,10 +351,10 @@ export function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
     const answers = [...state.answers];
     answers[state.index] = optionIndex;
     if (state.index + 1 < copy.questions.length) {
-      setState({ step: "question", index: state.index + 1, answers });
+      update({ step: "question", index: state.index + 1, answers });
     } else {
       trackEvent(EVENTS.quizCompleted);
-      setState({ step: "result", answers });
+      update({ step: "result", answers });
     }
   }
 
@@ -346,7 +367,7 @@ export function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
         <button
           onClick={() => {
             trackEvent(EVENTS.quizStarted);
-            setState({ step: "question", index: 0, answers: [] });
+            update({ step: "question", index: 0, answers: [] });
           }}
           className="inline-flex items-center gap-2 text-white font-semibold px-6 py-3 rounded-lg transition-all hover:scale-[1.02]"
           style={{ fontSize: "var(--text-btn)", backgroundColor: accent }}
@@ -395,8 +416,8 @@ export function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
   const band = [...copy.bands].reverse().find((b) => scores.score >= b.min) ?? copy.bands[0];
 
   return (
-    <div className="flex flex-col gap-10">
-      <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-2">
         <p className="font-light text-white/50" style={{ fontSize: "var(--text-small)" }}>
           {copy.resultReady}
         </p>
@@ -413,19 +434,19 @@ export function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
             {copy.scoreLabel}
           </span>
         </div>
-        <p className="text-white/60 font-light leading-relaxed max-w-2xl" style={{ fontSize: "var(--text-body)" }}>
+        <p className="text-white/60 font-light leading-snug max-w-2xl" style={{ fontSize: "var(--text-small)" }}>
           {band.narrative}
         </p>
-        <p className="text-white/70 font-light leading-relaxed max-w-2xl" style={{ fontSize: "var(--text-body)" }}>
+        <p className="text-white/70 font-light leading-snug max-w-2xl" style={{ fontSize: "var(--text-small)" }}>
           {copy.weakestSentence(copy.areaLabels[scores.weakest[0]], copy.areaLabels[scores.weakest[1]])}
         </p>
       </div>
 
-      <div className="flex flex-col gap-4 p-7 rounded-xl border border-white/8 bg-white/[0.02] max-w-2xl">
-        <h4 className="font-semibold text-white" style={{ fontSize: "var(--text-h2)" }}>
+      <div className="flex flex-col gap-3 p-5 rounded-xl border border-white/8 bg-white/[0.02] max-w-2xl">
+        <h4 className="font-semibold text-white" style={{ fontSize: "var(--text-body)" }}>
           {copy.ctaHeading}
         </h4>
-        <p className="text-white/60 font-light leading-relaxed" style={{ fontSize: "var(--text-body)" }}>
+        <p className="text-white/60 font-light leading-snug" style={{ fontSize: "var(--text-small)" }}>
           {copy.ctaBody}
         </p>
         <div className="flex flex-wrap items-center gap-4 mt-1">
@@ -438,7 +459,7 @@ export function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
             {copy.ctaButton}
           </CtaButton>
           <button
-            onClick={() => setState({ step: "intro" })}
+            onClick={() => update({ step: "intro" })}
             className="inline-flex items-center gap-1 text-white/50 hover:text-white transition-colors font-light"
             style={{ fontSize: "var(--text-small)" }}
           >
