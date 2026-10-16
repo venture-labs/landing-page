@@ -123,8 +123,14 @@ test.describe("criterion 3: Check/Build/Care CTAs carry their topic", () => {
     const rail = page.locator('button[aria-pressed]');
     for (let i = 0; i < STEPS.length; i++) {
       await rail.nth(i).click();
-      const href = await page.locator('a[href*="/kontakt?topic="]').first().getAttribute("href");
-      expect(href).toBe(`/de/kontakt?topic=${STEPS[i]}`);
+      // StepDetail is swapped under AnimatePresence mode="wait" (a 0.35s exit
+      // animation), so the previous step's link briefly remains the only
+      // match in the DOM. Use an auto-retrying assertion instead of a single
+      // getAttribute() read so the test waits out the transition.
+      await expect(page.locator('a[href*="/kontakt?topic="]').first()).toHaveAttribute(
+        "href",
+        `/de/kontakt?topic=${STEPS[i]}`
+      );
     }
   });
 
@@ -188,6 +194,11 @@ test.describe("criterion 7: a 50/100 score never returns the top band", () => {
       await expect(options.nth(0)).toBeVisible();
       await options.nth(0).click();
     }
-    await expect(page.getByText(/Datenbasis.+Prozesse|Prozesse.+Datenbasis/)).toBeVisible();
+    // Scope to the "weakest areas" narrative sentence specifically — a plain
+    // getByText(/Datenbasis.+Prozesse/) also matches the area-breakdown list
+    // below it, which names every area and triggers a strict-mode violation.
+    const weakestSentence = page.locator("p", { hasText: "schwächsten" });
+    await expect(weakestSentence).toBeVisible();
+    await expect(weakestSentence).toHaveText(/Datenbasis.+Prozesse|Prozesse.+Datenbasis/);
   });
 });
