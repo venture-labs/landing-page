@@ -33,6 +33,11 @@ const OPTION_BUTTONS = '[role="dialog"] button.text-left';
 const CTA_LABEL = { de: "Kostenloses Erstgespräch buchen", en: "Book a free intro call" } as const;
 const BREAKDOWN_HEADING = { de: "Deine Auswertung nach fünf Bereichen", en: "Your five-dimension breakdown" } as const;
 const START_CTA = { de: /Meinen Pulse Score prüfen/, en: /Check my Pulse Score/ } as const;
+const HERO_PULSE_CTA = { de: "Kostenlosen Pulse Score starten", en: "Start your free Pulse Score" } as const;
+const QUIZ_HEADING = {
+  de: "AI Pulse Score: Wie gesund ist dein KI-Einsatz?",
+  en: "AI Pulse Score: how healthy is your AI use?",
+} as const;
 
 async function blockOutbound(context: BrowserContext): Promise<void> {
   await context.route("**://plausible.io/**", (route) => route.abort());
@@ -103,6 +108,48 @@ test.describe("criterion 1: the result CTA is relabelled and reordered", () => {
         ).toBeLessThanOrEqual(Math.min(dialogVisibleBottom, vp.height));
       });
     }
+  }
+});
+
+test.describe("regression: the result step's hidden title does not survive close/reopen", () => {
+  // Reviewer finding (reviewer-r1.md #1, blocking): PulseCheckModal's own
+  // `step` state is lifted from PulseQuiz but PulseCheckModal itself stays
+  // mounted across opens/closes — only the Dialog's content unmounts. Without
+  // resetting `step` back to "intro" on close, a dialog reopened after
+  // completing the quiz once still thinks it is on the result step, so the
+  // (sr-only-for-result-only) DialogTitle stays hidden on the freshly
+  // reopened intro screen.
+  for (const lang of ["de", "en"] as const) {
+    test(`regression: /${lang}/leistungen — closing and reopening the quiz after completing it restores the visible title`, async ({
+      page,
+    }) => {
+      await blockOutbound(page.context());
+      await completeQuiz(page, lang, 0);
+
+      // Still on the result step: the title is the sr-only accessible name,
+      // not visibly rendered.
+      const dialogTitle = page.locator('[data-slot="dialog-title"]');
+      await expect(dialogTitle).toHaveClass(/sr-only/);
+
+      // Close the dialog (the Radix-provided close button).
+      await page.getByRole("button", { name: "Close" }).click();
+      await expect(page.locator('[role="dialog"]')).toHaveCount(0);
+
+      // Reopen it from the page's own hero CTA (not the #pulse-score hash,
+      // which only fires its auto-open effect once per hash value). The
+      // page carries two buttons with this label (hero + closing callout);
+      // either opens the same modal, so the first one is enough.
+      await page.getByRole("button", { name: HERO_PULSE_CTA[lang] }).first().click();
+      const reopenedDialog = page.locator('[role="dialog"]');
+      await expect(reopenedDialog).toBeVisible();
+
+      // Back on the intro step: the title must be visible again, not sr-only.
+      await expect(dialogTitle).not.toHaveClass(/sr-only/);
+      await expect(dialogTitle).toBeVisible();
+      await expect(dialogTitle).toHaveText(QUIZ_HEADING[lang]);
+      // And the intro's own start button confirms the step really is "intro".
+      await expect(reopenedDialog.getByRole("button", { name: START_CTA[lang] })).toBeVisible();
+    });
   }
 });
 
