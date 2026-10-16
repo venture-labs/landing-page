@@ -206,7 +206,11 @@
     "privacyLinkLabel": "Datenschutzbestimmungen",
     "privacyTextSuffix": " zu",
     "submit": "Absenden",
-    "submitHint": "Öffnet dein E-Mail-Programm mit einer vorausgefüllten Nachricht an uns.",
+    "submitting": "Wird gesendet…",
+    "submitHint": "Wir melden uns innerhalb von ein bis zwei Werktagen bei dir.",
+    "thankYouHeading": "Danke für deine Nachricht!",
+    "thankYouBody": "Wir haben deine Anfrage erhalten und melden uns innerhalb von ein bis zwei Werktagen bei dir.",
+    "errorText": "Das hat leider nicht geklappt. Bitte versuch es nochmal oder schreib uns direkt an contact@venturelabs.team.",
     "ctaQuestion": "Du möchtest eine kostenlose Erstberatung? Wir helfen dir gerne weiter. Buch dir direkt ein Gespräch oder schreib uns, wir melden uns bei dir."
   },
   "notFound": {

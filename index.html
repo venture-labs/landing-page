@@ -24,6 +24,29 @@
   </head>
 
   <body>
+    <!-- Static, build-time-detectable forms for Netlify Forms. Never shown to
+         visitors — the real forms are the React components below, which POST
+         to "/" via fetch() with the matching form-name. These hidden forms
+         exist only so Netlify's deploy-time HTML scan registers each field
+         schema. scripts/prerender.ts copies <body> unchanged into every
+         route shell, so both forms are registered from every deployed route. -->
+    <form name="contact" data-netlify="true" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="company" />
+      <input type="text" name="role" />
+      <input type="tel" name="phone" />
+      <input type="text" name="topics" />
+      <textarea name="message"></textarea>
+    </form>
+    <form name="pulse-score-leads" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="email" name="email" />
+      <input type="text" name="score" />
+      <input type="text" name="band" />
+      <input type="text" name="weakest" />
+      <input type="text" name="lang" />
+      <input name="bot-field" />
+    </form>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

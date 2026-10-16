@@ -1,8 +1,10 @@
 import { useMemo, useState } from "react";
+import { Link } from "react-router";
 import { ArrowRight, Check } from "lucide-react";
 import { EVENTS, trackEvent } from "@/app/analytics";
 import { BOOKING_URL } from "@/app/links";
 import { CtaButton } from "@/app/components/ui/CtaButton";
+import { useLocale } from "@/app/locale";
 
 /**
  * The 10-question Pulse Score quiz, transposed from the live
@@ -42,6 +44,17 @@ export interface Copy {
   ctaBody: string;
   ctaButton: string;
   questions: QuizQuestion[];
+  /* Optional lead capture box on the result step (item 1 of the 2026-10-16
+   * funnel fixes) — its own copy, same pattern as the rest of this file. */
+  leadHeading: string;
+  leadIntro: string;
+  leadEmailPlaceholder: string;
+  leadConsentText: string;
+  leadConsentLinkLabel: string;
+  leadSubmit: string;
+  leadSubmitting: string;
+  leadThankYou: string;
+  leadError: string;
 }
 
 export const COPY: Record<"de" | "en", Copy> = {
@@ -80,6 +93,15 @@ export const COPY: Record<"de" | "en", Copy> = {
     ctaHeading: "Lass uns den größten Hebel finden.",
     ctaBody: "Ein gezielter Pulse Check zeigt genau, welche verbleibenden Lücken es zuerst zu schließen lohnt – und welche nicht.",
     ctaButton: "Kostenloses Erstgespräch buchen",
+    leadHeading: "Ergebnis festhalten?",
+    leadIntro: "Trag deine E-Mail-Adresse ein, wenn du deinen Pulse Score festhalten oder mit uns darüber sprechen möchtest.",
+    leadEmailPlaceholder: "Deine E-Mail-Adresse",
+    leadConsentText: "Ich bin einverstanden, dass meine Angaben zur Kontaktaufnahme zu meinem Pulse Score verwendet werden, gemäß der",
+    leadConsentLinkLabel: "Datenschutzerklärung",
+    leadSubmit: "Absenden",
+    leadSubmitting: "Wird gesendet…",
+    leadThankYou: "Danke! Wir melden uns bei dir.",
+    leadError: "Das hat leider nicht geklappt. Bitte versuch es nochmal.",
     questions: [
       {
         area: "data",
@@ -209,6 +231,15 @@ export const COPY: Record<"de" | "en", Copy> = {
     ctaHeading: "Let's find the highest-leverage next step.",
     ctaBody: "A focused Pulse Check will show you exactly where the remaining gaps are worth closing first, and where they're not.",
     ctaButton: "Book a free intro call",
+    leadHeading: "Keep your result?",
+    leadIntro: "Leave your email if you'd like to hold on to your Pulse Score or talk it through with us.",
+    leadEmailPlaceholder: "Your email address",
+    leadConsentText: "I agree that my details may be used to get in touch about my Pulse Score, per the",
+    leadConsentLinkLabel: "privacy policy",
+    leadSubmit: "Submit",
+    leadSubmitting: "Sending…",
+    leadThankYou: "Thanks! We'll be in touch.",
+    leadError: "Something went wrong. Please try again.",
     questions: [
       {
         area: "data",
@@ -305,6 +336,136 @@ export const COPY: Record<"de" | "en", Copy> = {
 };
 
 type QuizState = { step: "intro" } | { step: "question"; index: number; answers: number[] } | { step: "result"; answers: number[] };
+
+/** Netlify Forms AJAX submission, the same pattern already proven on
+ * pulse-landing-page/index.html's `pulse-score-leads` form (see Kontakt.tsx,
+ * which uses the identical helper for the `contact` form). */
+function encodeFormData(data: Record<string, string>): string {
+  return Object.keys(data)
+    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
+    .join("&");
+}
+
+type LeadStatus = "idle" | "submitting" | "sent" | "error";
+
+/**
+ * The result step's optional lead capture box — item 1 of the 2026-10-16
+ * funnel fixes. Sits beside the score/band/breakdown/booking CTA without
+ * gating any of it: a visitor who never touches this box still sees the full
+ * result above and below it.
+ */
+function PulseLeadBox({
+  copy,
+  accent,
+  score,
+  band,
+  weakest,
+}: {
+  copy: Copy;
+  accent: string;
+  score: number;
+  band: string;
+  weakest: string;
+}) {
+  const { lang, localizedPath } = useLocale();
+  const [email, setEmail] = useState("");
+  const [consent, setConsent] = useState(false);
+  const [status, setStatus] = useState<LeadStatus>("idle");
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setStatus("submitting");
+
+    try {
+      const res = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encodeFormData({
+          "form-name": "pulse-score-leads",
+          email,
+          score: String(score),
+          band,
+          weakest,
+          lang,
+          "bot-field": "",
+        }),
+      });
+      if (!res.ok) {
+        setStatus("error");
+        return;
+      }
+      setStatus("sent");
+    } catch {
+      setStatus("error");
+    }
+  }
+
+  if (status === "sent") {
+    return (
+      <div className="flex items-center gap-2 p-5 rounded-xl border border-white/8 bg-white/[0.02] max-w-2xl">
+        <Check size={16} style={{ color: accent }} />
+        <p className="text-white/70 font-light" style={{ fontSize: "var(--text-small)" }}>
+          {copy.leadThankYou}
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-3 p-5 rounded-xl border border-white/8 bg-white/[0.02] max-w-2xl"
+    >
+      <h4 className="font-semibold text-white" style={{ fontSize: "var(--text-body)" }}>
+        {copy.leadHeading}
+      </h4>
+      <p className="text-white/60 font-light leading-snug" style={{ fontSize: "var(--text-small)" }}>
+        {copy.leadIntro}
+      </p>
+      <div className="flex flex-col sm:flex-row gap-3">
+        <input
+          type="email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder={copy.leadEmailPlaceholder}
+          className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/40 font-light outline-none transition-colors focus:border-white/30"
+          style={{ fontSize: "var(--text-small)" }}
+        />
+        <button
+          type="submit"
+          disabled={status === "submitting"}
+          className="font-semibold text-white rounded-lg px-5 py-3 transition-all hover:scale-[1.02] disabled:opacity-60 disabled:hover:scale-100 shrink-0"
+          style={{ fontSize: "var(--text-small)", backgroundColor: accent }}
+        >
+          {status === "submitting" ? copy.leadSubmitting : copy.leadSubmit}
+        </button>
+      </div>
+      <label className="flex items-start gap-3 cursor-pointer">
+        <input
+          type="checkbox"
+          required
+          checked={consent}
+          onChange={(e) => setConsent(e.target.checked)}
+          className="mt-1 w-4 h-4 shrink-0"
+          style={{ accentColor: accent }}
+        />
+        <span className="text-white/50 font-light leading-relaxed" style={{ fontSize: "var(--text-small)" }}>
+          {copy.leadConsentText}{" "}
+          <Link to={localizedPath("/datenschutz")} className="text-white/70 underline hover:text-white transition-colors">
+            {copy.leadConsentLinkLabel}
+          </Link>
+          .
+        </span>
+      </label>
+      {status === "error" && (
+        <p className="text-[#ef4444] font-light" style={{ fontSize: "var(--text-small)" }}>
+          {copy.leadError}
+        </p>
+      )}
+    </form>
+  );
+}
 
 export function PulseQuiz({
   copy,
@@ -488,6 +649,14 @@ export function PulseQuiz({
           ))}
         </div>
       </div>
+
+      <PulseLeadBox
+        copy={copy}
+        accent={accent}
+        score={scores.score}
+        band={band.label}
+        weakest={`${copy.areaLabels[scores.weakest[0]]}, ${copy.areaLabels[scores.weakest[1]]}`}
+      />
     </div>
   );
 }

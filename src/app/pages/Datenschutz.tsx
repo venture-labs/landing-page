@@ -47,17 +47,25 @@ function DatenschutzDe() {
           UK- und Swiss-U.S.-Erweiterung) zertifiziert; ergänzend werden EU-Standardvertragsklauseln (Beschluss
           2021/914 der EU-Kommission) eingesetzt.
         </p>
+        <p>
+          Eine Terminbuchung über den Buchungslink dieser Seite führt zu Google Calendar (Google Ireland Limited),
+          einem eigenständigen Angebot von Google. Dieser Link wird erst beim aktiven Anklicken aufgerufen; bis
+          dahin findet keine Verbindung zu Google statt. Für die Terminbuchung selbst gelten die Datenschutzhinweise
+          von Google.
+        </p>
       </div>
 
       <div>
         <h2>IV. Kontaktaufnahme</h2>
         <p>
-          Das Kontaktformular auf dieser Seite verarbeitet Ihre Angaben ausschließlich lokal in Ihrem Browser. Beim
-          Absenden öffnet sich Ihr eigenes E-Mail-Programm mit einer vorausgefüllten Nachricht an
-          contact@venturelabs.team. Eine Übermittlung an unsere Server findet dabei nicht statt — wir erhalten nur
-          die Angaben, die Sie anschließend aktiv per E-Mail versenden, und nutzen diese ausschließlich zur
-          Bearbeitung Ihrer Anfrage. Rechtsgrundlage ist die Durchführung vorvertraglicher Maßnahmen auf Ihre
-          Anfrage hin (Art. 6 Abs. 1 lit. b DSGVO).
+          Das Kontaktformular sowie das optionale E-Mail-Feld im Ergebnis des AI Pulse Score auf dieser Seite werden
+          über Netlify Forms verarbeitet, eine Funktion unseres Hosting-Anbieters Netlify, Inc. (siehe Abschnitt
+          III.). Beim Absenden werden die eingegebenen Angaben (beim Kontaktformular u. a. Name, E-Mail-Adresse und
+          Nachricht; beim Pulse-Score-Feld die E-Mail-Adresse sowie das Testergebnis) direkt an Netlify übermittelt
+          und dort gespeichert, bis wir sie im Netlify-Dashboard löschen; eine Übermittlung an unsere eigenen Server
+          findet nicht statt. Rechtsgrundlage ist die Durchführung vorvertraglicher Maßnahmen auf Ihre Anfrage hin
+          (Art. 6 Abs. 1 lit. b DSGVO) bzw., beim Pulse-Score-Feld, Ihre ausdrückliche Einwilligung (Art. 6 Abs. 1
+          lit. a DSGVO), die Sie beim Absenden erteilen.
         </p>
       </div>
 
@@ -72,12 +80,12 @@ function DatenschutzDe() {
       </div>
 
       <div>
-        <h2>VI. Adobe Fonts</h2>
+        <h2>VI. Schriftarten</h2>
         <p>
-          Diese Seite bindet Schriftarten über Adobe Fonts ein, einen Dienst der Adobe Inc. (345 Park Avenue, San
-          Jose, CA 95110, USA). Beim Aufruf der Seite wird dazu eine Verbindung zu Servern von Adobe hergestellt,
-          wobei Ihre IP-Adresse übertragen werden kann. Weitere Informationen:{" "}
-          <a href="https://www.adobe.com/privacy/policy.html">adobe.com/privacy/policy.html</a>.
+          Die auf dieser Seite verwendete Schriftart (Figtree) ist selbst gehostet und wird direkt von unserem
+          eigenen Server bzw. von Netlify ausgeliefert (siehe Abschnitt III.). Es wird keine Verbindung zu einem
+          externen Schriftarten-Dienst aufgebaut; beim Laden der Schriftart werden keine Daten an Dritte
+          übertragen.
         </p>
       </div>
 
@@ -85,11 +93,13 @@ function DatenschutzDe() {
         <h2>VII. Weitergabe an Dritte</h2>
         <p>
           Eine Weitergabe Ihrer Daten an Dritte erfolgt nur, soweit dies zur Erbringung der von Ihnen angefragten
-          Leistung erforderlich ist — insbesondere an Netlify, Inc. als Hosting-Dienstleister (siehe Abschnitt III.)
-          und Adobe Inc. im Rahmen der eingebundenen Schriftarten (siehe Abschnitt VI.) — oder wir gesetzlich dazu
-          verpflichtet sind. Eine Verarbeitung Ihrer Daten in den USA findet im Rahmen dieser Verbindungen statt;
-          beide Anbieter sind nach dem EU-U.S. Data Privacy Framework zertifiziert bzw. setzen
-          EU-Standardvertragsklauseln ein.
+          Leistung erforderlich ist — insbesondere an Netlify, Inc. als Hosting-Dienstleister und für die
+          Verarbeitung der beiden Formulare über Netlify Forms (siehe Abschnitte III. und IV.) — oder wir gesetzlich
+          dazu verpflichtet sind. Die eingebundene Schriftart (siehe Abschnitt VI.) ist selbst gehostet und
+          begründet keine Weitergabe an Dritte. Eine Verarbeitung Ihrer Daten in den USA findet im Rahmen der
+          Netlify-Verbindung statt; Netlify ist nach dem EU-U.S. Data Privacy Framework zertifiziert bzw. setzt
+          EU-Standardvertragsklauseln ein. Beim Anklicken des Buchungslinks (siehe Abschnitt III.) findet zudem eine
+          Verbindung zu Google Calendar statt.
         </p>
       </div>
 
@@ -161,16 +171,23 @@ function DatenschutzEn() {
           certified under the EU-U.S. Data Privacy Framework (including its UK and Swiss-U.S. extensions); EU
           Standard Contractual Clauses (European Commission Decision 2021/914) apply as an additional safeguard.
         </p>
+        <p>
+          Booking an appointment via this site's booking link takes you to Google Calendar (Google Ireland
+          Limited), a separate Google service. That link is only called up when you actively click it; no
+          connection to Google is made before that. Google's own privacy notices apply to the booking itself.
+        </p>
       </div>
 
       <div>
         <h2>IV. Getting in touch</h2>
         <p>
-          The contact form on this site processes your input entirely in your browser. On submission, it opens your
-          own email application with a pre-filled message to contact@venturelabs.team. No data is transmitted to
-          our servers in the process — we only receive the information you actively choose to send us afterwards by
-          email, and use it solely to handle your inquiry. The legal basis is the performance of pre-contractual
-          measures taken at your request (Art. 6(1)(b) GDPR).
+          The contact form and the optional email field in the AI Pulse Score result on this site are processed via
+          Netlify Forms, a feature of our hosting provider Netlify, Inc. (see section III). On submission, the
+          information you enter (for the contact form: name, email address and message, among others; for the
+          Pulse Score field: your email address and your test result) is sent directly to Netlify and stored there
+          until we delete it from the Netlify dashboard; no data is transmitted to our own servers. The legal basis
+          is the performance of pre-contractual measures taken at your request (Art. 6(1)(b) GDPR) or, for the
+          Pulse Score field, your explicit consent (Art. 6(1)(a) GDPR), given on submission.
         </p>
       </div>
 
@@ -184,12 +201,11 @@ function DatenschutzEn() {
       </div>
 
       <div>
-        <h2>VI. Adobe Fonts</h2>
+        <h2>VI. Fonts</h2>
         <p>
-          This site embeds typefaces via Adobe Fonts, a service of Adobe Inc. (345 Park Avenue, San Jose, CA 95110,
-          USA). Loading the page establishes a connection to Adobe's servers, which may transmit your IP address.
-          More information:{" "}
-          <a href="https://www.adobe.com/privacy/policy.html">adobe.com/privacy/policy.html</a>.
+          The typeface used on this site (Figtree) is self-hosted and served directly from our own server or from
+          Netlify (see section III). No connection is made to an external font service; loading the typeface
+          transmits no data to a third party.
         </p>
       </div>
 
@@ -197,10 +213,12 @@ function DatenschutzEn() {
         <h2>VII. Disclosure to third parties</h2>
         <p>
           We only disclose your data to third parties where necessary to provide the service you requested — in
-          particular to Netlify, Inc. as our hosting provider (see section III) and Adobe Inc. for the embedded
-          fonts (see section VI) — or where we are legally required to do so. Your data is processed in the USA
-          through these connections; both providers are certified under the EU-U.S. Data Privacy Framework and/or
-          apply EU Standard Contractual Clauses.
+          particular to Netlify, Inc. as our hosting provider and for processing both forms via Netlify Forms (see
+          sections III and IV) — or where we are legally required to do so. The embedded typeface (see section VI)
+          is self-hosted and involves no disclosure to third parties. Your data is processed in the USA through
+          this connection; Netlify is certified under the EU-U.S. Data Privacy Framework and/or applies EU Standard
+          Contractual Clauses. Clicking the booking link (see section III) also establishes a connection to Google
+          Calendar.
         </p>
       </div>
 
