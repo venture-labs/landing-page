@@ -69,6 +69,26 @@ async function fillContactForm(page: Page, { message }: { message: string }): Pr
   await page.locator('input[type="checkbox"]').check();
 }
 
+/**
+ * 20261016-leistungen-funnel-capture-leads-that-do-not-book: the contact form
+ * now POSTs to Netlify Forms and fires `Contact Sent` only once that POST
+ * resolves 200 (criterion 8) — `vite preview` has no Netlify Forms backend, so
+ * the POST to "/" is intercepted here and fulfilled with the given status,
+ * exactly as the spec's Test plan asks ("intercept the POST to `/`").
+ */
+async function mockFormSubmission(page: Page, status: number): Promise<void> {
+  await page.route(
+    (url) => url.pathname === "/",
+    async (route, request) => {
+      if (request.method() === "POST") {
+        await route.fulfill({ status, contentType: "text/plain", body: "" });
+      } else {
+        await route.continue();
+      }
+    }
+  );
+}
+
 test.describe("Plausible funnel events", () => {
   test.beforeEach(async ({ page }) => {
     await withRecorder(page);
@@ -97,14 +117,36 @@ test.describe("Plausible funnel events", () => {
     expect(await callsFor(page, "Quiz Started")).toBe(1);
   });
 
-  test('submitting the contact form fires "Contact Sent" once', async ({ page }) => {
+  test('criterion 8: a 200 response to the contact form POST fires "Contact Sent" once, after the response, not on click', async ({
+    page,
+  }) => {
+    await mockFormSubmission(page, 200);
     await fillContactForm(page, { message: "Hallo, Testnachricht." });
     await page.getByRole("button", { name: "Absenden" }).click();
 
+    // Nothing fires synchronously on the click itself.
+    expect(await callsFor(page, "Contact Sent")).toBe(0);
+
+    await expect(page.getByText("Danke für deine Nachricht!")).toBeVisible();
     expect(await callsFor(page, "Contact Sent")).toBe(1);
   });
 
-  test("submitting with an empty required field fires nothing", async ({ page }) => {
+  test("criterion 9: a non-200 response fires nothing, shows an inline error, and keeps the typed values", async ({
+    page,
+  }) => {
+    await mockFormSubmission(page, 500);
+    await fillContactForm(page, { message: "Hallo, Testnachricht." });
+    await page.getByRole("button", { name: "Absenden" }).click();
+
+    await expect(page.getByPlaceholder("Nachricht*")).toHaveValue("Hallo, Testnachricht.");
+    await expect(page.getByPlaceholder("Dein Name*")).toHaveValue("Test Person");
+    expect(await callsFor(page, "Contact Sent")).toBe(0);
+  });
+
+  test("criterion 9: submitting with an empty required field fires nothing (native validation blocks the handler)", async ({
+    page,
+  }) => {
+    await mockFormSubmission(page, 200);
     await fillContactForm(page, { message: "" });
     await page.getByRole("button", { name: "Absenden" }).click();
 
