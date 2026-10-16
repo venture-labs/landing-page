@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
 import { PulseJourney } from "@/app/components/PulseJourney";
+import { SituationsSection } from "@/app/components/SituationsSection";
 import { SkillMatrix } from "@/app/components/SkillMatrix";
 import { PulseCheckModal } from "@/app/components/PulseCheckModal";
 import { PulseLines } from "@/app/components/ui/PulseLines";
@@ -242,6 +243,7 @@ export function Leistungen() {
       <Navbar />
       <LeistungenHero onQuizOpen={() => setQuizOpen(true)} />
       <PulseJourney />
+      <SituationsSection />
       <SkillMatrix />
       <PulseCallout onQuizOpen={() => setQuizOpen(true)} />
       <ContactStrip />
