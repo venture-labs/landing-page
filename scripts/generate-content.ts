@@ -415,6 +415,13 @@ export interface CoreService {
   ctaLabel: string;
 }
 
+export interface Situation {
+  id: string;
+  text: string;
+  agentName: string;
+  capabilities: string[];
+}
+
 export interface LeistungenData {
   heroEyebrow: string;
   heroTitlePrefix: string;
@@ -432,6 +439,9 @@ export interface LeistungenData {
   strengthHeadline: string;
   strengthDescription: string;
   strengthFeatures: StrengthFeature[];
+  situationsHeading: string;
+  situationsCtaLabel: string;
+  situations: Situation[];
 }
 
 export const leistungenData: LeistungenData = {
@@ -459,6 +469,9 @@ export const leistungenData: LeistungenData = {
     null,
     2
   )},
+  situationsHeading: ${strLit(leistungen.situationsHeading)},
+  situationsCtaLabel: ${strLit(leistungen.situationsCtaLabel)},
+  situations: ${JSON.stringify(leistungen.situations ?? [], null, 2)},
 };
 `
   );
