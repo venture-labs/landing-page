@@ -206,7 +206,11 @@
     "privacyLinkLabel": "privacy policy",
     "privacyTextSuffix": "",
     "submit": "Send",
-    "submitHint": "Opens your email app with a pre-filled message to us.",
+    "submitting": "Sending…",
+    "submitHint": "We'll get back to you within one to two business days.",
+    "thankYouHeading": "Thanks for reaching out!",
+    "thankYouBody": "We've received your request and will get back to you within one to two business days.",
+    "errorText": "Something went wrong. Please try again, or email us directly at contact@venturelabs.team.",
     "ctaQuestion": "Want a free initial consultation? We're happy to help. Book a call directly or write to us – we'll get back to you."
   },
   "notFound": {
