@@ -71,7 +71,7 @@ export const COPY: Record<"de" | "en", Copy> = {
           "Dein Unternehmen steht ganz am Anfang seiner KI-Reise – ein völlig normaler Ausgangspunkt. Das Risiko liegt nicht darin, heute im Rückstand zu sein, sondern dort zu bleiben, während Wettbewerber und Kunden schneller vorankommen.",
       },
       {
-        min: 50,
+        min: 51,
         label: "Stabiler Puls",
         narrative:
           "Du bist den meisten Unternehmen deiner Größe voraus. Die Chance liegt jetzt nicht darin, grundlegende Lücken zu schließen, sondern gezielt zu entscheiden, wo KI als Nächstes den größten Hebel bietet – ohne unnötige Komplexität aufzubauen, die sich nicht auszahlt.",
@@ -79,7 +79,7 @@ export const COPY: Record<"de" | "en", Copy> = {
     ],
     ctaHeading: "Lass uns den größten Hebel finden.",
     ctaBody: "Ein gezielter Pulse Check zeigt genau, welche verbleibenden Lücken es zuerst zu schließen lohnt – und welche nicht.",
-    ctaButton: "Nächste Schritte ansehen →",
+    ctaButton: "Kostenloses Erstgespräch buchen",
     questions: [
       {
         area: "data",
@@ -200,7 +200,7 @@ export const COPY: Record<"de" | "en", Copy> = {
           "Your business is at the very beginning of its AI journey — a completely normal place to be. The risk isn't being behind today; it's staying there while competitors and customers move faster.",
       },
       {
-        min: 50,
+        min: 51,
         label: "Steady Pulse",
         narrative:
           "You're ahead of most companies your size. The opportunity now isn't fixing broken basics — it's making deliberate choices about where AI creates the most leverage next, without adding complexity that doesn't pay for itself.",
@@ -208,7 +208,7 @@ export const COPY: Record<"de" | "en", Copy> = {
     ],
     ctaHeading: "Let's find the highest-leverage next step.",
     ctaBody: "A focused Pulse Check will show you exactly where the remaining gaps are worth closing first, and where they're not.",
-    ctaButton: "See the next steps →",
+    ctaButton: "Book a free intro call",
     questions: [
       {
         area: "data",
@@ -317,7 +317,11 @@ export function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
     });
     const total = Object.values(byArea).reduce((a, b) => a + b, 0);
     const score = Math.round((total / 30) * 100);
-    const weakest = [...AREA_ORDER].sort((a, b) => byArea[a] - byArea[b]).slice(0, 2);
+    // Explicit tiebreak: equal-scoring areas keep their AREA_ORDER position
+    // rather than relying on Array.sort's stability.
+    const weakest = [...AREA_ORDER]
+      .sort((a, b) => byArea[a] - byArea[b] || AREA_ORDER.indexOf(a) - AREA_ORDER.indexOf(b))
+      .slice(0, 2);
     return { byArea, score, weakest };
   }, [state, copy]);
 
@@ -417,27 +421,6 @@ export function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
         </p>
       </div>
 
-      <div className="flex flex-col gap-4">
-        <h4 className="font-semibold text-white" style={{ fontSize: "var(--text-body)" }}>
-          {copy.breakdownHeading}
-        </h4>
-        <div className="flex flex-col gap-3 max-w-xl">
-          {AREA_ORDER.map((area) => (
-            <div key={area} className="flex items-center gap-4">
-              <span className="text-white/60 font-light w-40 shrink-0" style={{ fontSize: "var(--text-small)" }}>
-                {copy.areaLabels[area]}
-              </span>
-              <div className="flex-1 h-2 rounded-full bg-white/8 overflow-hidden">
-                <div className="h-full rounded-full" style={{ width: `${(scores.byArea[area] / 6) * 100}%`, backgroundColor: accent }} />
-              </div>
-              <span className="text-white/50 font-light w-10 text-right" style={{ fontSize: "var(--text-small)" }}>
-                {scores.byArea[area]}/6
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-
       <div className="flex flex-col gap-4 p-7 rounded-xl border border-white/8 bg-white/[0.02] max-w-2xl">
         <h4 className="font-semibold text-white" style={{ fontSize: "var(--text-h2)" }}>
           {copy.ctaHeading}
@@ -461,6 +444,27 @@ export function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
           >
             {copy.restart} <ArrowRight size={12} />
           </button>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-4">
+        <h4 className="font-semibold text-white" style={{ fontSize: "var(--text-body)" }}>
+          {copy.breakdownHeading}
+        </h4>
+        <div className="flex flex-col gap-3 max-w-xl">
+          {AREA_ORDER.map((area) => (
+            <div key={area} className="flex items-center gap-4">
+              <span className="text-white/60 font-light w-40 shrink-0" style={{ fontSize: "var(--text-small)" }}>
+                {copy.areaLabels[area]}
+              </span>
+              <div className="flex-1 h-2 rounded-full bg-white/8 overflow-hidden">
+                <div className="h-full rounded-full" style={{ width: `${(scores.byArea[area] / 6) * 100}%`, backgroundColor: accent }} />
+              </div>
+              <span className="text-white/50 font-light w-10 text-right" style={{ fontSize: "var(--text-small)" }}>
+                {scores.byArea[area]}/6
+              </span>
+            </div>
+          ))}
         </div>
       </div>
     </div>
