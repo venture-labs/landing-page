@@ -22,6 +22,7 @@ import { BlogDetail } from "./pages/BlogDetail";
 import { UeberUns } from "./pages/UeberUns";
 import { Impressum } from "./pages/Impressum";
 import { Datenschutz } from "./pages/Datenschutz";
+import { NotFound } from "./pages/NotFound";
 
 function HomePage() {
   const glowRef = useRef<HTMLDivElement>(null);
@@ -176,6 +177,14 @@ export default function App() {
           element={
             <LangGuard>
               <Datenschutz />
+            </LangGuard>
+          }
+        />
+        <Route
+          path="/:lang/*"
+          element={
+            <LangGuard>
+              <NotFound />
             </LangGuard>
           }
         />

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "motion/react";
 import { ArrowRight } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import { useTranslation } from "react-i18next";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
@@ -201,10 +201,20 @@ function ContactStrip() {
 export function Leistungen() {
   const glowRef = useRef<HTMLDivElement>(null);
   const [quizOpen, setQuizOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  // The quiz gets its own URL ("#pulse-score"). The old pulse.venturelabs.team
+  // "#quiz" fragment is carried unchanged across the S10 subdomain redirect
+  // (a fragment cannot be rewritten server-side), so it is answered here too.
+  useEffect(() => {
+    if (location.hash === "#pulse-score" || location.hash === "#quiz") {
+      setQuizOpen(true);
+    }
+  }, [location.hash]);
 
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     if (!glowRef.current) return;

@@ -167,6 +167,24 @@
           "Go-to-Market",
           "Team-Aufbau"
         ]
+      },
+      "check": {
+        "label": "Check",
+        "chips": [
+          "Check"
+        ]
+      },
+      "build": {
+        "label": "Build",
+        "chips": [
+          "Build"
+        ]
+      },
+      "care": {
+        "label": "Care",
+        "chips": [
+          "Care"
+        ]
       }
     },
     "directContact": "Direkter Kontakt",
@@ -186,8 +204,14 @@
     "privacyHeading": "Datenschutzerklärung",
     "privacyText": "Mit dem Absenden dieses Formulares erklärst du dich damit einverstanden, dass die übermittelten Daten zur Bearbeitung deines Anliegens verwendet werden und stimmst unseren",
     "privacyLinkLabel": "Datenschutzbestimmungen",
+    "privacyTextSuffix": " zu",
     "submit": "Absenden",
     "submitHint": "Öffnet dein E-Mail-Programm mit einer vorausgefüllten Nachricht an uns.",
     "ctaQuestion": "Du möchtest eine kostenlose Erstberatung? Wir helfen dir gerne weiter. Buch dir direkt ein Gespräch oder schreib uns, wir melden uns bei dir."
+  },
+  "notFound": {
+    "heading": "Seite nicht gefunden",
+    "message": "Diese Seite gibt es nicht (mehr). Vielleicht hilft dir unsere Leistungsübersicht weiter.",
+    "cta": "Zu den Leistungen"
   }
 }

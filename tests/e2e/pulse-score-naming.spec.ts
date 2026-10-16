@@ -237,7 +237,7 @@ test.describe("the closing block puts 'costs nothing' on the free Pulse Score", 
 test.describe("the paid Check step links to the contact page", () => {
   for (const lang of LANGS) {
     for (const path of [`/${lang}`, `/${lang}/leistungen`]) {
-      test(`criterion 10: on ${path} the Check card's CTA is a link to /${lang}/kontakt and navigates there`, async ({
+      test(`criterion 10: on ${path} the Check card's CTA is a link to /${lang}/kontakt?topic=check and navigates there`, async ({
         page,
       }) => {
         await page.goto(path);
@@ -245,7 +245,10 @@ test.describe("the paid Check step links to the contact page", () => {
 
         const cta = ablauf.getByRole("link", { name: CHECK_CARD_LABEL[lang] });
         await expect(cta, "the Check card's CTA must be a link, not a button").toHaveCount(1);
-        await expect(cta).toHaveAttribute("href", `/${lang}/kontakt`);
+        // 20261016-leistungen-funnel-booking-button-above-the-fold- (criterion 9,
+        // Dev Manager decision D6): this task appends ?topic=check to the same
+        // link on purpose, so the href is no longer query-free.
+        await expect(cta).toHaveAttribute("href", `/${lang}/kontakt?topic=check`);
 
         // It must not be a button any more — that was the old quiz opener.
         await expect(
@@ -253,7 +256,7 @@ test.describe("the paid Check step links to the contact page", () => {
         ).toHaveCount(0);
 
         await cta.click();
-        await expect(page).toHaveURL(new RegExp(`/${lang}/kontakt$`));
+        await expect(page).toHaveURL(new RegExp(`/${lang}/kontakt\\?topic=check$`));
         await expect(page.locator(DIALOG), "clicking it must open no dialog").toHaveCount(0);
       });
     }

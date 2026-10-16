@@ -218,7 +218,7 @@ function StepDetail({
           {step.description}
         </p>
         <Link
-          to={localizedPath("/kontakt")}
+          to={`${localizedPath("/kontakt")}?topic=${step.key}`}
           className="self-start inline-flex items-center gap-2 font-semibold text-white rounded-lg px-6 py-3 transition-transform hover:scale-[1.02]"
           style={{ fontSize: "var(--text-btn)", backgroundColor: accent }}
         >
