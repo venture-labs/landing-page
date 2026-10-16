@@ -20,6 +20,13 @@ export interface CoreService {
   ctaLabel: string;
 }
 
+export interface Situation {
+  id: string;
+  text: string;
+  agentName: string;
+  capabilities: string[];
+}
+
 export interface LeistungenData {
   heroEyebrow: string;
   heroTitlePrefix: string;
@@ -37,6 +44,9 @@ export interface LeistungenData {
   strengthHeadline: string;
   strengthDescription: string;
   strengthFeatures: StrengthFeature[];
+  situationsHeading: string;
+  situationsCtaLabel: string;
+  situations: Situation[];
 }
 
 export const leistungenData: LeistungenData = {
@@ -131,6 +141,60 @@ export const leistungenData: LeistungenData = {
     "icon": "handshake",
     "title": "Close collaboration & transparency",
     "subtitle": "You're part of the development process"
+  }
+],
+  situationsHeading: "Does one of these sound familiar?",
+  situationsCtaLabel: "Book a free 30-minute intro call",
+  situations: [
+  {
+    "id": "receipts",
+    "text": "Every time money leaves the account, the receipt for it is missing.",
+    "agentName": "Beleg-Inbox",
+    "capabilities": [
+      "Collects receipts automatically",
+      "Checks every receipt",
+      "Matches receipts against the bank statement"
+    ]
+  },
+  {
+    "id": "invoice-coverage",
+    "text": "I don't know if every invoice for a project has actually been captured.",
+    "agentName": "Beleg-Inbox",
+    "capabilities": [
+      "Assigns invoices to the right project automatically",
+      "Checks completeness per project",
+      "A person reviews it before anything is released"
+    ]
+  },
+  {
+    "id": "ai-pilots-stuck",
+    "text": "We've been trying AI tools for months, but none of them actually run in daily work.",
+    "agentName": "From pilot to daily work",
+    "capabilities": [
+      "A real handover into daily operations, not a demo",
+      "One use case, one agent, one person responsible",
+      "Ongoing development instead of stalling after launch"
+    ]
+  },
+  {
+    "id": "where-to-start",
+    "text": "I don't know where to start with AI — everyone recommends it, but nobody says what comes first.",
+    "agentName": "See what pays off first",
+    "capabilities": [
+      "Scans your processes, data and tools in 1–2 days",
+      "A prioritised list instead of a 40-page report",
+      "Names the use cases worth doing first"
+    ]
+  },
+  {
+    "id": "unmaintained-tool",
+    "text": "We rolled out a tool once — nobody has looked after it since.",
+    "agentName": "A system that stays maintained",
+    "capabilities": [
+      "Ongoing monitoring instead of standing still",
+      "Fixed sessions every month",
+      "Regular development instead of gathering dust"
+    ]
   }
 ],
 };

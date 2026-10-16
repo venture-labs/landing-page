@@ -42,6 +42,12 @@
  * `content/services/venture-building.md` said "im kostenlosen Erstgespräch"
  * before this task and stay untouched, in `content/` and in `dist/`.
  *
+ * Updated by VL-5-S11 (2026-10-16): criterion 19's no-duration rule is relaxed
+ * for exactly "30 Minuten"/"30 minutes" (Christian's booking-duration decision,
+ * DECISIONS.md) — every other duration ("15 Minuten", "45 minutes", "halbe
+ * Stunde", "half an hour") still fails, and the price ban (CURRENCY) and the
+ * six OWNED_STRINGS checks (criterion 20) are untouched.
+ *
  * Exits non-zero and prints a FAIL line per failed criterion.
  */
 import { readdirSync, readFileSync, existsSync } from "fs";
@@ -55,10 +61,13 @@ const distDir = resolve(repoRoot, "dist");
 /** A price, in either order: `2.900 €`, `2.500 €/Monat`, `EUR 15.000`, `2900 Euro`. */
 const CURRENCY = /(\d[\d.,]*\s*(€|EUR\b|Euro\b))|((€|EUR|Euro)\s*\d)/i;
 
-/** Criterion 19 — a duration for the first conversation, said outright. */
-const CALL_DURATION = /30\s*-?\s*min|halbe\s+stunde|half\s+an\s+hour/i;
-
-/** Criterion 19 — "45 Minuten" and the like, a duration only next to a conversation word. */
+/**
+ * Criterion 19 — "45 Minuten" and the like, a duration only next to a
+ * conversation word. The number 30 is exempt in statesCallDuration() below
+ * (VL-5-S11, 2026-10-16 booking-duration decision); the old unconditional
+ * CALL_DURATION branch ("30-min", "halbe Stunde", "half an hour") is dropped
+ * for the same reason.
+ */
 const MINUTES_PHRASE = /\d{1,3}\s*(min|minuten|minutes)\b/gi;
 const CONVERSATION_WORD = /gespräch|\bcall\b/i;
 const DURATION_WINDOW = 60;
@@ -247,11 +256,19 @@ function checkNoCallDuration(): void {
   );
 }
 
-/** "30 Minuten", "halbe Stunde", or "45 Minuten" close to a conversation word. */
+/**
+ * "45 Minuten" close to a conversation word still fails; "30 Minuten"/"30
+ * minutes" is exempt — Christian decided on 2026-10-16 (VL-5-S11, the
+ * booking-duration decision in DECISIONS.md) that the call is 30 minutes and
+ * may be stated. The old CALL_DURATION branch (which banned "30-min", "halbe
+ * Stunde" and "half an hour" unconditionally) is dropped for the same reason;
+ * CURRENCY and FREE_CLAIM are untouched and stay independent of this.
+ */
 function statesCallDuration(text: string): boolean {
-  if (CALL_DURATION.test(text)) return true;
   MINUTES_PHRASE.lastIndex = 0;
   for (let match = MINUTES_PHRASE.exec(text); match; match = MINUTES_PHRASE.exec(text)) {
+    const minutes = match[0].match(/\d{1,3}/)?.[0];
+    if (minutes === "30") continue;
     const from = Math.max(0, match.index - DURATION_WINDOW);
     const to = match.index + match[0].length + DURATION_WINDOW;
     if (CONVERSATION_WORD.test(text.slice(from, to))) return true;

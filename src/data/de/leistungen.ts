@@ -20,6 +20,13 @@ export interface CoreService {
   ctaLabel: string;
 }
 
+export interface Situation {
+  id: string;
+  text: string;
+  agentName: string;
+  capabilities: string[];
+}
+
 export interface LeistungenData {
   heroEyebrow: string;
   heroTitlePrefix: string;
@@ -37,6 +44,9 @@ export interface LeistungenData {
   strengthHeadline: string;
   strengthDescription: string;
   strengthFeatures: StrengthFeature[];
+  situationsHeading: string;
+  situationsCtaLabel: string;
+  situations: Situation[];
 }
 
 export const leistungenData: LeistungenData = {
@@ -131,6 +141,60 @@ export const leistungenData: LeistungenData = {
     "icon": "handshake",
     "title": "Enge Zusammenarbeit & Transparenz",
     "subtitle": "Du bist Teil des Entwicklungsprozesses"
+  }
+],
+  situationsHeading: "Kommt dir eine davon bekannt vor?",
+  situationsCtaLabel: "Kostenloses Erstgespräch buchen (30 Min.)",
+  situations: [
+  {
+    "id": "receipts",
+    "text": "Zu jeder Abbuchung fehlt mir der Beleg.",
+    "agentName": "Beleg-Inbox",
+    "capabilities": [
+      "Belege automatisch einsammeln",
+      "Belegprüfungen",
+      "Belegabgleich mit Bankauszug"
+    ]
+  },
+  {
+    "id": "invoice-coverage",
+    "text": "Ich weiß nicht, ob alle Rechnungen eines Projekts erfasst sind.",
+    "agentName": "Beleg-Inbox",
+    "capabilities": [
+      "Rechnungen automatisch dem richtigen Projekt zuordnen",
+      "Vollständigkeits-Check pro Projekt",
+      "Prüfung durch eine Person, bevor etwas freigegeben wird"
+    ]
+  },
+  {
+    "id": "ai-pilots-stuck",
+    "text": "Wir probieren seit Monaten KI-Tools aus, aber im Alltag läuft keines davon wirklich.",
+    "agentName": "Vom Pilot in den Alltag",
+    "capabilities": [
+      "Feste Übergabe ins Tagesgeschäft statt Demo-Modus",
+      "Ein Anwendungsfall, ein Agent, eine verantwortliche Person",
+      "Laufende Weiterentwicklung statt Stillstand nach dem Start"
+    ]
+  },
+  {
+    "id": "where-to-start",
+    "text": "Ich weiß nicht, wo wir mit KI anfangen sollen – überall wird es empfohlen, aber keiner sagt, was zuerst dran ist.",
+    "agentName": "Erst sehen, was sich lohnt",
+    "capabilities": [
+      "Prozesse, Daten und Tools in 1–2 Tagen sichten",
+      "Eine priorisierte Liste statt eines 40-Seiten-Reports",
+      "Die Anwendungsfälle nennen, die sich zuerst lohnen"
+    ]
+  },
+  {
+    "id": "unmaintained-tool",
+    "text": "Wir haben mal ein Tool eingeführt – seitdem kümmert sich niemand mehr darum.",
+    "agentName": "Ein System, das dranbleibt",
+    "capabilities": [
+      "Laufendes Monitoring statt Stillstand",
+      "Feste Termine jeden Monat",
+      "Regelmäßige Weiterentwicklung statt Verstauben"
+    ]
   }
 ],
 };

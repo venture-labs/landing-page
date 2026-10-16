@@ -77,14 +77,6 @@ const CASES = [
     identifies: "content/site/leistungen.md",
   },
   {
-    name: "a 30-minute duration for the first call (criterion 19)",
-    file: "content/site/leistungen.en.md",
-    find: "we work out in a first call:",
-    replace: "we work out in a 30-minute call:",
-    expectCriteria: ["19"],
-    identifies: "content/site/leistungen.en.md",
-  },
-  {
     name: "a duration other than 30 minutes next to the first conversation (criterion 19)",
     file: "content/site/leistungen.md",
     find: "besprechen wir im Erstgespräch:",
@@ -182,6 +174,43 @@ function assert(ok, message, detail) {
       "control: the unmodified tree passes the guard (exit 0, no FAIL line)",
       `exit ${code}\n      ${out.split(/\r?\n/).filter((l) => l.startsWith("FAIL")).join("\n      ")}`
     );
+  } finally {
+    rmSync(sandbox, { recursive: true, force: true });
+  }
+}
+
+// Positive case (VL-5-S11, 2026-10-16 booking-duration decision) — criterion 14/10:
+// the guard's criterion-19 duration ban is relaxed for exactly "30 Minuten"/"30
+// minutes" next to "Gespräch"/"call". This asserts the RELAXATION itself: a
+// freshly introduced "30 minutes" next to "call", in a file that is none of the
+// six OWNED_STRINGS (so criterion 20's exact-string check cannot mask a real
+// criterion-19 regression), still leaves the guard green. The independent
+// "a duration other than 30 minutes next to the first conversation" case below
+// (45 Minuten) still asserts the guard fails — that half of criterion 19 is
+// unchanged.
+{
+  const sandbox = makeSandbox();
+  try {
+    const file = "content/services/ai-automation.en.md";
+    const find = "In a free intro call with our team";
+    const replace = "In a free intro call (30 minutes) with our team";
+    const target = join(sandbox, file);
+    const before = readFileSync(target, "utf8");
+    if (!before.includes(find)) {
+      failed++;
+      console.error(
+        `FAIL  a stated 30-minute duration next to "call" outside an owned string: the fixture anchor is gone — ${file} no longer contains ${JSON.stringify(find)}`
+      );
+    } else {
+      writeFileSync(target, before.replace(find, replace));
+      const { code, out } = runGuard(sandbox);
+      const failLines = out.split(/\r?\n/).filter((line) => line.startsWith("FAIL"));
+      assert(
+        code === 0 && failLines.length === 0,
+        'a stated 30-minute duration next to "call" outside an owned string leaves the guard green (criterion 19 no longer fails on exactly 30)',
+        `exit ${code}\n      ${failLines.join("\n      ")}`
+      );
+    }
   } finally {
     rmSync(sandbox, { recursive: true, force: true });
   }
