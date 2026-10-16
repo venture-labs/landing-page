@@ -235,17 +235,41 @@ test.describe("criterion 8: the shared CTA is keyboard-reachable with a focus ri
         `focused and unfocused styles are identical: ${JSON.stringify(unfocused)}`
       ).not.toBe(JSON.stringify(unfocused));
 
-      // Also prove real Tab-only reachability from a fresh load.
+      // Also prove real Tab-only reachability of THIS specific element — the
+      // navbar and footer carry their own booking link to the same
+      // BOOKING_URL, so matching by href alone would pass even if the
+      // situations CTA itself were skipped from the tab order (e.g. a
+      // regression setting tabIndex=-1 on it, which still lets .focus() work
+      // programmatically above but must not satisfy this check).
       await page.goto("/de/leistungen");
+      const sharedCtaHandle = await sharedCta.elementHandle();
+      expect(sharedCtaHandle, "the shared CTA element could not be resolved").not.toBeNull();
+
       let reached = false;
       for (let i = 0; i < 60 && !reached; i++) {
         await page.keyboard.press("Tab");
         reached = await page.evaluate(
-          (url) => (document.activeElement as HTMLAnchorElement | null)?.href === url,
-          BOOKING_URL
+          (el) => document.activeElement === el,
+          sharedCtaHandle
         );
       }
-      expect(reached, "the shared CTA never became document.activeElement via Tab").toBe(true);
+      expect(
+        reached,
+        "the shared situations CTA (not some other element, e.g. the navbar's booking link) never became document.activeElement via Tab"
+      ).toBe(true);
+
+      // And that it is actually activatable by keyboard, not merely
+      // focusable: Enter on the focused CTA must open a new tab AND that tab
+      // must actually request BOOKING_URL (captured before blockOutbound's
+      // route.abort() turns it into a chrome-error page, so the assertion
+      // does not depend on the aborted page's final URL).
+      const popupPromise = page.waitForEvent("popup").catch(() => null);
+      const requestPromise = page.context().waitForEvent("request", { predicate: (req) => req.url() === BOOKING_URL, timeout: 5000 }).catch(() => null);
+      await page.keyboard.press("Enter");
+      const [popup, bookingRequest] = await Promise.all([popupPromise, requestPromise]);
+      expect(popup, "pressing Enter on the focused shared CTA did not open a new tab").not.toBeNull();
+      expect(bookingRequest, "pressing Enter on the focused shared CTA did not request the booking URL").not.toBeNull();
+      if (popup) await popup.close();
     });
   }
 });
