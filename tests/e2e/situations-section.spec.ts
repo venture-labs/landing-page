@@ -18,6 +18,14 @@
  * own mechanical checks (`pnpm check:naming`, `pnpm check:analytics`) cannot
  * reach because the block is client-rendered.
  *
+ * D10: `tests/e2e/situations-section-example-agents.spec.ts` was written
+ * independently by the Tester on the (then correct) assumption that this
+ * file would be retired; once Christian's constraint-floor answer kept this
+ * file instead, the two duplicated the same criteria 1-10 against the same
+ * fixtures. Criterion 9 (the accent-colour check), the one assertion that
+ * file had and this one didn't, is folded in below; the duplicate file is
+ * deleted. This is now the one file for this block's criteria 1-10.
+ *
  * Run exactly as `tests/e2e/playwright.config.ts` documents (a `pnpm build`
  * and a preview first, e.g. `pnpm exec vite preview --port 4173`). Nothing
  * leaves the machine: plausible.io and the booking page are aborted.
@@ -29,6 +37,13 @@ const CTA_LABEL: Record<"de" | "en", string> = {
   de: "Kostenloses Erstgespräch buchen",
   en: "Book a free intro call",
 };
+const ALLOWED_ACCENTS = ["#2b95f6", "#a318f8", "#fda700", "#8129ff"];
+// The browser serialises an inline hex background-color back as rgb(...), so
+// compare against the resolved rgb triplets rather than the literal hex.
+const ALLOWED_ACCENT_RGB = ALLOWED_ACCENTS.map((hex) => {
+  const n = parseInt(hex.slice(1), 16);
+  return `${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}`;
+});
 const EXAMPLE_MARKER: Record<"de" | "en", string> = { de: "Beispiel", en: "Example" };
 const HEADING: Record<"de" | "en", string> = {
   de: "Kommt dir eine davon bekannt vor?",
@@ -203,6 +218,16 @@ for (const lang of ["de", "en"] as const) {
       // Exactly 4 markers on the whole page — one per illustrative agent,
       // none on Beleg-Inbox.
       await expect(page.getByText(EXAMPLE_MARKER[lang], { exact: true })).toHaveCount(4);
+    });
+
+    test(`criterion 9: card accent colours are drawn only from the pre-existing palette (${lang})`, async ({ page }) => {
+      await page.goto(`/${lang}/leistungen`);
+      for (const situation of SITUATIONS[lang]) {
+        const card = page.locator("div", { has: page.getByText(situation.text, { exact: false }) }).last();
+        const bg = await card.evaluate((el) => getComputedStyle(el).backgroundColor);
+        const usesAllowedHex = ALLOWED_ACCENT_RGB.some((rgb) => bg.includes(rgb));
+        expect(usesAllowedHex, `card computed background-color "${bg}" uses no pre-existing accent hex`).toBe(true);
+      }
     });
 
     test(`criterion 8: no agentName is wrapped in an <a> (${lang})`, async ({ page }) => {
