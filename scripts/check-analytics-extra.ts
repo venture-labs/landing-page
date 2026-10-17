@@ -18,6 +18,13 @@
  *                    library anywhere in the tracked source. Comparing against
  *                    `git show dev:package.json` is not circular, so this is
  *                    mechanical after all rather than the spec's "manual".
+ *   - criterion 16 — (20261017-tracking-every-booking-contact-button-identifiab)
+ *                    trackEvent()'s exact `props` payload: page/lang derived
+ *                    from a DE and an EN route, both home routes (page
+ *                    collapses to "/"), a placement passed vs. omitted, and
+ *                    window.location missing entirely (never throws, safe
+ *                    defaults) — the static harness only greps for argument
+ *                    presence, never the runtime values.
  *
  * Exits non-zero with a FAIL line per failed check.
  */
@@ -178,6 +185,98 @@ async function checkTrackEventRuntime(): Promise<void> {
   }
 }
 
+/**
+ * Criterion 16 (20261017-tracking-every-booking-contact-button-identifiab,
+ * Reviewer finding 2) — the exact `props` payload trackEvent() attaches:
+ * German and English routes, both home routes (page collapses to "/"),
+ * missing window.location entirely, and calls with and without a placement.
+ * checkTrackEventRuntime() above only ever asserted the event *name* reached
+ * window.plausible — never the props object this task added.
+ */
+async function checkTrackEventProps(): Promise<void> {
+  const globalWithWindow = globalThis as { window?: any };
+  const hadWindow = "window" in globalWithWindow;
+  const previousWindow = globalWithWindow.window;
+
+  type Call = [string, { props?: Record<string, string> }?];
+
+  try {
+    const { trackEvent, EVENTS, PLACEMENTS } = await import(
+      pathToFileURL(resolve(repoRoot, "src/app/analytics.ts")).href
+    );
+
+    let calls: Call[] = [];
+    globalWithWindow.window = {
+      location: { pathname: "/de/leistungen/ai-automation" },
+      plausible: (...args: Call) => calls.push(args),
+    };
+
+    calls = [];
+    trackEvent(EVENTS.callLinkClicked, PLACEMENTS.footer);
+    check(
+      "16",
+      JSON.stringify(calls) ===
+        JSON.stringify([
+          [
+            "Call Link Clicked",
+            { props: { page: "/leistungen/ai-automation", lang: "de", placement: "footer" } },
+          ],
+        ]),
+      "DE route, with placement: trackEvent() attaches page/lang/placement exactly",
+      `got ${JSON.stringify(calls)}`
+    );
+
+    globalWithWindow.window.location.pathname = "/en/kontakt";
+    calls = [];
+    trackEvent(EVENTS.contactSent);
+    check(
+      "16",
+      JSON.stringify(calls) ===
+        JSON.stringify([["Contact Sent", { props: { page: "/kontakt", lang: "en" } }]]),
+      "EN route, no placement: trackEvent() attaches page/lang only, no placement key",
+      `got ${JSON.stringify(calls)}`
+    );
+
+    for (const home of ["/de", "/en"] as const) {
+      globalWithWindow.window.location.pathname = home;
+      calls = [];
+      trackEvent(EVENTS.quizStarted);
+      const expectedLang = home === "/en" ? "en" : "de";
+      check(
+        "16",
+        JSON.stringify(calls) ===
+          JSON.stringify([["Quiz Started", { props: { page: "/", lang: expectedLang } }]]),
+        `home route ${home}: page collapses to "/"`,
+        `got ${JSON.stringify(calls)}`
+      );
+    }
+
+    // No window.location at all (not just an absent pathname) — must default
+    // safely to page "/", lang "de", and never throw.
+    calls = [];
+    globalWithWindow.window = { plausible: (...args: Call) => calls.push(args) };
+    let threw: unknown = null;
+    try {
+      trackEvent(EVENTS.callLinkClicked, PLACEMENTS.navbarDesktop);
+    } catch (error) {
+      threw = error;
+    }
+    check(
+      "16",
+      threw === null &&
+        JSON.stringify(calls) ===
+          JSON.stringify([
+            ["Call Link Clicked", { props: { page: "/", lang: "de", placement: "navbar-desktop" } }],
+          ]),
+      'missing window.location: defaults to page "/", lang "de", never throws',
+      `threw=${String(threw)} calls=${JSON.stringify(calls)}`
+    );
+  } finally {
+    if (hadWindow) globalWithWindow.window = previousWindow;
+    else delete globalWithWindow.window;
+  }
+}
+
 function checkNoNewDependencies(): void {
   let basePackageJson: string;
   try {
@@ -258,6 +357,7 @@ async function main(): Promise<void> {
 
   await checkPluginGate();
   await checkTrackEventRuntime();
+  await checkTrackEventProps();
   checkNoNewDependencies();
   checkNoTrackerLibraries();
 
