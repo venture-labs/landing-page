@@ -3,11 +3,16 @@
  *
  * S13 extends S11's "Ihre Situation" block (VL-5-S13, CONCEPT.md §S13): every
  * situation now names an example agent, not only the receipts one. S11's own
- * suite (tests/e2e/situations-section.spec.ts) still asserts its old,
- * now-superseded fixtures (duplicate "Beleg-Inbox" for invoice-coverage, the
- * old slogan-style agent names, the old "(30 Min.)" CTA label) and is
- * reported as stale rather than edited here. This file covers S13's own
- * acceptance criteria 1-9 against the current content.
+ * suite (tests/e2e/situations-section.spec.ts) asserted S11's superseded
+ * pre-D1 fixtures (duplicate "Beleg-Inbox" for invoice-coverage, the old
+ * slogan-style agent names, the old "(30 Min.)" CTA label) — per the spec's
+ * own Assumptions ("S13 owns the block's end state, whatever S11 happens to
+ * leave behind") and the Dev Manager's round-4 instruction, that file has
+ * been retired and its two still-unique, still-valid assertions (keyboard
+ * *activation*, not just focus, on the shared CTA; no horizontal scroll at
+ * 390px/1440px) are folded into this file's criterion 10 and the new
+ * "layout" describe block below. This file now covers S13's acceptance
+ * criteria 1-10 against the current, shipped content.
  *
  * Run exactly as tests/e2e/playwright.config.ts documents: `pnpm build`,
  * then `pnpm exec vite preview --port <port>`, then this file against
@@ -326,6 +331,47 @@ test.describe("criterion 10: the shared CTA is keyboard reachable with a visible
         reached,
         "the shared situations CTA never became document.activeElement via Tab"
       ).toBe(true);
+
+      // And that it is actually activatable by keyboard, not merely
+      // focusable: Enter on the focused CTA must open a new tab AND that tab
+      // must actually request BOOKING_URL (captured before blockOutbound's
+      // route.abort() turns it into a chrome-error page, so the assertion
+      // does not depend on the aborted page's final URL).
+      const popupPromise = page.waitForEvent("popup").catch(() => null);
+      const requestPromise = page
+        .context()
+        .waitForEvent("request", { predicate: (req) => req.url() === BOOKING_URL, timeout: 5000 })
+        .catch(() => null);
+      await page.keyboard.press("Enter");
+      const [popup, bookingRequest] = await Promise.all([popupPromise, requestPromise]);
+      expect(popup, "pressing Enter on the focused shared CTA did not open a new tab").not.toBeNull();
+      expect(bookingRequest, "pressing Enter on the focused shared CTA did not request the booking URL").not.toBeNull();
+      if (popup) await popup.close();
     });
+  }
+});
+
+test.describe("layout: no horizontal scroll at 390px/1440px", () => {
+  for (const viewport of [
+    { width: 390, height: 844 },
+    { width: 1440, height: 900 },
+  ]) {
+    for (const lang of ["de", "en"] as const) {
+      test(`/${lang}/leistungen at ${viewport.width}px introduces no horizontal scroll`, async ({ page }) => {
+        await blockOutbound(page.context());
+        await page.setViewportSize(viewport);
+        await page.goto(`/${lang}/leistungen`);
+        await expect(page.getByText(HEADING[lang], { exact: true })).toBeVisible();
+
+        const { scrollWidth, clientWidth } = await page.evaluate(() => ({
+          scrollWidth: document.documentElement.scrollWidth,
+          clientWidth: document.documentElement.clientWidth,
+        }));
+        expect(
+          scrollWidth,
+          `document is wider than the viewport at ${viewport.width}px (scrollWidth ${scrollWidth} > clientWidth ${clientWidth})`
+        ).toBeLessThanOrEqual(clientWidth + 1);
+      });
+    }
   }
 });
