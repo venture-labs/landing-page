@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
 import { useLocale } from "@/app/locale";
-import { EVENTS, trackEvent } from "@/app/analytics";
+import { EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
 import { BOOKING_URL } from "@/app/links";
 
 /* ─── data ───────────────────────────────────────────────────────────── */
@@ -474,7 +474,7 @@ function CtaStrip() {
             href={BOOKING_URL}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => trackEvent(EVENTS.callLinkClicked)}
+            onClick={() => trackEvent(EVENTS.callLinkClicked, PLACEMENTS.kontakt)}
             className="font-semibold text-[#8129ff] hover:text-[#a318f8] transition-colors"
             style={{ fontSize: "clamp(1.2rem, 2vw, 1.75rem)" }}
           >

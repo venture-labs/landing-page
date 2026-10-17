@@ -17,6 +17,7 @@
 import { readdirSync, readFileSync, existsSync, statSync } from "fs";
 import { resolve, dirname, relative, join } from "path";
 import { fileURLToPath } from "url";
+import { findMissingPlacementCallSites } from "./check-placements";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, "..");
@@ -242,6 +243,25 @@ function checkDatenschutz(): void {
   );
 }
 
+/**
+ * Criterion 15 (20261017-tracking-every-booking-contact-button-identifiab) —
+ * a booking CTA without a placement id fails the build. Every call that
+ * fires EVENTS.callLinkClicked (directly or through Footer's `link.track`
+ * table) must pass a second argument, so Plausible can tell which button
+ * fired it. The check itself lives in scripts/check-placements.ts, shared
+ * with scripts/prerender.ts — that is what actually wires it into `pnpm
+ * build`; this is the post-build report of the same check.
+ */
+function checkPlacementIds(): void {
+  const offenders = findMissingPlacementCallSites(resolve(repoRoot, "src"));
+  check(
+    "15",
+    offenders.length === 0,
+    "every trackEvent(EVENTS.callLinkClicked, …) / trackEvent(link.track!, …) call site in src/ names a placement",
+    `${offenders.length} call site(s) missing a placement argument: ${offenders.map((f) => relative(repoRoot, f)).join(", ")}`
+  );
+}
+
 function main(): void {
   console.log(
     EXPECT_ABSENT
@@ -253,6 +273,7 @@ function main(): void {
   checkBuiltShells();
   if (!EXPECT_ABSENT) checkAnalyticsModule();
   checkDatenschutz();
+  checkPlacementIds();
 
   console.log("");
   if (failed > 0) {
