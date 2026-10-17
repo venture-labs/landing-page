@@ -165,7 +165,10 @@ function buildPagesForLocale(lang: Locale): PageMeta[] {
   pages.push({
     path: `/${lang}`,
     lang,
-    title: site.seoTitle,
+    // seoTitle is optional frontmatter (content/site/home.md / home.en.md); fall
+    // back to the pre-existing title expression when it's absent or blank so an
+    // editor omitting it never ships an empty <title>/og:title.
+    title: site.seoTitle?.trim() ? site.seoTitle : `VentureLabs – ${site.heroHeadline}`,
     description: site.heroSubline,
     sourceFile: contentFile(lang, "site/home"),
   });
