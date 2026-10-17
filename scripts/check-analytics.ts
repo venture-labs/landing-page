@@ -17,6 +17,7 @@
 import { readdirSync, readFileSync, existsSync, statSync } from "fs";
 import { resolve, dirname, relative, join } from "path";
 import { fileURLToPath } from "url";
+import { findMissingPlacementCallSites } from "./check-placements";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, "..");
@@ -28,7 +29,6 @@ const PLAUSIBLE_SRC = "https://plausible.io/js/script.file-downloads.outbound-li
 const PLAUSIBLE_DOMAIN = "venturelabs.team";
 const EVENT_NAMES = ["Quiz Started", "Quiz Completed", "Contact Sent", "Call Link Clicked"];
 const NAMED_ROUTES = ["de", join("de", "kontakt"), join("de", "datenschutz"), join("en", "cases")];
-const CODE_EXTENSIONS = /\.(ts|tsx)$/;
 
 let failed = 0;
 
@@ -243,33 +243,17 @@ function checkDatenschutz(): void {
   );
 }
 
-/** Every .ts/.tsx file under `dir`, recursively. */
-function findSourceFiles(dir: string): string[] {
-  const out: string[] = [];
-  for (const entry of readdirSync(dir)) {
-    const full = join(dir, entry);
-    if (statSync(full).isDirectory()) out.push(...findSourceFiles(full));
-    else if (CODE_EXTENSIONS.test(entry)) out.push(full);
-  }
-  return out;
-}
-
 /**
  * Criterion 15 (20261017-tracking-every-booking-contact-button-identifiab) —
  * a booking CTA without a placement id fails the build. Every call that
  * fires EVENTS.callLinkClicked (directly or through Footer's `link.track`
  * table) must pass a second argument, so Plausible can tell which button
- * fired it.
+ * fired it. The check itself lives in scripts/check-placements.ts, shared
+ * with scripts/prerender.ts — that is what actually wires it into `pnpm
+ * build`; this is the post-build report of the same check.
  */
 function checkPlacementIds(): void {
-  const files = findSourceFiles(resolve(repoRoot, "src"));
-  const offenders = files.filter((f) => {
-    const src = read(f);
-    return (
-      /trackEvent\(\s*EVENTS\.callLinkClicked\s*\)/.test(src) ||
-      /trackEvent\(\s*link\.track!?\s*\)/.test(src)
-    );
-  });
+  const offenders = findMissingPlacementCallSites(resolve(repoRoot, "src"));
   check(
     "15",
     offenders.length === 0,
