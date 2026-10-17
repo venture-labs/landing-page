@@ -74,41 +74,46 @@ strengthFeatures:
     title: 'Close collaboration & transparency'
     subtitle: "You're part of the development process"
 situationsHeading: 'Does one of these sound familiar?'
-situationsCtaLabel: 'Book a free 30-minute intro call'
+situationsCtaLabel: 'Book a free intro call'
 situations:
   - id: receipts
     text: 'Every time money leaves the account, the receipt for it is missing.'
     agentName: 'Beleg-Inbox'
+    agentKind: live
     capabilities:
       - 'Collects receipts automatically'
       - 'Checks every receipt'
       - 'Matches receipts against the bank statement'
   - id: invoice-coverage
     text: "I don't know if every invoice for a project has actually been captured."
-    agentName: 'Beleg-Inbox'
+    agentName: 'Invoice Radar'
+    agentKind: example
     capabilities:
-      - 'Assigns invoices to the right project automatically'
-      - 'Checks completeness per project'
-      - 'A person reviews it before anything is released'
-  - id: ai-pilots-stuck
+      - 'Match invoices to the right project automatically'
+      - 'Flag invoices that are missing'
+      - 'Summarise the monthly reconciliation per project'
+  - id: tool-fatigue
     text: "We've been trying AI tools for months, but none of them actually run in daily work."
-    agentName: 'From pilot to daily work'
+    agentName: 'Rollout Guide'
+    agentKind: example
     capabilities:
-      - 'A real handover into daily operations, not a demo'
-      - 'One use case, one agent, one person responsible'
-      - 'Ongoing development instead of stalling after launch'
-  - id: where-to-start
+      - 'Walk each team through the rollout step by step'
+      - 'Spot friction in daily use early'
+      - 'Keep usage visible over time'
+  - id: prioritization
     text: "I don't know where to start with AI — everyone recommends it, but nobody says what comes first."
-    agentName: 'See what pays off first'
+    agentName: 'Focus Compass'
+    agentKind: example
     capabilities:
-      - 'Scans your processes, data and tools in 1–2 days'
-      - 'A prioritised list instead of a 40-page report'
-      - 'Names the use cases worth doing first'
-  - id: unmaintained-tool
+      - 'Rank use cases by effort and impact'
+      - 'Suggest one concrete first step'
+      - 'Keep progress visible over time'
+  - id: neglected-tool
     text: 'We rolled out a tool once — nobody has looked after it since.'
-    agentName: 'A system that stays maintained'
+    agentName: 'Tool Watchdog'
+    agentKind: example
     capabilities:
-      - 'Ongoing monitoring instead of standing still'
-      - 'Fixed sessions every month'
-      - 'Regular development instead of gathering dust'
+      - 'Monitor usage and errors continuously'
+      - 'Automatically remind whoever is responsible'
+      - 'Deliver a monthly health check'
 ---
