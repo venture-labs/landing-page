@@ -4,9 +4,16 @@
  * <meta description> baked in, instead of every route serving the same
  * generic shell.
  *
- * This does not prerender page content — the SPA still mounts into #root
- * exactly as before, from the same built JS bundle. It only replaces the
- * <head> tags a crawler or link-preview bot sees before any JS runs.
+ * Each route's <body> also carries its fully rendered content: the SSR
+ * bundle built by `vite build --ssr src/entry-server.tsx --outDir dist/server`
+ * (a build step before this script, see package.json) is imported once and
+ * its renderApp(path) is awaited per route, sequentially — never
+ * Promise.all, so the one shared i18next instance's language (set inside
+ * renderApp before each render) is always correct for the page currently
+ * rendering. The returned HTML replaces the empty `<div id="root"></div>`
+ * shell, leaving everything else in <body> (the two hidden Netlify forms)
+ * untouched. The client (src/main.tsx) hydrates this same markup.
+ *
  * Netlify serves a directory's index.html for both "/foo" and "/foo/", so
  * writing dist/<lang>/<route>/index.html is enough to make it the response
  * for the matching app route.
@@ -14,12 +21,16 @@
  * The same route list is reused to emit dist/sitemap.xml and to inject a
  * self-referencing <link rel="canonical"> plus the de/en/x-default hreflang
  * alternates into every route shell. dist/index.html (the SPA fallback for
- * unmatched URLs) is deliberately left untouched, so it carries no canonical.
+ * unmatched URLs) is deliberately left untouched: #root stays empty there,
+ * so the client falls back to a fresh client-side mount (createRoot) for any
+ * path with no prerendered file, 404 included, and the file carries no
+ * canonical.
  */
 import { writeFileSync, mkdirSync, readFileSync } from "fs";
 import { execFileSync } from "child_process";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
+import { pathToFileURL } from "url";
 
 import { siteData as siteDe } from "../src/data/de/site";
 import { leistungenData as leistungenDe } from "../src/data/de/leistungen";
@@ -277,7 +288,7 @@ function alternatesFor(group: Map<Locale, string>): Alternate[] {
   return alternates;
 }
 
-function renderHtml(shell: string, page: PageMeta, alternates: Alternate[]): string {
+function renderHtml(shell: string, page: PageMeta, alternates: Alternate[], bodyHtml: string): string {
   const title = escapeText(page.title);
   const description = escapeAttr(page.description);
 
@@ -292,7 +303,12 @@ function renderHtml(shell: string, page: PageMeta, alternates: Alternate[]): str
   // the SPA fallback shell keeps no canonical.
   const withHead = shell.replace(/[ \t]*<\/head>/, () => `${headLinks}\n  </head>`);
 
-  return withHead
+  const withBody = withHead.replace(
+    '<div id="root"></div>',
+    `<div id="root">${bodyHtml}</div>`
+  );
+
+  return withBody
     .replace(/<html lang="[^"]*"/, `<html lang="${page.lang}"`)
     .replace(/<title>[^<]*<\/title>/, `<title>${title}</title>`)
     .replace(
@@ -336,7 +352,29 @@ function renderSitemap(pages: PageMeta[], alternatesByPath: Map<string, Alternat
   ].join("\n");
 }
 
-function main() {
+/**
+ * Build guard: a route whose written HTML has an empty `#root` or no `<h1`
+ * inside it means the body render silently failed (or regressed) for that
+ * route. Fails the build (non-zero exit) and names every offending route,
+ * instead of letting the SPA shell ship unnoticed again.
+ */
+function findEmptyBodyRoutes(writtenFiles: Map<string, string>): string[] {
+  const offending: string[] = [];
+  for (const [path, html] of writtenFiles) {
+    // #root is the body's last element (the two hidden forms come before
+    // it, nothing comes after) — greedy up to the final "</div>" right
+    // before "</body>" captures exactly #root's own content, however many
+    // nested <div>s it contains.
+    const rootMatch = html.match(/<div id="root">([\s\S]*)<\/div>\s*<\/body>/);
+    const rootContent = rootMatch ? rootMatch[1] : "";
+    const hasH1 = /<h1[\s>]/.test(rootContent);
+    const isEmpty = rootContent.trim().length === 0;
+    if (isEmpty || !hasH1) offending.push(path);
+  }
+  return offending;
+}
+
+async function main() {
   const shell = readFileSync(resolve(distDir, "index.html"), "utf-8");
 
   const allPages: PageMeta[] = [];
@@ -358,14 +396,27 @@ function main() {
     alternatesByPath.set(page.path, alternatesFor(groups.get(localeAgnosticKey(page.path))!));
   }
 
+  // The SSR bundle built by `vite build --ssr src/entry-server.tsx --outDir
+  // dist/server` (package.json's build script, before this script runs).
+  const serverEntryUrl = pathToFileURL(resolve(distDir, "server/entry-server.js")).href;
+  const { renderApp } = (await import(serverEntryUrl)) as {
+    renderApp: (path: string) => Promise<string>;
+  };
+
+  const writtenFiles = new Map<string, string>();
+
   let count = 0;
   for (const page of allPages) {
+    // Rendered one page at a time (never Promise.all): renderApp mutates the
+    // one shared i18next instance's language before each render, so a
+    // parallel render would race between routes of different locales.
+    const bodyHtml = await renderApp(page.path);
+    const html = renderHtml(shell, page, alternatesByPath.get(page.path)!, bodyHtml);
+
     const outDir = resolve(distDir, page.path.replace(/^\//, ""));
     mkdirSync(outDir, { recursive: true });
-    writeFileSync(
-      resolve(outDir, "index.html"),
-      renderHtml(shell, page, alternatesByPath.get(page.path)!)
-    );
+    writeFileSync(resolve(outDir, "index.html"), html);
+    writtenFiles.set(page.path, html);
     count++;
   }
 
@@ -373,6 +424,18 @@ function main() {
 
   console.log(`prerender: wrote ${count} route-specific HTML shells`);
   console.log(`prerender: wrote sitemap.xml with ${allPages.length} urls`);
+
+  const offending = findEmptyBodyRoutes(writtenFiles);
+  if (offending.length > 0) {
+    console.error(
+      `prerender: build guard failed — ${offending.length} route(s) have an empty #root or no <h1>:\n` +
+        offending.map((p) => `  - ${p}`).join("\n")
+    );
+    process.exit(1);
+  }
 }
 
-main();
+main().catch((err) => {
+  console.error("prerender: failed with an uncaught error:", err);
+  process.exit(1);
+});
