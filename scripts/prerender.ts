@@ -138,7 +138,7 @@ const byLocale = {
   },
 };
 
-interface PageMeta {
+export interface PageMeta {
   path: string; // e.g. "/de/leistungen/development"
   lang: Locale;
   title: string;
@@ -146,7 +146,7 @@ interface PageMeta {
   sourceFile?: string; // markdown file backing the page, for <lastmod>
 }
 
-interface Alternate {
+export interface Alternate {
   hreflang: string;
   href: string;
 }
@@ -290,7 +290,7 @@ function alternatesFor(group: Map<Locale, string>): Alternate[] {
   return alternates;
 }
 
-function renderHtml(shell: string, page: PageMeta, alternates: Alternate[], bodyHtml: string): string {
+export function renderHtml(shell: string, page: PageMeta, alternates: Alternate[], bodyHtml: string): string {
   const title = escapeText(page.title);
   const description = escapeAttr(page.description);
 
@@ -305,9 +305,14 @@ function renderHtml(shell: string, page: PageMeta, alternates: Alternate[], body
   // the SPA fallback shell keeps no canonical.
   const withHead = shell.replace(/[ \t]*<\/head>/, () => `${headLinks}\n  </head>`);
 
+  // A replacement callback (not a replacement string) returns bodyHtml
+  // verbatim: String.replace's string form treats "$$", "$&", "$1" etc. in
+  // the replacement as special patterns, so rendered editorial copy that
+  // happens to contain a literal "$$" would otherwise be silently collapsed
+  // to "$" in the written HTML.
   const withBody = withHead.replace(
     '<div id="root"></div>',
-    `<div id="root">${bodyHtml}</div>`
+    () => `<div id="root">${bodyHtml}</div>`
   );
 
   return withBody
@@ -458,7 +463,17 @@ async function main() {
   }
 }
 
-main().catch((err) => {
-  console.error("prerender: failed with an uncaught error:", err);
-  process.exit(1);
-});
+// Only auto-run the build when this file is the entry point tsx actually
+// invokes ("tsx scripts/prerender.ts") — not when a test imports renderHtml
+// (or any other export) directly, which would otherwise re-run the whole
+// prerender pipeline (reading dist/index.html, exiting the process) as a
+// side effect of the import.
+const isMainModule =
+  !!process.argv[1] && pathToFileURL(resolve(process.argv[1])).href === import.meta.url;
+
+if (isMainModule) {
+  main().catch((err) => {
+    console.error("prerender: failed with an uncaught error:", err);
+    process.exit(1);
+  });
+}
