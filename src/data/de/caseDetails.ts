@@ -2,6 +2,7 @@
 
 export interface CaseDetail {
   slug: string;
+  title: string;
   category: string;
   heroHeadline: string;
   heroSubline: string;
@@ -20,6 +21,7 @@ export interface CaseDetail {
 export const caseDetailsMap: Record<string, CaseDetail> = {
   "tap2link": {
     "slug": "tap2link",
+    "title": "Tap2Link – Mehr als eine digitale Visitenkarte.",
     "category": "Digitale Kontakt- & Serviceecosysteme",
     "heroHeadline": "Multifunktionale App für Events, Services & Teams",
     "heroSubline": "Ein digitales Serviceportal für komplexe B2B-Prozesse in nur 8 Wochen.",
@@ -49,6 +51,7 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
   },
   "brylliant": {
     "slug": "brylliant",
+    "title": "Brylliant – das Tool für perfekte Briefings",
     "category": "Design Systeme & UX-Tools",
     "heroHeadline": "Das Tool für perfekte Briefings",
     "heroSubline": "Ein skalierbares Tool für effiziente Briefings, saubere Prozesse und strategische Klarheit – designed in 6 Wochen.",
@@ -77,6 +80,7 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
   },
   "moerschen": {
     "slug": "moerschen",
+    "title": "Moerschen – Website-Relaunch für bessere Kommunikation",
     "category": "Website-Relaunch & Company Building",
     "heroHeadline": "Vom Relaunch zur Leadmaschine",
     "heroSubline": "Website-Relaunch mit klarer Nutzerführung und neuer Kommunikationsstrategie – in 8 Wochen live.",
@@ -107,6 +111,7 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
   },
   "machinemaster": {
     "slug": "machinemaster",
+    "title": "MachineMaster – Landmaschinen Vertriebsplattform",
     "category": "KI-gestützte Vertriebstools",
     "heroHeadline": "KI im Vertrieb von Landmaschinen",
     "heroSubline": "Ein KI-gestütztes Vertriebstool für Händler und Außendienst – vom MVP in nur 12 Wochen.",
@@ -137,6 +142,7 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
   },
   "neuer-look": {
     "slug": "neuer-look",
+    "title": "Neuer Look, neue Webseite",
     "category": "Website-Relaunch & Branding",
     "heroHeadline": "Neuer Look, neue Wirkung",
     "heroSubline": "Ein Website-Relaunch, der alte Strukturen abwirft und Marke, Design und Inhalte auf den aktuellen Stand bringt.",
@@ -165,6 +171,7 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
   },
   "creator-studios": {
     "slug": "creator-studios",
+    "title": "Creator Studio – Buchungsplattform für kreative Räume",
     "category": "Website & Buchungsplattform",
     "heroHeadline": "Turning ideas into trends",
     "heroSubline": "Eine neue Website für Creator Studio, mit der Kreative ihren Raum in Düsseldorf direkt online buchen können.",
@@ -193,6 +200,7 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
   },
   "scanservice": {
     "slug": "scanservice",
+    "title": "Dein ScanService",
     "category": "Digitale Serviceplattform",
     "heroHeadline": "Dein Scan, deine Ordnung",
     "heroSubline": "Eine Plattform, mit der Kunden Dokumente einreichen, digitalisieren lassen und jederzeit wiederfinden.",
