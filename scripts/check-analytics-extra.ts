@@ -25,14 +25,23 @@
  *                    window.location missing entirely (never throws, safe
  *                    defaults) — the static harness only greps for argument
  *                    presence, never the runtime values.
+ *   - criterion 17 — (20261017-tracking-every-booking-contact-button-identifiab,
+ *                    round 4) scripts/check-placements.ts's guard itself: a
+ *                    trailing-comma call site (`trackEvent(EVENTS.callLinkClicked,)`
+ *                    / `trackEvent(link.track!,)`) and a Footer-style config
+ *                    row whose `track:` field has no sibling `placement:`
+ *                    are both flagged, and a properly attributed call
+ *                    site/row is not (no false positive).
  *
  * Exits non-zero with a FAIL line per failed check.
  */
 import { execFileSync } from "child_process";
-import { readFileSync } from "fs";
-import { dirname, resolve } from "path";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "fs";
+import { tmpdir } from "os";
+import { dirname, join, resolve } from "path";
 import { fileURLToPath } from "url";
 import { pathToFileURL } from "url";
+import { findMissingPlacementCallSites } from "./check-placements";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const BASE_REF = process.env.BASE_REF ?? "dev";
@@ -277,6 +286,62 @@ async function checkTrackEventProps(): Promise<void> {
   }
 }
 
+/**
+ * Criterion 17 (20261017-tracking-every-booking-contact-button-identifiab,
+ * round 4) — regression tests for scripts/check-placements.ts's guard
+ * itself, against synthetic files in a throwaway temp dir (never the real
+ * src/ tree, so this never depends on — or risks drifting with — the actual
+ * call sites).
+ */
+function checkPlacementGuardRegressions(): void {
+  const dir = mkdtempSync(join(tmpdir(), "placement-guard-"));
+  try {
+    writeFileSync(join(dir, "TrailingCommaDirect.tsx"), "trackEvent(EVENTS.callLinkClicked,);\n");
+    writeFileSync(join(dir, "TrailingCommaFooterTrack.tsx"), "trackEvent(link.track!,);\n");
+    writeFileSync(
+      join(dir, "FooterRowMissingPlacement.tsx"),
+      'const footerColumns = [{ title: "x", links: [{ label: "Book", href: BOOKING_URL, track: EVENTS.callLinkClicked }] }];\n'
+    );
+    writeFileSync(
+      join(dir, "GoodDirect.tsx"),
+      "trackEvent(EVENTS.callLinkClicked, PLACEMENTS.navbarDesktop);\n"
+    );
+    writeFileSync(
+      join(dir, "GoodFooterRow.tsx"),
+      'const footerColumns = [{ title: "x", links: [{ label: "Book", href: BOOKING_URL, track: EVENTS.callLinkClicked, placement: PLACEMENTS.footer }] }];\n'
+    );
+
+    const offenders = findMissingPlacementCallSites(dir).map((f) => f.split(/[\\/]/).pop());
+
+    check(
+      "17",
+      offenders.includes("TrailingCommaDirect.tsx"),
+      "trackEvent(EVENTS.callLinkClicked,) — a trailing comma with no real second argument — is flagged",
+      `offenders: ${JSON.stringify(offenders)}`
+    );
+    check(
+      "17",
+      offenders.includes("TrailingCommaFooterTrack.tsx"),
+      "trackEvent(link.track!,) — same trailing-comma gap, Footer's form — is flagged",
+      `offenders: ${JSON.stringify(offenders)}`
+    );
+    check(
+      "17",
+      offenders.includes("FooterRowMissingPlacement.tsx"),
+      "a `track: EVENTS.callLinkClicked` config row with no sibling `placement:` field is flagged",
+      `offenders: ${JSON.stringify(offenders)}`
+    );
+    check(
+      "17",
+      !offenders.includes("GoodDirect.tsx") && !offenders.includes("GoodFooterRow.tsx"),
+      "a properly attributed call site and config row are not flagged (no false positive)",
+      `offenders: ${JSON.stringify(offenders)}`
+    );
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+}
+
 function checkNoNewDependencies(): void {
   let basePackageJson: string;
   try {
@@ -358,6 +423,7 @@ async function main(): Promise<void> {
   await checkPluginGate();
   await checkTrackEventRuntime();
   await checkTrackEventProps();
+  checkPlacementGuardRegressions();
   checkNoNewDependencies();
   checkNoTrackerLibraries();
 
