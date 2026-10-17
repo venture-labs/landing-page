@@ -79,10 +79,15 @@ function LegacyRedirect({ to }: { to: string }) {
   return <Navigate to={`/${lang ?? DEFAULT_LOCALE}${to}`} replace />;
 }
 
-export default function App() {
+/**
+ * The whole route tree, shared verbatim between the client (wrapped in
+ * `<BrowserRouter>` below) and the server entry (wrapped in `<StaticRouter>`
+ * in src/entry-server.tsx) — one definition, so the prerendered HTML and the
+ * hydrated client can never drift apart.
+ */
+export function AppRoutes() {
   return (
-    <BrowserRouter>
-      <RoutedErrorBoundary>
+    <RoutedErrorBoundary>
       <Routes>
         <Route path="/" element={<Navigate to={`/${DEFAULT_LOCALE}`} replace />} />
         <Route
@@ -189,7 +194,14 @@ export default function App() {
           }
         />
       </Routes>
-      </RoutedErrorBoundary>
+    </RoutedErrorBoundary>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppRoutes />
     </BrowserRouter>
   );
 }
