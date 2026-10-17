@@ -69,11 +69,23 @@ bug. Checked candidates, in order of likelihood, for whoever has the Plausible l
    Site Settings that both resolve to the same Plausible site.
 
 This repo cannot fix or verify any of the three from the outside — they all need the Plausible
-login. What this task *can* and does prove: a local production build (`pnpm build`, `CONTEXT`
-unset) injects the loader tag and queue stub into every shell (`pnpm check:analytics`), and
-clicking a booking CTA in that build fires `window.plausible('Call Link Clicked', { props: {
-placement, page, lang } })` with the correct values (verified manually via the browser devtools
-Network tab against `https://plausible.io/api/event`).
+login. What this task *can* and does prove, mechanically:
+
+- A local production build (`pnpm build`, `CONTEXT` unset) injects the loader tag and queue stub
+  into every shell (`pnpm check:analytics`, criteria 1-5).
+- `trackEvent()` calls `window.plausible(name, { props: { placement, page, lang } })` with the
+  exact values a booking CTA click should produce — verified at the **Node level**
+  (`scripts/check-analytics-extra.ts`, criterion 16: imports `src/app/analytics.ts` directly,
+  stubs `window.plausible` to record its arguments, and asserts the exact payload for a DE route
+  with a placement, an EN route without one, both home routes, and `window.location` missing
+  entirely). This is a stubbed call to the function, not a captured HTTP request.
+
+**Still pending, not performed here:** opening the built site in an actual browser, clicking a
+booking CTA, and watching the real request to `https://plausible.io/api/event` in the Network tab
+(or Plausible's Realtime/Events API) to confirm the exact bytes a browser sends match what the
+Node-level check above predicts, and that Plausible's backend accepts them. That step needs either
+a manual run with a browser, or Christian's/the front desk's Plausible login for the dashboard
+side — neither was available in this session, so it is not claimed as done.
 
 ## Plausible dashboard settings to enable (needs Christian's or the front desk's login)
 
