@@ -243,8 +243,8 @@ export function Leistungen() {
       <Navbar />
       <LeistungenHero onQuizOpen={() => setQuizOpen(true)} />
       <PulseJourney />
-      <SituationsSection />
       <SkillMatrix />
+      <SituationsSection />
       <PulseCallout onQuizOpen={() => setQuizOpen(true)} />
       <ContactStrip />
       <Footer />

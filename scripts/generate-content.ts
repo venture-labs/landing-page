@@ -419,6 +419,7 @@ export interface Situation {
   id: string;
   text: string;
   agentName: string;
+  agentKind: "live" | "example";
   capabilities: string[];
 }
 

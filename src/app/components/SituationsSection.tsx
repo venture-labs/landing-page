@@ -1,30 +1,40 @@
 import { useRef } from "react";
 import { motion, useInView } from "motion/react";
 import { Check } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useLeistungenData } from "@/data/content";
 import { CtaButton } from "@/app/components/ui/CtaButton";
 import { BOOKING_URL } from "@/app/links";
 import { EVENTS, trackEvent } from "@/app/analytics";
 
 /**
- * "Ihre Situation" — VL-5-S11.
+ * "Ihre Situation" — VL-5-S11, extended by VL-5-S13.
  *
  * Follows the picked handoff (design/handoff/leistungen-ihre-situation/variant-c.html,
  * variant C, quote bubbles) as amended by Christian's 2026-10-16 revision
- * (VL-5-D1, see CONCEPT.md §S11 and DECISIONS.md): a situation is answered by
- * naming what solves it and listing its concrete capabilities underneath, not
- * by a repeated booking CTA. Variant C's per-bubble CTA column is therefore
- * replaced by a capability list, and the whole block closes with exactly one
- * shared CtaButton — the only click target left, so no per-situation Plausible
- * attribution is needed and trackEvent() stays untouched (VL-5-S11-Q3).
+ * (VL-5-D1, see CONCEPT.md §S11/§S13 and DECISIONS.md): a situation is
+ * answered by naming what solves it and listing its concrete capabilities
+ * underneath, not by a repeated booking CTA. Variant C's per-bubble CTA
+ * column is therefore replaced by a capability list, and the whole block
+ * closes with exactly one shared CtaButton — the only click target left, so
+ * no per-situation Plausible attribution is needed and trackEvent() stays
+ * untouched (VL-5-S11-Q3).
  *
- * Mounted in Leistungen.tsx below PulseJourney ("Check. Build. Care."), per
- * VL-5-S11-Q4 — "deeper" with no exact position fixed by the decision.
+ * S13's own change request — "Wir bräuchten für jede Aussage
+ * Beispielagenten, die das Problem lösen könnten" — extends every situation
+ * beyond receipts with its own, distinct, illustrative agent, each carrying
+ * the "Beispiel"/"Example" marker below; the receipts situation keeps naming
+ * Beleg-Inbox, the one real, sellable tool, and carries no marker
+ * (`agentKind === "live"`).
+ *
+ * Mounted in Leistungen.tsx between SkillMatrix and PulseCallout, per S13's
+ * own acceptance criteria 1 and VL-5-D1's "deeper in the page".
  */
 
-const ACCENTS = ["#2b95f6", "#a318f8", "#fda700", "#8129ff", "#d9aeff"];
+const ACCENTS = ["#2b95f6", "#a318f8", "#fda700", "#8129ff", "#2b95f6"];
 
 export function SituationsSection() {
+  const { t } = useTranslation();
   const data = useLeistungenData();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
@@ -75,12 +85,26 @@ export function SituationsSection() {
                   </span>
                 </p>
                 <div className="flex flex-col gap-2 pt-3 border-t border-white/10">
-                  <span
-                    className="font-semibold"
-                    style={{ color: accent, fontSize: "var(--text-body)" }}
-                  >
-                    {situation.agentName}
-                  </span>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span
+                      className="font-semibold"
+                      style={{ color: accent, fontSize: "var(--text-body)" }}
+                    >
+                      {situation.agentName}
+                    </span>
+                    {situation.agentKind === "example" && (
+                      <span
+                        className="font-semibold uppercase tracking-wide rounded-full px-2 py-0.5"
+                        style={{
+                          fontSize: "var(--text-small)",
+                          color: accent,
+                          backgroundColor: `${accent}26`,
+                        }}
+                      >
+                        {t("leistungen.exampleAgentLabel")}
+                      </span>
+                    )}
+                  </div>
                   <ul className="flex flex-col gap-1.5">
                     {situation.capabilities.map((capability) => (
                       <li
