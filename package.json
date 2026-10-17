@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "build": "tsx scripts/generate-content.ts && vite build && tsx scripts/prerender.ts",
+    "build": "tsx scripts/generate-content.ts && vite build && vite build --ssr src/entry-server.tsx --outDir dist/server && tsx scripts/prerender.ts",
     "dev": "tsx scripts/generate-content.ts && vite",
     "check:analytics": "tsx scripts/check-analytics.ts",
     "check:area-pages": "tsx scripts/check-area-pages.ts",
