@@ -28,6 +28,7 @@ const PLAUSIBLE_SRC = "https://plausible.io/js/script.file-downloads.outbound-li
 const PLAUSIBLE_DOMAIN = "venturelabs.team";
 const EVENT_NAMES = ["Quiz Started", "Quiz Completed", "Contact Sent", "Call Link Clicked"];
 const NAMED_ROUTES = ["de", join("de", "kontakt"), join("de", "datenschutz"), join("en", "cases")];
+const CODE_EXTENSIONS = /\.(ts|tsx)$/;
 
 let failed = 0;
 
@@ -242,6 +243,41 @@ function checkDatenschutz(): void {
   );
 }
 
+/** Every .ts/.tsx file under `dir`, recursively. */
+function findSourceFiles(dir: string): string[] {
+  const out: string[] = [];
+  for (const entry of readdirSync(dir)) {
+    const full = join(dir, entry);
+    if (statSync(full).isDirectory()) out.push(...findSourceFiles(full));
+    else if (CODE_EXTENSIONS.test(entry)) out.push(full);
+  }
+  return out;
+}
+
+/**
+ * Criterion 15 (20261017-tracking-every-booking-contact-button-identifiab) —
+ * a booking CTA without a placement id fails the build. Every call that
+ * fires EVENTS.callLinkClicked (directly or through Footer's `link.track`
+ * table) must pass a second argument, so Plausible can tell which button
+ * fired it.
+ */
+function checkPlacementIds(): void {
+  const files = findSourceFiles(resolve(repoRoot, "src"));
+  const offenders = files.filter((f) => {
+    const src = read(f);
+    return (
+      /trackEvent\(\s*EVENTS\.callLinkClicked\s*\)/.test(src) ||
+      /trackEvent\(\s*link\.track!?\s*\)/.test(src)
+    );
+  });
+  check(
+    "15",
+    offenders.length === 0,
+    "every trackEvent(EVENTS.callLinkClicked, …) / trackEvent(link.track!, …) call site in src/ names a placement",
+    `${offenders.length} call site(s) missing a placement argument: ${offenders.map((f) => relative(repoRoot, f)).join(", ")}`
+  );
+}
+
 function main(): void {
   console.log(
     EXPECT_ABSENT
@@ -253,6 +289,7 @@ function main(): void {
   checkBuiltShells();
   if (!EXPECT_ABSENT) checkAnalyticsModule();
   checkDatenschutz();
+  checkPlacementIds();
 
   console.log("");
   if (failed > 0) {
