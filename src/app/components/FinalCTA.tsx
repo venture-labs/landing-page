@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion, useInView } from "motion/react";
 import { useTranslation } from "react-i18next";
 import { useLocale } from "@/app/locale";
-import { EVENTS, trackEvent } from "@/app/analytics";
+import { EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
 import { BOOKING_URL } from "@/app/links";
 import { CtaButton } from "@/app/components/ui/CtaButton";
 
@@ -41,7 +41,7 @@ export function FinalCTA() {
               href={BOOKING_URL}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => trackEvent(EVENTS.callLinkClicked)}
+              onClick={() => trackEvent(EVENTS.callLinkClicked, PLACEMENTS.finalCta)}
               className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/12 text-white font-medium px-6 py-3.5 rounded-lg transition-all"
               style={{ fontSize: "var(--text-body)" }}
             >

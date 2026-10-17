@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router";
 import { ArrowRight, Check } from "lucide-react";
-import { EVENTS, trackEvent } from "@/app/analytics";
+import { EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
 import { BOOKING_URL } from "@/app/links";
 import { CtaButton } from "@/app/components/ui/CtaButton";
 import { useLocale } from "@/app/locale";
@@ -613,7 +613,7 @@ export function PulseQuiz({
         <div className="flex flex-wrap items-center gap-4 mt-1">
           <CtaButton
             href={BOOKING_URL}
-            onClick={() => trackEvent(EVENTS.callLinkClicked)}
+            onClick={() => trackEvent(EVENTS.callLinkClicked, PLACEMENTS.quizResult)}
             backgroundColor={accent}
             showArrow={false}
           >

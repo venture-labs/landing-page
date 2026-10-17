@@ -10,7 +10,7 @@ import { PulseCheckModal } from "@/app/components/PulseCheckModal";
 import { PulseLines, type PulseLinesProps } from "@/app/components/ui/PulseLines";
 import { useServicesData, useServiceDetail } from "@/data/content";
 import { useLocale } from "@/app/locale";
-import { EVENTS, trackEvent } from "@/app/analytics";
+import { EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
 import { BOOKING_URL } from "@/app/links";
 
 
@@ -323,7 +323,7 @@ function CtaBanner({ detail, accent }: { detail: any; accent: string }) {
           </CtaButton>
           <CtaButton
             href={BOOKING_URL}
-            onClick={() => trackEvent(EVENTS.callLinkClicked)}
+            onClick={() => trackEvent(EVENTS.callLinkClicked, PLACEMENTS.leistungenDetailCta)}
             backgroundColor="rgba(255,255,255,0.1)"
             fontSize="var(--text-body)"
           >
@@ -436,7 +436,7 @@ function ContactStrip() {
             href={BOOKING_URL}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => trackEvent(EVENTS.callLinkClicked)}
+            onClick={() => trackEvent(EVENTS.callLinkClicked, PLACEMENTS.leistungenDetailContact)}
             className="font-semibold text-[#8129ff] hover:text-[#a318f8] transition-colors"
             style={{ fontSize: "clamp(1.2rem, 2vw, 1.75rem)" }}
           >

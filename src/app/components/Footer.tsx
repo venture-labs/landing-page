@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
 import { useLocale } from "@/app/locale";
-import { EVENTS, trackEvent } from "@/app/analytics";
+import { EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
 import { BOOKING_URL } from "@/app/links";
 import svgPaths from "@/imports/🖌Homepage/svg-oa0apfkpzr";
 
@@ -10,6 +10,8 @@ interface FooterLink {
   href: string;
   /** Plausible custom event fired when the link is clicked. */
   track?: string;
+  /** Plausible `placement` prop, required whenever `track` is set. */
+  placement?: string;
 }
 
 function FooterLogo() {
@@ -74,7 +76,12 @@ export function Footer() {
     {
       title: t("footer.contactTitle"),
       links: [
-        { label: t("footer.bookCall"), href: BOOKING_URL, track: EVENTS.callLinkClicked },
+        {
+          label: t("footer.bookCall"),
+          href: BOOKING_URL,
+          track: EVENTS.callLinkClicked,
+          placement: PLACEMENTS.footer,
+        },
         { label: "contact@venturelabs.team", href: "mailto:contact@venturelabs.team" },
       ],
     },
@@ -108,7 +115,7 @@ export function Footer() {
                     {link.href.startsWith("/") && !link.href.includes("#") ? (
                       <Link
                         to={link.href}
-                        onClick={link.track ? () => trackEvent(link.track!) : undefined}
+                        onClick={link.track ? () => trackEvent(link.track!, link.placement) : undefined}
                         className="text-white/40 hover:text-white/80 transition-colors font-light"
                         style={{ fontSize: "var(--text-small)" }}
                       >
@@ -117,7 +124,7 @@ export function Footer() {
                     ) : (
                       <a
                         href={link.href}
-                        onClick={link.track ? () => trackEvent(link.track!) : undefined}
+                        onClick={link.track ? () => trackEvent(link.track!, link.placement) : undefined}
                         {...(link.href.startsWith("http")
                           ? { target: "_blank", rel: "noopener noreferrer" }
                           : {})}
