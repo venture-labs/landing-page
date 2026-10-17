@@ -8,7 +8,7 @@ gradient: "linear-gradient(44.336deg, rgba(43, 149, 246, 0.8) 0%, rgba(43, 149, 
 icon: palette
 usedIn: [check, build]
 proof: "Ein Interface, das zeigt, was die KI gerade tut – und warum."
-heroHeadline: "Design the interaction."
+heroHeadline: "Die Interaktion gestalten."
 heroSubline: "Neue Interfaces für die Zusammenarbeit von Menschen und intelligenten Systemen."
 heroImage: "/uploads/services/ai-experience-hero.png"
 tags:
@@ -48,5 +48,5 @@ caseStats:
 caseDescription: "Ein skalierbares Tool für effiziente Briefings, saubere Prozesse und strategische Klarheit – designed in 6 Wochen."
 ctaHeadline: "Design, das nicht stehen bleibt."
 ctaBody: "Lass uns in einem ehrlichen Erstgespräch zeigen, wie durchdachtes UX-Design und smarte KI-Tools zusammen mehr Wirkung erzielen."
-ctaButtonLabel: "Design your AI experience"
+ctaButtonLabel: "Deine AI Experience gestalten"
 ---

@@ -8,7 +8,7 @@ gradient: "linear-gradient(-56.458deg, rgba(253, 167, 0, 0.8) 0%, rgba(253, 167,
 icon: bot
 usedIn: [check, build, care]
 proof: "Angebote, die früher drei Tage brauchten, gehen jetzt in Minuten raus."
-heroHeadline: "Improve the business."
+heroHeadline: "Das Geschäft verbessern."
 heroSubline: "Wir automatisieren Prozesse dort, wo KI messbar Zeit, Kosten und Fehler reduziert."
 heroImage: "/uploads/services/ai-automation-hero.png"
 tags:
@@ -45,5 +45,5 @@ caseStats:
 caseDescription: "Ein KI-gestütztes Vertriebstool für Händler und Außendienst – vom MVP in nur 12 Wochen."
 ctaHeadline: "KI, die wirklich automatisiert – nicht nur ein Chatbot."
 ctaBody: "Im kostenlosen Erstgespräch mit unserem Team sprechen wir ehrlich darüber, wo KI-Agenten in deinem Business heute schon den Unterschied machen."
-ctaButtonLabel: "Find your automation opportunity"
+ctaButtonLabel: "Dein Automatisierungspotenzial finden"
 ---

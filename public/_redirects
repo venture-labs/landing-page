@@ -2,3 +2,9 @@
 # App.tsx still redirects it client-side, this makes it a server-side 301.
 /de/ai-pulse  /de/leistungen  301
 /en/ai-pulse  /en/leistungen  301
+
+# Best-effort catch-all for an unmatched path (item 5): serve the SPA shell,
+# which renders the client-side NotFound route, with a real 404 status.
+# netlify.toml is a denied path for this task, so whatever rule it declares
+# for unmatched paths today still runs too — see the implementation report.
+/*  /index.html  404

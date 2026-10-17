@@ -32,7 +32,7 @@ export interface ServiceDetail {
 export const serviceDetails: ServiceDetail[] = [
   {
     "slug": "ai-automation",
-    "heroHeadline": "Improve the business.",
+    "heroHeadline": "Das Geschäft verbessern.",
     "heroSubline": "Wir automatisieren Prozesse dort, wo KI messbar Zeit, Kosten und Fehler reduziert.",
     "heroImage": "/uploads/services/ai-automation-hero.png",
     "tags": [
@@ -86,11 +86,11 @@ export const serviceDetails: ServiceDetail[] = [
     "caseDescription": "Ein KI-gestütztes Vertriebstool für Händler und Außendienst – vom MVP in nur 12 Wochen.",
     "ctaHeadline": "KI, die wirklich automatisiert – nicht nur ein Chatbot.",
     "ctaBody": "Im kostenlosen Erstgespräch mit unserem Team sprechen wir ehrlich darüber, wo KI-Agenten in deinem Business heute schon den Unterschied machen.",
-    "ctaButtonLabel": "Find your automation opportunity"
+    "ctaButtonLabel": "Dein Automatisierungspotenzial finden"
   },
   {
     "slug": "ai-products",
-    "heroHeadline": "Build the product.",
+    "heroHeadline": "Das Produkt bauen.",
     "heroSubline": "Digitale Produkte, bei denen KI von Anfang an Teil des Produkts ist.",
     "heroImage": "/uploads/services/ai-products-hero.png",
     "tags": [
@@ -139,11 +139,11 @@ export const serviceDetails: ServiceDetail[] = [
     "caseDescription": "Ein digitales Serviceportal für komplexe B2B-Prozesse – in nur 8 Wochen von der Idee bis zum Launch.",
     "ctaHeadline": "Bereit für ein Produkt, das mitdenkt?",
     "ctaBody": "Lass uns in einem ehrlichen Erstgespräch herausfinden, ob dein nächstes Produkt klassische Software oder ein selbstlernendes System braucht.",
-    "ctaButtonLabel": "Build your product"
+    "ctaButtonLabel": "Dein Produkt bauen"
   },
   {
     "slug": "ai-experience",
-    "heroHeadline": "Design the interaction.",
+    "heroHeadline": "Die Interaktion gestalten.",
     "heroSubline": "Neue Interfaces für die Zusammenarbeit von Menschen und intelligenten Systemen.",
     "heroImage": "/uploads/services/ai-experience-hero.png",
     "tags": [
@@ -202,11 +202,11 @@ export const serviceDetails: ServiceDetail[] = [
     "caseDescription": "Ein skalierbares Tool für effiziente Briefings, saubere Prozesse und strategische Klarheit – designed in 6 Wochen.",
     "ctaHeadline": "Design, das nicht stehen bleibt.",
     "ctaBody": "Lass uns in einem ehrlichen Erstgespräch zeigen, wie durchdachtes UX-Design und smarte KI-Tools zusammen mehr Wirkung erzielen.",
-    "ctaButtonLabel": "Design your AI experience"
+    "ctaButtonLabel": "Deine AI Experience gestalten"
   },
   {
     "slug": "venture-building",
-    "heroHeadline": "Create the new business.",
+    "heroHeadline": "Das neue Geschäft aufbauen.",
     "heroSubline": "Von der Opportunity zum validierten Geschäftsmodell und funktionierenden Venture.",
     "heroImage": "/uploads/services/venture-building-hero.png",
     "tags": [
@@ -265,6 +265,6 @@ export const serviceDetails: ServiceDetail[] = [
     "caseDescription": "Website-Relaunch mit klarer Nutzerführung und neuer Kommunikationsstrategie – in 8 Wochen live.",
     "ctaHeadline": "Dein Startup. Unsere Erfahrung. KI als Beschleuniger.",
     "ctaBody": "Lass uns im kostenlosen Erstgespräch herausfinden, wie wir dein Geschäftsmodell mit echter Erfahrung und smarter Automatisierung in die Realität umsetzen.",
-    "ctaButtonLabel": "Build a new venture"
+    "ctaButtonLabel": "Ein neues Venture aufbauen"
   }
 ];

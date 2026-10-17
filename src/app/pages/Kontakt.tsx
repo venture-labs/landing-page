@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-import { Link } from "react-router";
+import { useEffect, useRef, useState } from "react";
+import { Link, useSearchParams } from "react-router";
 import { motion, useInView } from "motion/react";
 import { useTranslation } from "react-i18next";
 import { Navbar } from "@/app/components/Navbar";
@@ -15,7 +15,16 @@ const topicCategories = [
   { slug: "ai-products", accent: "#a318f8" },
   { slug: "ai-experience", accent: "#2b95f6" },
   { slug: "venture-building", accent: "#ef4444" },
+  // The three Pulse funnel steps — linked from the Check/Build/Care CTAs
+  // under /leistungen#ablauf via "?topic=check|build|care". Same accents as
+  // PulseJourney's STEP_ACCENTS, so the colour stays recognisable across pages.
+  { slug: "check", accent: "#2b95f6" },
+  { slug: "build", accent: "#a318f8" },
+  { slug: "care", accent: "#fda700" },
 ] as const;
+
+/** The `?topic=` slugs that preselect a Pulse funnel chip (item 6). */
+const PULSE_TOPIC_SLUGS = ["check", "build", "care"] as const;
 
 const teamContacts = [
   {
@@ -154,6 +163,16 @@ function DirectContact() {
 const fieldClasses =
   "w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/40 font-light outline-none transition-colors focus:border-[#8129ff]";
 
+/** Netlify Forms AJAX submission, the same pattern already proven on
+ * pulse-landing-page/index.html's `pulse-score-leads` form. */
+function encodeFormData(data: Record<string, string>): string {
+  return Object.keys(data)
+    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
+    .join("&");
+}
+
+type SubmitStatus = "idle" | "submitting" | "sent" | "error";
+
 function ContactForm({ selectedTopics }: { selectedTopics: string[] }) {
   const { t } = useTranslation();
   const { localizedPath } = useLocale();
@@ -163,28 +182,60 @@ function ContactForm({ selectedTopics }: { selectedTopics: string[] }) {
   const [role, setRole] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [status, setStatus] = useState<SubmitStatus>("idle");
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setStatus("submitting");
 
-    const bodyLines = [
-      selectedTopics.length > 0 ? `Themen: ${selectedTopics.join(", ")}` : null,
-      "",
-      message,
-      "",
-      `Name: ${name}`,
-      company ? `Unternehmen: ${company}` : null,
-      role ? `Rolle: ${role}` : null,
-      `E-Mail: ${email}`,
-      phone ? `Telefon: ${phone}` : null,
-    ].filter((line): line is string => line !== null);
+    try {
+      const res = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encodeFormData({
+          "form-name": "contact",
+          name,
+          email,
+          company,
+          role,
+          phone,
+          topics: selectedTopics.join(", "),
+          message,
+        }),
+      });
+      if (!res.ok) {
+        setStatus("error");
+        return;
+      }
+      setStatus("sent");
+      // Fires only once Netlify has actually accepted the submission (a 200
+      // response), not on the submit click and not when the browser's native
+      // `required` validation blocks the submit before this handler runs.
+      trackEvent(EVENTS.contactSent);
+    } catch {
+      // Typed values are intentionally left untouched here so the visitor
+      // can retry without retyping anything.
+      setStatus("error");
+    }
+  }
 
-    const subject = encodeURIComponent(`Kontaktanfrage von ${name || "der Website"}`);
-    const body = encodeURIComponent(bodyLines.join("\n"));
-    // Fires once the browser's native `required` validation has passed, i.e. on
-    // the handoff to the mail client — not on a delivered mail.
-    trackEvent(EVENTS.contactSent);
-    window.location.href = `mailto:contact@venturelabs.team?subject=${subject}&body=${body}`;
+  if (status === "sent") {
+    return (
+      <div className="flex flex-col gap-4">
+        <h3
+          className="font-semibold text-white"
+          style={{ fontSize: "var(--text-card)" }}
+        >
+          {t("kontakt.thankYouHeading")}
+        </h3>
+        <p
+          className="text-white/60 font-light leading-relaxed"
+          style={{ fontSize: "var(--text-body)" }}
+        >
+          {t("kontakt.thankYouBody")}
+        </p>
+      </div>
+    );
   }
 
   return (
@@ -284,18 +335,28 @@ function ContactForm({ selectedTopics }: { selectedTopics: string[] }) {
             <Link to={localizedPath("/datenschutz")} className="text-white/70 underline hover:text-white transition-colors">
               {t("kontakt.privacyLinkLabel")}
             </Link>
-            .
+            {t("kontakt.privacyTextSuffix", { defaultValue: "" })}.
           </span>
         </label>
       </div>
 
+      {status === "error" && (
+        <p
+          className="text-[#ef4444] font-light leading-relaxed"
+          style={{ fontSize: "var(--text-small)" }}
+        >
+          {t("kontakt.errorText")}
+        </p>
+      )}
+
       <div className="flex flex-col gap-3">
         <button
           type="submit"
-          className="w-full bg-[#8129ff] hover:bg-[#a318f8] text-white font-semibold rounded-lg px-6 py-4 transition-all hover:scale-[1.01]"
+          disabled={status === "submitting"}
+          className="w-full bg-[#8129ff] hover:bg-[#a318f8] text-white font-semibold rounded-lg px-6 py-4 transition-all hover:scale-[1.01] disabled:opacity-60 disabled:hover:scale-100"
           style={{ fontSize: "var(--text-body)" }}
         >
-          {t("kontakt.submit")}
+          {status === "submitting" ? t("kontakt.submitting") : t("kontakt.submit")}
         </button>
         <p
           className="text-white/30 font-light"
@@ -435,14 +496,27 @@ function CtaStrip() {
 /* ─── page ───────────────────────────────────────────────────────────── */
 
 export function Kontakt() {
+  const { t } = useTranslation();
   const glowRef = useRef<HTMLDivElement>(null);
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
+  const [searchParams] = useSearchParams();
 
   function toggleTopic(chip: string) {
     setSelectedTopics((prev) =>
       prev.includes(chip) ? prev.filter((c) => c !== chip) : [...prev, chip]
     );
   }
+
+  // Item 6 — the Check/Build/Care CTAs pass their topic on as "?topic=", and
+  // that preselects the matching Pulse chip here.
+  useEffect(() => {
+    const topic = searchParams.get("topic");
+    if (!topic || !PULSE_TOPIC_SLUGS.includes(topic as (typeof PULSE_TOPIC_SLUGS)[number])) return;
+    const chips = t(`kontakt.topics.${topic}.chips`, { returnObjects: true }) as string[];
+    const chip = chips[0];
+    if (!chip) return;
+    setSelectedTopics((prev) => (prev.includes(chip) ? prev : [...prev, chip]));
+  }, [searchParams, t]);
 
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     if (!glowRef.current) return;

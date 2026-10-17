@@ -8,7 +8,7 @@ gradient: "linear-gradient(146.383deg, rgba(163, 24, 248, 0.8) 0%, rgba(163, 24,
 icon: code
 usedIn: [build, care]
 proof: "Aus einer Excel-Liste wurde ein Produkt, das Kunden selbst bedienen."
-heroHeadline: "Build the product."
+heroHeadline: "Das Produkt bauen."
 heroSubline: "Digitale Produkte, bei denen KI von Anfang an Teil des Produkts ist."
 heroImage: "/uploads/services/ai-products-hero.png"
 tags:
@@ -42,5 +42,5 @@ caseStats:
 caseDescription: "Ein digitales Serviceportal für komplexe B2B-Prozesse – in nur 8 Wochen von der Idee bis zum Launch."
 ctaHeadline: "Bereit für ein Produkt, das mitdenkt?"
 ctaBody: "Lass uns in einem ehrlichen Erstgespräch herausfinden, ob dein nächstes Produkt klassische Software oder ein selbstlernendes System braucht."
-ctaButtonLabel: "Build your product"
+ctaButtonLabel: "Dein Produkt bauen"
 ---

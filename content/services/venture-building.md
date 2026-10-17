@@ -8,7 +8,7 @@ gradient: "linear-gradient(268.344deg, rgba(255, 0, 0, 0.8) 0%, rgba(255, 0, 0, 
 icon: grid
 usedIn: [check, build, care]
 proof: "Aus einer Idee im Nebensatz wurde ein eigenes Geschäft."
-heroHeadline: "Create the new business."
+heroHeadline: "Das neue Geschäft aufbauen."
 heroSubline: "Von der Opportunity zum validierten Geschäftsmodell und funktionierenden Venture."
 heroImage: "/uploads/services/venture-building-hero.png"
 tags:
@@ -48,5 +48,5 @@ caseStats:
 caseDescription: "Website-Relaunch mit klarer Nutzerführung und neuer Kommunikationsstrategie – in 8 Wochen live."
 ctaHeadline: "Dein Startup. Unsere Erfahrung. KI als Beschleuniger."
 ctaBody: "Lass uns im kostenlosen Erstgespräch herausfinden, wie wir dein Geschäftsmodell mit echter Erfahrung und smarter Automatisierung in die Realität umsetzen."
-ctaButtonLabel: "Build a new venture"
+ctaButtonLabel: "Ein neues Venture aufbauen"
 ---

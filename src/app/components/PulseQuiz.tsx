@@ -1,8 +1,10 @@
 import { useMemo, useState } from "react";
+import { Link } from "react-router";
 import { ArrowRight, Check } from "lucide-react";
 import { EVENTS, trackEvent } from "@/app/analytics";
 import { BOOKING_URL } from "@/app/links";
 import { CtaButton } from "@/app/components/ui/CtaButton";
+import { useLocale } from "@/app/locale";
 
 /**
  * The 10-question Pulse Score quiz, transposed from the live
@@ -42,6 +44,17 @@ export interface Copy {
   ctaBody: string;
   ctaButton: string;
   questions: QuizQuestion[];
+  /* Optional lead capture box on the result step (item 1 of the 2026-10-16
+   * funnel fixes) — its own copy, same pattern as the rest of this file. */
+  leadHeading: string;
+  leadIntro: string;
+  leadEmailPlaceholder: string;
+  leadConsentText: string;
+  leadConsentLinkLabel: string;
+  leadSubmit: string;
+  leadSubmitting: string;
+  leadThankYou: string;
+  leadError: string;
 }
 
 export const COPY: Record<"de" | "en", Copy> = {
@@ -71,7 +84,7 @@ export const COPY: Record<"de" | "en", Copy> = {
           "Dein Unternehmen steht ganz am Anfang seiner KI-Reise – ein völlig normaler Ausgangspunkt. Das Risiko liegt nicht darin, heute im Rückstand zu sein, sondern dort zu bleiben, während Wettbewerber und Kunden schneller vorankommen.",
       },
       {
-        min: 50,
+        min: 51,
         label: "Stabiler Puls",
         narrative:
           "Du bist den meisten Unternehmen deiner Größe voraus. Die Chance liegt jetzt nicht darin, grundlegende Lücken zu schließen, sondern gezielt zu entscheiden, wo KI als Nächstes den größten Hebel bietet – ohne unnötige Komplexität aufzubauen, die sich nicht auszahlt.",
@@ -79,7 +92,16 @@ export const COPY: Record<"de" | "en", Copy> = {
     ],
     ctaHeading: "Lass uns den größten Hebel finden.",
     ctaBody: "Ein gezielter Pulse Check zeigt genau, welche verbleibenden Lücken es zuerst zu schließen lohnt – und welche nicht.",
-    ctaButton: "Nächste Schritte ansehen →",
+    ctaButton: "Kostenloses Erstgespräch buchen",
+    leadHeading: "Ergebnis festhalten?",
+    leadIntro: "Trag deine E-Mail-Adresse ein, wenn du deinen Pulse Score festhalten oder mit uns darüber sprechen möchtest.",
+    leadEmailPlaceholder: "Deine E-Mail-Adresse",
+    leadConsentText: "Ich bin einverstanden, dass meine Angaben zur Kontaktaufnahme zu meinem Pulse Score verwendet werden, gemäß der",
+    leadConsentLinkLabel: "Datenschutzerklärung",
+    leadSubmit: "Absenden",
+    leadSubmitting: "Wird gesendet…",
+    leadThankYou: "Danke! Wir melden uns bei dir.",
+    leadError: "Das hat leider nicht geklappt. Bitte versuch es nochmal.",
     questions: [
       {
         area: "data",
@@ -200,7 +222,7 @@ export const COPY: Record<"de" | "en", Copy> = {
           "Your business is at the very beginning of its AI journey — a completely normal place to be. The risk isn't being behind today; it's staying there while competitors and customers move faster.",
       },
       {
-        min: 50,
+        min: 51,
         label: "Steady Pulse",
         narrative:
           "You're ahead of most companies your size. The opportunity now isn't fixing broken basics — it's making deliberate choices about where AI creates the most leverage next, without adding complexity that doesn't pay for itself.",
@@ -208,7 +230,16 @@ export const COPY: Record<"de" | "en", Copy> = {
     ],
     ctaHeading: "Let's find the highest-leverage next step.",
     ctaBody: "A focused Pulse Check will show you exactly where the remaining gaps are worth closing first, and where they're not.",
-    ctaButton: "See the next steps →",
+    ctaButton: "Book a free intro call",
+    leadHeading: "Keep your result?",
+    leadIntro: "Leave your email if you'd like to hold on to your Pulse Score or talk it through with us.",
+    leadEmailPlaceholder: "Your email address",
+    leadConsentText: "I agree that my details may be used to get in touch about my Pulse Score, per the",
+    leadConsentLinkLabel: "privacy policy",
+    leadSubmit: "Submit",
+    leadSubmitting: "Sending…",
+    leadThankYou: "Thanks! We'll be in touch.",
+    leadError: "Something went wrong. Please try again.",
     questions: [
       {
         area: "data",
@@ -306,8 +337,159 @@ export const COPY: Record<"de" | "en", Copy> = {
 
 type QuizState = { step: "intro" } | { step: "question"; index: number; answers: number[] } | { step: "result"; answers: number[] };
 
-export function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
+/** Netlify Forms AJAX submission, the same pattern already proven on
+ * pulse-landing-page/index.html's `pulse-score-leads` form (see Kontakt.tsx,
+ * which uses the identical helper for the `contact` form). */
+function encodeFormData(data: Record<string, string>): string {
+  return Object.keys(data)
+    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
+    .join("&");
+}
+
+type LeadStatus = "idle" | "submitting" | "sent" | "error";
+
+/**
+ * The result step's optional lead capture box — item 1 of the 2026-10-16
+ * funnel fixes. Sits beside the score/band/breakdown/booking CTA without
+ * gating any of it: a visitor who never touches this box still sees the full
+ * result above and below it.
+ */
+function PulseLeadBox({
+  copy,
+  accent,
+  score,
+  band,
+  weakest,
+}: {
+  copy: Copy;
+  accent: string;
+  score: number;
+  band: string;
+  weakest: string;
+}) {
+  const { lang, localizedPath } = useLocale();
+  const [email, setEmail] = useState("");
+  const [consent, setConsent] = useState(false);
+  const [status, setStatus] = useState<LeadStatus>("idle");
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setStatus("submitting");
+
+    try {
+      const res = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encodeFormData({
+          "form-name": "pulse-score-leads",
+          email,
+          score: String(score),
+          band,
+          weakest,
+          lang,
+          "bot-field": "",
+        }),
+      });
+      if (!res.ok) {
+        setStatus("error");
+        return;
+      }
+      setStatus("sent");
+    } catch {
+      setStatus("error");
+    }
+  }
+
+  if (status === "sent") {
+    return (
+      <div className="flex items-center gap-2 p-5 rounded-xl border border-white/8 bg-white/[0.02] max-w-2xl">
+        <Check size={16} style={{ color: accent }} />
+        <p className="text-white/70 font-light" style={{ fontSize: "var(--text-small)" }}>
+          {copy.leadThankYou}
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-3 p-5 rounded-xl border border-white/8 bg-white/[0.02] max-w-2xl"
+    >
+      <h4 className="font-semibold text-white" style={{ fontSize: "var(--text-body)" }}>
+        {copy.leadHeading}
+      </h4>
+      <p className="text-white/60 font-light leading-snug" style={{ fontSize: "var(--text-small)" }}>
+        {copy.leadIntro}
+      </p>
+      <div className="flex flex-col sm:flex-row gap-3">
+        <input
+          type="email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder={copy.leadEmailPlaceholder}
+          className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-white/40 font-light outline-none transition-colors focus:border-white/30"
+          style={{ fontSize: "var(--text-small)" }}
+        />
+        <button
+          type="submit"
+          disabled={status === "submitting"}
+          className="font-semibold text-white rounded-lg px-5 py-3 transition-all hover:scale-[1.02] disabled:opacity-60 disabled:hover:scale-100 shrink-0"
+          style={{ fontSize: "var(--text-small)", backgroundColor: accent }}
+        >
+          {status === "submitting" ? copy.leadSubmitting : copy.leadSubmit}
+        </button>
+      </div>
+      <label className="flex items-start gap-3 cursor-pointer">
+        <input
+          type="checkbox"
+          required
+          checked={consent}
+          onChange={(e) => setConsent(e.target.checked)}
+          className="mt-1 w-4 h-4 shrink-0"
+          style={{ accentColor: accent }}
+        />
+        <span className="text-white/50 font-light leading-relaxed" style={{ fontSize: "var(--text-small)" }}>
+          {copy.leadConsentText}{" "}
+          <Link to={localizedPath("/datenschutz")} className="text-white/70 underline hover:text-white transition-colors">
+            {copy.leadConsentLinkLabel}
+          </Link>
+          .
+        </span>
+      </label>
+      {status === "error" && (
+        <p className="text-[#ef4444] font-light" style={{ fontSize: "var(--text-small)" }}>
+          {copy.leadError}
+        </p>
+      )}
+    </form>
+  );
+}
+
+export function PulseQuiz({
+  copy,
+  accent,
+  onStepChange,
+}: {
+  copy: Copy;
+  accent: string;
+  /** Lets the surrounding dialog react to the current step (e.g. shrink its
+   * always-visible title for the result step so the booking CTA fits above
+   * the fold). */
+  onStepChange?: (step: QuizState["step"]) => void;
+}) {
   const [state, setState] = useState<QuizState>({ step: "intro" });
+
+  // Notify the parent synchronously, in the same event-handler tick as the
+  // local step change (not via a useEffect, which would commit one render
+  // late and let the dialog paint one frame with the previous step's layout
+  // — e.g. the full-size title still showing while the result view is
+  // already laid out, pushing the booking CTA below the fold for that frame).
+  function update(next: QuizState) {
+    onStepChange?.(next.step);
+    setState(next);
+  }
 
   const scores = useMemo(() => {
     if (state.step !== "result") return null;
@@ -317,7 +499,11 @@ export function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
     });
     const total = Object.values(byArea).reduce((a, b) => a + b, 0);
     const score = Math.round((total / 30) * 100);
-    const weakest = [...AREA_ORDER].sort((a, b) => byArea[a] - byArea[b]).slice(0, 2);
+    // Explicit tiebreak: equal-scoring areas keep their AREA_ORDER position
+    // rather than relying on Array.sort's stability.
+    const weakest = [...AREA_ORDER]
+      .sort((a, b) => byArea[a] - byArea[b] || AREA_ORDER.indexOf(a) - AREA_ORDER.indexOf(b))
+      .slice(0, 2);
     return { byArea, score, weakest };
   }, [state, copy]);
 
@@ -326,10 +512,10 @@ export function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
     const answers = [...state.answers];
     answers[state.index] = optionIndex;
     if (state.index + 1 < copy.questions.length) {
-      setState({ step: "question", index: state.index + 1, answers });
+      update({ step: "question", index: state.index + 1, answers });
     } else {
       trackEvent(EVENTS.quizCompleted);
-      setState({ step: "result", answers });
+      update({ step: "result", answers });
     }
   }
 
@@ -342,7 +528,7 @@ export function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
         <button
           onClick={() => {
             trackEvent(EVENTS.quizStarted);
-            setState({ step: "question", index: 0, answers: [] });
+            update({ step: "question", index: 0, answers: [] });
           }}
           className="inline-flex items-center gap-2 text-white font-semibold px-6 py-3 rounded-lg transition-all hover:scale-[1.02]"
           style={{ fontSize: "var(--text-btn)", backgroundColor: accent }}
@@ -391,8 +577,8 @@ export function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
   const band = [...copy.bands].reverse().find((b) => scores.score >= b.min) ?? copy.bands[0];
 
   return (
-    <div className="flex flex-col gap-10">
-      <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-2">
         <p className="font-light text-white/50" style={{ fontSize: "var(--text-small)" }}>
           {copy.resultReady}
         </p>
@@ -409,12 +595,38 @@ export function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
             {copy.scoreLabel}
           </span>
         </div>
-        <p className="text-white/60 font-light leading-relaxed max-w-2xl" style={{ fontSize: "var(--text-body)" }}>
+        <p className="text-white/60 font-light leading-snug max-w-2xl" style={{ fontSize: "var(--text-small)" }}>
           {band.narrative}
         </p>
-        <p className="text-white/70 font-light leading-relaxed max-w-2xl" style={{ fontSize: "var(--text-body)" }}>
+        <p className="text-white/70 font-light leading-snug max-w-2xl" style={{ fontSize: "var(--text-small)" }}>
           {copy.weakestSentence(copy.areaLabels[scores.weakest[0]], copy.areaLabels[scores.weakest[1]])}
         </p>
+      </div>
+
+      <div className="flex flex-col gap-3 p-5 rounded-xl border border-white/8 bg-white/[0.02] max-w-2xl">
+        <h4 className="font-semibold text-white" style={{ fontSize: "var(--text-body)" }}>
+          {copy.ctaHeading}
+        </h4>
+        <p className="text-white/60 font-light leading-snug" style={{ fontSize: "var(--text-small)" }}>
+          {copy.ctaBody}
+        </p>
+        <div className="flex flex-wrap items-center gap-4 mt-1">
+          <CtaButton
+            href={BOOKING_URL}
+            onClick={() => trackEvent(EVENTS.callLinkClicked)}
+            backgroundColor={accent}
+            showArrow={false}
+          >
+            {copy.ctaButton}
+          </CtaButton>
+          <button
+            onClick={() => update({ step: "intro" })}
+            className="inline-flex items-center gap-1 text-white/50 hover:text-white transition-colors font-light"
+            style={{ fontSize: "var(--text-small)" }}
+          >
+            {copy.restart} <ArrowRight size={12} />
+          </button>
+        </div>
       </div>
 
       <div className="flex flex-col gap-4">
@@ -438,31 +650,13 @@ export function PulseQuiz({ copy, accent }: { copy: Copy; accent: string }) {
         </div>
       </div>
 
-      <div className="flex flex-col gap-4 p-7 rounded-xl border border-white/8 bg-white/[0.02] max-w-2xl">
-        <h4 className="font-semibold text-white" style={{ fontSize: "var(--text-h2)" }}>
-          {copy.ctaHeading}
-        </h4>
-        <p className="text-white/60 font-light leading-relaxed" style={{ fontSize: "var(--text-body)" }}>
-          {copy.ctaBody}
-        </p>
-        <div className="flex flex-wrap items-center gap-4 mt-1">
-          <CtaButton
-            href={BOOKING_URL}
-            onClick={() => trackEvent(EVENTS.callLinkClicked)}
-            backgroundColor={accent}
-            showArrow={false}
-          >
-            {copy.ctaButton}
-          </CtaButton>
-          <button
-            onClick={() => setState({ step: "intro" })}
-            className="inline-flex items-center gap-1 text-white/50 hover:text-white transition-colors font-light"
-            style={{ fontSize: "var(--text-small)" }}
-          >
-            {copy.restart} <ArrowRight size={12} />
-          </button>
-        </div>
-      </div>
+      <PulseLeadBox
+        copy={copy}
+        accent={accent}
+        score={scores.score}
+        band={band.label}
+        weakest={`${copy.areaLabels[scores.weakest[0]]}, ${copy.areaLabels[scores.weakest[1]]}`}
+      />
     </div>
   );
 }
