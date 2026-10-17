@@ -28,9 +28,11 @@
  */
 import { writeFileSync, mkdirSync, readFileSync } from "fs";
 import { execFileSync } from "child_process";
-import { resolve, dirname } from "path";
+import { resolve, dirname, relative } from "path";
 import { fileURLToPath } from "url";
 import { pathToFileURL } from "url";
+
+import { findMissingPlacementCallSites } from "./check-placements";
 
 import { siteData as siteDe } from "../src/data/de/site";
 import { leistungenData as leistungenDe } from "../src/data/de/leistungen";
@@ -374,7 +376,28 @@ function findEmptyBodyRoutes(writtenFiles: Map<string, string>): string[] {
   return offending;
 }
 
+/**
+ * 20261017-tracking-every-booking-contact-button-identifiab, Reviewer finding
+ * 1: `pnpm build` is `generate-content.ts && vite build && prerender.ts`
+ * (package.json stays untouched per the spec), so this is the one script in
+ * that chain where "a booking CTA without a placement id fails the build"
+ * can actually be true — scripts/check-analytics.ts's own criterion 15 is
+ * only ever run separately via `pnpm check:analytics`.
+ */
+function assertPlacementIds(): void {
+  const offenders = findMissingPlacementCallSites(resolve(repoRoot, "src"));
+  if (offenders.length > 0) {
+    console.error(
+      `prerender: ${offenders.length} call site(s) fire EVENTS.callLinkClicked without a Plausible placement argument:\n` +
+        offenders.map((f) => `  - ${relative(repoRoot, f)}`).join("\n")
+    );
+    process.exit(1);
+  }
+}
+
 async function main() {
+  assertPlacementIds();
+
   const shell = readFileSync(resolve(distDir, "index.html"), "utf-8");
 
   const allPages: PageMeta[] = [];
