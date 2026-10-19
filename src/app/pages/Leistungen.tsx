@@ -8,6 +8,7 @@ import { Footer } from "@/app/components/Footer";
 import { PulseJourney } from "@/app/components/PulseJourney";
 import { SituationsSection } from "@/app/components/SituationsSection";
 import { SkillMatrix } from "@/app/components/SkillMatrix";
+import { ToolProfile } from "@/app/components/ToolProfile";
 import { PulseCheckModal } from "@/app/components/PulseCheckModal";
 import { PulseLines } from "@/app/components/ui/PulseLines";
 import { useLeistungenData } from "@/data/content";
@@ -244,6 +245,7 @@ export function Leistungen() {
       <LeistungenHero onQuizOpen={() => setQuizOpen(true)} />
       <PulseJourney />
       <SkillMatrix />
+      <ToolProfile />
       <SituationsSection />
       <PulseCallout onQuizOpen={() => setQuizOpen(true)} />
       <ContactStrip />
