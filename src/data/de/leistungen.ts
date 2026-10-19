@@ -24,6 +24,7 @@ export interface Situation {
   id: string;
   text: string;
   agentName: string;
+  agentKind: "live" | "example";
   capabilities: string[];
 }
 
@@ -144,12 +145,13 @@ export const leistungenData: LeistungenData = {
   }
 ],
   situationsHeading: "Kommt dir eine davon bekannt vor?",
-  situationsCtaLabel: "Kostenloses Erstgespräch buchen (30 Min.)",
+  situationsCtaLabel: "Kostenloses Erstgespräch buchen",
   situations: [
   {
     "id": "receipts",
     "text": "Zu jeder Abbuchung fehlt mir der Beleg.",
     "agentName": "Beleg-Inbox",
+    "agentKind": "live",
     "capabilities": [
       "Belege automatisch einsammeln",
       "Belegprüfungen",
@@ -159,41 +161,45 @@ export const leistungenData: LeistungenData = {
   {
     "id": "invoice-coverage",
     "text": "Ich weiß nicht, ob alle Rechnungen eines Projekts erfasst sind.",
-    "agentName": "Beleg-Inbox",
+    "agentName": "Rechnungs-Radar",
+    "agentKind": "example",
     "capabilities": [
-      "Rechnungen automatisch dem richtigen Projekt zuordnen",
-      "Vollständigkeits-Check pro Projekt",
-      "Prüfung durch eine Person, bevor etwas freigegeben wird"
+      "Rechnungen automatisch dem passenden Projekt zuordnen",
+      "Fehlende Rechnungen markieren",
+      "Monatsabgleich pro Projekt zusammenfassen"
     ]
   },
   {
-    "id": "ai-pilots-stuck",
+    "id": "tool-fatigue",
     "text": "Wir probieren seit Monaten KI-Tools aus, aber im Alltag läuft keines davon wirklich.",
-    "agentName": "Vom Pilot in den Alltag",
+    "agentName": "Rollout-Lotse",
+    "agentKind": "example",
     "capabilities": [
-      "Feste Übergabe ins Tagesgeschäft statt Demo-Modus",
-      "Ein Anwendungsfall, ein Agent, eine verantwortliche Person",
-      "Laufende Weiterentwicklung statt Stillstand nach dem Start"
+      "Einführung Schritt für Schritt pro Team begleiten",
+      "Blockaden im Alltag früh erkennen",
+      "Nutzung laufend sichtbar machen"
     ]
   },
   {
-    "id": "where-to-start",
+    "id": "prioritization",
     "text": "Ich weiß nicht, wo wir mit KI anfangen sollen – überall wird es empfohlen, aber keiner sagt, was zuerst dran ist.",
-    "agentName": "Erst sehen, was sich lohnt",
+    "agentName": "Fokus-Kompass",
+    "agentKind": "example",
     "capabilities": [
-      "Prozesse, Daten und Tools in 1–2 Tagen sichten",
-      "Eine priorisierte Liste statt eines 40-Seiten-Reports",
-      "Die Anwendungsfälle nennen, die sich zuerst lohnen"
+      "Anwendungsfälle nach Aufwand und Wirkung sortieren",
+      "Einen konkreten ersten Schritt vorschlagen",
+      "Fortschritt über die Zeit sichtbar machen"
     ]
   },
   {
-    "id": "unmaintained-tool",
+    "id": "neglected-tool",
     "text": "Wir haben mal ein Tool eingeführt – seitdem kümmert sich niemand mehr darum.",
-    "agentName": "Ein System, das dranbleibt",
+    "agentName": "Tool-Wächter",
+    "agentKind": "example",
     "capabilities": [
-      "Laufendes Monitoring statt Stillstand",
-      "Feste Termine jeden Monat",
-      "Regelmäßige Weiterentwicklung statt Verstauben"
+      "Nutzung und Fehler laufend überwachen",
+      "Verantwortliche automatisch erinnern",
+      "Monatlichen Gesundheitscheck liefern"
     ]
   }
 ],
