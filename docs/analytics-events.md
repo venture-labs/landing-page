@@ -38,6 +38,7 @@ absent — see `scripts/check-analytics-extra.ts`'s criterion 6, which runs it a
 | `leistungenDetailCta` | `leistungen-detail-cta` | `LeistungenDetail` (service CTA block, next to the Pulse-check button) | `src/app/pages/LeistungenDetail.tsx:326` |
 | `leistungenDetailContact` | `leistungen-detail-contact` | `LeistungenDetail` (bottom contact strip, same page, different section) | `src/app/pages/LeistungenDetail.tsx:439` |
 | `situations` | `situations` | `SituationsSection` ("Ihre Situation" block on `/leistungen`) | `src/app/components/SituationsSection.tsx:135` |
+| `toolProfile` | `tool-profile` | `ToolProfile` ("Im Einsatz: Beleg-Inbox" Steckbrief on `/leistungen`) | `src/app/components/ToolProfile.tsx` (`ToolProfileCard`'s `CtaButton`) |
 
 `leistungen-detail-cta` and `leistungen-detail-contact` sit on the same page/route, so `page` alone
 cannot tell them apart — the distinct `placement` id is what does.

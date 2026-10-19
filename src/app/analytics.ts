@@ -38,6 +38,7 @@ export const PLACEMENTS = Object.freeze({
   leistungenDetailCta: "leistungen-detail-cta",
   leistungenDetailContact: "leistungen-detail-contact",
   situations: "situations",
+  toolProfile: "tool-profile",
 } as const);
 
 /**
