@@ -97,12 +97,12 @@ export const toolProfiles: ToolProfile[] = [
       {
         "category": "ai-experience",
         "title": "Turn meeting notes into tasks",
-        "description": "Turns meeting notes into a prioritised task list per participant, right after the call ends."
+        "description": "Turns meeting notes into a prioritised task list per participant."
       },
       {
         "category": "venture-building",
         "title": "Monitor competitor websites",
-        "description": "Regularly checks competitors’ prices and offers and reports as soon as something changes there."
+        "description": "Regularly checks competitors’ prices and offers and flags where something has changed."
       },
       {
         "category": "venture-building",
