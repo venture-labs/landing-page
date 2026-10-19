@@ -1,0 +1,65 @@
+---
+language: de
+order: 1
+slug: beleg-inbox
+category: ai-automation
+name: 'Beleg-Inbox'
+task: 'Beleg-Inbox sortiert eingehende Belege, ordnet sie Kunden und Projekten zu – und legt sie erst ab, wenn dein Team sie geprüft hat.'
+input: 'Belege aus einem NAS-Ordner und einem Rechnungs-Postfach.'
+output: 'Sortierte, geprüfte Belege in den passenden Kundenordnern.'
+whereItRuns: 'Läuft auf einem Rechner bei dir vor Ort oder in deinem eigenen Cloud-Account.'
+releaseNote: 'Nichts wird automatisch abgelegt: Ein Mensch gibt jeden Beleg erst frei, wenn er geprüft und richtig sortiert ist.'
+cancellationNote: 'Monatlich kündbar.'
+ctaLabel: 'Über Beleg-Inbox sprechen'
+agentOptionsHeading: 'Was sonst noch möglich ist'
+agentOptionsIntro: 'Beispiele für die gleiche Automatisierungs-Technik wie bei Beleg-Inbox – zur Einordnung der Bandbreite, keine laufenden Tools und keine Kundenreferenz.'
+agentOptions:
+  - category: ai-automation
+    title: 'Angebote aus Anfragen vorbereiten'
+    description: 'Liest eingehende Anfragen, zieht Produkt und Menge heraus und legt einen Angebotsentwurf im CRM an – Freigabe durch einen Menschen vor dem Versand.'
+  - category: ai-automation
+    title: 'Rechnungen mit Bestellungen abgleichen'
+    description: 'Prüft jede Eingangsrechnung gegen die passende Bestellung und markiert Abweichungen, statt sie stillschweigend durchzuwinken.'
+  - category: ai-automation
+    title: 'Zahlungserinnerungen anstoßen'
+    description: 'Erkennt überfällige Rechnungen und bereitet eine Erinnerung vor, die dein Team nur noch bestätigen muss.'
+  - category: ai-automation
+    title: 'Termine aus E-Mails eintragen'
+    description: 'Liest Terminwünsche aus eingehenden Mails heraus und schlägt freie Slots im Kalender vor, statt sie manuell abzutippen.'
+  - category: ai-products
+    title: 'Onboarding-Fragen automatisch beantworten'
+    description: 'Beantwortet wiederkehrende Fragen neuer Nutzer aus der eigenen Dokumentation und eskaliert den Rest direkt an euer Team.'
+  - category: ai-products
+    title: 'Support-Tickets vorsortieren'
+    description: 'Ordnet eingehende Tickets nach Dringlichkeit und Thema, bevor ein Mensch das erste Mal hineinsieht.'
+  - category: ai-products
+    title: 'Feature-Wünsche strukturieren'
+    description: 'Fasst Nutzerfeedback aus mehreren Kanälen zusammen und ordnet es nach Aufwand und Nutzen für die nächste Priorisierung.'
+  - category: ai-products
+    title: 'Nutzungsdaten in Berichte übersetzen'
+    description: 'Verwandelt rohe Produktanalytik in einen lesbaren wöchentlichen Bericht fürs Team, ohne manuelles Zusammensuchen.'
+  - category: ai-experience
+    title: 'Kundengespräche auswerten'
+    description: 'Analysiert Calls und Chats nach Thema und Stimmung, damit Muster sichtbar werden statt in Einzelnotizen zu verschwinden.'
+  - category: ai-experience
+    title: 'Antworten auf Standardfragen vorschlagen'
+    description: 'Schlägt eurem Support-Team passende Antwortbausteine vor – abgeschickt wird weiterhin von einem Menschen.'
+  - category: ai-experience
+    title: 'Interne Wissensdatenbank pflegen'
+    description: 'Hält eine interne Wissensdatenbank aus Chats und Dokumenten aktuell, ohne dass jemand sie manuell nachträgt.'
+  - category: ai-experience
+    title: 'Meeting-Notizen in Aufgaben verwandeln'
+    description: 'Macht aus Meeting-Mitschriften eine priorisierte Aufgabenliste je Teilnehmer, direkt im Anschluss an den Call.'
+  - category: venture-building
+    title: 'Wettbewerber-Websites beobachten'
+    description: 'Prüft regelmäßig Preise und Angebote der Konkurrenz und meldet, sobald sich dort etwas ändert.'
+  - category: venture-building
+    title: 'Investoren-Updates vorbereiten'
+    description: 'Zieht Kennzahlen aus euren bestehenden Tools und bereitet einen Entwurf für das nächste Investoren-Update vor.'
+  - category: venture-building
+    title: 'Markttrends zusammenfassen'
+    description: 'Fasst relevante Fachartikel und Branchenmeldungen zu einer kurzen, wöchentlichen Markteinschätzung zusammen.'
+  - category: venture-building
+    title: 'Social-Media-Entwürfe aus Blogtexten ableiten'
+    description: 'Leitet aus veröffentlichten Blogartikeln Entwürfe für Social-Media-Beiträge ab – veröffentlicht wird weiterhin manuell.'
+---
