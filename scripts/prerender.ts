@@ -177,9 +177,16 @@ function buildPagesForLocale(lang: Locale): PageMeta[] {
     path: `/${lang}`,
     lang,
     // seoTitle is optional frontmatter (content/site/home.md / home.en.md); fall
-    // back to the pre-existing title expression when it's absent or blank so an
-    // editor omitting it never ships an empty <title>/og:title.
-    title: site.seoTitle?.trim() ? site.seoTitle : `VentureLabs – ${site.heroHeadline}`,
+    // back to a locale-correct literal (the same wording the seoTitle fields are
+    // authored with today — index.html's own former German title / the
+    // already-translated English footer tagline) when it's absent or blank, so an
+    // editor omitting it never reproduces F-a6d917's identical-English-title bug
+    // via the shared, locale-identical heroHeadline.
+    title: site.seoTitle?.trim()
+      ? site.seoTitle
+      : lang === "de"
+        ? "VentureLabs – Digitale Produkte, die wirklich funktionieren"
+        : "VentureLabs – Digital products that actually work",
     description: site.heroSubline,
     sourceFile: contentFile(lang, "site/home"),
   });
