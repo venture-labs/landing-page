@@ -55,6 +55,8 @@ skillStepLabels:
   check: 'Check'
   build: 'Build'
   care: 'Care'
+toolProfilesHeading: 'Im Einsatz: Beleg-Inbox'
+toolProfilesIntro: 'Der erste Tool-Steckbrief aus unserer AI-Automation-Praxis – konkret, ohne Buzzwords.'
 ctaHeading: 'Noch unklar, wo du stehst?'
 ctaBody: 'Der AI Pulse Score dauert fünf Minuten und kostet nichts: 10 Fragen, sofort ein Ergebnis über fünf Bereiche. Willst du danach genau wissen, wo dein größter Hebel liegt, ist der Pulse Check der nächste Schritt – was er bei dir umfasst, besprechen wir im Erstgespräch.'
 contactCallout: 'Du suchst ehrliche Beratung statt Buzzwords? Ruf uns an oder schreib uns – wir hören zu, bevor wir bauen.'

@@ -55,6 +55,8 @@ skillStepLabels:
   check: 'Check'
   build: 'Build'
   care: 'Care'
+toolProfilesHeading: 'In production: Beleg-Inbox'
+toolProfilesIntro: 'The first tool profile from our AI Automation work — concrete, no buzzwords.'
 ctaHeading: 'Not sure where you stand?'
 ctaBody: 'The AI Pulse Score takes five minutes and costs nothing: 10 questions, an instant result across five areas. If you then want to know exactly where your biggest lever is, the Pulse Check is the next step — what it covers in your case is something we work out in a first call.'
 contactCallout: 'Looking for honest advice instead of buzzwords? Call or email us — we listen before we build.'
