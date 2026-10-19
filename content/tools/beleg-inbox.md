@@ -49,10 +49,10 @@ agentOptions:
     description: 'Hält eine interne Wissensdatenbank aus Chats und Dokumenten aktuell, ohne dass jemand sie manuell nachträgt.'
   - category: ai-experience
     title: 'Meeting-Notizen in Aufgaben verwandeln'
-    description: 'Macht aus Meeting-Mitschriften eine priorisierte Aufgabenliste je Teilnehmer, direkt im Anschluss an den Call.'
+    description: 'Macht aus Meeting-Mitschriften eine priorisierte Aufgabenliste je Teilnehmer.'
   - category: venture-building
     title: 'Wettbewerber-Websites beobachten'
-    description: 'Prüft regelmäßig Preise und Angebote der Konkurrenz und meldet, sobald sich dort etwas ändert.'
+    description: 'Prüft regelmäßig Preise und Angebote der Konkurrenz und markiert, wo sich dort etwas geändert hat.'
   - category: venture-building
     title: 'Investoren-Updates vorbereiten'
     description: 'Zieht Kennzahlen aus euren bestehenden Tools und bereitet einen Entwurf für das nächste Investoren-Update vor.'

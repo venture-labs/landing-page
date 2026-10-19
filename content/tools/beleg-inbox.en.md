@@ -49,10 +49,10 @@ agentOptions:
     description: 'Keeps an internal knowledge base built from chats and documents up to date, with nobody updating it by hand.'
   - category: ai-experience
     title: 'Turn meeting notes into tasks'
-    description: 'Turns meeting notes into a prioritised task list per participant, right after the call ends.'
+    description: 'Turns meeting notes into a prioritised task list per participant.'
   - category: venture-building
     title: 'Monitor competitor websites'
-    description: 'Regularly checks competitors’ prices and offers and reports as soon as something changes there.'
+    description: 'Regularly checks competitors’ prices and offers and flags where something has changed.'
   - category: venture-building
     title: 'Prepare investor updates'
     description: 'Pulls metrics from your existing tools and drafts the next investor update.'
