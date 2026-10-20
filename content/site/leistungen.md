@@ -138,7 +138,7 @@ clusterStory:
     - id: concepts
       navLabel: 'Konzepte'
       heading: 'Konzepte'
-      body: 'Aus deinem Input entsteht sofort ein Konzept – und kommt zu dir zurück, zur Entscheidung.'
+      body: 'Aus deinem Input wird sofort ein Konzept angestoßen – und kommt zu dir zurück, zur Entscheidung.'
     - id: handover
       navLabel: 'Übergabe'
       heading: 'Übergabe an unsere Agenten'

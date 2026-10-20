@@ -274,7 +274,7 @@ export const leistungenData: LeistungenData = {
       "id": "concepts",
       "navLabel": "Concepts",
       "heading": "Concepts",
-      "body": "A concept is built from your input at once — and comes back to you, for your decision."
+      "body": "Concept-building starts from your input at once — and it comes back to you, for your decision."
     },
     {
       "id": "handover",
