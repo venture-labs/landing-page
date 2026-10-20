@@ -77,6 +77,7 @@ async function generateLocale(locale: Locale) {
     `${banner()}
 export const siteData = {
   heroHeadline: ${strLit(site.heroHeadline)},
+  seoTitle: ${strLit(site.seoTitle)},
   heroSubline: ${strLit(site.heroSubline)},
   heroCta: ${strLit(site.heroCta)},
   heroCtaSecondary: ${strLit(site.heroCtaSecondary)},
@@ -300,6 +301,7 @@ export const gridCases: GridCase[] = ${JSON.stringify(
     `${banner()}
 export interface CaseDetail {
   slug: string;
+  title: string;
   category: string;
   heroHeadline: string;
   heroSubline: string;
@@ -321,6 +323,7 @@ export const caseDetailsMap: Record<string, CaseDetail> = ${JSON.stringify(
           c.slug,
           {
             slug: c.slug,
+            title: c.title,
             category: c.category,
             heroHeadline: c.heroHeadline,
             heroSubline: c.heroSubline,

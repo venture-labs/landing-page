@@ -120,6 +120,7 @@
   },
   "blog": {
     "heroTitle": "Blog",
+    "seoTitle": "Blog – Gedanken & Learnings – VentureLabs",
     "heroSubtitle": "Gedanken, Learnings und Einblicke aus unserer Arbeit mit digitalen Produkten, Teams und KI.",
     "featuredLabel": "Empfohlen",
     "readArticle": "Weiterlesen",

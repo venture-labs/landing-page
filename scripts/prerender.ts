@@ -38,6 +38,7 @@ import { siteData as siteDe } from "../src/data/de/site";
 import { leistungenData as leistungenDe } from "../src/data/de/leistungen";
 import { aboutData as aboutDe } from "../src/data/de/about";
 import { services as servicesDe } from "../src/data/de/services";
+import { serviceDetails as serviceDetailsDe } from "../src/data/de/serviceDetails";
 import { caseDetailsMap as caseDetailsDe } from "../src/data/de/caseDetails";
 import { blogPosts as blogPostsDe } from "../src/data/de/blog";
 
@@ -45,6 +46,7 @@ import { siteData as siteEn } from "../src/data/en/site";
 import { leistungenData as leistungenEn } from "../src/data/en/leistungen";
 import { aboutData as aboutEn } from "../src/data/en/about";
 import { services as servicesEn } from "../src/data/en/services";
+import { serviceDetails as serviceDetailsEn } from "../src/data/en/serviceDetails";
 import { caseDetailsMap as caseDetailsEn } from "../src/data/en/caseDetails";
 import { blogPosts as blogPostsEn } from "../src/data/en/blog";
 
@@ -123,6 +125,7 @@ const byLocale = {
     leistungen: leistungenDe,
     about: aboutDe,
     services: servicesDe,
+    serviceDetails: serviceDetailsDe,
     caseDetails: caseDetailsDe,
     blogPosts: blogPostsDe,
     ui: deUi as any,
@@ -132,17 +135,22 @@ const byLocale = {
     leistungen: leistungenEn,
     about: aboutEn,
     services: servicesEn,
+    serviceDetails: serviceDetailsEn,
     caseDetails: caseDetailsEn,
     blogPosts: blogPostsEn,
     ui: enUi as any,
   },
 };
 
+/** Branded 1200x630 default share image, used by every route with no own hero/case image. */
+const DEFAULT_OG_IMAGE = "/og/default.png";
+
 export interface PageMeta {
   path: string; // e.g. "/de/leistungen/development"
   lang: Locale;
   title: string;
   description: string;
+  image?: string; // og:image path, relative to SITE_ORIGIN; defaults to DEFAULT_OG_IMAGE
   sourceFile?: string; // markdown file backing the page, for <lastmod>
 }
 
@@ -160,14 +168,25 @@ function escapeText(s: string): string {
 }
 
 function buildPagesForLocale(lang: Locale): PageMeta[] {
-  const { site, leistungen, about, services, caseDetails, blogPosts, ui } = byLocale[lang];
+  const { site, leistungen, about, services, serviceDetails, caseDetails, blogPosts, ui } =
+    byLocale[lang];
   const suffix = " – VentureLabs";
   const pages: PageMeta[] = [];
 
   pages.push({
     path: `/${lang}`,
     lang,
-    title: `VentureLabs – ${site.heroHeadline}`,
+    // seoTitle is optional frontmatter (content/site/home.md / home.en.md); fall
+    // back to a locale-correct literal (the same wording the seoTitle fields are
+    // authored with today — index.html's own former German title / the
+    // already-translated English footer tagline) when it's absent or blank, so an
+    // editor omitting it never reproduces F-a6d917's identical-English-title bug
+    // via the shared, locale-identical heroHeadline.
+    title: site.seoTitle?.trim()
+      ? site.seoTitle
+      : lang === "de"
+        ? "VentureLabs – Digitale Produkte, die wirklich funktionieren"
+        : "VentureLabs – Digital products that actually work",
     description: site.heroSubline,
     sourceFile: contentFile(lang, "site/home"),
   });
@@ -181,11 +200,13 @@ function buildPagesForLocale(lang: Locale): PageMeta[] {
   });
 
   for (const s of services) {
+    const detail = serviceDetails.find((d) => d.slug === s.slug);
     pages.push({
       path: `/${lang}/leistungen/${s.slug}`,
       lang,
-      title: `${s.title}${suffix}`,
+      title: `${s.title} – ${leistungen.heroEyebrow}${suffix}`,
       description: s.description,
+      image: detail?.heroImage,
       sourceFile: contentFile(lang, `services/${s.slug}`),
     });
   }
@@ -202,8 +223,9 @@ function buildPagesForLocale(lang: Locale): PageMeta[] {
     pages.push({
       path: `/${lang}/cases/${slug}`,
       lang,
-      title: `${c.heroHeadline}${suffix}`,
+      title: `${c.title}${suffix}`,
       description: c.description || c.heroSubline,
+      image: c.heroImage,
       sourceFile: contentFile(lang, `cases/${slug}`),
     });
   }
@@ -218,7 +240,7 @@ function buildPagesForLocale(lang: Locale): PageMeta[] {
   pages.push({
     path: `/${lang}/blog`,
     lang,
-    title: `${ui.blog.heroTitle}${suffix}`,
+    title: ui.blog.seoTitle,
     description: ui.blog.heroSubtitle,
   });
 
@@ -294,11 +316,16 @@ export function renderHtml(shell: string, page: PageMeta, alternates: Alternate[
   const title = escapeText(page.title);
   const description = escapeAttr(page.description);
 
+  const imagePath = page.image ?? DEFAULT_OG_IMAGE;
+  const imageUrl = `${SITE_ORIGIN}${imagePath.startsWith("/") ? "" : "/"}${imagePath}`;
+
   const headLinks = [
     `    <link rel="canonical" href="${escapeAttr(absoluteUrl(page.path))}" />`,
     ...alternates.map(
       (a) => `    <link rel="alternate" hreflang="${escapeAttr(a.hreflang)}" href="${escapeAttr(a.href)}" />`
     ),
+    `    <meta property="og:url" content="${escapeAttr(absoluteUrl(page.path))}" />`,
+    `    <meta property="og:image" content="${escapeAttr(imageUrl)}" />`,
   ].join("\n");
 
   // Injected before the first </head>; index.html itself is never modified, so
