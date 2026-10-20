@@ -87,7 +87,12 @@
     "backToOverview": "Back to overview",
     "pulseCta": "Start your free Pulse Score",
     "allSteps": "All steps",
-    "allServices": "All services in detail"
+    "allServices": "All services in detail",
+    "toolInputLabel": "Comes in",
+    "toolOutputLabel": "Comes out",
+    "toolWhereItRunsLabel": "Runs on your side",
+    "toolReleaseLabel": "Release",
+    "toolCancellationLabel": "Cancellation"
   },
   "cases": {
     "heroTitle": "Our projects",

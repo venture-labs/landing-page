@@ -69,6 +69,7 @@ async function generateLocale(locale: Locale) {
   const services = readCollection("services", locale);
   const cases = readCollection("cases", locale);
   const blogPosts = readCollection("blog", locale);
+  const tools = readCollection("tools", locale);
 
   /* ── site.ts ─────────────────────────────────────────────────────────── */
   writeFileSync(
@@ -434,6 +435,8 @@ export interface LeistungenData {
   skillsHeading: string;
   skillsIntro: string;
   skillStepLabels: Record<"check" | "build" | "care", string>;
+  toolProfilesHeading: string;
+  toolProfilesIntro: string;
   ctaHeading: string;
   ctaBody: string;
   contactCallout: string;
@@ -456,6 +459,8 @@ export const leistungenData: LeistungenData = {
   skillsHeading: ${strLit(leistungen.skillsHeading)},
   skillsIntro: ${strLit(leistungen.skillsIntro)},
   skillStepLabels: ${JSON.stringify(leistungen.skillStepLabels ?? {}, null, 2)},
+  toolProfilesHeading: ${strLit(leistungen.toolProfilesHeading)},
+  toolProfilesIntro: ${strLit(leistungen.toolProfilesIntro)},
   ctaHeading: ${strLit(leistungen.ctaHeading)},
   ctaBody: ${strLit(leistungen.ctaBody)},
   contactCallout: ${strLit(leistungen.contactCallout)},
@@ -477,8 +482,62 @@ export const leistungenData: LeistungenData = {
 `
   );
 
+  /* ── tools.ts ────────────────────────────────────────────────────────── */
+  writeFileSync(
+    resolve(outDir, "tools.ts"),
+    `${banner()}
+export type ToolCategory = "ai-automation" | "ai-products" | "ai-experience" | "venture-building";
+
+export interface AgentOption {
+  category: ToolCategory;
+  title: string;
+  description: string;
+}
+
+export interface ToolProfile {
+  slug: string;
+  category: ToolCategory;
+  name: string;
+  task: string;
+  input: string;
+  output: string;
+  whereItRuns: string;
+  releaseNote: string;
+  cancellationNote: string;
+  ctaLabel: string;
+  agentOptionsHeading: string;
+  agentOptionsIntro: string;
+  agentOptions: AgentOption[];
+}
+
+export const toolProfiles: ToolProfile[] = ${JSON.stringify(
+      tools.map((tool) => ({
+        slug: tool.slug,
+        category: tool.category,
+        name: tool.name,
+        task: tool.task,
+        input: tool.input,
+        output: tool.output,
+        whereItRuns: tool.whereItRuns,
+        releaseNote: tool.releaseNote,
+        cancellationNote: tool.cancellationNote,
+        ctaLabel: tool.ctaLabel,
+        agentOptionsHeading: tool.agentOptionsHeading,
+        agentOptionsIntro: tool.agentOptionsIntro,
+        agentOptions: (tool.agentOptions ?? []).map((o: any) => ({
+          category: o!.category,
+          title: o!.title,
+          description: o!.description,
+        })),
+      })),
+      null,
+      2
+    )};
+`
+  );
+
   console.log(
-    `generate-content[${locale}]: wrote site.ts, about.ts, leistungen.ts, services.ts, serviceDetails.ts, cases.ts (${featured.length} featured / ${grid.length} grid), caseDetails.ts (${withDetail.length} with detail), blog.ts (${blogPosts.length} posts)`
+    `generate-content[${locale}]: wrote site.ts, about.ts, leistungen.ts, services.ts, serviceDetails.ts, cases.ts (${featured.length} featured / ${grid.length} grid), caseDetails.ts (${withDetail.length} with detail), blog.ts (${blogPosts.length} posts), tools.ts (${tools.length} profiles)`
   );
 }
 
