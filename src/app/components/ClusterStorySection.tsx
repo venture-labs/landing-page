@@ -70,6 +70,38 @@ const STEP_ACCENTS = [
 /** Index of the area that carries the "Beispiel"/"Example" Tap2Link tag (step 8's third tile). */
 const EXAMPLE_AREA_INDEX = 2;
 
+const ACTIVE_TEXT_DARK = "#0e0d13";
+const ACTIVE_TEXT_LIGHT = "#ffffff";
+
+/** WCAG relative luminance of a `#rrggbb` hex colour. */
+function relLuminance(hex: string): number {
+  const c = hex.replace("#", "");
+  const r = parseInt(c.slice(0, 2), 16) / 255;
+  const g = parseInt(c.slice(2, 4), 16) / 255;
+  const b = parseInt(c.slice(4, 6), 16) / 255;
+  const toLinear = (v: number) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
+  return 0.2126 * toLinear(r) + 0.7152 * toLinear(g) + 0.0722 * toLinear(b);
+}
+
+/** WCAG contrast ratio between two relative luminances. */
+function contrastRatio(l1: number, l2: number): number {
+  const hi = Math.max(l1, l2);
+  const lo = Math.min(l1, l2);
+  return (hi + 0.05) / (lo + 0.05);
+}
+
+const DARK_LUMINANCE = relLuminance(ACTIVE_TEXT_DARK);
+
+/** The active step-navigator button's foreground: the fixed dark text (used elsewhere in this
+ * component) fails 4.5:1 normal-text contrast on the darker/more saturated accents (Reviewer
+ * finding, round 3 — e.g. #8129ff/#a318f8 sit at ~3.4–3.7:1 against #0e0d13); picking whichever
+ * of the two fixed foregrounds clears 4.5:1 against the step's own accent keeps every active
+ * button legible without a per-step hand-picked colour. */
+function activeNavTextColor(accent: string): string {
+  const accentLuminance = relLuminance(accent);
+  return contrastRatio(accentLuminance, DARK_LUMINANCE) >= 4.5 ? ACTIVE_TEXT_DARK : ACTIVE_TEXT_LIGHT;
+}
+
 interface ClusterGraphicProps {
   revealed: number;
   active: number;
@@ -102,7 +134,7 @@ function ClusterGraphic({ revealed, active, reducedMotion }: ClusterGraphicProps
       viewBox="0 0 800 320"
       aria-hidden="true"
       focusable="false"
-      className="w-full h-[170px] md:h-auto"
+      className="w-full h-[170px] lg:h-auto"
     >
       {/* our-cluster */}
       <g style={{ opacity: ourClusterOpacity, transition: opacityTransition }}>
@@ -335,7 +367,7 @@ export function ClusterStorySection() {
                 style={{
                   fontSize: "0.78rem",
                   backgroundColor: isActive ? accent : "rgba(255,255,255,0.04)",
-                  color: isActive ? "#0e0d13" : "rgba(255,255,255,0.65)",
+                  color: isActive ? activeNavTextColor(accent) : "rgba(255,255,255,0.65)",
                   // Criterion 8: zero animation under reduced motion — the active/inactive
                   // colour swap must be instant, never a transition, in that mode.
                   transition: reducedMotion ? "none" : "background-color 0.2s ease, color 0.2s ease",
@@ -349,7 +381,14 @@ export function ClusterStorySection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_1fr] gap-8 lg:gap-16 items-start">
           <div
-            className="lg:sticky lg:top-28 top-24 sticky self-start rounded-2xl bg-white/[0.015] p-4 md:p-6"
+            // Reviewer finding (round 3): on the single-column layout (below `lg`) default grid
+            // auto-placement gives this item its OWN row, sized to its own short content — the
+            // sticky stage's containing block is then that short row, so it can never stay pinned
+            // across the whole nine-step story. Forcing both this item and the `<ol>` below into
+            // the SAME row (`grid-row: 1`) makes the shared row as tall as the `<ol>` (the taller
+            // of the two), restoring a containing block that spans the whole story; `self-start`
+            // keeps this item's own box small and pinned to the row's top instead of stretching.
+            className="[grid-row:1] lg:[grid-row:auto] lg:sticky lg:top-28 top-24 sticky self-start rounded-2xl bg-white/[0.015] p-4 md:p-6"
             style={{ boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.06)" }}
           >
             <ClusterGraphic revealed={revealed} active={active} reducedMotion={Boolean(reducedMotion)} />
@@ -357,7 +396,11 @@ export function ClusterStorySection() {
 
           <ol
             aria-label={clusterStory.heading}
-            className="flex flex-col gap-16 lg:gap-24"
+            // Shares the sticky stage's row (see the comment above) so that row's height follows
+            // the `<ol>`'s own (tall) content; `pt-[218px]` reserves exactly the sticky stage's
+            // own rendered height below `lg` (170px graphic + up to 2×24px `md:p-6` padding) so
+            // the first step's text never starts underneath it (criterion 11).
+            className="[grid-row:1] lg:[grid-row:auto] pt-[218px] lg:pt-0 flex flex-col gap-16 lg:gap-24"
           >
             {clusterStory.steps.map((step, index) => (
               <StoryStepItem
