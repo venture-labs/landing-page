@@ -73,6 +73,7 @@ const EXAMPLE_AREA_INDEX = 2;
 interface ClusterGraphicProps {
   revealed: number;
   active: number;
+  reducedMotion: boolean;
 }
 
 /** Opacity of a layer whose own step index is `stepIndex`: hidden until built, dimmed once the
@@ -87,26 +88,30 @@ function layerOpacity(stepIndex: number, revealed: number, active: number): numb
  * readable word lives in the real-DOM step list next to it (criterion 9), so this graphic alone
  * never needs a translation.
  */
-function ClusterGraphic({ revealed, active }: ClusterGraphicProps) {
+function ClusterGraphic({ revealed, active, reducedMotion }: ClusterGraphicProps) {
   const ourClusterOpacity = revealed > 0 ? 1 : 0; // never dims once built
   const clientSolid = revealed >= 5; // from step 5 (install) onward
   const growthSolid = revealed >= 9; // step 9 (service)
+  // Criterion 8: zero animation under reduced motion — every layer's opacity transition is
+  // disabled outright, so a navigator jump (which changes `active`, not `revealed`) can never
+  // fade a layer in or out.
+  const opacityTransition = reducedMotion ? "none" : "opacity 0.4s ease";
 
   return (
     <svg
-      viewBox="0 0 760 320"
+      viewBox="0 0 800 320"
       aria-hidden="true"
       focusable="false"
       className="w-full h-[170px] md:h-auto"
     >
       {/* our-cluster */}
-      <g style={{ opacity: ourClusterOpacity, transition: "opacity 0.4s ease" }}>
+      <g style={{ opacity: ourClusterOpacity, transition: opacityTransition }}>
         <circle cx="110" cy="170" r="46" fill="none" stroke="#2b95f6" strokeWidth="1.5" />
         <circle cx="110" cy="170" r="3.5" fill="#2b95f6" />
       </g>
 
       {/* input-channel badges (step 0) */}
-      <g style={{ opacity: layerOpacity(0, revealed, active), transition: "opacity 0.4s ease" }}>
+      <g style={{ opacity: layerOpacity(0, revealed, active), transition: opacityTransition }}>
         <rect x="40" y="14" width="68" height="36" rx="9" fill="#2b95f61f" stroke="#2b95f6" strokeWidth="1.2" />
         <rect x="118" y="14" width="56" height="36" rx="9" fill="#2b95f61f" stroke="#2b95f6" strokeWidth="1.2" />
         <rect x="186" y="14" width="56" height="36" rx="9" fill="#2b95f61f" stroke="#2b95f6" strokeWidth="1.2" />
@@ -124,7 +129,7 @@ function ClusterGraphic({ revealed, active }: ClusterGraphicProps) {
       </g>
 
       {/* concept (step 1) */}
-      <g style={{ opacity: layerOpacity(1, revealed, active), transition: "opacity 0.4s ease" }}>
+      <g style={{ opacity: layerOpacity(1, revealed, active), transition: opacityTransition }}>
         <path d="M74 50 Q180 92 350 95" fill="none" stroke="#8129ff" strokeWidth="1" opacity="0.55" />
         <path d="M146 50 Q230 88 350 98" fill="none" stroke="#8129ff" strokeWidth="1" opacity="0.55" />
         <path d="M214 50 Q280 84 350 101" fill="none" stroke="#8129ff" strokeWidth="1" opacity="0.55" />
@@ -140,7 +145,7 @@ function ClusterGraphic({ revealed, active }: ClusterGraphicProps) {
       </g>
 
       {/* handover-arrow (step 2) */}
-      <g style={{ opacity: layerOpacity(2, revealed, active), transition: "opacity 0.4s ease" }}>
+      <g style={{ opacity: layerOpacity(2, revealed, active), transition: opacityTransition }}>
         <defs>
           <marker id="cs-arrow-handover" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
             <path d="M0 0L10 5L0 10z" fill="#a318f8" />
@@ -150,7 +155,7 @@ function ClusterGraphic({ revealed, active }: ClusterGraphicProps) {
       </g>
 
       {/* agent dots + build line + client-cluster outline (step 3) */}
-      <g style={{ opacity: layerOpacity(3, revealed, active), transition: "opacity 0.4s ease" }}>
+      <g style={{ opacity: layerOpacity(3, revealed, active), transition: opacityTransition }}>
         <circle cx="100" cy="160" r="3" fill="#a318f8" />
         <circle cx="120" cy="160" r="3" fill="#a318f8" />
         <circle cx="110" cy="178" r="3" fill="#a318f8" />
@@ -176,13 +181,13 @@ function ClusterGraphic({ revealed, active }: ClusterGraphicProps) {
       </g>
 
       {/* install badge (step 4) */}
-      <g style={{ opacity: layerOpacity(4, revealed, active), transition: "opacity 0.4s ease" }}>
+      <g style={{ opacity: layerOpacity(4, revealed, active), transition: opacityTransition }}>
         <circle cx="630" cy="116" r="11" fill="#0e0d13" stroke="#a318f8" strokeWidth="1.5" />
         <path d="M625 116l3.5 4 7-8.5" fill="none" stroke="#a318f8" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
       </g>
 
       {/* telemetry-impulse + update-arrow (step 5) */}
-      <g style={{ opacity: layerOpacity(5, revealed, active), transition: "opacity 0.4s ease" }}>
+      <g style={{ opacity: layerOpacity(5, revealed, active), transition: opacityTransition }}>
         <defs>
           <marker id="cs-arrow-telemetry" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
             <path d="M0 0L10 5L0 10z" fill="#d9aeff" />
@@ -206,7 +211,7 @@ function ClusterGraphic({ revealed, active }: ClusterGraphicProps) {
       </g>
 
       {/* loop-arrow (step 6) */}
-      <g style={{ opacity: layerOpacity(6, revealed, active), transition: "opacity 0.4s ease" }}>
+      <g style={{ opacity: layerOpacity(6, revealed, active), transition: opacityTransition }}>
         <defs>
           <marker id="cs-arrow-loop" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
             <path d="M0 0L10 5L0 10z" fill="#2b95f6" />
@@ -216,7 +221,7 @@ function ClusterGraphic({ revealed, active }: ClusterGraphicProps) {
       </g>
 
       {/* growth-ring + area-tile (step 7) */}
-      <g style={{ opacity: layerOpacity(7, revealed, active), transition: "opacity 0.4s ease" }}>
+      <g style={{ opacity: layerOpacity(7, revealed, active), transition: opacityTransition }}>
         <circle
           cx="630"
           cy="170"
@@ -233,7 +238,7 @@ function ClusterGraphic({ revealed, active }: ClusterGraphicProps) {
       </g>
 
       {/* final 100% state (step 8) */}
-      <g style={{ opacity: layerOpacity(8, revealed, active), transition: "opacity 0.4s ease" }}>
+      <g style={{ opacity: layerOpacity(8, revealed, active), transition: opacityTransition }}>
         <text x="630" y="176" textAnchor="middle" fill="#8129ff" fontSize="16" fontWeight="700">
           100%
         </text>
@@ -295,7 +300,7 @@ export function ClusterStorySection() {
   if (!clusterStory || clusterStory.steps.length === 0) return null;
 
   return (
-    <section className="bg-[#0e0d13] py-24 overflow-hidden">
+    <section className="bg-[#0e0d13] py-24">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 flex flex-col gap-10">
         <div className="max-w-2xl flex flex-col gap-4">
           <h2
@@ -326,11 +331,14 @@ export function ClusterStorySection() {
                 type="button"
                 aria-current={isActive ? "step" : undefined}
                 onClick={() => jumpTo(index)}
-                className="rounded-full px-4 py-2 font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                className="rounded-full px-4 py-2 font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 style={{
                   fontSize: "0.78rem",
                   backgroundColor: isActive ? accent : "rgba(255,255,255,0.04)",
                   color: isActive ? "#0e0d13" : "rgba(255,255,255,0.65)",
+                  // Criterion 8: zero animation under reduced motion — the active/inactive
+                  // colour swap must be instant, never a transition, in that mode.
+                  transition: reducedMotion ? "none" : "background-color 0.2s ease, color 0.2s ease",
                 }}
               >
                 {index + 1} · {step.navLabel}
@@ -344,7 +352,7 @@ export function ClusterStorySection() {
             className="lg:sticky lg:top-28 top-24 sticky self-start rounded-2xl bg-white/[0.015] p-4 md:p-6"
             style={{ boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.06)" }}
           >
-            <ClusterGraphic revealed={revealed} active={active} />
+            <ClusterGraphic revealed={revealed} active={active} reducedMotion={Boolean(reducedMotion)} />
           </div>
 
           <ol
