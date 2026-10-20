@@ -388,7 +388,13 @@ export function ClusterStorySection() {
             // the SAME row (`grid-row: 1`) makes the shared row as tall as the `<ol>` (the taller
             // of the two), restoring a containing block that spans the whole story; `self-start`
             // keeps this item's own box small and pinned to the row's top instead of stretching.
-            className="[grid-row:1] lg:[grid-row:auto] lg:sticky lg:top-28 top-24 sticky self-start rounded-2xl bg-white/[0.015] p-4 md:p-6"
+            // Reviewer finding (round 4): fixing only `grid-row` left `grid-column` on `auto`, so
+            // the auto-placement algorithm — finding column 1 of that row already taken by this
+            // item — opened an IMPLICIT column 2 for the `<ol>` below instead of overlapping it in
+            // column 1, putting the two side by side on mobile. Both items now also pin
+            // `grid-column: 1` below `lg`, reset to `auto` at `lg` where the explicit 2-column
+            // template already places them correctly (col 1 / col 2) without any override.
+            className="[grid-row:1] [grid-column:1] lg:[grid-row:auto] lg:[grid-column:auto] lg:sticky lg:top-28 top-24 sticky self-start rounded-2xl bg-white/[0.015] p-4 md:p-6"
             style={{ boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.06)" }}
           >
             <ClusterGraphic revealed={revealed} active={active} reducedMotion={Boolean(reducedMotion)} />
@@ -396,11 +402,12 @@ export function ClusterStorySection() {
 
           <ol
             aria-label={clusterStory.heading}
-            // Shares the sticky stage's row (see the comment above) so that row's height follows
-            // the `<ol>`'s own (tall) content; `pt-[218px]` reserves exactly the sticky stage's
-            // own rendered height below `lg` (170px graphic + up to 2×24px `md:p-6` padding) so
-            // the first step's text never starts underneath it (criterion 11).
-            className="[grid-row:1] lg:[grid-row:auto] pt-[218px] lg:pt-0 flex flex-col gap-16 lg:gap-24"
+            // Shares the sticky stage's row AND column (see the comments above) so that cell's
+            // height follows the `<ol>`'s own (tall) content; `pt-[218px]` reserves exactly the
+            // sticky stage's own rendered height below `lg` (170px graphic + up to 2×24px
+            // `md:p-6` padding) so the first step's text never starts underneath it
+            // (criterion 11).
+            className="[grid-row:1] [grid-column:1] lg:[grid-row:auto] lg:[grid-column:auto] pt-[218px] lg:pt-0 flex flex-col gap-16 lg:gap-24"
           >
             {clusterStory.steps.map((step, index) => (
               <StoryStepItem
