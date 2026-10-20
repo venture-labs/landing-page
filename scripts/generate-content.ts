@@ -427,6 +427,40 @@ export interface Situation {
   capabilities: string[];
 }
 
+export interface ClusterStoryChannel {
+  label: string;
+  status: "live" | "planned";
+}
+
+export interface ClusterStoryArea {
+  label: string;
+}
+
+export interface ClusterStoryStep {
+  id:
+    | "input"
+    | "concepts"
+    | "handover"
+    | "build"
+    | "install"
+    | "telemetry"
+    | "loop"
+    | "growth"
+    | "service";
+  navLabel: string;
+  heading: string;
+  body: string;
+  channels?: ClusterStoryChannel[];
+  areas?: ClusterStoryArea[];
+  billingNote?: string;
+}
+
+export interface ClusterStoryData {
+  heading: string;
+  intro: string;
+  steps: ClusterStoryStep[];
+}
+
 export interface LeistungenData {
   heroEyebrow: string;
   heroTitlePrefix: string;
@@ -449,6 +483,7 @@ export interface LeistungenData {
   situationsHeading: string;
   situationsCtaLabel: string;
   situations: Situation[];
+  clusterStory: ClusterStoryData;
 }
 
 export const leistungenData: LeistungenData = {
@@ -481,6 +516,11 @@ export const leistungenData: LeistungenData = {
   situationsHeading: ${strLit(leistungen.situationsHeading)},
   situationsCtaLabel: ${strLit(leistungen.situationsCtaLabel)},
   situations: ${JSON.stringify(leistungen.situations ?? [], null, 2)},
+  clusterStory: ${JSON.stringify(
+    leistungen.clusterStory ?? { heading: "", intro: "", steps: [] },
+    null,
+    2
+  )},
 };
 `
   );
