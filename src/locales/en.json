@@ -92,7 +92,12 @@
     "toolOutputLabel": "Comes out",
     "toolWhereItRunsLabel": "Runs on your side",
     "toolReleaseLabel": "Release",
-    "toolCancellationLabel": "Cancellation"
+    "toolCancellationLabel": "Cancellation",
+    "clusterStory": {
+      "stepOf": "Step {{current}} of {{total}}",
+      "stepNavLabel": "Steps",
+      "plannedChannelTag": "planned"
+    }
   },
   "cases": {
     "heroTitle": "Our projects",

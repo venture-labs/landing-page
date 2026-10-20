@@ -92,7 +92,12 @@
     "toolOutputLabel": "Kommt raus",
     "toolWhereItRunsLabel": "Läuft bei dir",
     "toolReleaseLabel": "Freigabe",
-    "toolCancellationLabel": "Kündigung"
+    "toolCancellationLabel": "Kündigung",
+    "clusterStory": {
+      "stepOf": "Schritt {{current}} von {{total}}",
+      "stepNavLabel": "Schritte",
+      "plannedChannelTag": "geplant"
+    }
   },
   "cases": {
     "heroTitle": "Unsere Projekte",
