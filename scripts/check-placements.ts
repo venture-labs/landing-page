@@ -218,15 +218,91 @@ function extractJsxTags(src: string, tagNameRegex: RegExp): string[] {
 }
 
 /**
+ * The `{...}`-wrapped (or bare-string) value text of `attrName=` inside a
+ * JSX opening tag's text, or the untouched identifier/expression when it
+ * isn't brace-wrapped. Null when the tag has no such attribute at all.
+ * Braces are balanced the same way `extractJsxTags` balances the whole
+ * tag's braces, so a value containing a nested arrow-function body or
+ * object literal is captured whole, not cut off at its first `}`.
+ */
+function extractAttributeValue(tag: string, attrName: string): string | null {
+  const marker = `${attrName}=`;
+  const idx = tag.indexOf(marker);
+  if (idx === -1) return null;
+  const after = idx + marker.length;
+  if (tag[after] !== "{") {
+    const quote = tag[after];
+    if (quote !== '"' && quote !== "'") return null;
+    const end = tag.indexOf(quote, after + 1);
+    return end === -1 ? null : tag.slice(after + 1, end);
+  }
+  let depth = 1;
+  let j = after + 1;
+  while (j < tag.length && depth > 0) {
+    if (tag[j] === "{") depth++;
+    else if (tag[j] === "}") depth--;
+    j++;
+  }
+  return tag.slice(after + 1, j - 1);
+}
+
+/** True when `expr` (an onClick value, or a resolved handler's body) actually invokes trackEvent. */
+function callsTrackEvent(expr: string): boolean {
+  return /trackEvent\(/.test(expr);
+}
+
+/**
+ * True when `tag`'s `onClick=` attribute actually invokes `trackEvent` —
+ * inline (`onClick={() => trackEvent(...)}`, or a block body that calls it
+ * among other statements, e.g. Navbar's mobile booking link which also
+ * closes the menu), or through a named handler function declared elsewhere
+ * in `src` (`onClick={trackImpressumMail}`, where `trackImpressumMail`
+ * itself calls `trackEvent` — the Impressum/Datenschutz pattern).
+ *
+ * Round 5, Reviewer finding 1: the previous checks here only asked "does an
+ * onClick= attribute exist at all", so `onClick={() => setOpen(false)}` on a
+ * booking/kontakt/mailto link passed every guard without ever firing an
+ * event. This requires the attribute's own value (or the named function it
+ * points at) to actually reach a `trackEvent(` call.
+ */
+function hasTrackedOnClick(src: string, tag: string): boolean {
+  const value = extractAttributeValue(tag, "onClick")?.trim();
+  if (!value) return false;
+  if (callsTrackEvent(value)) return true;
+
+  const identifierMatch = /^[A-Za-z_$][\w$]*$/.exec(value);
+  if (!identifierMatch) return false;
+  const name = identifierMatch[0];
+
+  const defRegexes = [
+    new RegExp(`function\\s+${name}\\s*\\([^)]*\\)\\s*\\{`),
+    new RegExp(`const\\s+${name}\\s*=\\s*\\([^)]*\\)\\s*=>\\s*\\{`),
+  ];
+  for (const defRegex of defRegexes) {
+    const match = defRegex.exec(src);
+    if (!match) continue;
+    let depth = 1;
+    let j = match.index + match[0].length;
+    while (j < src.length && depth > 0) {
+      if (src[j] === "{") depth++;
+      else if (src[j] === "}") depth--;
+      j++;
+    }
+    if (callsTrackEvent(src.slice(match.index + match[0].length, j - 1))) return true;
+  }
+  return false;
+}
+
+/**
  * True when `src` has an `<a>` tag whose href is a `mailto:`/`tel:` literal
  * (plain string or a template literal, e.g. `` `mailto:${person.email}` ``)
- * with no `onClick=` on that same tag, or a Footer-style config row whose
- * `href:` field is a `mailto:`/`tel:` literal with no sibling `track:` /
- * `placement:` / `cta:` fields.
+ * whose `onClick=` doesn't actually invoke tracking, or a Footer-style
+ * config row whose `href:` field is a `mailto:`/`tel:` literal with no
+ * sibling `track:` / `placement:` / `cta:` fields.
  */
 function hasUntrackedMailtoOrTel(src: string): boolean {
   const directOffender = extractJsxTags(src, /^a$/).some(
-    (tag) => /mailto:|tel:/.test(tag) && !/\bonClick=/.test(tag)
+    (tag) => /mailto:|tel:/.test(tag) && !hasTrackedOnClick(src, tag)
   );
   if (directOffender) return true;
 
@@ -257,13 +333,14 @@ export function findUntrackedPulseCheckModalUsages(srcDir: string): string[] {
 /**
  * True when `src` has an `<a>`, `<Link>` or `<CtaButton>` tag whose
  * `href`/`to` is the booking URL (`BOOKING_URL`) or a `/kontakt` path
- * (including the `?topic=` variant, carried in a template literal) with no
- * `onClick=` on that same tag. A tag whose destination is built from a
- * variable (Navbar's generic nav-item renderer, Footer's `link.href`,
- * CtaButton's own internal `<a href={href}>`) never contains the literal
- * text `BOOKING_URL` or `/kontakt` and is correctly never flagged here —
- * those are covered by findMissingPlacementCallSites / findMissingCtaCallSites
- * / hasMailtoTelRowMissingTracking instead, at the config-row level.
+ * (including the `?topic=` variant, carried in a template literal) whose
+ * `onClick=` doesn't actually invoke tracking. A tag whose destination is
+ * built from a variable (Navbar's generic nav-item renderer, Footer's
+ * `link.href`, CtaButton's own internal `<a href={href}>`) never contains
+ * the literal text `BOOKING_URL` or `/kontakt` and is correctly never
+ * flagged here — those are covered by findMissingPlacementCallSites /
+ * findMissingCtaCallSites / hasMailtoTelRowMissingTracking instead, at the
+ * config-row level.
  */
 function hasUntrackedKontaktOrBookingLink(src: string): boolean {
   const tags = [
@@ -272,7 +349,7 @@ function hasUntrackedKontaktOrBookingLink(src: string): boolean {
     ...extractJsxTags(src, /^CtaButton$/),
   ];
   return tags.some(
-    (tag) => (/\bBOOKING_URL\b/.test(tag) || /\/kontakt\b/.test(tag)) && !/\bonClick=/.test(tag)
+    (tag) => (/\bBOOKING_URL\b/.test(tag) || /\/kontakt\b/.test(tag)) && !hasTrackedOnClick(src, tag)
   );
 }
 

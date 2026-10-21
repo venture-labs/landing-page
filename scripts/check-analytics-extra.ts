@@ -432,14 +432,41 @@ function checkCtaTrackingGuardRegressions(): void {
       join(dir, "GoodMailto.tsx"),
       '<a href="mailto:x@y.com" onClick={() => trackEvent(EVENTS.contactSent, PLACEMENTS.x, CTAS.mail)}>x</a>\n'
     );
+    // Round 5, Reviewer finding 1: an onClick= that exists but never calls
+    // trackEvent (e.g. closing an unrelated menu state) must still be
+    // flagged — an onClick= presence check alone used to pass this.
+    writeFileSync(
+      join(dir, "UnrelatedOnClickMailto.tsx"),
+      '<a href="mailto:x@y.com" onClick={() => setOpen(false)}>x</a>\n'
+    );
+    // A named handler that resolves to a function body with no trackEvent
+    // call must also be flagged, not just a bare inline non-tracking onClick.
+    writeFileSync(
+      join(dir, "UnrelatedNamedHandlerMailto.tsx"),
+      'function closeMenu() { setOpen(false); }\n<a href="mailto:x@y.com" onClick={closeMenu}>x</a>\n'
+    );
+    // The Impressum/Datenschutz pattern — onClick points at a named function
+    // declared elsewhere in the file, and THAT function calls trackEvent —
+    // must still pass (resolving the reference is the whole point of the fix).
+    writeFileSync(
+      join(dir, "GoodNamedHandlerMailto.tsx"),
+      "function trackMail() { trackEvent(EVENTS.contactSent, PLACEMENTS.x, CTAS.mail); }\n" +
+        '<a href="mailto:x@y.com" onClick={trackMail}>x</a>\n'
+    );
 
     const mailOffenders = findUntrackedMailtoTelLinks(dir).map((f) => f.split(/[\\/]/).pop());
     check(
       "23",
-      ["UntrackedMailto.tsx", "UntrackedTelTemplate.tsx", "FooterRowMissingMailTracking.tsx"].every((f) =>
-        mailOffenders.includes(f)
-      ) && !mailOffenders.includes("GoodMailto.tsx"),
-      "findUntrackedMailtoTelLinks flags a bare mailto:/tel: href (string or template) and a config row missing tracking, not a tracked one",
+      [
+        "UntrackedMailto.tsx",
+        "UntrackedTelTemplate.tsx",
+        "FooterRowMissingMailTracking.tsx",
+        "UnrelatedOnClickMailto.tsx",
+        "UnrelatedNamedHandlerMailto.tsx",
+      ].every((f) => mailOffenders.includes(f)) &&
+        !mailOffenders.includes("GoodMailto.tsx") &&
+        !mailOffenders.includes("GoodNamedHandlerMailto.tsx"),
+      "findUntrackedMailtoTelLinks flags a bare mailto:/tel: href (string or template), a config row missing tracking, and an onClick/named handler that never calls trackEvent — but not a tracked one, inline or via a tracking named handler",
       `offenders: ${JSON.stringify(mailOffenders)}`
     );
 
@@ -472,15 +499,37 @@ function checkCtaTrackingGuardRegressions(): void {
       join(dir, "GoodKontaktLink.tsx"),
       '<Link to={localizedPath("/kontakt")} onClick={() => trackEvent(EVENTS.contactSent, PLACEMENTS.x, CTAS.contact)}>Kontakt</Link>\n'
     );
+    // Round 5, Reviewer finding 1: an onClick= that exists but never calls
+    // trackEvent (e.g. closing an unrelated menu/modal state) must still be
+    // flagged for a booking or /kontakt link too.
+    writeFileSync(
+      join(dir, "UnrelatedOnClickKontakt.tsx"),
+      '<Link to={localizedPath("/kontakt")} onClick={() => setOpen(false)}>Kontakt</Link>\n'
+    );
+    writeFileSync(join(dir, "UnrelatedOnClickBooking.tsx"), "<a href={BOOKING_URL} onClick={closeMenu}>Book</a>\n");
+    // A multi-statement block body (Navbar's mobile booking link: it both
+    // tracks AND closes the menu) must still be recognised as tracked.
+    writeFileSync(
+      join(dir, "GoodBookingBlockBody.tsx"),
+      "<a href={BOOKING_URL} onClick={() => {\n" +
+        "  trackEvent(EVENTS.callLinkClicked, PLACEMENTS.x, CTAS.bookCall);\n" +
+        "  setOpen(false);\n" +
+        "}}>Book</a>\n"
+    );
     const navOffenders = findUntrackedKontaktOrBookingLinks(dir).map((f) => f.split(/[\\/]/).pop());
     check(
       "23",
-      ["UntrackedKontaktLink.tsx", "UntrackedKontaktTopic.tsx", "UntrackedBooking.tsx"].every((f) =>
-        navOffenders.includes(f)
-      ) &&
+      [
+        "UntrackedKontaktLink.tsx",
+        "UntrackedKontaktTopic.tsx",
+        "UntrackedBooking.tsx",
+        "UnrelatedOnClickKontakt.tsx",
+        "UnrelatedOnClickBooking.tsx",
+      ].every((f) => navOffenders.includes(f)) &&
         !navOffenders.includes("GoodCtaButtonBooking.tsx") &&
-        !navOffenders.includes("GoodKontaktLink.tsx"),
-      "findUntrackedKontaktOrBookingLinks flags an untracked <Link>/<a>/<CtaButton> to BOOKING_URL or /kontakt (incl. ?topic=), not a tracked one",
+        !navOffenders.includes("GoodKontaktLink.tsx") &&
+        !navOffenders.includes("GoodBookingBlockBody.tsx"),
+      "findUntrackedKontaktOrBookingLinks flags an untracked <Link>/<a>/<CtaButton> to BOOKING_URL or /kontakt (incl. ?topic=) and an onClick that never calls trackEvent — but not a tracked one, including a multi-statement block body",
       `offenders: ${JSON.stringify(navOffenders)}`
     );
   } finally {
