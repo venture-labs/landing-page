@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
 import { useLocale } from "@/app/locale";
-import { EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
+import { CTAS, EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
 import { BOOKING_URL } from "@/app/links";
 
 /* ─── data ───────────────────────────────────────────────────────────── */
@@ -136,6 +136,7 @@ function DirectContact() {
               </p>
               <a
                 href={`mailto:${person.email}`}
+                onClick={() => trackEvent(EVENTS.contactSent, PLACEMENTS.kontaktTeamMail, CTAS.mail)}
                 className="text-[#a318f8] hover:text-white font-light transition-colors"
                 style={{ fontSize: "var(--text-small)" }}
               >
@@ -144,6 +145,7 @@ function DirectContact() {
               {person.phone && (
                 <a
                   href={`tel:${person.phone.replace(/\s+/g, "")}`}
+                  onClick={() => trackEvent(EVENTS.contactSent, PLACEMENTS.kontaktTeamPhone, CTAS.phone)}
                   className="text-white/50 hover:text-white font-light transition-colors"
                   style={{ fontSize: "var(--text-small)" }}
                 >
@@ -211,7 +213,7 @@ function ContactForm({ selectedTopics }: { selectedTopics: string[] }) {
       // Fires only once Netlify has actually accepted the submission (a 200
       // response), not on the submit click and not when the browser's native
       // `required` validation blocks the submit before this handler runs.
-      trackEvent(EVENTS.contactSent);
+      trackEvent(EVENTS.contactSent, PLACEMENTS.kontaktForm, CTAS.contact);
     } catch {
       // Typed values are intentionally left untouched here so the visitor
       // can retry without retyping anything.
@@ -474,7 +476,7 @@ function CtaStrip() {
             href={BOOKING_URL}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => trackEvent(EVENTS.callLinkClicked, PLACEMENTS.kontakt)}
+            onClick={() => trackEvent(EVENTS.callLinkClicked, PLACEMENTS.kontakt, CTAS.bookCall)}
             className="font-semibold text-[#8129ff] hover:text-[#a318f8] transition-colors"
             style={{ fontSize: "clamp(1.2rem, 2vw, 1.75rem)" }}
           >
@@ -482,6 +484,7 @@ function CtaStrip() {
           </a>
           <a
             href="mailto:contact@venturelabs.team"
+            onClick={() => trackEvent(EVENTS.contactSent, PLACEMENTS.kontaktBottomMail, CTAS.mail)}
             className="font-semibold text-[#8129ff] hover:text-[#a318f8] transition-colors"
             style={{ fontSize: "clamp(1.2rem, 2vw, 1.75rem)" }}
           >
