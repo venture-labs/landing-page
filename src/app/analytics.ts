@@ -56,6 +56,13 @@ export const PLACEMENTS = Object.freeze({
   leistungenHero: "leistungen-hero",
   leistungenPulseCallout: "leistungen-pulse-callout",
   leistungenDetailQuiz: "leistungen-detail-quiz",
+  leistungenHeroContact: "leistungen-hero-contact",
+  leistungenPulseCalloutContact: "leistungen-pulse-callout-contact",
+  leistungenDetailHeroCta: "leistungen-detail-hero-cta",
+  caseDetailCta: "case-detail-cta",
+  caseDetailBottomCta: "case-detail-bottom-cta",
+  blogDetailCta: "blog-detail-cta",
+  ueberUnsCta: "ueber-uns-cta",
 } as const);
 
 /**
