@@ -7,6 +7,7 @@ import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
 import { useLocale } from "@/app/locale";
 import { useAboutData } from "@/data/content";
+import { CTAS, EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
 
 /* ─── hero ──────────────────────────────────────────────────────────── */
 
@@ -273,6 +274,7 @@ function CtaSection({ data }: { data: ReturnType<typeof useAboutData> }) {
         <div className="flex flex-wrap gap-3">
           <Link
             to={localizedPath("/kontakt")}
+            onClick={() => trackEvent(EVENTS.contactSent, PLACEMENTS.ueberUnsCta, CTAS.contact)}
             className="inline-flex items-center gap-2 bg-[#8129ff] hover:bg-[#a318f8] border border-[#8129ff] text-white font-semibold px-[24px] py-[11px] rounded-lg transition-all"
             style={{ fontSize: "var(--text-btn)" }}
           >

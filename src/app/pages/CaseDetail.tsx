@@ -8,6 +8,7 @@ import { Footer } from "@/app/components/Footer";
 import { CtaButton } from "@/app/components/ui/CtaButton";
 import { useCaseDetail } from "@/data/content";
 import { useLocale } from "@/app/locale";
+import { CTAS, EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
 
 
 const accentColor = "#2b95f6";
@@ -58,6 +59,7 @@ function CaseHero({ detail }: { detail: any }) {
           </p>
           <CtaButton
             href={localizedPath("/kontakt")}
+            onClick={() => trackEvent(EVENTS.contactSent, PLACEMENTS.caseDetailCta, CTAS.contact)}
             backgroundColor={accentColor}
           >
             {t("cases.requestNow")}
@@ -280,6 +282,7 @@ function CTASection() {
         >
           <CtaButton
             href={localizedPath("/kontakt")}
+            onClick={() => trackEvent(EVENTS.contactSent, PLACEMENTS.caseDetailBottomCta, CTAS.contact)}
             backgroundColor={accentColor}
           >
             {t("cases.contactButton")}
