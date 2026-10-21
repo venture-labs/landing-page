@@ -102,10 +102,138 @@ function activeNavTextColor(accent: string): string {
   return contrastRatio(accentLuminance, DARK_LUMINANCE) >= 4.5 ? ACTIVE_TEXT_DARK : ACTIVE_TEXT_LIGHT;
 }
 
+/** Round 5 variant A icon library (design/handoff/cluster-grafik/variant-a.html `<defs>`): 24×24
+ * glyphs stroked in `currentColor`, so each `<use>` takes its colour from the wrapping `<g color>`.
+ * Rendered once inside the graphic itself, so ids stay unique per page. */
+function ClusterIconDefs() {
+  const s = { fill: "none", stroke: "currentColor", strokeWidth: 1.5 } as const;
+  const round = { strokeLinecap: "round", strokeLinejoin: "round" } as const;
+  return (
+    <defs>
+      <radialGradient id="cs-glow-blue" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stopColor="#2b95f6" stopOpacity="0.55" />
+        <stop offset="100%" stopColor="#2b95f6" stopOpacity="0" />
+      </radialGradient>
+      <radialGradient id="cs-glow-neutral" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stopColor="#ffffff" stopOpacity="0.35" />
+        <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
+      </radialGradient>
+      <radialGradient id="cs-glow-amber" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stopColor="#fda700" stopOpacity="0.45" />
+        <stop offset="100%" stopColor="#fda700" stopOpacity="0" />
+      </radialGradient>
+      <radialGradient id="cs-glow-primary" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stopColor="#8129ff" stopOpacity="0.5" />
+        <stop offset="100%" stopColor="#8129ff" stopOpacity="0" />
+      </radialGradient>
+      <linearGradient id="cs-fill-blue" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="#5db1ff" />
+        <stop offset="100%" stopColor="#2b95f6" />
+      </linearGradient>
+      <linearGradient id="cs-fill-violet" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="#a318f8" />
+        <stop offset="100%" stopColor="#8129ff" />
+      </linearGradient>
+      <linearGradient id="cs-fill-amber" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="#ffc861" />
+        <stop offset="100%" stopColor="#fda700" />
+      </linearGradient>
+      <linearGradient id="cs-fill-neutral" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9" />
+        <stop offset="100%" stopColor="#ffffff" stopOpacity="0.55" />
+      </linearGradient>
+      <filter id="cs-soft-glow" x="-80%" y="-80%" width="260%" height="260%">
+        <feGaussianBlur stdDeviation="5" result="b" />
+        <feMerge>
+          <feMergeNode in="b" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+      {(
+        [
+          ["arrow-handover", "#a318f8", 7],
+          ["arrow-telemetry", "#d9aeff", 6],
+          ["arrow-loop", "#2b95f6", 7],
+        ] as const
+      ).map(([id, fill, size]) => (
+        <marker key={id} id={`cs-${id}`} viewBox="0 0 10 10" refX="8" refY="5" markerWidth={size} markerHeight={size} orient="auto-start-reverse">
+          <path d="M0 0L10 5L0 10z" fill={fill} />
+        </marker>
+      ))}
+
+      <symbol id="cs-icon-video" viewBox="0 0 24 24">
+        <rect x="2" y="6" width="13" height="12" rx="2.5" {...s} strokeWidth="1.6" />
+        <circle cx="8.5" cy="12" r="2.1" {...s} strokeWidth="1.4" />
+        <path d="M15 10.5l6-3.2v9.4l-6-3.2" {...s} strokeWidth="1.6" strokeLinejoin="round" />
+      </symbol>
+      <symbol id="cs-icon-chat" viewBox="0 0 24 24">
+        <path d="M3 5.5A2.5 2.5 0 0 1 5.5 3h13A2.5 2.5 0 0 1 21 5.5v8A2.5 2.5 0 0 1 18.5 16H10l-5 4v-4H5.5A2.5 2.5 0 0 1 3 13.5z" {...s} strokeLinejoin="round" />
+        <path d="M7.5 8.5h9M7.5 11.5h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      </symbol>
+      <symbol id="cs-icon-mail" viewBox="0 0 24 24">
+        <rect x="2.5" y="5" width="19" height="14" rx="2.5" {...s} />
+        <path d="M3.5 6.5l8.5 7 8.5-7" {...s} strokeLinejoin="round" />
+      </symbol>
+      <symbol id="cs-icon-whatsapp" viewBox="0 0 24 24">
+        <path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3z" {...s} strokeLinejoin="round" />
+        <path d="M8.3 9.6c-.3 1 .1 2.2 1 3.4 1 1.3 2.2 2 3.3 2.2.9.2 1.6-.1 1.9-.6l.3-.6-1.7-.9c-.2.3-.5.6-.9.5-.6-.1-1.4-.6-2-1.4-.5-.7-.8-1.4-.7-2 0-.4.4-.6.7-.8l-.6-1.7z" fill="currentColor" stroke="none" />
+      </symbol>
+      <symbol id="cs-icon-doc" viewBox="0 0 24 24">
+        <path d="M6 2.5h8l4 4v14.5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1z" {...s} strokeLinejoin="round" />
+        <path d="M14 2.5V7h4" {...s} strokeLinejoin="round" />
+        <path d="M8 12h8M8 15.3h8M8 18.6h5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+      </symbol>
+      <symbol id="cs-icon-check-badge" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9.5" {...s} strokeWidth="1.6" />
+        <path d="M8 12.3l2.6 2.6 5.4-6" {...s} strokeWidth="1.8" {...round} />
+      </symbol>
+      <symbol id="cs-icon-coin" viewBox="0 0 24 24">
+        <ellipse cx="12" cy="7" rx="7.5" ry="3.2" {...s} />
+        <path d="M4.5 7v4.2c0 1.8 3.4 3.2 7.5 3.2s7.5-1.4 7.5-3.2V7" {...s} />
+        <path d="M4.5 11.2v4.4c0 1.8 3.4 3.2 7.5 3.2s7.5-1.4 7.5-3.2v-4.4" {...s} />
+      </symbol>
+      <symbol id="cs-icon-people" viewBox="0 0 24 24">
+        <circle cx="8.5" cy="8" r="3" {...s} />
+        <circle cx="16.5" cy="9" r="2.4" {...s} />
+        <path d="M3 19.5c0-3 2.5-5 5.5-5s5.5 2 5.5 5" {...s} strokeLinecap="round" />
+        <path d="M14.5 14.8c2.3.3 4 2 4 4.7" {...s} strokeLinecap="round" />
+      </symbol>
+      <symbol id="cs-icon-monitor" viewBox="0 0 24 24">
+        <rect x="2.5" y="4" width="19" height="13" rx="2" {...s} />
+        <path d="M8.5 20.5h7M12 17v3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        <path d="M6.5 8.5l3 3-3 3M13.5 14.5h3" {...s} strokeWidth="1.4" {...round} />
+      </symbol>
+      <symbol id="cs-icon-chip" viewBox="0 0 24 24">
+        <rect x="6.5" y="6.5" width="11" height="11" rx="1.6" {...s} />
+        <rect x="9.5" y="9.5" width="5" height="5" rx="0.8" {...s} strokeWidth="1.3" />
+        <path d="M9 2.5v3M12 2.5v3M15 2.5v3M9 18.5v3M12 18.5v3M15 18.5v3M2.5 9h3M2.5 12h3M2.5 15h3M18.5 9h3M18.5 12h3M18.5 15h3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+      </symbol>
+      <symbol id="cs-icon-node" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="2.6" fill="currentColor" />
+        <circle cx="12" cy="4.5" r="1.7" fill="currentColor" opacity="0.85" />
+        <circle cx="19" cy="16.3" r="1.7" fill="currentColor" opacity="0.85" />
+        <circle cx="5" cy="16.3" r="1.7" fill="currentColor" opacity="0.85" />
+        <path d="M12 7.1V9.6M17.4 15L13.9 13M6.6 15L10.1 13" stroke="currentColor" strokeWidth="1.3" />
+      </symbol>
+    </defs>
+  );
+}
+
+function Icon({ name, x, y, size, color }: { name: string; x: number; y: number; size: number; color: string }) {
+  return (
+    <g color={color}>
+      <use href={`#cs-icon-${name}`} x={x} y={y} width={size} height={size} />
+    </g>
+  );
+}
+
 interface ClusterGraphicProps {
   revealed: number;
   active: number;
   reducedMotion: boolean;
+  /** True only once `prefers-reduced-motion: no-preference` is confirmed on the client. */
+  pulse: boolean;
+  channelLabels: string[];
 }
 
 /** Opacity of a layer whose own step index is `stepIndex`: hidden until built, dimmed once the
@@ -115,163 +243,217 @@ function layerOpacity(stepIndex: number, revealed: number, active: number): numb
   return stepIndex === active ? 1 : 0.45;
 }
 
+const CHANNEL_BADGES = [
+  { icon: "video", x: 40, w: 74 },
+  { icon: "chat", x: 128, w: 56 },
+  { icon: "mail", x: 198, w: 56 },
+  { icon: "whatsapp", x: 268, w: 74 },
+] as const;
+
+const CHANNEL_PLANNED_INDEX = 3;
+
+const AREA_TILES = [
+  { key: "bookkeeping", icon: "coin", x: 514, y: 26, connector: [560, 80, 560, 64] },
+  { key: "crm", icon: "people", x: 656, y: 150, connector: [650, 170, 656, 170] },
+  { key: "apps", icon: "monitor", x: 514, y: 258, connector: [560, 260, 560, 258] },
+  { key: "models", icon: "chip", x: 372, y: 150, connector: [470, 170, 464, 170] },
+] as const;
+
 /**
- * The one decorative, `aria-hidden` inline-SVG scene. No text node carries any language — every
- * readable word lives in the real-DOM step list next to it (criterion 9), so this graphic alone
- * never needs a translation.
+ * The one decorative, `aria-hidden` inline-SVG scene (round 5 variant A: icon tiles, gradient hubs,
+ * soft glows). Cumulative: each layer fades in at its own step and stays; the readable text of
+ * every step lives in the real-DOM step list next to it. The short labels drawn inside the SVG are
+ * a visual aid only and are hidden below `md`, where they would render at an unreadable size.
+ *
+ * Geometry: one coordinate space for all nine steps. The client hub sits at x=560 from the start
+ * (the design moves it from 630 to 560 at the growth step; keeping it fixed means no layer ever
+ * has to re-route).
  */
-function ClusterGraphic({ revealed, active, reducedMotion }: ClusterGraphicProps) {
+function ClusterGraphic({ revealed, active, reducedMotion, pulse, channelLabels }: ClusterGraphicProps) {
+  const { t } = useTranslation();
   const ourClusterOpacity = revealed > 0 ? 1 : 0; // never dims once built
   const clientSolid = revealed >= 5; // from step 5 (install) onward
   const growthSolid = revealed >= 9; // step 9 (service)
-  // Criterion 8: zero animation under reduced motion — every layer's opacity transition is
-  // disabled outright, so a navigator jump (which changes `active`, not `revealed`) can never
-  // fade a layer in or out.
-  const opacityTransition = reducedMotion ? "none" : "opacity 0.4s ease";
+  const buildLineVisible = revealed >= 4 && revealed < 6; // replaced by the telemetry/update pair
+  // Zero animation under reduced motion — every layer's opacity transition is disabled outright,
+  // so a navigator jump (which changes `active`, not `revealed`) can never fade a layer.
+  const tr = reducedMotion ? "none" : "opacity 0.4s ease";
+  const label = (props: React.SVGProps<SVGTextElement>, text: string) => (
+    <text className="cs-label" textAnchor="middle" {...props}>
+      {text}
+    </text>
+  );
 
   return (
     <svg
-      viewBox="0 0 800 320"
+      viewBox="0 0 760 320"
       aria-hidden="true"
       focusable="false"
-      className="w-full h-[170px] lg:h-auto"
+      className="w-full h-[170px] lg:h-auto max-md:[&_.cs-label]:hidden"
     >
+      <ClusterIconDefs />
+
       {/* our-cluster */}
-      <g style={{ opacity: ourClusterOpacity, transition: opacityTransition }}>
-        <circle cx="110" cy="170" r="46" fill="none" stroke="#2b95f6" strokeWidth="1.5" />
-        <circle cx="110" cy="170" r="3.5" fill="#2b95f6" />
+      <g style={{ opacity: ourClusterOpacity, transition: tr }}>
+        <circle cx="110" cy="170" r="58" fill="url(#cs-glow-blue)" />
+        <circle cx="110" cy="170" r="46" fill="none" stroke="url(#cs-fill-blue)" strokeWidth="2" />
+        <g filter="url(#cs-soft-glow)">
+          <Icon name="node" x={98} y={158} size={24} color="#2b95f6" />
+        </g>
+        {label({ x: 110, y: 246, fill: "#9ca3af", fontSize: 11, letterSpacing: 0.5 }, t("leistungen.clusterStory.graphic.ours"))}
       </g>
 
       {/* input-channel badges (step 0) */}
-      <g style={{ opacity: layerOpacity(0, revealed, active), transition: opacityTransition }}>
-        <rect x="40" y="14" width="68" height="36" rx="9" fill="#2b95f61f" stroke="#2b95f6" strokeWidth="1.2" />
-        <rect x="118" y="14" width="56" height="36" rx="9" fill="#2b95f61f" stroke="#2b95f6" strokeWidth="1.2" />
-        <rect x="186" y="14" width="56" height="36" rx="9" fill="#2b95f61f" stroke="#2b95f6" strokeWidth="1.2" />
-        <rect
-          x="254"
-          y="14"
-          width="68"
-          height="36"
-          rx="9"
-          fill="rgba(255,255,255,0.03)"
-          stroke="rgba(255,255,255,0.4)"
-          strokeWidth="1.2"
-          strokeDasharray="3 4"
-        />
+      <g style={{ opacity: layerOpacity(0, revealed, active), transition: tr }}>
+        {CHANNEL_BADGES.map((b, i) => {
+          const planned = i === CHANNEL_PLANNED_INDEX;
+          return (
+            <g key={b.icon}>
+              <rect
+                x={b.x}
+                y={10}
+                width={b.w}
+                height={46}
+                rx={10}
+                fill={planned ? "rgba(255,255,255,0.03)" : "#2b95f61f"}
+                stroke={planned ? "rgba(255,255,255,0.3)" : "#2b95f6"}
+                strokeWidth="1.2"
+                strokeDasharray={planned ? "3 4" : undefined}
+              />
+              <Icon name={b.icon} x={b.x + b.w / 2 - 9} y={16} size={18} color={planned ? "rgba(255,255,255,0.6)" : "#2b95f6"} />
+              {label(
+                { x: b.x + b.w / 2, y: 68, fill: planned ? "rgba(255,255,255,0.55)" : "#2b95f6", fontSize: 10 },
+                channelLabels[i] ?? ""
+              )}
+              {planned && (
+                <>
+                  <rect x={b.x + b.w / 2 - 25} y={72} width={50} height={14} rx={7} fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="1" strokeDasharray="2 2" />
+                  {label({ x: b.x + b.w / 2, y: 82, fill: "rgba(255,255,255,0.55)", fontSize: 8 }, t("leistungen.clusterStory.plannedChannelTag"))}
+                </>
+              )}
+            </g>
+          );
+        })}
       </g>
 
       {/* concept (step 1) */}
-      <g style={{ opacity: layerOpacity(1, revealed, active), transition: opacityTransition }}>
-        <path d="M74 50 Q180 92 350 95" fill="none" stroke="#8129ff" strokeWidth="1" opacity="0.55" />
-        <path d="M146 50 Q230 88 350 98" fill="none" stroke="#8129ff" strokeWidth="1" opacity="0.55" />
-        <path d="M214 50 Q280 84 350 101" fill="none" stroke="#8129ff" strokeWidth="1" opacity="0.55" />
-        <path
-          d="M288 50 Q320 80 350 95"
-          fill="none"
-          stroke="rgba(255,255,255,0.35)"
-          strokeWidth="1"
-          strokeDasharray="2 4"
-        />
-        <rect x="350" y="74" width="70" height="46" rx="10" fill="#8129ff1f" stroke="#8129ff" strokeWidth="1.4" />
-        <path d="M363 90h44M363 98h44M363 106h28" stroke="#8129ff" strokeWidth="1.6" strokeLinecap="round" />
+      <g style={{ opacity: layerOpacity(1, revealed, active), transition: tr }}>
+        <path d="M77 56 Q180 95 355 95" fill="none" stroke="#8129ff" strokeWidth="1" opacity="0.55" />
+        <path d="M156 56 Q230 90 355 98" fill="none" stroke="#8129ff" strokeWidth="1" opacity="0.55" />
+        <path d="M226 56 Q280 85 355 101" fill="none" stroke="#8129ff" strokeWidth="1" opacity="0.55" />
+        <path d="M305 56 Q330 80 355 95" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="1" strokeDasharray="2 4" />
+        <circle cx="390" cy="98" r="46" fill="url(#cs-glow-primary)" />
+        <rect x="354" y="74" width="72" height="48" rx="12" fill="url(#cs-fill-violet)" fillOpacity="0.18" stroke="#8129ff" strokeWidth="1.4" />
+        <g filter="url(#cs-soft-glow)">
+          <Icon name="doc" x={378} y={86} size={24} color="#8129ff" />
+        </g>
+        {label({ x: 390, y: 138, fill: "#8129ff", fontSize: 12, fontWeight: 600 }, t("leistungen.clusterStory.graphic.concept"))}
       </g>
 
       {/* handover-arrow (step 2) */}
-      <g style={{ opacity: layerOpacity(2, revealed, active), transition: opacityTransition }}>
-        <defs>
-          <marker id="cs-arrow-handover" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M0 0L10 5L0 10z" fill="#a318f8" />
-          </marker>
-        </defs>
-        <path d="M360 122 Q255 165 158 168" fill="none" stroke="#a318f8" strokeWidth="2" markerEnd="url(#cs-arrow-handover)" />
+      <g style={{ opacity: layerOpacity(2, revealed, active), transition: tr }}>
+        <path d="M365 122 Q260 165 158 168" fill="none" stroke="#a318f8" strokeWidth="2.2" markerEnd="url(#cs-arrow-handover)" />
+        {label({ x: 260, y: 148, fill: "#a318f8", fontSize: 12, fontWeight: 600 }, t("leistungen.clusterStory.graphic.handover"))}
       </g>
 
-      {/* agent dots + build line + client-cluster outline (step 3) */}
-      <g style={{ opacity: layerOpacity(3, revealed, active), transition: opacityTransition }}>
-        <circle cx="100" cy="160" r="3" fill="#a318f8" />
-        <circle cx="120" cy="160" r="3" fill="#a318f8" />
-        <circle cx="110" cy="178" r="3" fill="#a318f8" />
-        <line
-          x1="156"
-          y1="170"
-          x2="586"
-          y2="170"
-          stroke="#a318f8"
-          strokeWidth="2"
-          strokeDasharray={clientSolid ? undefined : "3 6"}
-        />
+      {/* agent chips inside our-cluster (step 3) */}
+      <g style={{ opacity: layerOpacity(3, revealed, active), transition: tr }} color="#a318f8" filter="url(#cs-soft-glow)">
+        <use href="#cs-icon-chip" x={99} y={149} width={11} height={11} />
+        <use href="#cs-icon-chip" x={112} y={149} width={11} height={11} />
+        <use href="#cs-icon-chip" x={105.5} y={161} width={11} height={11} />
+      </g>
+
+      {/* build line (steps 3-5), client-cluster (dashed until installed) */}
+      <g style={{ opacity: ourClusterOpacity && revealed >= 4 ? 1 : 0, transition: tr }}>
+        <g style={{ opacity: buildLineVisible ? 1 : 0, transition: tr }}>
+          <line
+            x1="156"
+            y1="170"
+            x2="516"
+            y2="170"
+            stroke={clientSolid ? "url(#cs-fill-violet)" : "#a318f8"}
+            strokeWidth="2.2"
+            strokeDasharray={clientSolid ? undefined : "3 6"}
+          />
+          {!clientSolid && label({ x: 336, y: 156, fill: "#a318f8", fontSize: 12, fontWeight: 600 }, t("leistungen.clusterStory.graphic.build"))}
+        </g>
+        <circle cx="560" cy="170" r="50" fill="url(#cs-glow-neutral)" opacity={clientSolid ? 1 : 0.6} />
         <circle
-          cx="630"
+          cx="560"
           cy="170"
-          r="42"
+          r="44"
           fill="none"
-          stroke="rgba(255,255,255,0.45)"
-          strokeWidth="1.5"
+          stroke={clientSolid ? "url(#cs-fill-neutral)" : "rgba(255,255,255,0.4)"}
+          strokeWidth="1.6"
           strokeDasharray={clientSolid ? undefined : "4 5"}
         />
-        <circle cx="630" cy="170" r="3.5" fill="#fff" opacity="0.8" />
+        <Icon name="node" x={548} y={158} size={24} color={clientSolid ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.55)"} />
+        {label(
+          { x: 560, y: 246, fill: "#9ca3af", fontSize: 11, letterSpacing: 0.5 },
+          clientSolid ? t("leistungen.clusterStory.graphic.theirs") : t("leistungen.clusterStory.graphic.theirsBuilding")
+        )}
       </g>
 
       {/* install badge (step 4) */}
-      <g style={{ opacity: layerOpacity(4, revealed, active), transition: opacityTransition }}>
-        <circle cx="630" cy="116" r="11" fill="#0e0d13" stroke="#a318f8" strokeWidth="1.5" />
-        <path d="M625 116l3.5 4 7-8.5" fill="none" stroke="#a318f8" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <g style={{ opacity: layerOpacity(4, revealed, active), transition: tr }}>
+        <circle cx="560" cy="116" r="13" fill="#0e0d13" stroke="url(#cs-fill-violet)" strokeWidth="1.6" filter="url(#cs-soft-glow)" />
+        <Icon name="check-badge" x={549} y={105} size={22} color="#a318f8" />
       </g>
 
       {/* telemetry-impulse + update-arrow (step 5) */}
-      <g style={{ opacity: layerOpacity(5, revealed, active), transition: opacityTransition }}>
-        <defs>
-          <marker id="cs-arrow-telemetry" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M0 0L10 5L0 10z" fill="#d9aeff" />
-          </marker>
-          <marker id="cs-arrow-update" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M0 0L10 5L0 10z" fill="#d9aeff" />
-          </marker>
-        </defs>
-        <line x1="156" y1="140" x2="586" y2="140" stroke="#d9aeff" strokeWidth="2" markerStart="url(#cs-arrow-telemetry)" />
-        <circle cx="386" cy="140" r="4" fill="#fff" />
-        <line
-          x1="156"
-          y1="200"
-          x2="586"
-          y2="200"
-          stroke="#d9aeff"
-          strokeWidth="1.6"
-          strokeDasharray="3 5"
-          markerEnd="url(#cs-arrow-update)"
-        />
+      <g style={{ opacity: layerOpacity(5, revealed, active), transition: tr }}>
+        <line x1="156" y1="140" x2="516" y2="140" stroke="#d9aeff" strokeWidth="2" markerStart="url(#cs-arrow-telemetry)" />
+        <circle cx="336" cy="140" r="5" fill="#fff" filter="url(#cs-soft-glow)">
+          {pulse && revealed >= 6 && (
+            <animate attributeName="cx" values="516;180;516" dur="5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1" />
+          )}
+        </circle>
+        {label({ x: 220, y: 124, fill: "#d9aeff", fontSize: 12, fontWeight: 600 }, t("leistungen.clusterStory.graphic.telemetry"))}
+        <line x1="156" y1="200" x2="516" y2="200" stroke="#d9aeff" strokeWidth="1.6" strokeDasharray="3 5" markerEnd="url(#cs-arrow-telemetry)" />
+        {label({ x: 460, y: 218, fill: "#d9aeff", fontSize: 12, fontWeight: 600 }, t("leistungen.clusterStory.graphic.updates"))}
       </g>
 
       {/* loop-arrow (step 6) */}
-      <g style={{ opacity: layerOpacity(6, revealed, active), transition: opacityTransition }}>
-        <defs>
-          <marker id="cs-arrow-loop" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M0 0L10 5L0 10z" fill="#2b95f6" />
-          </marker>
-        </defs>
-        <path d="M330 140 C 300,70 350,75 388,96" fill="none" stroke="#2b95f6" strokeWidth="2" markerEnd="url(#cs-arrow-loop)" />
+      <g style={{ opacity: layerOpacity(6, revealed, active), transition: tr }}>
+        <path d="M330 140 C 300,70 350,75 388,96" fill="none" stroke="url(#cs-fill-blue)" strokeWidth="2.2" markerEnd="url(#cs-arrow-loop)" />
+        {label({ x: 300, y: 108, fill: "#2b95f6", fontSize: 12, fontWeight: 600 }, t("leistungen.clusterStory.graphic.loop"))}
       </g>
 
-      {/* growth-ring + area-tile (step 7) */}
-      <g style={{ opacity: layerOpacity(7, revealed, active), transition: opacityTransition }}>
+      {/* growth-ring + area tiles (step 7) */}
+      <g style={{ opacity: layerOpacity(7, revealed, active), transition: tr }}>
         <circle
-          cx="630"
+          cx="560"
           cy="170"
-          r="88"
+          r="90"
           fill="none"
-          stroke="#fda700"
-          strokeWidth="1.6"
+          stroke="url(#cs-fill-amber)"
+          strokeWidth={growthSolid ? 1.8 : 1.6}
           strokeDasharray={growthSolid ? undefined : "4 6"}
         />
-        <rect x="586" y="32" width="88" height="30" rx="8" fill="#fda7001a" stroke="#fda700" strokeWidth="1.2" />
-        <rect x="690" y="156" width="88" height="30" rx="8" fill="#fda7001a" stroke="#fda700" strokeWidth="1.2" />
-        <rect x="586" y="258" width="88" height="30" rx="8" fill="#fda7001a" stroke="#fda700" strokeWidth="1.2" />
-        <rect x="482" y="156" width="88" height="30" rx="8" fill="#fda7001a" stroke="#fda700" strokeWidth="1.2" />
+        {AREA_TILES.map((a, i) => (
+          <g key={a.key}>
+            <line x1={a.connector[0]} y1={a.connector[1]} x2={a.connector[2]} y2={a.connector[3]} stroke="#fda700" strokeWidth="1.2" />
+            <rect x={a.x} y={a.y} width={92} height={38} rx={10} fill="#fda7001a" stroke="#fda700" strokeWidth="1.2" />
+            <Icon name={a.icon} x={a.x + 7} y={a.y + 5} size={16} color="#fda700" />
+            {label(
+              { x: a.x + 50, y: a.y + 23, fill: "#fff", fontSize: 10.5, fontWeight: 600 },
+              t(`leistungen.clusterStory.graphic.area.${a.key}`)
+            )}
+            {i === EXAMPLE_AREA_INDEX && (
+              <>
+                <rect x={a.x + 71} y={a.y - 14} width={52} height={13} rx={6.5} fill="#c7c4d1" />
+                {label({ x: a.x + 97, y: a.y - 4.5, fill: "#1E1C27", fontSize: 7.5, fontWeight: 700 }, t("leistungen.exampleAgentLabel").toUpperCase())}
+              </>
+            )}
+          </g>
+        ))}
       </g>
 
       {/* final 100% state (step 8) */}
-      <g style={{ opacity: layerOpacity(8, revealed, active), transition: opacityTransition }}>
-        <text x="630" y="176" textAnchor="middle" fill="#8129ff" fontSize="16" fontWeight="700">
+      <g style={{ opacity: layerOpacity(8, revealed, active), transition: tr }}>
+        <circle cx="560" cy="170" r="98" fill="none" stroke="#8129ff" strokeWidth="1" opacity="0.25" />
+        <circle cx="560" cy="170" r="22" fill="#0e0d13" filter="url(#cs-soft-glow)" />
+        <text className="cs-label" x="560" y="176" textAnchor="middle" fill="#8129ff" fontSize="15" fontWeight="700">
           100%
         </text>
       </g>
@@ -394,10 +576,16 @@ export function ClusterStorySection() {
             // column 1, putting the two side by side on mobile. Both items now also pin
             // `grid-column: 1` below `lg`, reset to `auto` at `lg` where the explicit 2-column
             // template already places them correctly (col 1 / col 2) without any override.
-            className="[grid-row:1] [grid-column:1] lg:[grid-row:auto] lg:[grid-column:auto] lg:sticky lg:top-28 top-24 sticky self-start rounded-2xl bg-white/[0.015] p-4 md:p-6"
+            className="[grid-row:1] [grid-column:1] lg:[grid-row:auto] lg:[grid-column:auto] lg:sticky lg:top-28 top-24 sticky self-start z-10 rounded-2xl bg-[#14131b] p-4 md:p-6"
             style={{ boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.06)" }}
           >
-            <ClusterGraphic revealed={revealed} active={active} reducedMotion={Boolean(reducedMotion)} />
+            <ClusterGraphic
+              revealed={revealed}
+              active={active}
+              reducedMotion={Boolean(reducedMotion)}
+              pulse={reducedMotion === false}
+              channelLabels={clusterStory.steps[0]?.channels?.map((c) => c.label) ?? []}
+            />
           </div>
 
           <ol
@@ -447,7 +635,9 @@ function StoryStepItem({
     <li
       ref={setRef}
       data-step-index={index}
-      className="flex flex-col gap-3 scroll-mt-28"
+      // Below lg the graphic is pinned at top-24 (96px) and is at most 218px tall (170px svg + md:p-6),
+      // so its bottom edge is at 314px; the scroll margin keeps a navigator jump below it (review).
+      className="flex flex-col gap-3 scroll-mt-[330px] lg:scroll-mt-28"
     >
       <span
         className="font-semibold uppercase tracking-[0.12em]"

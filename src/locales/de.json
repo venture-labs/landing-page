@@ -96,7 +96,24 @@
     "clusterStory": {
       "stepOf": "Schritt {{current}} von {{total}}",
       "stepNavLabel": "Schritte",
-      "plannedChannelTag": "geplant"
+      "plannedChannelTag": "geplant",
+      "graphic": {
+        "ours": "UNSER CLUSTER",
+        "theirs": "DEIN CLUSTER",
+        "theirsBuilding": "DEIN CLUSTER (wird gebaut)",
+        "concept": "Konzept",
+        "handover": "Übergabe",
+        "build": "Aufbau",
+        "telemetry": "Telemetrie",
+        "updates": "Updates",
+        "loop": "Neue Calls / Input",
+        "area": {
+          "bookkeeping": "Buchhaltung & Bank",
+          "crm": "Eigenes CRM",
+          "apps": "Frontends/Apps",
+          "models": "Lokale Modelle"
+        }
+      }
     }
   },
   "cases": {
