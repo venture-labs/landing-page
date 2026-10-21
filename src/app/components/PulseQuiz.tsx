@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router";
 import { ArrowRight, Check } from "lucide-react";
-import { EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
+import { CTAS, EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
 import { BOOKING_URL } from "@/app/links";
 import { CtaButton } from "@/app/components/ui/CtaButton";
 import { useLocale } from "@/app/locale";
@@ -471,6 +471,7 @@ export function PulseQuiz({
   copy,
   accent,
   onStepChange,
+  placement,
 }: {
   copy: Copy;
   accent: string;
@@ -478,6 +479,9 @@ export function PulseQuiz({
    * always-visible title for the result step so the booking CTA fits above
    * the fold). */
   onStepChange?: (step: QuizState["step"]) => void;
+  /** Which button opened the modal — threaded into Quiz Started / Quiz
+   * Completed so Plausible can tell two openers apart. */
+  placement: string;
 }) {
   const [state, setState] = useState<QuizState>({ step: "intro" });
 
@@ -514,7 +518,7 @@ export function PulseQuiz({
     if (state.index + 1 < copy.questions.length) {
       update({ step: "question", index: state.index + 1, answers });
     } else {
-      trackEvent(EVENTS.quizCompleted);
+      trackEvent(EVENTS.quizCompleted, placement, CTAS.quiz);
       update({ step: "result", answers });
     }
   }
@@ -527,7 +531,7 @@ export function PulseQuiz({
         </p>
         <button
           onClick={() => {
-            trackEvent(EVENTS.quizStarted);
+            trackEvent(EVENTS.quizStarted, placement, CTAS.quiz);
             update({ step: "question", index: 0, answers: [] });
           }}
           className="inline-flex items-center gap-2 text-white font-semibold px-6 py-3 rounded-lg transition-all hover:scale-[1.02]"
@@ -613,7 +617,7 @@ export function PulseQuiz({
         <div className="flex flex-wrap items-center gap-4 mt-1">
           <CtaButton
             href={BOOKING_URL}
-            onClick={() => trackEvent(EVENTS.callLinkClicked, PLACEMENTS.quizResult)}
+            onClick={() => trackEvent(EVENTS.callLinkClicked, PLACEMENTS.quizResult, CTAS.bookCall)}
             backgroundColor={accent}
             showArrow={false}
           >

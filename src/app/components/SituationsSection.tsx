@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useLeistungenData } from "@/data/content";
 import { CtaButton } from "@/app/components/ui/CtaButton";
 import { BOOKING_URL } from "@/app/links";
-import { EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
+import { CTAS, EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
 
 /**
  * "Ihre Situation" — VL-5-S11, extended by VL-5-S13.
@@ -132,7 +132,7 @@ export function SituationsSection() {
           <CtaButton
             href={BOOKING_URL}
             backgroundColor="#8129ff"
-            onClick={() => trackEvent(EVENTS.callLinkClicked, PLACEMENTS.situations)}
+            onClick={() => trackEvent(EVENTS.callLinkClicked, PLACEMENTS.situations, CTAS.bookCall)}
           >
             {data.situationsCtaLabel}
           </CtaButton>

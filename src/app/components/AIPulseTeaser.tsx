@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { motion, useInView } from "motion/react";
 import { useTranslation } from "react-i18next";
 import { CtaButton } from "@/app/components/ui/CtaButton";
+import { PLACEMENTS } from "@/app/analytics";
 import { PulseCheckModal } from "@/app/components/PulseCheckModal";
 
 export function AIPulseTeaser() {
@@ -53,7 +54,7 @@ export function AIPulseTeaser() {
         </div>
       </div>
 
-      <PulseCheckModal open={quizOpen} onOpenChange={setQuizOpen} />
+      <PulseCheckModal open={quizOpen} onOpenChange={setQuizOpen} placement={PLACEMENTS.aiPulseTeaser} />
     </section>
   );
 }
