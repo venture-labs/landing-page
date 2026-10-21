@@ -3,8 +3,7 @@
 /de/ai-pulse  /de/leistungen  301
 /en/ai-pulse  /en/leistungen  301
 
-# Best-effort catch-all for an unmatched path (item 5): serve the SPA shell,
-# which renders the client-side NotFound route, with a real 404 status.
-# netlify.toml is a denied path for this task, so whatever rule it declares
-# for unmatched paths today still runs too — see the implementation report.
-/*  /index.html  404
+# Unmatched path: serve dist/404.html (scripts/prerender.ts writes it: noindex,
+# no canonical, empty #root) with a real 404 status. The client renders the
+# NotFound page. "/" is dist/index.html, a real file, so it stays a 200.
+/*  /404.html  404
