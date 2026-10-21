@@ -37,8 +37,8 @@ absent — see `scripts/check-analytics-extra.ts`'s criterion 6, which runs it a
 | `kontakt` | `kontakt` | `Kontakt` page (booking CTA in the bottom contact strip) | `src/app/pages/Kontakt.tsx:477` |
 | `leistungenDetailCta` | `leistungen-detail-cta` | `LeistungenDetail` (service CTA block, next to the Pulse-check button) | `src/app/pages/LeistungenDetail.tsx:326` |
 | `leistungenDetailContact` | `leistungen-detail-contact` | `LeistungenDetail` (bottom contact strip, same page, different section) | `src/app/pages/LeistungenDetail.tsx:439` |
-| `situations` | `situations` | `SituationsSection` ("Ihre Situation" block on `/leistungen`) | `src/app/components/SituationsSection.tsx:135` |
-| `toolProfile` | `tool-profile` | `ToolProfile` ("Im Einsatz: Beleg-Inbox" Steckbrief on `/leistungen`) | `src/app/components/ToolProfile.tsx` (`ToolProfileCard`'s `CtaButton`) |
+| `situations` | `situations` | `UseCasesSection` ("Mögliche Use Cases" carousel on `/leistungen`, renamed from `SituationsSection` by VL-11-S3) | `src/app/components/UseCasesSection.tsx` |
+| `toolProfile` | `tool-profile` | **Retired** (VL-11-S3) — the "Im Einsatz: Beleg-Inbox" Steckbrief this placement belonged to (`ToolProfileCard`'s `CtaButton` in `ToolProfile.tsx`) was deleted; no call site uses this placement any more. `PLACEMENTS.toolProfile` itself is left in `analytics.ts` (out of this task's scope). | — |
 
 `leistungen-detail-cta` and `leistungen-detail-contact` sit on the same page/route, so `page` alone
 cannot tell them apart — the distinct `placement` id is what does.

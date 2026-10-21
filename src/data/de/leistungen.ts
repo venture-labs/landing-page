@@ -73,16 +73,15 @@ export interface LeistungenData {
   skillsHeading: string;
   skillsIntro: string;
   skillStepLabels: Record<"check" | "build" | "care", string>;
-  toolProfilesHeading: string;
-  toolProfilesIntro: string;
   ctaHeading: string;
   ctaBody: string;
   contactCallout: string;
   strengthHeadline: string;
   strengthDescription: string;
   strengthFeatures: StrengthFeature[];
-  situationsHeading: string;
-  situationsCtaLabel: string;
+  useCasesHeading: string;
+  useCasesLeadLine: string;
+  useCasesCtaLabel: string;
   situations: Situation[];
   clusterStory: ClusterStoryData;
 }
@@ -154,8 +153,6 @@ export const leistungenData: LeistungenData = {
   "build": "Build",
   "care": "Care"
 },
-  toolProfilesHeading: "Im Einsatz: Beleg-Inbox",
-  toolProfilesIntro: "Der erste Tool-Steckbrief aus unserer AI-Automation-Praxis – konkret, ohne Buzzwords.",
   ctaHeading: "Noch unklar, wo du stehst?",
   ctaBody: "Der AI Pulse Score dauert fünf Minuten und kostet nichts: 10 Fragen, sofort ein Ergebnis über fünf Bereiche. Willst du danach genau wissen, wo dein größter Hebel liegt, ist der Pulse Check der nächste Schritt – was er bei dir umfasst, besprechen wir im Erstgespräch.",
   contactCallout: "Du suchst ehrliche Beratung statt Buzzwords? Ruf uns an oder schreib uns – wir hören zu, bevor wir bauen.",
@@ -183,8 +180,9 @@ export const leistungenData: LeistungenData = {
     "subtitle": "Du bist Teil des Entwicklungsprozesses"
   }
 ],
-  situationsHeading: "Kommt dir eine davon bekannt vor?",
-  situationsCtaLabel: "Kostenloses Erstgespräch buchen",
+  useCasesHeading: "Mögliche Use Cases",
+  useCasesLeadLine: "Beleg-Inbox läuft heute schon produktiv bei uns im Einsatz – die anderen vier zeigen dir, was mit demselben Ansatz sonst noch möglich ist.",
+  useCasesCtaLabel: "Kostenloses Erstgespräch buchen",
   situations: [
   {
     "id": "receipts",
