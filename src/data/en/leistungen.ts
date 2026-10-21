@@ -73,16 +73,15 @@ export interface LeistungenData {
   skillsHeading: string;
   skillsIntro: string;
   skillStepLabels: Record<"check" | "build" | "care", string>;
-  toolProfilesHeading: string;
-  toolProfilesIntro: string;
   ctaHeading: string;
   ctaBody: string;
   contactCallout: string;
   strengthHeadline: string;
   strengthDescription: string;
   strengthFeatures: StrengthFeature[];
-  situationsHeading: string;
-  situationsCtaLabel: string;
+  useCasesHeading: string;
+  useCasesLeadLine: string;
+  useCasesCtaLabel: string;
   situations: Situation[];
   clusterStory: ClusterStoryData;
 }
@@ -154,8 +153,6 @@ export const leistungenData: LeistungenData = {
   "build": "Build",
   "care": "Care"
 },
-  toolProfilesHeading: "In production: Beleg-Inbox",
-  toolProfilesIntro: "The first tool profile from our AI Automation work — concrete, no buzzwords.",
   ctaHeading: "Not sure where you stand?",
   ctaBody: "The AI Pulse Score takes five minutes and costs nothing: 10 questions, an instant result across five areas. If you then want to know exactly where your biggest lever is, the Pulse Check is the next step — what it covers in your case is something we work out in a first call.",
   contactCallout: "Looking for honest advice instead of buzzwords? Call or email us — we listen before we build.",
@@ -183,8 +180,9 @@ export const leistungenData: LeistungenData = {
     "subtitle": "You're part of the development process"
   }
 ],
-  situationsHeading: "Does one of these sound familiar?",
-  situationsCtaLabel: "Book a free intro call",
+  useCasesHeading: "Possible use cases",
+  useCasesLeadLine: "Beleg-Inbox is already running in production for us today — the other four show you what else is possible with the same approach.",
+  useCasesCtaLabel: "Book a free intro call",
   situations: [
   {
     "id": "receipts",
