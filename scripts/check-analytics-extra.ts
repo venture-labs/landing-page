@@ -453,6 +453,18 @@ function checkCtaTrackingGuardRegressions(): void {
       "function trackMail() { trackEvent(EVENTS.contactSent, PLACEMENTS.x, CTAS.mail); }\n" +
         '<a href="mailto:x@y.com" onClick={trackMail}>x</a>\n'
     );
+    // Round 6: a named handler can also be a concise-body arrow (no braces
+    // at all) — the other valid-JS shape of "onClick points at a named
+    // function", not just the function-declaration/block-arrow forms above.
+    writeFileSync(
+      join(dir, "GoodConciseArrowHandlerMailto.tsx"),
+      "const trackMail = () => trackEvent(EVENTS.contactSent, PLACEMENTS.x, CTAS.mail);\n" +
+        '<a href="mailto:x@y.com" onClick={trackMail}>x</a>\n'
+    );
+    writeFileSync(
+      join(dir, "UnrelatedConciseArrowHandlerMailto.tsx"),
+      "const closeMenu = () => setOpen(false);\n" + '<a href="mailto:x@y.com" onClick={closeMenu}>x</a>\n'
+    );
 
     const mailOffenders = findUntrackedMailtoTelLinks(dir).map((f) => f.split(/[\\/]/).pop());
     check(
@@ -463,10 +475,12 @@ function checkCtaTrackingGuardRegressions(): void {
         "FooterRowMissingMailTracking.tsx",
         "UnrelatedOnClickMailto.tsx",
         "UnrelatedNamedHandlerMailto.tsx",
+        "UnrelatedConciseArrowHandlerMailto.tsx",
       ].every((f) => mailOffenders.includes(f)) &&
         !mailOffenders.includes("GoodMailto.tsx") &&
-        !mailOffenders.includes("GoodNamedHandlerMailto.tsx"),
-      "findUntrackedMailtoTelLinks flags a bare mailto:/tel: href (string or template), a config row missing tracking, and an onClick/named handler that never calls trackEvent — but not a tracked one, inline or via a tracking named handler",
+        !mailOffenders.includes("GoodNamedHandlerMailto.tsx") &&
+        !mailOffenders.includes("GoodConciseArrowHandlerMailto.tsx"),
+      "findUntrackedMailtoTelLinks flags a bare mailto:/tel: href (string or template), a config row missing tracking, and an onClick/named handler (block or concise-arrow body) that never calls trackEvent — but not a tracked one, inline or via a tracking named handler of either shape",
       `offenders: ${JSON.stringify(mailOffenders)}`
     );
 

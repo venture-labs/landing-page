@@ -264,6 +264,15 @@ function callsTrackEvent(expr: string): boolean {
  * booking/kontakt/mailto link passed every guard without ever firing an
  * event. This requires the attribute's own value (or the named function it
  * points at) to actually reach a `trackEvent(` call.
+ *
+ * Round 6: a named handler's definition can be a block body
+ * (`function f() { ... }` / `const f = () => { ... }`, the Impressum/
+ * Datenschutz pattern already handled) OR a concise arrow body with no
+ * braces at all (`const f = () => trackEvent(...)`). The codebase has no
+ * concise-body handler today (grep-verified), but the block-only resolver
+ * would otherwise flag a correctly-tracked one as untracked the day someone
+ * writes it that way — the same "named handler" case the Reviewer's
+ * suggested fix named, just the other valid-JS shape of it.
  */
 function hasTrackedOnClick(src: string, tag: string): boolean {
   const value = extractAttributeValue(tag, "onClick")?.trim();
@@ -274,23 +283,41 @@ function hasTrackedOnClick(src: string, tag: string): boolean {
   if (!identifierMatch) return false;
   const name = identifierMatch[0];
 
-  const defRegexes = [
-    new RegExp(`function\\s+${name}\\s*\\([^)]*\\)\\s*\\{`),
-    new RegExp(`const\\s+${name}\\s*=\\s*\\([^)]*\\)\\s*=>\\s*\\{`),
-  ];
-  for (const defRegex of defRegexes) {
-    const match = defRegex.exec(src);
-    if (!match) continue;
-    let depth = 1;
-    let j = match.index + match[0].length;
-    while (j < src.length && depth > 0) {
-      if (src[j] === "{") depth++;
-      else if (src[j] === "}") depth--;
-      j++;
+  const fnDeclRegex = new RegExp(`function\\s+${name}\\s*\\([^)]*\\)\\s*\\{`);
+  const fnMatch = fnDeclRegex.exec(src);
+  if (fnMatch && callsTrackEvent(extractBalancedBraceBody(src, fnMatch.index + fnMatch[0].length))) return true;
+
+  const arrowHeadRegex = new RegExp(`const\\s+${name}\\s*=\\s*\\([^)]*\\)\\s*=>\\s*`);
+  const arrowMatch = arrowHeadRegex.exec(src);
+  if (arrowMatch) {
+    const bodyStart = arrowMatch.index + arrowMatch[0].length;
+    if (src[bodyStart] === "{") {
+      if (callsTrackEvent(extractBalancedBraceBody(src, bodyStart + 1))) return true;
+    } else {
+      // Concise body — no braces, so it is exactly one expression. Its end
+      // is the first top-level `;`/`\n` (no trackEvent(...) call site in
+      // this codebase nests a semicolon or a newline inside its own
+      // arguments, same assumption countArgs already relies on above).
+      const end = /[;\n]/.exec(src.slice(bodyStart));
+      const body = end ? src.slice(bodyStart, bodyStart + end.index) : src.slice(bodyStart);
+      if (callsTrackEvent(body)) return true;
     }
-    if (callsTrackEvent(src.slice(match.index + match[0].length, j - 1))) return true;
   }
+
   return false;
+}
+
+/** The text strictly inside the `{...}` body that starts right after `openBraceIndex - 1`
+ * (i.e. `src[openBraceIndex - 1]` is the opening `{`), balancing nested braces. */
+function extractBalancedBraceBody(src: string, openBraceIndex: number): string {
+  let depth = 1;
+  let j = openBraceIndex;
+  while (j < src.length && depth > 0) {
+    if (src[j] === "{") depth++;
+    else if (src[j] === "}") depth--;
+    j++;
+  }
+  return src.slice(openBraceIndex, j - 1);
 }
 
 /**
