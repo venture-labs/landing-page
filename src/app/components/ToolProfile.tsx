@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useLeistungenData, useServicesData, useToolProfilesData } from "@/data/content";
 import { CtaButton } from "@/app/components/ui/CtaButton";
 import { BOOKING_URL } from "@/app/links";
-import { EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
+import { CTAS, EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
 import type { Service } from "@/data/de/services";
 import type { AgentOption, ToolProfile as ToolProfileData } from "@/data/de/tools";
 
@@ -151,7 +151,7 @@ function ToolProfileCard({ tool, services }: { tool: ToolProfileData; services: 
           href={BOOKING_URL}
           backgroundColor={ACCENT}
           textColor="text-[#1E1C27]"
-          onClick={() => trackEvent(EVENTS.callLinkClicked, PLACEMENTS.toolProfile)}
+          onClick={() => trackEvent(EVENTS.callLinkClicked, PLACEMENTS.toolProfile, CTAS.bookCall)}
         >
           {tool.ctaLabel}
         </CtaButton>
