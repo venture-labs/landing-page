@@ -114,6 +114,11 @@
           "models": "Lokale Modelle"
         }
       }
+    },
+    "useCases": {
+      "stepOf": "Karte {{current}} von {{total}}",
+      "prevLabel": "Vorherige Karte",
+      "nextLabel": "Nächste Karte"
     }
   },
   "cases": {

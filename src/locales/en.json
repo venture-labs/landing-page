@@ -114,6 +114,11 @@
           "models": "Local models"
         }
       }
+    },
+    "useCases": {
+      "stepOf": "Card {{current}} of {{total}}",
+      "prevLabel": "Previous card",
+      "nextLabel": "Next card"
     }
   },
   "cases": {
