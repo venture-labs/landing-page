@@ -166,7 +166,7 @@ export function findMissingCtaCallSites(srcDir: string): string[] {
  * inspect — a `placement=`/`onClick=` attribute can sit on a different line
  * than the `href=`/`to=` it has to accompany.
  */
-function extractOpeningTags(src: string, tagNameRegex: RegExp): string[] {
+function extractJsxTags(src: string, tagNameRegex: RegExp): string[] {
   const tags: string[] = [];
   const startRegex = /<([A-Za-z][\w.]*)\b/g;
   let start: RegExpExecArray | null;
@@ -225,7 +225,7 @@ function extractOpeningTags(src: string, tagNameRegex: RegExp): string[] {
  * `placement:` / `cta:` fields.
  */
 function hasUntrackedMailtoOrTel(src: string): boolean {
-  const directOffender = extractOpeningTags(src, /^a$/).some(
+  const directOffender = extractJsxTags(src, /^a$/).some(
     (tag) => /mailto:|tel:/.test(tag) && !/\bonClick=/.test(tag)
   );
   if (directOffender) return true;
@@ -247,7 +247,7 @@ export function findUntrackedMailtoTelLinks(srcDir: string): string[] {
 
 /** True when `src` renders `<PulseCheckModal ...>` with no `placement=` attribute. */
 function hasUntrackedPulseCheckModal(src: string): boolean {
-  return extractOpeningTags(src, /^PulseCheckModal$/).some((tag) => !/\bplacement=/.test(tag));
+  return extractJsxTags(src, /^PulseCheckModal$/).some((tag) => !/\bplacement=/.test(tag));
 }
 
 export function findUntrackedPulseCheckModalUsages(srcDir: string): string[] {
@@ -267,9 +267,9 @@ export function findUntrackedPulseCheckModalUsages(srcDir: string): string[] {
  */
 function hasUntrackedKontaktOrBookingLink(src: string): boolean {
   const tags = [
-    ...extractOpeningTags(src, /^a$/),
-    ...extractOpeningTags(src, /^Link$/),
-    ...extractOpeningTags(src, /^CtaButton$/),
+    ...extractJsxTags(src, /^a$/),
+    ...extractJsxTags(src, /^Link$/),
+    ...extractJsxTags(src, /^CtaButton$/),
   ];
   return tags.some(
     (tag) => (/\bBOOKING_URL\b/.test(tag) || /\/kontakt\b/.test(tag)) && !/\bonClick=/.test(tag)

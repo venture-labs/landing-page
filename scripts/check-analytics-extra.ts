@@ -41,7 +41,13 @@ import { tmpdir } from "os";
 import { dirname, join, resolve } from "path";
 import { fileURLToPath } from "url";
 import { pathToFileURL } from "url";
-import { findMissingPlacementCallSites } from "./check-placements";
+import {
+  findMissingPlacementCallSites,
+  findMissingCtaCallSites,
+  findUntrackedMailtoTelLinks,
+  findUntrackedPulseCheckModalUsages,
+  findUntrackedKontaktOrBookingLinks,
+} from "./check-placements";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const BASE_REF = process.env.BASE_REF ?? "dev";
@@ -280,6 +286,49 @@ async function checkTrackEventProps(): Promise<void> {
       'missing window.location: defaults to page "/", lang "de", never throws',
       `threw=${String(threw)} calls=${JSON.stringify(calls)}`
     );
+
+    // Criterion 22 (20261021-cta-tracking-every-call-to-action-fires-a-plausi)
+    // — trackEvent()'s new third (cta) argument: attached exactly when
+    // given, alongside placement, and omitted (no "cta" key at all, not an
+    // empty string) when the call site passes none.
+    const { CTAS } = await import(pathToFileURL(resolve(repoRoot, "src/app/analytics.ts")).href);
+    globalWithWindow.window = {
+      location: { pathname: "/de/kontakt" },
+      plausible: (...args: Call) => calls.push(args),
+    };
+
+    calls = [];
+    trackEvent(EVENTS.callLinkClicked, PLACEMENTS.footer, CTAS.bookCall);
+    check(
+      "22",
+      JSON.stringify(calls) ===
+        JSON.stringify([
+          [
+            "Call Link Clicked",
+            { props: { page: "/kontakt", lang: "de", placement: "footer", cta: "book-call" } },
+          ],
+        ]),
+      "placement + cta both given: trackEvent() attaches both exactly",
+      `got ${JSON.stringify(calls)}`
+    );
+
+    calls = [];
+    trackEvent(EVENTS.contactSent, PLACEMENTS.kontaktForm);
+    check(
+      "22",
+      JSON.stringify(calls) ===
+        JSON.stringify([["Contact Sent", { props: { page: "/kontakt", lang: "de", placement: "kontakt-form" } }]]),
+      "placement given, no cta: trackEvent() attaches no cta key at all",
+      `got ${JSON.stringify(calls)}`
+    );
+
+    check(
+      "22",
+      JSON.stringify(Object.values(CTAS)) ===
+        JSON.stringify(["book-call", "contact", "quiz", "mail", "phone"]) && Object.isFrozen(CTAS),
+      "CTAS holds exactly the five values, frozen",
+      `CTAS values are ${JSON.stringify(Object.values(CTAS))}, frozen=${Object.isFrozen(CTAS)}`
+    );
   } finally {
     if (hadWindow) globalWithWindow.window = previousWindow;
     else delete globalWithWindow.window;
@@ -342,6 +391,103 @@ function checkPlacementGuardRegressions(): void {
   }
 }
 
+/**
+ * Criterion 23 (20261021-cta-tracking-every-call-to-action-fires-a-plausi)
+ * — regression tests for the four new checks in scripts/check-placements.ts
+ * (missing cta, untracked mailto:/tel:, untracked <PulseCheckModal>,
+ * untracked booking/kontakt link), against synthetic files in a throwaway
+ * temp dir, same pattern as checkPlacementGuardRegressions() above.
+ */
+function checkCtaTrackingGuardRegressions(): void {
+  const dir = mkdtempSync(join(tmpdir(), "cta-tracking-guard-"));
+  try {
+    // --- missing cta ---------------------------------------------------
+    writeFileSync(join(dir, "MissingCtaDirect.tsx"), "trackEvent(EVENTS.callLinkClicked, PLACEMENTS.x);\n");
+    writeFileSync(join(dir, "MissingCtaContactSent.tsx"), "trackEvent(EVENTS.contactSent, PLACEMENTS.x);\n");
+    writeFileSync(join(dir, "MissingCtaFooterTrack.tsx"), "trackEvent(link.track!, link.placement);\n");
+    writeFileSync(
+      join(dir, "FooterRowMissingCta.tsx"),
+      'const cols = [{ links: [{ href: BOOKING_URL, track: EVENTS.callLinkClicked, placement: PLACEMENTS.footer }] }];\n'
+    );
+    writeFileSync(join(dir, "GoodCta.tsx"), "trackEvent(EVENTS.callLinkClicked, PLACEMENTS.x, CTAS.bookCall);\n");
+
+    const ctaOffenders = findMissingCtaCallSites(dir).map((f) => f.split(/[\\/]/).pop());
+    check(
+      "23",
+      ["MissingCtaDirect.tsx", "MissingCtaContactSent.tsx", "MissingCtaFooterTrack.tsx", "FooterRowMissingCta.tsx"].every(
+        (f) => ctaOffenders.includes(f)
+      ) && !ctaOffenders.includes("GoodCta.tsx"),
+      "findMissingCtaCallSites flags every cta-less form (direct, link.track!, config row) and not a correct one",
+      `offenders: ${JSON.stringify(ctaOffenders)}`
+    );
+
+    // --- untracked mailto:/tel: -----------------------------------------
+    writeFileSync(join(dir, "UntrackedMailto.tsx"), '<a href="mailto:x@y.com">x@y.com</a>\n');
+    writeFileSync(join(dir, "UntrackedTelTemplate.tsx"), "<a href={`tel:${p.phone}`}>{p.phone}</a>\n");
+    writeFileSync(
+      join(dir, "FooterRowMissingMailTracking.tsx"),
+      'const cols = [{ links: [{ href: "mailto:x@y.com" }] }];\n'
+    );
+    writeFileSync(
+      join(dir, "GoodMailto.tsx"),
+      '<a href="mailto:x@y.com" onClick={() => trackEvent(EVENTS.contactSent, PLACEMENTS.x, CTAS.mail)}>x</a>\n'
+    );
+
+    const mailOffenders = findUntrackedMailtoTelLinks(dir).map((f) => f.split(/[\\/]/).pop());
+    check(
+      "23",
+      ["UntrackedMailto.tsx", "UntrackedTelTemplate.tsx", "FooterRowMissingMailTracking.tsx"].every((f) =>
+        mailOffenders.includes(f)
+      ) && !mailOffenders.includes("GoodMailto.tsx"),
+      "findUntrackedMailtoTelLinks flags a bare mailto:/tel: href (string or template) and a config row missing tracking, not a tracked one",
+      `offenders: ${JSON.stringify(mailOffenders)}`
+    );
+
+    // --- untracked <PulseCheckModal> ------------------------------------
+    writeFileSync(join(dir, "UntrackedModal.tsx"), "<PulseCheckModal open={o} onOpenChange={s} />\n");
+    writeFileSync(
+      join(dir, "GoodModal.tsx"),
+      "<PulseCheckModal open={o} onOpenChange={s} placement={PLACEMENTS.heroQuiz} />\n"
+    );
+    const modalOffenders = findUntrackedPulseCheckModalUsages(dir).map((f) => f.split(/[\\/]/).pop());
+    check(
+      "23",
+      modalOffenders.includes("UntrackedModal.tsx") && !modalOffenders.includes("GoodModal.tsx"),
+      "findUntrackedPulseCheckModalUsages flags a <PulseCheckModal> with no placement=, not one that has it",
+      `offenders: ${JSON.stringify(modalOffenders)}`
+    );
+
+    // --- untracked booking/kontakt link ---------------------------------
+    writeFileSync(join(dir, "UntrackedKontaktLink.tsx"), '<Link to={localizedPath("/kontakt")}>Kontakt</Link>\n');
+    writeFileSync(
+      join(dir, "UntrackedKontaktTopic.tsx"),
+      "<Link to={`${localizedPath(\"/kontakt\")}?topic=${k}`}>Go</Link>\n"
+    );
+    writeFileSync(join(dir, "UntrackedBooking.tsx"), "<a href={BOOKING_URL}>Book</a>\n");
+    writeFileSync(
+      join(dir, "GoodCtaButtonBooking.tsx"),
+      "<CtaButton href={BOOKING_URL} onClick={() => trackEvent(EVENTS.callLinkClicked, PLACEMENTS.x, CTAS.bookCall)}>Book</CtaButton>\n"
+    );
+    writeFileSync(
+      join(dir, "GoodKontaktLink.tsx"),
+      '<Link to={localizedPath("/kontakt")} onClick={() => trackEvent(EVENTS.contactSent, PLACEMENTS.x, CTAS.contact)}>Kontakt</Link>\n'
+    );
+    const navOffenders = findUntrackedKontaktOrBookingLinks(dir).map((f) => f.split(/[\\/]/).pop());
+    check(
+      "23",
+      ["UntrackedKontaktLink.tsx", "UntrackedKontaktTopic.tsx", "UntrackedBooking.tsx"].every((f) =>
+        navOffenders.includes(f)
+      ) &&
+        !navOffenders.includes("GoodCtaButtonBooking.tsx") &&
+        !navOffenders.includes("GoodKontaktLink.tsx"),
+      "findUntrackedKontaktOrBookingLinks flags an untracked <Link>/<a>/<CtaButton> to BOOKING_URL or /kontakt (incl. ?topic=), not a tracked one",
+      `offenders: ${JSON.stringify(navOffenders)}`
+    );
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+}
+
 function checkNoNewDependencies(): void {
   let basePackageJson: string;
   try {
@@ -372,10 +518,18 @@ function checkNoNewDependencies(): void {
   const changedScripts = Object.keys(base.scripts ?? {}).filter(
     (k) => base.scripts[k] !== head.scripts?.[k]
   );
+  // 20261021-cta-tracking-every-call-to-action-fires-a-plausi: this used to
+  // hardcode `same(addedScripts, ["check:analytics"])`, written when that was
+  // the one new script relative to ITS OWN base. check:analytics,
+  // check:area-pages, check:naming and the amended build script have all
+  // since merged into dev via other tasks, so the literal list goes stale for
+  // every task cut after them (BASE_REF already carries all four by then).
+  // This task adds/changes no script at all, so "none added, none changed" is
+  // the correct, no-longer-one-task-specific assertion going forward.
   check(
     "13",
-    same(addedScripts, ["check:analytics"]) && changedScripts.length === 0,
-    "scripts gained only check:analytics; no existing script was changed",
+    addedScripts.length === 0 && changedScripts.length === 0,
+    "no script was added or changed relative to the base",
     `scripts added ${JSON.stringify(addedScripts)} and changed ${JSON.stringify(changedScripts)}`
   );
 
@@ -424,6 +578,7 @@ async function main(): Promise<void> {
   await checkTrackEventRuntime();
   await checkTrackEventProps();
   checkPlacementGuardRegressions();
+  checkCtaTrackingGuardRegressions();
   checkNoNewDependencies();
   checkNoTrackerLibraries();
 
