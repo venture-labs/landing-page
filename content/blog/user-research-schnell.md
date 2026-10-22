@@ -1,6 +1,8 @@
 ---
 slug: "user-research-schnell"
 language: "de"
+seoTitle: 'User Research auf die Schnelle: 3 Methoden – Venture Labs'
+seoDescription: 'Auch mit wenig Zeit und Budget lässt sich fundiertes Nutzerfeedback einholen. Drei Methoden, die sich in der Praxis bewährt haben.'
 order: 6
 title: "User Research auf die Schnelle: 3 Methoden für enge Timelines"
 excerpt: "Auch mit wenig Zeit und Budget lässt sich fundiertes Nutzerfeedback einholen. Drei Methoden, die sich in der Praxis bewährt haben."

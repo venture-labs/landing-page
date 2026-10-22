@@ -1,6 +1,8 @@
 ---
 slug: "pitch-zu-produkt"
 language: "en"
+seoTitle: 'From pitch to product: an MVP in 12 weeks – Venture Labs'
+seoDescription: 'How we build an MVP in 12 weeks: a behind-the-scenes look at our company-building process – from first idea to first paying customer.'
 order: 4
 title: "From pitch to product: how we build an MVP in 12 weeks"
 excerpt: "A behind-the-scenes look at our company-building process – from first idea to first paying customer."

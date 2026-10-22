@@ -1,6 +1,8 @@
 ---
 slug: moerschen
 language: "en"
+seoTitle: 'Moerschen – From relaunch to lead machine – Venture Labs'
+seoDescription: 'Moerschen needed a website that makes complex industrial services understandable and guides prospects straight to the right contact.'
 order: 3
 title: "Moerschen – website relaunch for better communication"
 subtitle: "A digital service portal for complex B2B processes in just 8 weeks."

@@ -1,6 +1,8 @@
 ---
 slug: "ki-agenten-use-cases"
 language: "en"
+seoTitle: 'AI agents in everyday business: 5 use cases – Venture Labs'
+seoDescription: 'From automated support workflows to internal knowledge assistants: five AI applications delivering real value today – no hype attached.'
 order: 2
 title: "AI agents in everyday business: 5 use cases that actually work"
 excerpt: "From automated support workflows to internal knowledge assistants: five AI applications delivering real value today – no hype attached."

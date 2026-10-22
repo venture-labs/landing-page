@@ -1,6 +1,8 @@
 ---
 slug: "design-systems-hebel"
 language: "en"
+seoTitle: 'Design systems: the underrated growth lever – Venture Labs'
+seoDescription: 'A good design system doesn''t just save time in design – it speeds up development too. Here''s how to build one people actually use.'
 order: 3
 title: "Design systems: the underrated lever for faster growth"
 excerpt: "A good design system doesn't just save time in design – it speeds up development too. Here's how to build one people actually use."

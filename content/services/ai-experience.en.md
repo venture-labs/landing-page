@@ -1,6 +1,8 @@
 ---
 slug: ai-experience
 language: "en"
+seoTitle: 'AI Experience – Design the interaction – Venture Labs'
+seoDescription: 'Designing how people and AI work together: we design interfaces, workflows, and interactions for a new generation of digital products.'
 order: 3
 title: "AI Experience"
 description: "Designing how people and AI work together: we design interfaces, workflows, and interactions for a new generation of digital products."

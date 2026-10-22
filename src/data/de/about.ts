@@ -12,6 +12,8 @@ export interface ProcessStep {
 }
 
 export interface AboutData {
+  seoTitle: string;
+  seoDescription: string;
   heroTitle: string;
   heroSubheading: string;
   missionTitle: string;
@@ -26,6 +28,8 @@ export interface AboutData {
 }
 
 export const aboutData: AboutData = {
+  seoTitle: "Über uns – Wir bauen digitale Produkte – Venture Labs",
+  seoDescription: "Venture Labs ist eine Agentur für digitale Produktentwicklung. Wir helfen Unternehmen und Gründer, ihre Visionen in marktfähige Produkte umzuwandeln.",
   heroTitle: "Wir bauen digitale Produkte, die funktionieren.",
   heroSubheading: "VentureLabs ist eine Agentur für digitale Produktentwicklung. Wir helfen Unternehmen und Gründer, ihre Visionen in marktfähige Produkte umzuwandeln – mit Expertise in Design, Entwicklung und AI.",
   missionTitle: "Unsere Mission",

@@ -3,6 +3,8 @@
 export interface CaseDetail {
   slug: string;
   title: string;
+  seoTitle: string;
+  seoDescription: string;
   category: string;
   heroHeadline: string;
   heroSubline: string;
@@ -22,6 +24,8 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
   "tap2link": {
     "slug": "tap2link",
     "title": "Tap2Link – more than a digital business card.",
+    "seoTitle": "Tap2Link – Digital business card and more – Venture Labs",
+    "seoDescription": "Tap2Link is an entirely new, multifunctional platform for events, services, and teams. We built the application from scratch with modern design.",
     "category": "Digital contact & service ecosystems",
     "heroHeadline": "Multifunctional app for events, services & teams",
     "heroSubline": "A digital service portal for complex B2B processes in just 8 weeks.",
@@ -52,6 +56,8 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
   "brylliant": {
     "slug": "brylliant",
     "title": "Brylliant – the tool for perfect briefings",
+    "seoTitle": "Brylliant – The tool for perfect briefings – Venture Labs",
+    "seoDescription": "Brylliant is a briefing tool that puts agencies and clients on the same page. We rethought the interface and workflow from scratch.",
     "category": "Design systems & UX tools",
     "heroHeadline": "The tool for perfect briefings",
     "heroSubline": "A scalable tool for efficient briefings, clean processes, and strategic clarity — designed in 6 weeks.",
@@ -81,6 +87,8 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
   "moerschen": {
     "slug": "moerschen",
     "title": "Moerschen – website relaunch for better communication",
+    "seoTitle": "Moerschen – From relaunch to lead machine – Venture Labs",
+    "seoDescription": "Moerschen needed a website that makes complex industrial services understandable and guides prospects straight to the right contact.",
     "category": "Website relaunch & company building",
     "heroHeadline": "From relaunch to lead machine",
     "heroSubline": "Website relaunch with clear user guidance and a new communication strategy — live in 8 weeks.",
@@ -112,6 +120,8 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
   "machinemaster": {
     "slug": "machinemaster",
     "title": "MachineMaster – agricultural machinery sales platform",
+    "seoTitle": "MachineMaster – AI-powered machinery sales – Venture Labs",
+    "seoDescription": "MachineMaster helps dealers and field reps sell agricultural machinery with AI-powered product guidance – the MVP built in 12 weeks.",
     "category": "AI-powered sales tools",
     "heroHeadline": "AI in agricultural machinery sales",
     "heroSubline": "An AI-powered sales tool for dealers and field reps — from MVP in just 12 weeks.",
@@ -143,6 +153,8 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
   "neuer-look": {
     "slug": "neuer-look",
     "title": "New look, new website",
+    "seoTitle": "New look, new impact – Website relaunch – Venture Labs",
+    "seoDescription": "The existing website no longer matched the company's current presence. We rethought design, structure, and content from scratch.",
     "category": "Website relaunch & branding",
     "heroHeadline": "New look, new impact",
     "heroSubline": "A website relaunch that drops old structures and brings brand, design, and content up to date.",
@@ -172,6 +184,8 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
   "creator-studios": {
     "slug": "creator-studios",
     "title": "Creator Studio – booking platform for creative spaces",
+    "seoTitle": "Creator Studio – Website with space booking – Venture Labs",
+    "seoDescription": "For Creator Studio, a photo studio in Düsseldorf, we built a new website with direct space booking that turns inquiries into real bookings.",
     "category": "Website & booking platform",
     "heroHeadline": "Turning ideas into trends",
     "heroSubline": "A new website for Creator Studio that lets creatives book their space in Düsseldorf directly online.",
@@ -201,6 +215,8 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
   "scanservice": {
     "slug": "scanservice",
     "title": "Your ScanService",
+    "seoTitle": "ScanService – Manage documents digitally – Venture Labs",
+    "seoDescription": "For a document scanning service, we built a digital platform where customers submit orders, track their status, and manage their digitized documents.",
     "category": "Digital service platform",
     "heroHeadline": "Your scan, your order",
     "heroSubline": "A platform that lets customers submit documents, have them digitized, and find them again anytime.",

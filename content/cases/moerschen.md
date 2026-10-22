@@ -1,5 +1,7 @@
 ---
 language: "de"
+seoTitle: 'Moerschen – Vom Relaunch zur Leadmaschine – Venture Labs'
+seoDescription: 'Moerschen brauchte eine Website, die komplexe Industrieleistungen verständlich macht und Interessenten direkt zum richtigen Ansprechpartner führt.'
 slug: moerschen
 order: 3
 title: "Moerschen – Website-Relaunch für bessere Kommunikation"

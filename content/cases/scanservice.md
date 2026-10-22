@@ -1,5 +1,7 @@
 ---
 language: "de"
+seoTitle: 'ScanService – Dokumente digital verwalten – Venture Labs'
+seoDescription: 'Für einen Dokumenten-Scan-Service haben wir eine digitale Plattform entwickelt, über die Kunden Aufträge einreichen und den Status verfolgen.'
 slug: scanservice
 order: 7
 title: "Dein ScanService"

@@ -1,6 +1,8 @@
 ---
 slug: "design-systems-hebel"
 language: "de"
+seoTitle: 'Design Systems: Der unterschätzte Hebel – Venture Labs'
+seoDescription: 'Ein gutes Design System spart nicht nur Zeit im Design – es beschleunigt auch die Entwicklung. So baust du eins, das wirklich genutzt wird.'
 order: 3
 title: "Design Systems: Der unterschätzte Hebel für schnelleres Wachstum"
 excerpt: "Ein gutes Design System spart nicht nur Zeit im Design – es beschleunigt auch die Entwicklung. So baust du eins, das wirklich genutzt wird."

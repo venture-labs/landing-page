@@ -1,5 +1,7 @@
 ---
 language: de
+seoTitle: 'Drei Schritte, ein Puls: Check, Build, Care – Venture Labs'
+seoDescription: 'Erst schauen, was wirklich los ist. Dann bauen, was den größten Unterschied macht. Und dann dranbleiben. Alles andere sind Details.'
 heroEyebrow: 'Leistungen'
 heroTitlePrefix: 'Drei Schritte.'
 heroTitleHighlight: 'Ein Puls.'
