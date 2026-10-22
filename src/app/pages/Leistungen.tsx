@@ -6,7 +6,8 @@ import { useTranslation } from "react-i18next";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
 import { PulseJourney } from "@/app/components/PulseJourney";
-import { SituationsSection } from "@/app/components/SituationsSection";
+import { ClusterStorySection } from "@/app/components/ClusterStorySection";
+import { UseCasesSection } from "@/app/components/UseCasesSection";
 import { SkillMatrix } from "@/app/components/SkillMatrix";
 import { ToolProfile } from "@/app/components/ToolProfile";
 import { PulseCheckModal } from "@/app/components/PulseCheckModal";
@@ -258,7 +259,8 @@ export function Leistungen() {
       <PulseJourney />
       <SkillMatrix />
       <ToolProfile />
-      <SituationsSection />
+      <ClusterStorySection />
+      <UseCasesSection />
       <PulseCallout onQuizOpen={() => setQuizPlacement(PLACEMENTS.leistungenPulseCallout)} />
       <ContactStrip />
       <Footer />

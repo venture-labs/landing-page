@@ -92,7 +92,34 @@
     "toolOutputLabel": "Kommt raus",
     "toolWhereItRunsLabel": "Läuft bei dir",
     "toolReleaseLabel": "Freigabe",
-    "toolCancellationLabel": "Kündigung"
+    "toolCancellationLabel": "Kündigung",
+    "clusterStory": {
+      "stepOf": "Schritt {{current}} von {{total}}",
+      "stepNavLabel": "Schritte",
+      "plannedChannelTag": "geplant",
+      "graphic": {
+        "ours": "UNSER CLUSTER",
+        "theirs": "DEIN CLUSTER",
+        "theirsBuilding": "DEIN CLUSTER (wird gebaut)",
+        "concept": "Konzept",
+        "handover": "Übergabe",
+        "build": "Aufbau",
+        "telemetry": "Telemetrie",
+        "updates": "Updates",
+        "loop": "Neue Calls / Input",
+        "area": {
+          "bookkeeping": "Buchhaltung & Bank",
+          "crm": "Eigenes CRM",
+          "apps": "Frontends/Apps",
+          "models": "Lokale Modelle"
+        }
+      }
+    },
+    "useCases": {
+      "stepOf": "Karte {{current}} von {{total}}",
+      "prevLabel": "Vorherige Karte",
+      "nextLabel": "Nächste Karte"
+    }
   },
   "cases": {
     "heroTitle": "Unsere Projekte",

@@ -450,6 +450,40 @@ export interface Situation {
   capabilities: string[];
 }
 
+export interface ClusterStoryChannel {
+  label: string;
+  status: "live" | "planned";
+}
+
+export interface ClusterStoryArea {
+  label: string;
+}
+
+export interface ClusterStoryStep {
+  id:
+    | "input"
+    | "concepts"
+    | "handover"
+    | "build"
+    | "install"
+    | "telemetry"
+    | "loop"
+    | "growth"
+    | "service";
+  navLabel: string;
+  heading: string;
+  body: string;
+  channels?: ClusterStoryChannel[];
+  areas?: ClusterStoryArea[];
+  billingNote?: string;
+}
+
+export interface ClusterStoryData {
+  heading: string;
+  intro: string;
+  steps: ClusterStoryStep[];
+}
+
 export interface LeistungenData {
   seoTitle: string;
   seoDescription: string;
@@ -463,17 +497,17 @@ export interface LeistungenData {
   skillsHeading: string;
   skillsIntro: string;
   skillStepLabels: Record<"check" | "build" | "care", string>;
-  toolProfilesHeading: string;
-  toolProfilesIntro: string;
   ctaHeading: string;
   ctaBody: string;
   contactCallout: string;
   strengthHeadline: string;
   strengthDescription: string;
   strengthFeatures: StrengthFeature[];
-  situationsHeading: string;
-  situationsCtaLabel: string;
+  useCasesHeading: string;
+  useCasesLeadLine: string;
+  useCasesCtaLabel: string;
   situations: Situation[];
+  clusterStory: ClusterStoryData;
 }
 
 export const leistungenData: LeistungenData = {
@@ -489,8 +523,6 @@ export const leistungenData: LeistungenData = {
   skillsHeading: ${strLit(leistungen.skillsHeading)},
   skillsIntro: ${strLit(leistungen.skillsIntro)},
   skillStepLabels: ${JSON.stringify(leistungen.skillStepLabels ?? {}, null, 2)},
-  toolProfilesHeading: ${strLit(leistungen.toolProfilesHeading)},
-  toolProfilesIntro: ${strLit(leistungen.toolProfilesIntro)},
   ctaHeading: ${strLit(leistungen.ctaHeading)},
   ctaBody: ${strLit(leistungen.ctaBody)},
   contactCallout: ${strLit(leistungen.contactCallout)},
@@ -505,9 +537,15 @@ export const leistungenData: LeistungenData = {
     null,
     2
   )},
-  situationsHeading: ${strLit(leistungen.situationsHeading)},
-  situationsCtaLabel: ${strLit(leistungen.situationsCtaLabel)},
+  useCasesHeading: ${strLit(leistungen.useCasesHeading)},
+  useCasesLeadLine: ${strLit(leistungen.useCasesLeadLine)},
+  useCasesCtaLabel: ${strLit(leistungen.useCasesCtaLabel)},
   situations: ${JSON.stringify(leistungen.situations ?? [], null, 2)},
+  clusterStory: ${JSON.stringify(
+    leistungen.clusterStory ?? { heading: "", intro: "", steps: [] },
+    null,
+    2
+  )},
 };
 `
   );

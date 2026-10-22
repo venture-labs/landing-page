@@ -28,6 +28,40 @@ export interface Situation {
   capabilities: string[];
 }
 
+export interface ClusterStoryChannel {
+  label: string;
+  status: "live" | "planned";
+}
+
+export interface ClusterStoryArea {
+  label: string;
+}
+
+export interface ClusterStoryStep {
+  id:
+    | "input"
+    | "concepts"
+    | "handover"
+    | "build"
+    | "install"
+    | "telemetry"
+    | "loop"
+    | "growth"
+    | "service";
+  navLabel: string;
+  heading: string;
+  body: string;
+  channels?: ClusterStoryChannel[];
+  areas?: ClusterStoryArea[];
+  billingNote?: string;
+}
+
+export interface ClusterStoryData {
+  heading: string;
+  intro: string;
+  steps: ClusterStoryStep[];
+}
+
 export interface LeistungenData {
   seoTitle: string;
   seoDescription: string;
@@ -41,17 +75,17 @@ export interface LeistungenData {
   skillsHeading: string;
   skillsIntro: string;
   skillStepLabels: Record<"check" | "build" | "care", string>;
-  toolProfilesHeading: string;
-  toolProfilesIntro: string;
   ctaHeading: string;
   ctaBody: string;
   contactCallout: string;
   strengthHeadline: string;
   strengthDescription: string;
   strengthFeatures: StrengthFeature[];
-  situationsHeading: string;
-  situationsCtaLabel: string;
+  useCasesHeading: string;
+  useCasesLeadLine: string;
+  useCasesCtaLabel: string;
   situations: Situation[];
+  clusterStory: ClusterStoryData;
 }
 
 export const leistungenData: LeistungenData = {
@@ -123,8 +157,6 @@ export const leistungenData: LeistungenData = {
   "build": "Build",
   "care": "Care"
 },
-  toolProfilesHeading: "In production: Beleg-Inbox",
-  toolProfilesIntro: "The first tool profile from our AI Automation work — concrete, no buzzwords.",
   ctaHeading: "Not sure where you stand?",
   ctaBody: "The AI Pulse Score takes five minutes and costs nothing: 10 questions, an instant result across five areas. If you then want to know exactly where your biggest lever is, the Pulse Check is the next step — what it covers in your case is something we work out in a first call.",
   contactCallout: "Looking for honest advice instead of buzzwords? Call or email us — we listen before we build.",
@@ -152,8 +184,9 @@ export const leistungenData: LeistungenData = {
     "subtitle": "You're part of the development process"
   }
 ],
-  situationsHeading: "Does one of these sound familiar?",
-  situationsCtaLabel: "Book a free intro call",
+  useCasesHeading: "Possible use cases",
+  useCasesLeadLine: "Beleg-Inbox is already running in production for us today — the other four show you what else is possible with the same approach.",
+  useCasesCtaLabel: "Book a free intro call",
   situations: [
   {
     "id": "receipts",
@@ -211,4 +244,97 @@ export const leistungenData: LeistungenData = {
     ]
   }
 ],
+  clusterStory: {
+  "heading": "How your cluster takes shape with us",
+  "intro": "From your first input to a cluster that covers you 100% — a story in nine steps that builds itself as you scroll.",
+  "steps": [
+    {
+      "id": "input",
+      "navLabel": "Input",
+      "heading": "Input",
+      "body": "We collect your information — in a personal video call, via Slack and e-mail, and (in preparation) via WhatsApp. Nobody at Venture Labs relays it.",
+      "channels": [
+        {
+          "label": "Video call",
+          "status": "live"
+        },
+        {
+          "label": "Slack",
+          "status": "live"
+        },
+        {
+          "label": "E-mail",
+          "status": "live"
+        },
+        {
+          "label": "WhatsApp",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "concepts",
+      "navLabel": "Concepts",
+      "heading": "Concepts",
+      "body": "Concept-building starts from your input at once — and it comes back to you, for your decision."
+    },
+    {
+      "id": "handover",
+      "navLabel": "Handover",
+      "heading": "Handover to our agents",
+      "body": "The decided concept is handed over to our own agents."
+    },
+    {
+      "id": "build",
+      "navLabel": "Build",
+      "heading": "Agents build your agents",
+      "body": "Our agents build your own agent cluster — shaped around your processes, not a template."
+    },
+    {
+      "id": "install",
+      "navLabel": "Installation",
+      "heading": "Installation",
+      "body": "The cluster is installed at your site."
+    },
+    {
+      "id": "telemetry",
+      "navLabel": "Data flow",
+      "heading": "Telemetry back, updates out",
+      "body": "Sensitive data stays local; outward only what you release — only runtime, error and cost telemetry flows back automatically, local AI models wherever possible, learning data only after you release it by hand. Every agent has its own budget with visible spend. In return, we ship updates."
+    },
+    {
+      "id": "loop",
+      "navLabel": "Loop",
+      "heading": "The loop closes",
+      "body": "New calls or new input lead to new concepts — the arrow visibly draws back to the start."
+    },
+    {
+      "id": "growth",
+      "navLabel": "Growth",
+      "heading": "The cluster grows ring by ring",
+      "body": "Your agents keep extending the cluster — area by area, until it covers your whole business.",
+      "areas": [
+        {
+          "label": "Bookkeeping & bank data"
+        },
+        {
+          "label": "Your own CRM"
+        },
+        {
+          "label": "Your own frontends/apps"
+        },
+        {
+          "label": "Local models"
+        }
+      ]
+    },
+    {
+      "id": "service",
+      "navLabel": "Offer",
+      "heading": "Your cluster covers you 100%",
+      "body": "The build is one project. The ongoing operation after that: a monthly retainer.",
+      "billingNote": "Build = one project · Operation = monthly retainer"
+    }
+  ]
+},
 };

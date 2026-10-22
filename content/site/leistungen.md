@@ -57,8 +57,6 @@ skillStepLabels:
   check: 'Check'
   build: 'Build'
   care: 'Care'
-toolProfilesHeading: 'Im Einsatz: Beleg-Inbox'
-toolProfilesIntro: 'Der erste Tool-Steckbrief aus unserer AI-Automation-Praxis – konkret, ohne Buzzwords.'
 ctaHeading: 'Noch unklar, wo du stehst?'
 ctaBody: 'Der AI Pulse Score dauert fünf Minuten und kostet nichts: 10 Fragen, sofort ein Ergebnis über fünf Bereiche. Willst du danach genau wissen, wo dein größter Hebel liegt, ist der Pulse Check der nächste Schritt – was er bei dir umfasst, besprechen wir im Erstgespräch.'
 contactCallout: 'Du suchst ehrliche Beratung statt Buzzwords? Ruf uns an oder schreib uns – wir hören zu, bevor wir bauen.'
@@ -77,8 +75,9 @@ strengthFeatures:
   - icon: handshake
     title: 'Enge Zusammenarbeit & Transparenz'
     subtitle: 'Du bist Teil des Entwicklungsprozesses'
-situationsHeading: 'Kommt dir eine davon bekannt vor?'
-situationsCtaLabel: 'Kostenloses Erstgespräch buchen'
+useCasesHeading: 'Mögliche Use Cases'
+useCasesLeadLine: 'Beleg-Inbox läuft heute schon produktiv bei uns im Einsatz – die anderen vier zeigen dir, was mit demselben Ansatz sonst noch möglich ist.'
+useCasesCtaLabel: 'Kostenloses Erstgespräch buchen'
 situations:
   - id: receipts
     text: 'Zu jeder Abbuchung fehlt mir der Beleg.'
@@ -120,4 +119,59 @@ situations:
       - 'Nutzung und Fehler laufend überwachen'
       - 'Verantwortliche automatisch erinnern'
       - 'Monatlichen Gesundheitscheck liefern'
+clusterStory:
+  heading: 'Wie dein Cluster bei uns entsteht'
+  intro: 'Von deinem ersten Input bis zu einem Cluster, der dich zu 100 % abdeckt – eine Geschichte in neun Schritten, die sich beim Scrollen selbst aufbaut.'
+  steps:
+    - id: input
+      navLabel: 'Input'
+      heading: 'Input'
+      body: 'Wir sammeln deine Informationen ein – im persönlichen Videocall, über Slack und E-Mail, und (in Vorbereitung) über WhatsApp. Niemand bei uns funkt dazwischen.'
+      channels:
+        - label: 'Videocall'
+          status: live
+        - label: 'Slack'
+          status: live
+        - label: 'E-Mail'
+          status: live
+        - label: 'WhatsApp'
+          status: planned
+    - id: concepts
+      navLabel: 'Konzepte'
+      heading: 'Konzepte'
+      body: 'Aus deinem Input wird sofort ein Konzept angestoßen – und kommt zu dir zurück, zur Entscheidung.'
+    - id: handover
+      navLabel: 'Übergabe'
+      heading: 'Übergabe an unsere Agenten'
+      body: 'Das entschiedene Konzept geht an unsere eigenen Agenten weiter.'
+    - id: build
+      navLabel: 'Aufbau'
+      heading: 'Agenten bauen deine Agenten'
+      body: 'Unsere Agenten bauen deinen eigenen Agenten-Cluster – zugeschnitten auf deine Prozesse, nicht auf eine Vorlage.'
+    - id: install
+      navLabel: 'Installation'
+      heading: 'Installation'
+      body: 'Der Cluster wird bei dir installiert.'
+    - id: telemetry
+      navLabel: 'Datenfluss'
+      heading: 'Telemetrie zurück, Updates raus'
+      body: 'Sensible Daten bleiben bei dir; nach außen geht nur, was du freigibst – nur Laufzeit-, Fehler- und Kosten-Telemetrie fließt automatisch zurück, lokale KI-Modelle wo immer möglich, Lerndaten erst nach deiner manuellen Freigabe. Jeder Agent hat ein eigenes Budget mit sichtbaren Kosten. Dafür schicken wir Updates.'
+    - id: loop
+      navLabel: 'Kreislauf'
+      heading: 'Der Kreis schließt sich'
+      body: 'Neue Calls oder neuer Input führen zu neuen Konzepten – der Pfeil zieht sich sichtbar zurück zum Anfang.'
+    - id: growth
+      navLabel: 'Wachstum'
+      heading: 'Der Cluster wächst Ring für Ring'
+      body: 'Deine Agenten bauen den Cluster immer weiter aus – Bereich für Bereich, bis er dein Unternehmen abdeckt.'
+      areas:
+        - label: 'Buchhaltung & Bankdaten'
+        - label: 'Eigenes CRM'
+        - label: 'Eigene Frontends/Apps'
+        - label: 'Lokale Modelle'
+    - id: service
+      navLabel: 'Angebot'
+      heading: 'Dein Cluster deckt dich zu 100 % ab'
+      body: 'Der Aufbau ist ein Projekt. Der laufende Betrieb danach: eine monatliche Betreuung.'
+      billingNote: 'Aufbau = ein Projekt · Betrieb = monatliche Betreuung'
 ---
