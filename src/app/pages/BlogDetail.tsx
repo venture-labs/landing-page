@@ -7,6 +7,7 @@ import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
 import { useLocale } from "@/app/locale";
 import { useBlogDetail } from "@/data/content";
+import { CTAS, EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
 
 const topicAccent: Record<string, string> = {
   "ai-automation": "#fda700",
@@ -212,6 +213,7 @@ export function BlogDetail() {
                 </p>
                 <Link
                   to={localizedPath("/kontakt")}
+                  onClick={() => trackEvent(EVENTS.contactSent, PLACEMENTS.blogDetailCta, CTAS.contact)}
                   className="inline-flex items-center gap-2 w-fit font-semibold px-5 py-3 rounded-full transition-colors"
                   style={{ backgroundColor: accent, color: "#0e0d13" }}
                 >

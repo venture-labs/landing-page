@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useLeistungenData } from "@/data/content";
 import { CtaButton } from "@/app/components/ui/CtaButton";
 import { BOOKING_URL } from "@/app/links";
-import { EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
+import { CTAS, EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
 import {
   Carousel,
   CarouselContent,
@@ -224,7 +224,7 @@ export function UseCasesSection() {
           <CtaButton
             href={BOOKING_URL}
             backgroundColor="#8129ff"
-            onClick={() => trackEvent(EVENTS.callLinkClicked, PLACEMENTS.situations)}
+            onClick={() => trackEvent(EVENTS.callLinkClicked, PLACEMENTS.situations, CTAS.bookCall)}
           >
             {data.useCasesCtaLabel}
           </CtaButton>

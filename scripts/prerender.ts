@@ -32,7 +32,13 @@ import { resolve, dirname, relative } from "path";
 import { fileURLToPath } from "url";
 import { pathToFileURL } from "url";
 
-import { findMissingPlacementCallSites } from "./check-placements";
+import {
+  findMissingPlacementCallSites,
+  findMissingCtaCallSites,
+  findUntrackedMailtoTelLinks,
+  findUntrackedPulseCheckModalUsages,
+  findUntrackedKontaktOrBookingLinks,
+} from "./check-placements";
 
 import { siteData as siteDe } from "../src/data/de/site";
 import { leistungenData as leistungenDe } from "../src/data/de/leistungen";
@@ -427,8 +433,37 @@ function assertPlacementIds(): void {
   }
 }
 
+/**
+ * 20261021-cta-tracking-every-call-to-action-fires-a-plausi — the four new
+ * "every CTA is attributable" checks (cta argument, mailto:/tel: links,
+ * PulseCheckModal's placement, a booking/kontakt link with no tracked
+ * onClick), wired into `pnpm build` itself for the same reason
+ * assertPlacementIds() above is: scripts/check-analytics.ts's own criteria
+ * 18-21 are only ever run separately via `pnpm check:analytics`.
+ */
+function assertCtaTracking(): void {
+  const srcDir = resolve(repoRoot, "src");
+  const offenders = [
+    ...findMissingCtaCallSites(srcDir).map((f) => `missing cta argument: ${relative(repoRoot, f)}`),
+    ...findUntrackedMailtoTelLinks(srcDir).map((f) => `untracked mailto:/tel: link: ${relative(repoRoot, f)}`),
+    ...findUntrackedPulseCheckModalUsages(srcDir).map(
+      (f) => `<PulseCheckModal> missing placement=: ${relative(repoRoot, f)}`
+    ),
+    ...findUntrackedKontaktOrBookingLinks(srcDir).map(
+      (f) => `untracked booking/kontakt link: ${relative(repoRoot, f)}`
+    ),
+  ];
+  if (offenders.length > 0) {
+    console.error(
+      `prerender: ${offenders.length} untracked CTA(s) found:\n` + offenders.map((o) => `  - ${o}`).join("\n")
+    );
+    process.exit(1);
+  }
+}
+
 async function main() {
   assertPlacementIds();
+  assertCtaTracking();
 
   const shell = readFileSync(resolve(distDir, "index.html"), "utf-8");
 

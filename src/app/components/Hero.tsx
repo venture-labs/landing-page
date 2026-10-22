@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 import { useSiteData } from "@/data/content";
 import { useLocale } from "@/app/locale";
+import { CTAS, EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
 import { PulseCheckModal } from "@/app/components/PulseCheckModal";
 import { PulseLines } from "@/app/components/ui/PulseLines";
 import heroVideo from "@/assets/venturelabs-reel.mp4";
@@ -172,6 +173,7 @@ export function Hero() {
             </button>
             <Link
               to={localizedPath("/kontakt")}
+              onClick={() => trackEvent(EVENTS.contactSent, PLACEMENTS.heroContact, CTAS.contact)}
               className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/12 text-white font-medium px-6 py-3.5 rounded-lg transition-all"
               style={{ fontSize: "var(--text-body)" }}
             >
@@ -218,7 +220,7 @@ export function Hero() {
         </motion.div>
       </div>
 
-      <PulseCheckModal open={quizOpen} onOpenChange={setQuizOpen} />
+      <PulseCheckModal open={quizOpen} onOpenChange={setQuizOpen} placement={PLACEMENTS.heroQuiz} />
     </section>
   );
 }

@@ -17,7 +17,13 @@
 import { readdirSync, readFileSync, existsSync, statSync } from "fs";
 import { resolve, dirname, relative, join } from "path";
 import { fileURLToPath } from "url";
-import { findMissingPlacementCallSites } from "./check-placements";
+import {
+  findMissingPlacementCallSites,
+  findMissingCtaCallSites,
+  findUntrackedMailtoTelLinks,
+  findUntrackedPulseCheckModalUsages,
+  findUntrackedKontaktOrBookingLinks,
+} from "./check-placements";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, "..");
@@ -262,6 +268,49 @@ function checkPlacementIds(): void {
   );
 }
 
+/**
+ * Criteria 18-21 (20261021-cta-tracking-every-call-to-action-fires-a-plausi)
+ * — the four new "every CTA is attributable" checks, all sharing
+ * scripts/check-placements.ts with scripts/prerender.ts's assertCtaTracking()
+ * so an untracked CTA fails `pnpm build` itself, not just this separately
+ * run script (same pattern as criterion 15/assertPlacementIds above).
+ */
+function checkCtaTracking(): void {
+  const srcDir = resolve(repoRoot, "src");
+
+  const missingCta = findMissingCtaCallSites(srcDir);
+  check(
+    "18",
+    missingCta.length === 0,
+    "every trackEvent(EVENTS.callLinkClicked | EVENTS.contactSent, …) call site in src/ names a cta",
+    `${missingCta.length} call site(s) missing a cta argument: ${missingCta.map((f) => relative(repoRoot, f)).join(", ")}`
+  );
+
+  const untrackedMail = findUntrackedMailtoTelLinks(srcDir);
+  check(
+    "19",
+    untrackedMail.length === 0,
+    "every mailto:/tel: link in src/ fires a tracked onClick",
+    `${untrackedMail.length} file(s) with an untracked mailto:/tel: link: ${untrackedMail.map((f) => relative(repoRoot, f)).join(", ")}`
+  );
+
+  const untrackedQuiz = findUntrackedPulseCheckModalUsages(srcDir);
+  check(
+    "20",
+    untrackedQuiz.length === 0,
+    "every <PulseCheckModal> usage in src/ names a placement",
+    `${untrackedQuiz.length} file(s) with a <PulseCheckModal> missing placement=: ${untrackedQuiz.map((f) => relative(repoRoot, f)).join(", ")}`
+  );
+
+  const untrackedNav = findUntrackedKontaktOrBookingLinks(srcDir);
+  check(
+    "21",
+    untrackedNav.length === 0,
+    "every booking-host / /kontakt link in src/ fires a tracked onClick",
+    `${untrackedNav.length} file(s) with an untracked booking/kontakt link: ${untrackedNav.map((f) => relative(repoRoot, f)).join(", ")}`
+  );
+}
+
 function main(): void {
   console.log(
     EXPECT_ABSENT
@@ -274,6 +323,7 @@ function main(): void {
   if (!EXPECT_ABSENT) checkAnalyticsModule();
   checkDatenschutz();
   checkPlacementIds();
+  checkCtaTracking();
 
   console.log("");
   if (failed > 0) {
