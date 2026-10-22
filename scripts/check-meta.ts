@@ -16,7 +16,9 @@
  *   - the root shell, dist/404.html or public/_redirects deviate,
  *   - or robots.txt / sitemap.xml / canonical / hreflang disagree (the
  *     criteria of the retired scripts/check-seo.ts).
- * Title and description LENGTHS are only printed, never a failure (S2's job).
+ *   - a route's <title> is not 50-60 characters or its description not
+ *     120-160 characters (inclusive; Unicode code points of the decoded,
+ *     trimmed text). The per-route table is printed on success and on failure.
  *
  * Expected values are this script's OWN constants, deliberately not imported
  * from scripts/prerender.ts, so a silent change over there fails the check.
@@ -45,10 +47,13 @@ const SHARE_IMAGE: Record<Locale, { path: string; alt: string }> = {
 const MAX_IMAGE_BYTES = 300 * 1024;
 const HOME_TITLE: Record<Locale, string> = {
   de: "Venture Labs – Digitale Produkte, die wirklich funktionieren",
-  en: "Venture Labs – Digital products that actually work",
+  en: "Venture Labs – Digital products that actually work, with AI",
 };
-/** Routes whose description is on-page copy that still says "VentureLabs" (Q2 exemption). */
-const OLD_BRAND_DESCRIPTION_EXEMPT = new Set(["/de/ueber-uns", "/en/ueber-uns"]);
+/** The two legal pages carry the brand inside their title sentence, not as the " – Venture Labs" suffix. */
+const BRAND_INSIDE_TITLE = new Set(["/de/impressum", "/en/impressum", "/de/datenschutz", "/en/datenschutz"]);
+/** Inclusive bounds, in characters (Unicode code points of the decoded, trimmed text). */
+export const TITLE_LENGTH = { min: 50, max: 60 };
+export const DESCRIPTION_LENGTH = { min: 120, max: 160 };
 const ROBOTS = "index,follow,max-image-preview:large";
 const THEME_COLOR = "#0e0d13";
 const FORBIDDEN_LD_KEYS = ["Offer", "offers", "price", "priceCurrency", "SearchAction", "potentialAction"];
@@ -61,6 +66,24 @@ const FOOTER_KEY_BY_SECTION: Record<string, string> = {
   impressum: "imprint",
   datenschutz: "privacy",
 };
+
+/** Characters of a head string: code points of the trimmed text. */
+export function headLength(text: string): number {
+  return Array.from(text.trim()).length;
+}
+
+/**
+ * The length rule for one head string: undefined when `text` is within the
+ * inclusive bounds (title 50-60, description 120-160), otherwise the message
+ * naming the measured length and the violated bound.
+ */
+export function lengthProblem(tag: "title" | "description", text: string): string | undefined {
+  const { min, max } = tag === "title" ? TITLE_LENGTH : DESCRIPTION_LENGTH;
+  const n = headLength(text);
+  if (n < min) return `${n} characters, under the minimum of ${min}`;
+  if (n > max) return `${n} characters, over the maximum of ${max}`;
+  return undefined;
+}
 
 export interface CheckOutcome {
   passed: string[];
@@ -441,17 +464,17 @@ export function runChecks(distDir: string, env: NodeJS.ProcessEnv = process.env)
       const h = parsed.get(p)!;
       for (const t of h.title) scan(p, "<title>", t);
       for (const [name, values] of h.names) {
-        if (OLD_BRAND_DESCRIPTION_EXEMPT.has(p) && (name === "description" || name === "twitter:description")) continue;
         for (const v of values) scan(p, `meta[name=${name}]`, v);
       }
       for (const [prop, values] of h.props) {
-        if (OLD_BRAND_DESCRIPTION_EXEMPT.has(p) && prop === "og:description") continue;
         for (const v of values) scan(p, `meta[property=${prop}]`, v);
       }
       for (const ld of h.ld) scan(p, "script[type=application/ld+json]", ld);
       const title = h.title[0] ?? "";
       if (isHome(p)) {
         if (title !== HOME_TITLE[localeOf(p)]) fail(p, "<title>", `expected "${HOME_TITLE[localeOf(p)]}", got "${title}"`);
+      } else if (BRAND_INSIDE_TITLE.has(p)) {
+        if (!title.includes(BRAND)) fail(p, "<title>", `does not contain "${BRAND}": ${title}`);
       } else if (!title.endsWith(` – ${BRAND}`)) {
         fail(p, "<title>", `does not end with " – ${BRAND}": ${title}`);
       }
@@ -629,8 +652,9 @@ export function runChecks(distDir: string, env: NodeJS.ProcessEnv = process.env)
           fail(path, tag, `last item URL is ${items[items.length - 1].item}, expected the page's canonical ${canonical}`);
         }
         const isDetail = path.split("/").length === 4;
-        const lastName: string = items[items.length - 1].name ?? "";
-        if (isDetail && !(h.title[0] ?? "").startsWith(lastName)) fail(path, tag, `last item "${lastName}" is not the page's own name (title: ${h.title[0]})`);
+        // The last label is the content `title` field, the <title> is an authored head string
+        // (seoTitle), so the two are no longer tied by a prefix; the service routes' Service.name
+        // check below still ties a service page's title to its name.
         if (items.length !== (isDetail ? 3 : 2)) fail(path, tag, `${items.length} items, expected ${isDetail ? 3 : 2}`);
       }
     }
@@ -795,14 +819,28 @@ export function runChecks(distDir: string, env: NodeJS.ProcessEnv = process.env)
     }
   });
 
-  // ---- (i) the length report ---------------------------------------------------
+  // ---- (i) the length rule and its table -----------------------------------------
+  check(
+    `15 title ${TITLE_LENGTH.min}-${TITLE_LENGTH.max} and description ${DESCRIPTION_LENGTH.min}-${DESCRIPTION_LENGTH.max} characters on every route`,
+    (fail) => {
+      for (const p of shellPaths) {
+        const h = parsed.get(p)!;
+        const title = h.title[0];
+        const description = one(h.names.get("description"));
+        // a missing or duplicated tag is reported by check 1
+        const tt = title === undefined ? undefined : lengthProblem("title", title);
+        if (tt) fail(p, "title", tt);
+        const dp = description === undefined ? undefined : lengthProblem("description", description);
+        if (dp) fail(p, "description", dp);
+      }
+    }
+  );
   out("");
   out("route                                              title  description");
   for (const p of shellPaths) {
     const h = parsed.get(p)!;
-    out(`${p.padEnd(50)} ${String((h.title[0] ?? "").length).padStart(5)}  ${String((one(h.names.get("description")) ?? "").length).padStart(11)}`);
+    out(`${p.padEnd(50)} ${String(headLength(h.title[0] ?? "")).padStart(5)}  ${String(headLength(one(h.names.get("description")) ?? "")).padStart(11)}`);
   }
-  out("(lengths are informational: they never fail the build)");
 
   return { passed, failures, report };
 }

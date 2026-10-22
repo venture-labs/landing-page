@@ -29,6 +29,8 @@ export interface Situation {
 }
 
 export interface LeistungenData {
+  seoTitle: string;
+  seoDescription: string;
   heroEyebrow: string;
   heroTitlePrefix: string;
   heroTitleHighlight: string;
@@ -53,6 +55,8 @@ export interface LeistungenData {
 }
 
 export const leistungenData: LeistungenData = {
+  seoTitle: "Drei Schritte, ein Puls: Check, Build, Care – Venture Labs",
+  seoDescription: "Erst schauen, was wirklich los ist. Dann bauen, was den größten Unterschied macht. Und dann dranbleiben. Alles andere sind Details.",
   heroEyebrow: "Leistungen",
   heroTitlePrefix: "Drei Schritte.",
   heroTitleHighlight: "Ein Puls.",

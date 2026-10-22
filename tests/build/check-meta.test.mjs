@@ -15,7 +15,7 @@ import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync, existsSync } 
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { runChecks } from "../../scripts/check-meta.ts";
+import { lengthProblem, runChecks } from "../../scripts/check-meta.ts";
 
 const realDist = resolve(dirname(fileURLToPath(import.meta.url)), "../../dist");
 const PROD_ENV = {};
@@ -221,4 +221,28 @@ test("a head string spelled VentureLabs is reported", () => {
     editFile(d, "de/kontakt/index.html", (h) => h.replace(/<title>/, "<title>VentureLabs "))
   );
   assertFails(o, "/de/kontakt", "VentureLabs");
+});
+
+test("the length rule: title 49 fails, 50 and 60 pass, 61 fails; description 119 fails, 120 and 160 pass, 161 fails", () => {
+  const ok = (tag, n) => lengthProblem(tag, "x".repeat(n)) === undefined;
+  assert.deepEqual([49, 50, 60, 61].map((n) => ok("title", n)), [false, true, true, false]);
+  assert.deepEqual([119, 120, 160, 161].map((n) => ok("description", n)), [false, true, true, false]);
+  assert.match(lengthProblem("title", "x".repeat(49)), /49 characters.*minimum of 50/);
+  assert.match(lengthProblem("title", "x".repeat(61)), /61 characters.*maximum of 60/);
+  assert.match(lengthProblem("description", "x".repeat(119)), /119 characters.*minimum of 120/);
+  assert.match(lengthProblem("description", "x".repeat(161)), /161 characters.*maximum of 160/);
+  // code points of the trimmed text, not UTF-16 units and not surrounding whitespace
+  assert.equal(lengthProblem("title", `  ${"ä".repeat(50)}  `), undefined);
+  assert.equal(lengthProblem("title", "😀".repeat(50)), undefined);
+});
+
+test("a title or description out of range is reported with route, tag, length and bound", () => {
+  const short = withCopy((d) =>
+    editFile(d, "de/kontakt/index.html", (h) => h.replace(/<title>[^<]*<\/title>/, "<title>Kontakt – Venture Labs</title>"))
+  );
+  assertFails(short, "/de/kontakt", "title", "characters, under the minimum of 50");
+  const long = withCopy((d) =>
+    editFile(d, "en/kontakt/index.html", (h) => h.replace(/(<meta name="description" content=")[^"]*(")/, `$1${"y".repeat(161)}$2`))
+  );
+  assertFails(long, "/en/kontakt", "description", "161 characters, over the maximum of 160");
 });

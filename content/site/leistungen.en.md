@@ -1,5 +1,7 @@
 ---
 language: en
+seoTitle: 'Three steps, one pulse: Check, Build, Care – Venture Labs'
+seoDescription: 'First find out what is really going on. Then build what makes the biggest difference. Then stay with it. Everything else is detail.'
 heroEyebrow: 'Services'
 heroTitlePrefix: 'Three steps.'
 heroTitleHighlight: 'One pulse.'

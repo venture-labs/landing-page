@@ -5,6 +5,12 @@
  *
  * All content lives in YAML frontmatter (there are no markdown bodies), so
  * reading it is a plain file read + YAML parse.
+ *
+ * Head copy: every file that backs a route may carry `seoTitle` (50-60
+ * characters) and `seoDescription` (120-160 characters) in its frontmatter -
+ * the COMPLETE <title> / meta description of that route, used verbatim by
+ * scripts/prerender.ts (no suffix is appended). Both are passed through below;
+ * scripts/check-meta.ts fails the build when a route's pair is out of range.
  */
 import { writeFileSync, mkdirSync, readFileSync, readdirSync } from "fs";
 import { resolve, dirname } from "path";
@@ -78,6 +84,7 @@ async function generateLocale(locale: Locale) {
 export const siteData = {
   heroHeadline: ${strLit(site.heroHeadline)},
   seoTitle: ${strLit(site.seoTitle)},
+  seoDescription: ${strLit(site.seoDescription)},
   heroSubline: ${strLit(site.heroSubline)},
   heroCta: ${strLit(site.heroCta)},
   heroCtaSecondary: ${strLit(site.heroCtaSecondary)},
@@ -102,6 +109,8 @@ export interface ProcessStep {
 }
 
 export interface AboutData {
+  seoTitle: string;
+  seoDescription: string;
   heroTitle: string;
   heroSubheading: string;
   missionTitle: string;
@@ -116,6 +125,8 @@ export interface AboutData {
 }
 
 export const aboutData: AboutData = {
+  seoTitle: ${strLit(about.seoTitle)},
+  seoDescription: ${strLit(about.seoDescription)},
   heroTitle: ${strLit(about.heroTitle)},
   heroSubheading: ${strLit(about.heroSubheading)},
   missionTitle: ${strLit(about.missionTitle)},
@@ -155,6 +166,8 @@ export type PulseStep = "check" | "build" | "care";
 export interface Service {
   slug: string;
   title: string;
+  seoTitle: string;
+  seoDescription: string;
   description: string;
   gradient: string;
   icon: "code" | "grid" | "palette" | "bot";
@@ -167,6 +180,8 @@ export const services: Service[] = ${JSON.stringify(
       services.map((s) => ({
         slug: s.slug,
         title: s.title,
+        seoTitle: s.seoTitle ?? "",
+        seoDescription: s.seoDescription ?? "",
         description: s.description,
         gradient: s.gradient,
         icon: s.icon,
@@ -302,6 +317,8 @@ export const gridCases: GridCase[] = ${JSON.stringify(
 export interface CaseDetail {
   slug: string;
   title: string;
+  seoTitle: string;
+  seoDescription: string;
   category: string;
   heroHeadline: string;
   heroSubline: string;
@@ -324,6 +341,8 @@ export const caseDetailsMap: Record<string, CaseDetail> = ${JSON.stringify(
           {
             slug: c.slug,
             title: c.title,
+            seoTitle: c.seoTitle ?? "",
+            seoDescription: c.seoDescription ?? "",
             category: c.category,
             heroHeadline: c.heroHeadline,
             heroSubline: c.heroSubline,
@@ -363,6 +382,8 @@ export interface BlogContentBlock {
 export interface BlogPost {
   slug: string;
   title: string;
+  seoTitle: string;
+  seoDescription: string;
   excerpt: string;
   topicSlug: "ai-automation" | "ai-products" | "ai-experience" | "venture-building";
   topic: string;
@@ -377,6 +398,8 @@ export const blogPosts: BlogPost[] = ${JSON.stringify(
       blogPosts.map((p) => ({
         slug: p.slug,
         title: p.title,
+        seoTitle: p.seoTitle ?? "",
+        seoDescription: p.seoDescription ?? "",
         excerpt: p.excerpt,
         topicSlug: p.topicSlug,
         topic: p.topic,
@@ -428,6 +451,8 @@ export interface Situation {
 }
 
 export interface LeistungenData {
+  seoTitle: string;
+  seoDescription: string;
   heroEyebrow: string;
   heroTitlePrefix: string;
   heroTitleHighlight: string;
@@ -452,6 +477,8 @@ export interface LeistungenData {
 }
 
 export const leistungenData: LeistungenData = {
+  seoTitle: ${strLit(leistungen.seoTitle)},
+  seoDescription: ${strLit(leistungen.seoDescription)},
   heroEyebrow: ${strLit(leistungen.heroEyebrow)},
   heroTitlePrefix: ${strLit(leistungen.heroTitlePrefix)},
   heroTitleHighlight: ${strLit(leistungen.heroTitleHighlight)},

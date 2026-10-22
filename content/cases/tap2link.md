@@ -1,5 +1,7 @@
 ---
 language: "de"
+seoTitle: 'Tap2Link – Digitale Visitenkarte und mehr – Venture Labs'
+seoDescription: 'Tap2Link ist eine multifunktionale Plattform für Events, Services und Teams. Wir haben die Anwendung von Grund auf mit modernem Design entwickelt.'
 slug: tap2link
 order: 1
 title: "Tap2Link – Mehr als eine digitale Visitenkarte."

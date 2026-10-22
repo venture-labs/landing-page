@@ -1,6 +1,8 @@
 ---
 slug: creator-studios
 language: "en"
+seoTitle: 'Creator Studio – Website with space booking – Venture Labs'
+seoDescription: 'For Creator Studio, a photo studio in Düsseldorf, we built a new website with direct space booking that turns inquiries into real bookings.'
 order: 6
 title: "Creator Studio – booking platform for creative spaces"
 subtitle: "A minimal booking website for a photo studio in Düsseldorf that turns inquiries into direct bookings."

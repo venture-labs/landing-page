@@ -213,6 +213,17 @@ function escapeText(s: string): string {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
+/**
+ * An authored head string (frontmatter `seoTitle` / `seoDescription`, or a
+ * `seo.<page>.*` locale key) is used verbatim - no suffix - when it is
+ * non-blank; a blank or missing one falls back to the page's composed string,
+ * so a page never gets an empty <title> or description. scripts/check-meta.ts
+ * then fails the build if the fallback is out of the 50-60 / 120-160 range.
+ */
+function authored(value: string | undefined, fallback: string): string {
+  return value?.trim() ? value.trim() : fallback;
+}
+
 function buildPagesForLocale(lang: Locale): PageMeta[] {
   const { site, leistungen, about, services, caseDetails, blogPosts, ui } = byLocale[lang];
   const suffix = " – Venture Labs";
@@ -234,30 +245,32 @@ function buildPagesForLocale(lang: Locale): PageMeta[] {
       : lang === "de"
         ? "Venture Labs – Digitale Produkte, die wirklich funktionieren"
         : "Venture Labs – Digital products that actually work",
-    description: site.heroSubline,
+    description: authored(site.seoDescription, site.heroSubline),
     sourceFile: contentFile(lang, "site/home"),
   });
 
+  const leistungenDescription = authored(leistungen.seoDescription, leistungen.heroSubheading);
   pages.push({
     path: `/${lang}/leistungen`,
     lang,
-    title: `${leistungen.heroTitlePrefix} ${leistungen.heroTitleHighlight}${suffix}`,
-    description: leistungen.heroSubheading,
+    title: authored(leistungen.seoTitle, `${leistungen.heroTitlePrefix} ${leistungen.heroTitleHighlight}${suffix}`),
+    description: leistungenDescription,
     crumbs: [crumb(footer.servicesTitle, "/leistungen")],
     // "AI Pulse" is the glossary's name for the productised offer; the hero
     // ("Drei Schritte. Ein Puls.") is a claim, not a name.
-    service: { name: "AI Pulse", description: leistungen.heroSubheading },
+    service: { name: "AI Pulse", description: leistungenDescription },
     sourceFile: contentFile(lang, "site/leistungen"),
   });
 
   for (const s of services) {
+    const serviceDescription = authored(s.seoDescription, s.description);
     pages.push({
       path: `/${lang}/leistungen/${s.slug}`,
       lang,
-      title: `${s.title} – ${leistungen.heroEyebrow}${suffix}`,
-      description: s.description,
+      title: authored(s.seoTitle, `${s.title} – ${leistungen.heroEyebrow}${suffix}`),
+      description: serviceDescription,
       crumbs: [crumb(footer.servicesTitle, "/leistungen"), crumb(s.title, `/leistungen/${s.slug}`)],
-      service: { name: s.title, description: s.description },
+      service: { name: s.title, description: serviceDescription },
       sourceFile: contentFile(lang, `services/${s.slug}`),
     });
   }
@@ -265,8 +278,8 @@ function buildPagesForLocale(lang: Locale): PageMeta[] {
   pages.push({
     path: `/${lang}/cases`,
     lang,
-    title: `${ui.cases.heroTitle}${suffix}`,
-    description: ui.cases.heroSubheading,
+    title: authored(ui.seo?.cases?.title, `${ui.cases.heroTitle}${suffix}`),
+    description: authored(ui.seo?.cases?.description, ui.cases.heroSubheading),
     crumbs: [crumb(footer.projectsTitle, "/cases")],
   });
 
@@ -275,8 +288,8 @@ function buildPagesForLocale(lang: Locale): PageMeta[] {
     pages.push({
       path: `/${lang}/cases/${slug}`,
       lang,
-      title: `${c.title}${suffix}`,
-      description: c.description || c.heroSubline,
+      title: authored(c.seoTitle, `${c.title}${suffix}`),
+      description: authored(c.seoDescription, c.description || c.heroSubline),
       crumbs: [crumb(footer.projectsTitle, "/cases"), crumb(c.title, `/cases/${slug}`)],
       sourceFile: contentFile(lang, `cases/${slug}`),
     });
@@ -285,16 +298,16 @@ function buildPagesForLocale(lang: Locale): PageMeta[] {
   pages.push({
     path: `/${lang}/kontakt`,
     lang,
-    title: `${ui.kontakt.heroTitle}${suffix}`,
-    description: ui.kontakt.heroSubtitle,
+    title: authored(ui.seo?.kontakt?.title, `${ui.kontakt.heroTitle}${suffix}`),
+    description: authored(ui.seo?.kontakt?.description, ui.kontakt.heroSubtitle),
     crumbs: [crumb(footer.contactTitle, "/kontakt")],
   });
 
   pages.push({
     path: `/${lang}/blog`,
     lang,
-    title: ui.blog.seoTitle,
-    description: ui.blog.heroSubtitle,
+    title: authored(ui.seo?.blog?.title, `${ui.blog.heroTitle}${suffix}`),
+    description: authored(ui.seo?.blog?.description, ui.blog.heroSubtitle),
     crumbs: [crumb(footer.blog, "/blog")],
   });
 
@@ -302,8 +315,8 @@ function buildPagesForLocale(lang: Locale): PageMeta[] {
     pages.push({
       path: `/${lang}/blog/${p.slug}`,
       lang,
-      title: `${p.title}${suffix}`,
-      description: p.excerpt,
+      title: authored(p.seoTitle, `${p.title}${suffix}`),
+      description: authored(p.seoDescription, p.excerpt),
       crumbs: [crumb(footer.blog, "/blog"), crumb(p.title, `/blog/${p.slug}`)],
       sourceFile: contentFile(lang, `blog/${p.slug}`),
     });
@@ -312,8 +325,8 @@ function buildPagesForLocale(lang: Locale): PageMeta[] {
   pages.push({
     path: `/${lang}/ueber-uns`,
     lang,
-    title: `${about.heroTitle}${suffix}`,
-    description: about.heroSubheading,
+    title: authored(about.seoTitle, `${about.heroTitle}${suffix}`),
+    description: authored(about.seoDescription, about.heroSubheading),
     crumbs: [crumb(footer.aboutTitle, "/ueber-uns")],
     sourceFile: contentFile(lang, "about/about"),
   });
@@ -321,22 +334,22 @@ function buildPagesForLocale(lang: Locale): PageMeta[] {
   pages.push({
     path: `/${lang}/impressum`,
     lang,
-    title: `${lang === "de" ? "Impressum" : "Imprint"}${suffix}`,
-    description:
-      lang === "de"
-        ? "Impressum der Venture Labs GmbH."
-        : "Legal notice (Impressum) for Venture Labs GmbH.",
+    title: authored(ui.seo?.impressum?.title, `${lang === "de" ? "Impressum" : "Imprint"}${suffix}`),
+    description: authored(
+      ui.seo?.impressum?.description,
+      lang === "de" ? "Impressum der Venture Labs GmbH." : "Legal notice (Impressum) for Venture Labs GmbH."
+    ),
     crumbs: [crumb(footer.imprint, "/impressum")],
   });
 
   pages.push({
     path: `/${lang}/datenschutz`,
     lang,
-    title: `${lang === "de" ? "Datenschutzerklärung" : "Privacy Policy"}${suffix}`,
-    description:
-      lang === "de"
-        ? "Datenschutzerklärung für venturelabs.team."
-        : "Privacy policy for venturelabs.team.",
+    title: authored(ui.seo?.datenschutz?.title, `${lang === "de" ? "Datenschutzerklärung" : "Privacy Policy"}${suffix}`),
+    description: authored(
+      ui.seo?.datenschutz?.description,
+      lang === "de" ? "Datenschutzerklärung für venturelabs.team." : "Privacy policy for venturelabs.team."
+    ),
     crumbs: [crumb(footer.privacy, "/datenschutz")],
   });
 
