@@ -31,7 +31,7 @@ Runs on http://localhost:5173 by default. `pnpm dev` regenerates `src/data/{de,e
 ```bash
 pnpm build
 ```
-This runs `scripts/generate-content.ts` (markdown → `src/data/{de,en}/*.ts`) and then `vite build`. No credentials or external services are involved.
+This runs `scripts/generate-content.ts` (markdown → `src/data/{de,en}/*.ts`), `vite build`, a server-side build of `src/entry-server.tsx`, `scripts/prerender.ts` (one HTML shell per route with its full head set, plus the root shell, `dist/404.html` and the sitemap) and finally `scripts/check-meta.ts`, which fails the build when a route's share/SEO meta data, an image, an icon or the JSON-LD is missing or wrong (`pnpm check:meta` runs it alone on an existing `dist/`). No credentials or external services are involved.
 
 ## Project Overview
 
