@@ -44,7 +44,7 @@ export const featuredCases: FeaturedCase[] = [
   {
     "slug": "moerschen",
     "title": "Moerschen – website relaunch for better communication",
-    "subtitle": "A digital service portal for complex B2B processes in just 8 weeks.",
+    "subtitle": "A new website for complex industrial services – with clear user guidance to the right contact.",
     "imagePosition": "right",
     "stats": [
       "45% more contact inquiries via the website",
