@@ -8,6 +8,7 @@
     "dev": "tsx scripts/generate-content.ts && vite",
     "check:analytics": "tsx scripts/check-analytics.ts",
     "check:area-pages": "tsx scripts/check-area-pages.ts",
+    "check:cases": "tsx scripts/check-case-facts.ts",
     "check:meta": "tsx scripts/check-meta.ts",
     "check:naming": "tsx scripts/check-pulse-naming.ts"
   },
