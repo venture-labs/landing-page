@@ -34,20 +34,7 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
     "background": "The original platform was technically outdated and couldn't meet users' growing demands. The company needed a complete rebuild with a new design system.",
     "problem": "Many requirements, unclear prioritization, multiple stakeholders with different visions, technical debt from legacy code, tight deadlines.",
     "solution": "Modular app architecture with clean separation of concerns, modern React stack with TypeScript for type safety, iterative development with weekly reviews, agile prioritization with a clear user focus, design system for fast consistency.",
-    "stats": [
-      {
-        "value": "+300%",
-        "label": "more app installs after launch"
-      },
-      {
-        "value": "5 sec",
-        "label": "to complete profile upload via NFC"
-      },
-      {
-        "value": "+60%",
-        "label": "conversion on trade-show meeting bookings"
-      }
-    ],
+    "stats": [],
     "mockupImages": [
       "/uploads/cases/tap2link-mockup-1.png",
       "/uploads/cases/tap2link-mockup-3.png"
@@ -60,26 +47,13 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
     "seoDescription": "Brylliant is a briefing tool that puts agencies and clients on the same page. We rethought the interface and workflow from scratch.",
     "category": "Design systems & UX tools",
     "heroHeadline": "The tool for perfect briefings",
-    "heroSubline": "A scalable tool for efficient briefings, clean processes, and strategic clarity — designed in 6 weeks.",
+    "heroSubline": "A scalable tool for efficient briefings, clean processes, and strategic clarity.",
     "heroImage": "/uploads/cases/brylliant-card.png",
     "description": "Brylliant is a briefing tool that puts agencies and clients on the same page. We rethought the interface and workflow from scratch so briefings are no longer a matter of luck.",
     "background": "Briefings used to run through unstructured documents and email threads. Important information got lost, and follow-up questions cost time and nerves on both sides.",
     "problem": "Inconsistent briefing formats, missing required fields, many rounds of follow-up questions, no central place for status and approvals, growing frustration on both client and agency side.",
     "solution": "Guided briefing forms with clear required fields, a central dashboard for status and approvals, a design system for consistent usage, close collaboration with real users in every iteration.",
-    "stats": [
-      {
-        "value": "2×",
-        "label": "faster briefing approvals"
-      },
-      {
-        "value": "95%",
-        "label": "fewer follow-up questions from agencies"
-      },
-      {
-        "value": "+60%",
-        "label": "higher user satisfaction"
-      }
-    ],
+    "stats": [],
     "mockupImages": [
       "/uploads/cases/brylliant-card.png"
     ]
@@ -91,26 +65,13 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
     "seoDescription": "Moerschen needed a website that makes complex industrial services understandable and guides prospects straight to the right contact.",
     "category": "Website relaunch & company building",
     "heroHeadline": "From relaunch to lead machine",
-    "heroSubline": "Website relaunch with clear user guidance and a new communication strategy — live in 8 weeks.",
+    "heroSubline": "Website relaunch with clear user guidance and a new communication strategy.",
     "heroImage": "/uploads/cases/hero-moereschen.png",
     "description": "Moerschen needed a website that makes complex industrial services understandable and guides prospects straight to the right contact. We rebuilt information architecture, design, and content from scratch.",
     "background": "The old website had grown organically over the years, was hard to navigate, and technically outdated. Visitors couldn't find the right contacts or the right services.",
     "problem": "Unclear navigation, outdated design, missing clear calls-to-action, long paths to the right contact person, no consistent brand experience across sections.",
-    "solution": "New information architecture along the customer journey, clearly guided contact paths, a modern design system, iterative delivery with weekly feedback up to launch after 8 weeks.",
-    "stats": [
-      {
-        "value": "+45%",
-        "label": "more contact inquiries"
-      },
-      {
-        "value": "8 wks",
-        "label": "from kickoff to launch"
-      },
-      {
-        "value": "2×",
-        "label": "faster to find the right contact"
-      }
-    ],
+    "solution": "New information architecture along the customer journey, clearly guided contact paths, a modern design system, iterative delivery with weekly feedback up to launch.",
+    "stats": [],
     "mockupImages": [
       "/uploads/cases/case-moerschen-pic1.png",
       "/uploads/cases/case-moerschen-pic2.png",
@@ -121,29 +82,16 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
     "slug": "machinemaster",
     "title": "MachineMaster – agricultural machinery sales platform",
     "seoTitle": "MachineMaster – AI-powered machinery sales – Venture Labs",
-    "seoDescription": "MachineMaster helps dealers and field reps sell agricultural machinery with AI-powered product guidance – the MVP built in 12 weeks.",
+    "seoDescription": "MachineMaster helps dealers and field reps sell agricultural machinery with AI-powered product guidance – from first idea to rollout.",
     "category": "AI-powered sales tools",
     "heroHeadline": "AI in agricultural machinery sales",
-    "heroSubline": "An AI-powered sales tool for dealers and field reps — from MVP in just 12 weeks.",
+    "heroSubline": "An AI-powered sales tool for dealers and field reps.",
     "heroImage": "/uploads/cases/hero-machinemaster.png",
-    "description": "MachineMaster helps dealers and field reps sell agricultural machinery with AI-powered product guidance. We built the MVP from first idea to rollout in 12 weeks.",
+    "description": "MachineMaster helps dealers and field reps sell agricultural machinery with AI-powered product guidance. We built the MVP from first idea to rollout.",
     "background": "Field reps had to keep extensive product catalogs and technical specs in their heads to advise customers competently on site. That cost time and created uncertainty in sales conversations.",
     "problem": "Complex product ranges, high advisory demands in the field, no fast access to the right machine configurations, high onboarding effort for new staff.",
     "solution": "AI-powered product advisor with natural-language search, mobile-first app built for use in the field, integration with existing product data, iterative development with a real sales team as test users.",
-    "stats": [
-      {
-        "value": "+230%",
-        "label": "more user interactions"
-      },
-      {
-        "value": "+10%",
-        "label": "sales increase"
-      },
-      {
-        "value": "5/5",
-        "label": "customer reviews"
-      }
-    ],
+    "stats": [],
     "mockupImages": [
       "/uploads/cases/case-machinemaster-1.png",
       "/uploads/cases/case-machinemaster-2.png",
@@ -163,20 +111,7 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
     "background": "The old site had grown organically over the years, looked visually outdated, and reflected neither the current offering nor the brand positioning.",
     "problem": "Outdated design, confusing navigation, stale content, no recognizable brand identity, no clear call to action for visitors.",
     "solution": "New design concept based on the brand's values, clearly structured navigation, revised content focused on the most important offerings, consistent calls to action on every page.",
-    "stats": [
-      {
-        "value": "4 wks",
-        "label": "from concept to launch"
-      },
-      {
-        "value": "+40%",
-        "label": "longer time on site"
-      },
-      {
-        "value": "100%",
-        "label": "of content restructured"
-      }
-    ],
+    "stats": [],
     "mockupImages": [
       "/uploads/cases/neuer-look-card.png"
     ]
@@ -194,20 +129,7 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
     "background": "Inquiries for the studio used to run entirely through email and Instagram. There was no central view of availability, and prospects often had to exchange several messages before a booking was confirmed.",
     "problem": "No way to book online, unclear availability, high manual effort for every inquiry, no clear presentation of spaces and equipment.",
     "solution": "Clearly structured pages for Space, Features, and Interior, a direct 'Book a space' call-to-action, a reduced design with a focus on imagery, a mobile-optimized booking flow.",
-    "stats": [
-      {
-        "value": "-60%",
-        "label": "fewer manual email inquiries"
-      },
-      {
-        "value": "4 wks",
-        "label": "from concept to launch"
-      },
-      {
-        "value": "100%",
-        "label": "of bookings made directly online"
-      }
-    ],
+    "stats": [],
     "mockupImages": [
       "/uploads/cases/animation-card.png"
     ]
@@ -225,20 +147,7 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
     "background": "Orders and inquiries used to run entirely over phone and email. Customers had no visibility into the processing status of their orders.",
     "problem": "Manual order intake, no transparency on processing status, time-consuming phone and email communication, no central storage for digitized documents.",
     "solution": "Self-service portal for order submission, automated status updates via email, structured document storage with search, easy handover of completed orders.",
-    "stats": [
-      {
-        "value": "-70%",
-        "label": "fewer phone inquiries"
-      },
-      {
-        "value": "24/7",
-        "label": "order status visible anytime"
-      },
-      {
-        "value": "6 wks",
-        "label": "from concept to launch"
-      }
-    ],
+    "stats": [],
     "mockupImages": [
       "/uploads/cases/scanservice-card.png"
     ]

@@ -69,21 +69,8 @@ export const serviceDetails: ServiceDetail[] = [
     "caseSlug": "machinemaster",
     "caseSubtitle": "MachineMaster: KI im Vertrieb von Landmaschinen.",
     "caseImage": "/uploads/services/ai-automation-case.png",
-    "caseStats": [
-      {
-        "value": "+230%",
-        "label": "Mehr Nutzerinteraktionen"
-      },
-      {
-        "value": "+10%",
-        "label": "Verkaufssteigerung"
-      },
-      {
-        "value": "5/5",
-        "label": "Kundenbewertungen"
-      }
-    ],
-    "caseDescription": "Ein KI-gestütztes Vertriebstool für Händler und Außendienst – vom MVP in nur 12 Wochen.",
+    "caseStats": [],
+    "caseDescription": "Ein KI-gestütztes Vertriebstool für Händler und Außendienst.",
     "ctaHeadline": "KI, die wirklich automatisiert – nicht nur ein Chatbot.",
     "ctaBody": "Im kostenlosen Erstgespräch mit unserem Team sprechen wir ehrlich darüber, wo KI-Agenten in deinem Business heute schon den Unterschied machen.",
     "ctaButtonLabel": "Dein Automatisierungspotenzial finden"
@@ -122,20 +109,7 @@ export const serviceDetails: ServiceDetail[] = [
     "caseSlug": "tap2link",
     "caseSubtitle": "Tap2Link: Mehr als eine digitale Visitenkarte.",
     "caseImage": "/uploads/services/ai-products-case.png",
-    "caseStats": [
-      {
-        "value": "+35%",
-        "label": "Schnellerer Onboarding-Prozess"
-      },
-      {
-        "value": "-20%",
-        "label": "Reduzierter Support-Aufwand"
-      },
-      {
-        "value": "+40%",
-        "label": "Mehr Nutzerinteraktionen"
-      }
-    ],
+    "caseStats": [],
     "caseDescription": "Ein digitales Serviceportal für komplexe B2B-Prozesse – in nur 8 Wochen von der Idee bis zum Launch.",
     "ctaHeadline": "Bereit für ein Produkt, das mitdenkt?",
     "ctaBody": "Lass uns in einem ehrlichen Erstgespräch herausfinden, ob dein nächstes Produkt klassische Software oder ein selbstlernendes System braucht.",
@@ -185,21 +159,8 @@ export const serviceDetails: ServiceDetail[] = [
     "caseSlug": "brylliant",
     "caseSubtitle": "Brylliant: Das Tool für perfekte Briefings.",
     "caseImage": "/uploads/services/ai-experience-case.png",
-    "caseStats": [
-      {
-        "value": "2×",
-        "label": "Schnellere Briefing-Freigaben"
-      },
-      {
-        "value": "95%",
-        "label": "Weniger Rückfragen"
-      },
-      {
-        "value": "+60%",
-        "label": "Höhere Nutzerzufriedenheit"
-      }
-    ],
-    "caseDescription": "Ein skalierbares Tool für effiziente Briefings, saubere Prozesse und strategische Klarheit – designed in 6 Wochen.",
+    "caseStats": [],
+    "caseDescription": "Ein skalierbares Tool für effiziente Briefings, saubere Prozesse und strategische Klarheit.",
     "ctaHeadline": "Design, das nicht stehen bleibt.",
     "ctaBody": "Lass uns in einem ehrlichen Erstgespräch zeigen, wie durchdachtes UX-Design und smarte KI-Tools zusammen mehr Wirkung erzielen.",
     "ctaButtonLabel": "Deine AI Experience gestalten"
@@ -248,21 +209,8 @@ export const serviceDetails: ServiceDetail[] = [
     "caseSlug": "moerschen",
     "caseSubtitle": "Moerschen: Vom Relaunch zur Leadmaschine.",
     "caseImage": "/uploads/services/venture-building-case.png",
-    "caseStats": [
-      {
-        "value": "+45%",
-        "label": "Mehr Kontaktanfragen"
-      },
-      {
-        "value": "8 Wo.",
-        "label": "Vom Kickoff bis Launch"
-      },
-      {
-        "value": "2×",
-        "label": "Schnellere Ansprechpartner-Suche"
-      }
-    ],
-    "caseDescription": "Website-Relaunch mit klarer Nutzerführung und neuer Kommunikationsstrategie – in 8 Wochen live.",
+    "caseStats": [],
+    "caseDescription": "Website-Relaunch mit klarer Nutzerführung und neuer Kommunikationsstrategie.",
     "ctaHeadline": "Dein Startup. Unsere Erfahrung. KI als Beschleuniger.",
     "ctaBody": "Lass uns im kostenlosen Erstgespräch herausfinden, wie wir dein Geschäftsmodell mit echter Erfahrung und smarter Automatisierung in die Realität umsetzen.",
     "ctaButtonLabel": "Ein neues Venture aufbauen"

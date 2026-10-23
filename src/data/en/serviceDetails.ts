@@ -69,21 +69,8 @@ export const serviceDetails: ServiceDetail[] = [
     "caseSlug": "machinemaster",
     "caseSubtitle": "MachineMaster: AI in agricultural machinery sales.",
     "caseImage": "/uploads/services/ai-automation-case.png",
-    "caseStats": [
-      {
-        "value": "+230%",
-        "label": "More user interactions"
-      },
-      {
-        "value": "+10%",
-        "label": "Sales increase"
-      },
-      {
-        "value": "5/5",
-        "label": "Customer ratings"
-      }
-    ],
-    "caseDescription": "An AI-powered sales tool for dealers and field reps — from MVP in just 12 weeks.",
+    "caseStats": [],
+    "caseDescription": "An AI-powered sales tool for dealers and field reps.",
     "ctaHeadline": "AI that actually automates — not just a chatbot.",
     "ctaBody": "In a free intro call with our team, we'll talk honestly about where AI agents can already make a difference in your business today.",
     "ctaButtonLabel": "Find your automation opportunity"
@@ -122,20 +109,7 @@ export const serviceDetails: ServiceDetail[] = [
     "caseSlug": "tap2link",
     "caseSubtitle": "Tap2Link: more than a digital business card.",
     "caseImage": "/uploads/services/ai-products-case.png",
-    "caseStats": [
-      {
-        "value": "+35%",
-        "label": "Faster onboarding process"
-      },
-      {
-        "value": "-20%",
-        "label": "Reduced support effort"
-      },
-      {
-        "value": "+40%",
-        "label": "More user interactions"
-      }
-    ],
+    "caseStats": [],
     "caseDescription": "A digital service portal for complex B2B processes — from idea to launch in just 8 weeks.",
     "ctaHeadline": "Ready for a product that thinks along?",
     "ctaBody": "Let's find out in an honest intro call whether your next product needs classic software or a self-learning system.",
@@ -185,21 +159,8 @@ export const serviceDetails: ServiceDetail[] = [
     "caseSlug": "brylliant",
     "caseSubtitle": "Brylliant: the tool for perfect briefings.",
     "caseImage": "/uploads/services/ai-experience-case.png",
-    "caseStats": [
-      {
-        "value": "2×",
-        "label": "Faster briefing approvals"
-      },
-      {
-        "value": "95%",
-        "label": "Fewer follow-up questions"
-      },
-      {
-        "value": "+60%",
-        "label": "Higher user satisfaction"
-      }
-    ],
-    "caseDescription": "A scalable tool for efficient briefings, clean processes, and strategic clarity — designed in 6 weeks.",
+    "caseStats": [],
+    "caseDescription": "A scalable tool for efficient briefings, clean processes, and strategic clarity.",
     "ctaHeadline": "Design that doesn't stand still.",
     "ctaBody": "Let us show you in an honest intro call how thoughtful UX design and smart AI tools achieve more together.",
     "ctaButtonLabel": "Design your AI experience"
@@ -248,21 +209,8 @@ export const serviceDetails: ServiceDetail[] = [
     "caseSlug": "moerschen",
     "caseSubtitle": "Moerschen: from relaunch to lead machine.",
     "caseImage": "/uploads/services/venture-building-case.png",
-    "caseStats": [
-      {
-        "value": "+45%",
-        "label": "More contact inquiries"
-      },
-      {
-        "value": "8 wks",
-        "label": "From kickoff to launch"
-      },
-      {
-        "value": "2×",
-        "label": "Faster to find the right contact"
-      }
-    ],
-    "caseDescription": "Website relaunch with clear user guidance and a new communication strategy — live in 8 weeks.",
+    "caseStats": [],
+    "caseDescription": "Website relaunch with clear user guidance and a new communication strategy.",
     "ctaHeadline": "Your startup. Our experience. AI as an accelerator.",
     "ctaBody": "Let's find out in a free intro call how we turn your business model into reality with real experience and smart automation.",
     "ctaButtonLabel": "Build a new venture"

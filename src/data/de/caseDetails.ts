@@ -34,20 +34,7 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
     "background": "Die ursprüngliche Plattform war technisch veraltet und konnte die wachsenden Anforderungen der Nutzer nicht erfüllen. Das Unternehmen benötigte eine Komplettneubau mit neuem Design-System.",
     "problem": "Viele Anforderungen, unklare Priorisierung, Verschiedene Stakeholder mit unterschiedlichen Visionen, Technische Schulden aus Legacy-Code, Knappe Zeitvorgaben.",
     "solution": "Modulare App-Architektur mit sauberer Separation of Concerns, Modernes React-Stack mit TypeScript für Typ-Sicherheit, Iterative Entwicklung mit wöchentlichen Reviews, Agile Priorisierung mit klarer Nutzer-Fokussierung, Design-System für schnelle Konsistenz.",
-    "stats": [
-      {
-        "value": "+300%",
-        "label": "mehr App-Installationen nach Launch"
-      },
-      {
-        "value": "5 Sek",
-        "label": "bis zum vollständigen Profilein Upload via NFC"
-      },
-      {
-        "value": "+60%",
-        "label": "Conversion bei Messegesprächsterminen"
-      }
-    ],
+    "stats": [],
     "mockupImages": [
       "/uploads/cases/tap2link-mockup-1.png",
       "/uploads/cases/tap2link-mockup-3.png"
@@ -60,26 +47,13 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
     "seoDescription": "Brylliant ist ein Briefing-Tool, das Agenturen und Kunden auf eine gemeinsame Grundlage bringt – Interface und Workflow von Grund auf neu gedacht.",
     "category": "Design Systeme & UX-Tools",
     "heroHeadline": "Das Tool für perfekte Briefings",
-    "heroSubline": "Ein skalierbares Tool für effiziente Briefings, saubere Prozesse und strategische Klarheit – designed in 6 Wochen.",
+    "heroSubline": "Ein skalierbares Tool für effiziente Briefings, saubere Prozesse und strategische Klarheit.",
     "heroImage": "/uploads/cases/brylliant-card.png",
     "description": "Brylliant ist ein Briefing-Tool, das Agenturen und Kunden auf eine gemeinsame Grundlage bringt. Wir haben Interface und Workflow von Grund auf neu gedacht, damit Briefings nicht mehr Glückssache sind.",
     "background": "Briefings liefen bisher über unstrukturierte Dokumente und E-Mail-Ketten. Wichtige Informationen gingen verloren, Rückfragen kosteten Zeit und Nerven auf beiden Seiten.",
     "problem": "Uneinheitliche Briefing-Formate, fehlende Pflichtfelder, viele Rückfragerunden, kein zentraler Ort für Status und Freigaben, wachsender Frust bei Kunden und Agenturen.",
     "solution": "Geführte Briefing-Formulare mit klaren Pflichtfeldern, zentrales Dashboard für Status und Freigaben, Design System für konsistente Bedienung, enge Abstimmung mit echten Nutzern in jeder Iteration.",
-    "stats": [
-      {
-        "value": "2×",
-        "label": "schnellere Briefing-Freigaben"
-      },
-      {
-        "value": "95%",
-        "label": "weniger Rückfragen von Agenturen"
-      },
-      {
-        "value": "+60%",
-        "label": "höhere Nutzerzufriedenheit"
-      }
-    ],
+    "stats": [],
     "mockupImages": [
       "/uploads/cases/brylliant-card.png"
     ]
@@ -91,26 +65,13 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
     "seoDescription": "Moerschen brauchte eine Website, die komplexe Industrieleistungen verständlich macht und Interessenten direkt zum richtigen Ansprechpartner führt.",
     "category": "Website-Relaunch & Company Building",
     "heroHeadline": "Vom Relaunch zur Leadmaschine",
-    "heroSubline": "Website-Relaunch mit klarer Nutzerführung und neuer Kommunikationsstrategie – in 8 Wochen live.",
+    "heroSubline": "Website-Relaunch mit klarer Nutzerführung und neuer Kommunikationsstrategie.",
     "heroImage": "/uploads/cases/hero-moereschen.png",
     "description": "Moerschen brauchte eine Website, die komplexe Industrieleistungen verständlich macht und Interessenten direkt zum richtigen Ansprechpartner führt. Wir haben Informationsarchitektur, Design und Content komplett neu aufgesetzt.",
     "background": "Die alte Website war historisch gewachsen, unübersichtlich und technisch in die Jahre gekommen. Besucher fanden weder passende Ansprechpartner noch die richtigen Leistungen.",
     "problem": "Unklare Navigation, veraltetes Design, fehlende klare Calls-to-Action, lange Wege zu Ansprechpartnern, kein einheitliches Markenbild über alle Bereiche.",
-    "solution": "Neue Informationsarchitektur entlang der Kundenreise, klar geführte Kontaktwege zu Ansprechpartnern, modernes Design-System, iterative Umsetzung mit wöchentlichem Feedback bis zum Launch nach 8 Wochen.",
-    "stats": [
-      {
-        "value": "+45%",
-        "label": "mehr Kontaktanfragen"
-      },
-      {
-        "value": "8 Wo.",
-        "label": "vom Kickoff bis Launch"
-      },
-      {
-        "value": "2×",
-        "label": "schnellere Ansprechpartner-Suche"
-      }
-    ],
+    "solution": "Neue Informationsarchitektur entlang der Kundenreise, klar geführte Kontaktwege zu Ansprechpartnern, modernes Design-System, iterative Umsetzung mit wöchentlichem Feedback bis zum Launch.",
+    "stats": [],
     "mockupImages": [
       "/uploads/cases/case-moerschen-pic1.png",
       "/uploads/cases/case-moerschen-pic2.png",
@@ -121,29 +82,16 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
     "slug": "machinemaster",
     "title": "MachineMaster – Landmaschinen Vertriebsplattform",
     "seoTitle": "MachineMaster – KI-gestütztes Vertriebstool – Venture Labs",
-    "seoDescription": "MachineMaster unterstützt Händler und Außendienst beim Verkauf von Landmaschinen mit KI-gestützter Produktberatung – das MVP in 12 Wochen gebaut.",
+    "seoDescription": "MachineMaster unterstützt Händler und Außendienst beim Verkauf von Landmaschinen mit KI-gestützter Produktberatung – von der ersten Idee bis zum Rollout.",
     "category": "KI-gestützte Vertriebstools",
     "heroHeadline": "KI im Vertrieb von Landmaschinen",
-    "heroSubline": "Ein KI-gestütztes Vertriebstool für Händler und Außendienst – vom MVP in nur 12 Wochen.",
+    "heroSubline": "Ein KI-gestütztes Vertriebstool für Händler und Außendienst.",
     "heroImage": "/uploads/cases/hero-machinemaster.png",
-    "description": "MachineMaster unterstützt Händler und Außendienst beim Verkauf von Landmaschinen mit KI-gestützter Produktberatung. Wir haben das MVP von der ersten Idee bis zum Rollout in 12 Wochen gebaut.",
+    "description": "MachineMaster unterstützt Händler und Außendienst beim Verkauf von Landmaschinen mit KI-gestützter Produktberatung. Wir haben das MVP von der ersten Idee bis zum Rollout gebaut.",
     "background": "Außendienstler mussten umfangreiche Produktkataloge und technische Spezifikationen im Kopf haben, um Kunden vor Ort kompetent beraten zu können. Das kostete Zeit und führte zu Unsicherheit im Verkaufsgespräch.",
     "problem": "Komplexe Produktwelten, hohe Beratungsanforderungen im Außendienst, fehlender schneller Zugriff auf passende Maschinenkonfigurationen, hoher Schulungsaufwand für neue Mitarbeiter.",
     "solution": "KI-gestützter Produktberater mit natürlicher Sprachsuche, mobile-first Anwendung für den Einsatz vor Ort, Integration mit bestehenden Produktdaten, iterative Entwicklung mit echtem Vertriebsteam als Testnutzer.",
-    "stats": [
-      {
-        "value": "+230%",
-        "label": "mehr Nutzerinteraktionen"
-      },
-      {
-        "value": "+10%",
-        "label": "Verkaufssteigerung"
-      },
-      {
-        "value": "5/5",
-        "label": "Kundenbewertungen"
-      }
-    ],
+    "stats": [],
     "mockupImages": [
       "/uploads/cases/case-machinemaster-1.png",
       "/uploads/cases/case-machinemaster-2.png",
@@ -163,20 +111,7 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
     "background": "Die alte Seite war über Jahre gewachsen, wirkte optisch veraltet und spiegelte weder aktuelle Leistungen noch die Markenpositionierung wider.",
     "problem": "Veraltetes Design, unübersichtliche Navigation, Inhalte nicht mehr aktuell, fehlender Wiedererkennungswert, keine klare Handlungsaufforderung für Besucher.",
     "solution": "Neues Design-Konzept auf Basis der Markenwerte, klar strukturierte Navigation, überarbeitete Inhalte mit Fokus auf die wichtigsten Angebote, durchgängige Handlungsaufforderungen auf jeder Seite.",
-    "stats": [
-      {
-        "value": "4 Wo.",
-        "label": "von Konzept bis Livegang"
-      },
-      {
-        "value": "+40%",
-        "label": "längere Verweildauer auf der Seite"
-      },
-      {
-        "value": "100%",
-        "label": "der Inhalte neu strukturiert"
-      }
-    ],
+    "stats": [],
     "mockupImages": [
       "/uploads/cases/neuer-look-card.png"
     ]
@@ -194,20 +129,7 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
     "background": "Anfragen für das Studio liefen bisher ausschließlich über E-Mail und Instagram. Es gab keine zentrale Übersicht über Verfügbarkeiten, und Interessenten mussten oft mehrere Nachrichten austauschen, bevor ein Termin feststand.",
     "problem": "Keine Möglichkeit zur Online-Buchung, unübersichtliche Verfügbarkeiten, hoher manueller Aufwand bei jeder Anfrage, keine klare Präsentation von Räumen und Ausstattung.",
     "solution": "Klar strukturierte Seiten für Space, Features und Interior, direkter 'Book a space'-Call-to-Action, reduziertes Design mit Fokus auf Bildsprache, mobile-optimierte Buchungsstrecke.",
-    "stats": [
-      {
-        "value": "-60%",
-        "label": "weniger manuelle Anfragen per E-Mail"
-      },
-      {
-        "value": "4 Wo.",
-        "label": "von Konzept bis Livegang"
-      },
-      {
-        "value": "100%",
-        "label": "der Buchungen direkt online"
-      }
-    ],
+    "stats": [],
     "mockupImages": [
       "/uploads/cases/animation-card.png"
     ]
@@ -225,20 +147,7 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
     "background": "Bestellungen und Rückfragen liefen bisher per Telefon und E-Mail. Kunden hatten keinen Überblick über den Bearbeitungsstatus ihrer Aufträge.",
     "problem": "Manuelle Auftragsannahme, keine Transparenz über den Bearbeitungsstand, aufwendige Kommunikation per Telefon und E-Mail, keine zentrale Ablage für digitalisierte Dokumente.",
     "solution": "Self-Service-Portal für Auftragserfassung, automatisierte Status-Updates per E-Mail, strukturierte Dokumentenablage mit Suchfunktion, einfache Weitergabe abgeschlossener Aufträge.",
-    "stats": [
-      {
-        "value": "-70%",
-        "label": "weniger Rückfragen per Telefon"
-      },
-      {
-        "value": "24/7",
-        "label": "Auftragsstatus jederzeit einsehbar"
-      },
-      {
-        "value": "6 Wo.",
-        "label": "von Konzept bis Launch"
-      }
-    ],
+    "stats": [],
     "mockupImages": [
       "/uploads/cases/scanservice-card.png"
     ]

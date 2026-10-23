@@ -23,9 +23,7 @@ export const featuredCases: FeaturedCase[] = [
     "subtitle": "Ein digitales Serviceportal für komplexe B2B-Prozesse in nur 8 Wochen.",
     "imagePosition": "right",
     "stats": [
-      "+230% Nutzerinteraktion",
-      "Launch in 16 Wochen",
-      "95% Kundenzufriedenheit"
+      "Launch in 8 Wochen"
     ],
     "image": "/uploads/cases/tap2link-card.png"
   },
@@ -35,34 +33,24 @@ export const featuredCases: FeaturedCase[] = [
     "subtitle": "Ein skalierbares Tool für effiziente Briefings, saubere Prozesse und strategische Klarheit.",
     "imagePosition": "left",
     "stats": [
-      "Strukturierte Vorlagen & geführte Briefings",
-      "2x schnellere Briefing-Freigaben",
-      "95 % weniger Rückfragen von Agenturen"
+      "Strukturierte Vorlagen & geführte Briefings"
     ],
     "image": "/uploads/cases/brylliant-card.png"
   },
   {
     "slug": "moerschen",
     "title": "Moerschen – Website-Relaunch für bessere Kommunikation",
-    "subtitle": "Ein digitales Serviceportal für komplexe B2B-Prozesse in nur 8 Wochen.",
+    "subtitle": "Ein Website-Relaunch, der komplexe Industrieleistungen verständlich macht und Besucher direkt zum richtigen Ansprechpartner führt.",
     "imagePosition": "right",
-    "stats": [
-      "45 % mehr Kontaktanfragen über die Website",
-      "Nutzer finden Ansprechpersonen 2× schneller als vorher",
-      "8 Wochen vom Kickoff bis Livegang"
-    ],
+    "stats": [],
     "image": "/uploads/cases/moerschen-card.png"
   },
   {
     "slug": "machinemaster",
     "title": "MachineMaster – Landmaschinen Vertriebsplattform",
-    "subtitle": "Ein digitales Vertriebstool für Händler, Vertrieb & Außendienst – zum MVP in nur 12 Wochen",
+    "subtitle": "Ein digitales Vertriebstool für Händler, Vertrieb & Außendienst.",
     "imagePosition": "left",
-    "stats": [
-      "+230 % Nutzerinteraktionen",
-      "Verkaufssteigerung um 10%",
-      "5/5 Sternen in den Bewertungen"
-    ],
+    "stats": [],
     "image": "/uploads/cases/machinemaster-card.png"
   }
 ];

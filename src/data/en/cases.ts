@@ -23,9 +23,7 @@ export const featuredCases: FeaturedCase[] = [
     "subtitle": "A digital service portal for complex B2B processes in just 8 weeks.",
     "imagePosition": "right",
     "stats": [
-      "+230% user interaction",
-      "Launched in 16 weeks",
-      "95% customer satisfaction"
+      "Launched in 8 weeks"
     ],
     "image": "/uploads/cases/tap2link-card.png"
   },
@@ -35,34 +33,24 @@ export const featuredCases: FeaturedCase[] = [
     "subtitle": "A scalable tool for efficient briefings, clean processes, and strategic clarity.",
     "imagePosition": "left",
     "stats": [
-      "Structured templates & guided briefings",
-      "2x faster briefing approvals",
-      "95% fewer follow-up questions from agencies"
+      "Structured templates & guided briefings"
     ],
     "image": "/uploads/cases/brylliant-card.png"
   },
   {
     "slug": "moerschen",
     "title": "Moerschen – website relaunch for better communication",
-    "subtitle": "A digital service portal for complex B2B processes in just 8 weeks.",
+    "subtitle": "A website relaunch that makes complex industrial services understandable and guides visitors straight to the right contact.",
     "imagePosition": "right",
-    "stats": [
-      "45% more contact inquiries via the website",
-      "Users find the right contact 2× faster than before",
-      "8 weeks from kickoff to launch"
-    ],
+    "stats": [],
     "image": "/uploads/cases/moerschen-card.png"
   },
   {
     "slug": "machinemaster",
     "title": "MachineMaster – agricultural machinery sales platform",
-    "subtitle": "A digital sales tool for dealers, sales, and field reps — to MVP in just 12 weeks",
+    "subtitle": "A digital sales tool for dealers, sales, and field reps.",
     "imagePosition": "left",
-    "stats": [
-      "+230% user interaction",
-      "10% sales increase",
-      "5/5 star reviews"
-    ],
+    "stats": [],
     "image": "/uploads/cases/machinemaster-card.png"
   }
 ];
