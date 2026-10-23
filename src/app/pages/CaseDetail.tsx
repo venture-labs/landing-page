@@ -195,43 +195,46 @@ function ResultsSection({ detail }: { detail: any }) {
 
   return (
     <section className="bg-[#0e0d13] py-20 px-6 lg:px-12">
-      <div className="max-w-[1400px] mx-auto">
-        <motion.h2
-          ref={ref}
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="font-semibold text-white mb-12"
-          style={{ fontSize: "var(--text-h2)" }}
-        >
-          {t("cases.resultsHeading")}
-        </motion.h2>
-
-        {/* Stats */}
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
-          {(detail.stats ?? []).map((stat: any, idx: number) => (
-            <motion.div
-              key={idx}
+      <div className="max-w-[1400px] mx-auto" ref={ref}>
+        {(detail.stats ?? []).length > 0 && (
+          <>
+            <motion.h2
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: idx * 0.1 }}
-              className="text-center"
+              transition={{ duration: 0.6 }}
+              className="font-semibold text-white mb-12"
+              style={{ fontSize: "var(--text-h2)" }}
             >
-              <p
-                className="font-semibold text-white mb-2"
-                style={{ fontSize: "var(--text-hero)", color: accentColor }}
-              >
-                {stat.value}
-              </p>
-              <p
-                className="text-white/60 font-light"
-                style={{ fontSize: "var(--text-body)" }}
-              >
-                {stat.label}
-              </p>
-            </motion.div>
-          ))}
-        </div>
+              {t("cases.resultsHeading")}
+            </motion.h2>
+
+            {/* Stats */}
+            <div className="grid md:grid-cols-3 gap-8 mb-16">
+              {(detail.stats ?? []).map((stat: any, idx: number) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6, delay: idx * 0.1 }}
+                  className="text-center"
+                >
+                  <p
+                    className="font-semibold text-white mb-2"
+                    style={{ fontSize: "var(--text-hero)", color: accentColor }}
+                  >
+                    {stat.value}
+                  </p>
+                  <p
+                    className="text-white/60 font-light"
+                    style={{ fontSize: "var(--text-body)" }}
+                  >
+                    {stat.label}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </>
+        )}
 
         {/* Mockup Gallery - full width */}
         {(detail.mockupImages ?? []).map((img: string, idx: number) => (

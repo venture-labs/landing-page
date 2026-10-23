@@ -216,32 +216,34 @@ function CaseSection({ detail, accent }: { detail: any; accent: string }) {
         </motion.p>
 
         {/* Stats row */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="grid grid-cols-3 gap-0 mb-16 border border-white/8 rounded-xl overflow-hidden"
-        >
-          {detail.caseStats.map((stat: any, i: number) => (
-            <div
-              key={stat.label}
-              className={`flex flex-col gap-2 p-8 ${i < 2 ? "border-r border-white/8" : ""}`}
-            >
-              <span
-                className="font-semibold"
-                style={{ fontSize: "var(--text-hero)", color: accent }}
+        {detail.caseStats.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="grid grid-cols-3 gap-0 mb-16 border border-white/8 rounded-xl overflow-hidden"
+          >
+            {detail.caseStats.map((stat: any, i: number) => (
+              <div
+                key={stat.label}
+                className={`flex flex-col gap-2 p-8 ${i < 2 ? "border-r border-white/8" : ""}`}
               >
-                {stat.value}
-              </span>
-              <span
-                className="text-white/60 font-light"
-                style={{ fontSize: "var(--text-body)" }}
-              >
-                {stat.label}
-              </span>
-            </div>
-          ))}
-        </motion.div>
+                <span
+                  className="font-semibold"
+                  style={{ fontSize: "var(--text-hero)", color: accent }}
+                >
+                  {stat.value}
+                </span>
+                <span
+                  className="text-white/60 font-light"
+                  style={{ fontSize: "var(--text-body)" }}
+                >
+                  {stat.label}
+                </span>
+              </div>
+            ))}
+          </motion.div>
+        )}
 
         {/* Image + text */}
         <motion.div

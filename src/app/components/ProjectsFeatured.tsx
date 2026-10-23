@@ -121,19 +121,21 @@ function CaseCard({ c, index }: { c: FeaturedCase; index: number }) {
             </p>
           </div>
 
-          <ul className="flex flex-col gap-3">
-            {c.stats.map((stat, i) => (
-              <li key={stat} className="flex items-start gap-3">
-                <CheckIcon />
-                <span
-                  className="text-white/90 font-light leading-snug"
-                  style={{ fontSize: "var(--text-body)" }}
-                >
-                  {stat}
-                </span>
-              </li>
-            ))}
-          </ul>
+          {c.stats.length > 0 && (
+            <ul className="flex flex-col gap-3">
+              {c.stats.map((stat, i) => (
+                <li key={stat} className="flex items-start gap-3">
+                  <CheckIcon />
+                  <span
+                    className="text-white/90 font-light leading-snug"
+                    style={{ fontSize: "var(--text-body)" }}
+                  >
+                    {stat}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
 
           <Link
             to={localizedPath(`/cases/${c.slug}`)}
