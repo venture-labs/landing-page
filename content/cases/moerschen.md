@@ -5,7 +5,7 @@ seoDescription: 'Moerschen brauchte eine Website, die komplexe Industrieleistung
 slug: moerschen
 order: 3
 title: "Moerschen – Website-Relaunch für bessere Kommunikation"
-subtitle: "Ein digitales Serviceportal für komplexe B2B-Prozesse in nur 8 Wochen."
+subtitle: "Neue Website für komplexe Industrieleistungen – mit klarer Nutzerführung zum richtigen Ansprechpartner."
 featured: true
 imagePosition: right
 stats:
