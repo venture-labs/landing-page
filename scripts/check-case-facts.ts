@@ -73,7 +73,7 @@ function renderedFields(e: Entry): { name: string; text: string }[] {
   const out: { name: string; text: string }[] = [];
   const add = (name: string, v: unknown) => out.push({ name, text: str(v) });
   if (e.kind === "case") {
-    for (const k of ["title", "subtitle", "category", "heroHeadline", "heroSubline", "description", "background", "problem", "solution"]) {
+    for (const k of ["seoTitle", "seoDescription", "title", "subtitle", "category", "heroHeadline", "heroSubline", "description", "background", "problem", "solution"]) {
       add(k, e.fm[k]);
     }
     list(e.fm.stats).forEach((s, i) => add(`stats[${i}]`, s));

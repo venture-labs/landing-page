@@ -2,7 +2,7 @@
 slug: machinemaster
 language: "en"
 seoTitle: 'MachineMaster – AI-powered machinery sales – Venture Labs'
-seoDescription: 'MachineMaster helps dealers and field reps sell agricultural machinery with AI-powered product guidance – the MVP built in 12 weeks.'
+seoDescription: 'MachineMaster helps dealers and field reps sell agricultural machinery with AI-powered product guidance – from first idea to rollout.'
 order: 4
 title: "MachineMaster – agricultural machinery sales platform"
 subtitle: "A digital sales tool for dealers, sales, and field reps."
