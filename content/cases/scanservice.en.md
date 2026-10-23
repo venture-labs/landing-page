@@ -16,13 +16,7 @@ description: "For a document scanning service, we built a digital platform where
 background: "Orders and inquiries used to run entirely over phone and email. Customers had no visibility into the processing status of their orders."
 problem: "Manual order intake, no transparency on processing status, time-consuming phone and email communication, no central storage for digitized documents."
 solution: "Self-service portal for order submission, automated status updates via email, structured document storage with search, easy handover of completed orders."
-detailStats:
-  - value: "-70%"
-    label: "fewer phone inquiries"
-  - value: "24/7"
-    label: "order status visible anytime"
-  - value: "6 wks"
-    label: "from concept to launch"
+detailStats: []
 mockupImages:
   - "/uploads/cases/scanservice-card.png"
 ---

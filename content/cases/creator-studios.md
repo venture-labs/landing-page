@@ -16,13 +16,7 @@ description: "Für Creator Studio, ein Fotostudio in Düsseldorf, haben wir eine
 background: "Anfragen für das Studio liefen bisher ausschließlich über E-Mail und Instagram. Es gab keine zentrale Übersicht über Verfügbarkeiten, und Interessenten mussten oft mehrere Nachrichten austauschen, bevor ein Termin feststand."
 problem: "Keine Möglichkeit zur Online-Buchung, unübersichtliche Verfügbarkeiten, hoher manueller Aufwand bei jeder Anfrage, keine klare Präsentation von Räumen und Ausstattung."
 solution: "Klar strukturierte Seiten für Space, Features und Interior, direkter 'Book a space'-Call-to-Action, reduziertes Design mit Fokus auf Bildsprache, mobile-optimierte Buchungsstrecke."
-detailStats:
-  - value: "-60%"
-    label: "weniger manuelle Anfragen per E-Mail"
-  - value: "4 Wo."
-    label: "von Konzept bis Livegang"
-  - value: "100%"
-    label: "der Buchungen direkt online"
+detailStats: []
 mockupImages:
   - "/uploads/cases/animation-card.png"
 ---

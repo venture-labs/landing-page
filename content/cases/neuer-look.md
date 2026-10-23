@@ -16,13 +16,7 @@ description: "Die bestehende Webseite passte nicht mehr zum heutigen Auftritt de
 background: "Die alte Seite war über Jahre gewachsen, wirkte optisch veraltet und spiegelte weder aktuelle Leistungen noch die Markenpositionierung wider."
 problem: "Veraltetes Design, unübersichtliche Navigation, Inhalte nicht mehr aktuell, fehlender Wiedererkennungswert, keine klare Handlungsaufforderung für Besucher."
 solution: "Neues Design-Konzept auf Basis der Markenwerte, klar strukturierte Navigation, überarbeitete Inhalte mit Fokus auf die wichtigsten Angebote, durchgängige Handlungsaufforderungen auf jeder Seite."
-detailStats:
-  - value: "4 Wo."
-    label: "von Konzept bis Livegang"
-  - value: "+40%"
-    label: "längere Verweildauer auf der Seite"
-  - value: "100%"
-    label: "der Inhalte neu strukturiert"
+detailStats: []
 mockupImages:
   - "/uploads/cases/neuer-look-card.png"
 ---

@@ -16,13 +16,7 @@ description: "The existing website no longer matched the company's current prese
 background: "The old site had grown organically over the years, looked visually outdated, and reflected neither the current offering nor the brand positioning."
 problem: "Outdated design, confusing navigation, stale content, no recognizable brand identity, no clear call to action for visitors."
 solution: "New design concept based on the brand's values, clearly structured navigation, revised content focused on the most important offerings, consistent calls to action on every page."
-detailStats:
-  - value: "4 wks"
-    label: "from concept to launch"
-  - value: "+40%"
-    label: "longer time on site"
-  - value: "100%"
-    label: "of content restructured"
+detailStats: []
 mockupImages:
   - "/uploads/cases/neuer-look-card.png"
 ---

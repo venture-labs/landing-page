@@ -9,9 +9,7 @@ subtitle: "Ein digitales Serviceportal für komplexe B2B-Prozesse in nur 8 Woche
 featured: true
 imagePosition: right
 stats:
-  - "+230% Nutzerinteraktion"
-  - "Launch in 16 Wochen"
-  - "95% Kundenzufriedenheit"
+  - "Launch in 8 Wochen"
 image: "/uploads/cases/tap2link-card.png"
 category: "Digitale Kontakt- & Serviceecosysteme"
 heroHeadline: "Multifunktionale App für Events, Services & Teams"
@@ -21,13 +19,10 @@ description: "Tap2Link ist eine vollständig neue, multifunktionale Plattform f�
 background: "Die ursprüngliche Plattform war technisch veraltet und konnte die wachsenden Anforderungen der Nutzer nicht erfüllen. Das Unternehmen benötigte eine Komplettneubau mit neuem Design-System."
 problem: "Viele Anforderungen, unklare Priorisierung, Verschiedene Stakeholder mit unterschiedlichen Visionen, Technische Schulden aus Legacy-Code, Knappe Zeitvorgaben."
 solution: "Modulare App-Architektur mit sauberer Separation of Concerns, Modernes React-Stack mit TypeScript für Typ-Sicherheit, Iterative Entwicklung mit wöchentlichen Reviews, Agile Priorisierung mit klarer Nutzer-Fokussierung, Design-System für schnelle Konsistenz."
-detailStats:
-  - value: "+300%"
-    label: "mehr App-Installationen nach Launch"
-  - value: "5 Sek"
-    label: "bis zum vollständigen Profilein Upload via NFC"
-  - value: "+60%"
-    label: "Conversion bei Messegesprächsterminen"
+detailStats: []
+statsSource:
+  - value: "8 Wochen"
+    source: "Christian Wenzel, terminal front desk, 2026-10-16: «Launch dauert 8 Wochen» (Tap2Link); answer Q1 of task 20260926-case-facts-remove-the-contradictions-source-the-, 2026-10-23"
 mockupImages:
   - "/uploads/cases/tap2link-mockup-1.png"
   - "/uploads/cases/tap2link-mockup-3.png"

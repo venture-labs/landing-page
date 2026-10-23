@@ -16,13 +16,7 @@ description: "Für einen Dokumenten-Scan-Service haben wir eine digitale Plattfo
 background: "Bestellungen und Rückfragen liefen bisher per Telefon und E-Mail. Kunden hatten keinen Überblick über den Bearbeitungsstatus ihrer Aufträge."
 problem: "Manuelle Auftragsannahme, keine Transparenz über den Bearbeitungsstand, aufwendige Kommunikation per Telefon und E-Mail, keine zentrale Ablage für digitalisierte Dokumente."
 solution: "Self-Service-Portal für Auftragserfassung, automatisierte Status-Updates per E-Mail, strukturierte Dokumentenablage mit Suchfunktion, einfache Weitergabe abgeschlossener Aufträge."
-detailStats:
-  - value: "-70%"
-    label: "weniger Rückfragen per Telefon"
-  - value: "24/7"
-    label: "Auftragsstatus jederzeit einsehbar"
-  - value: "6 Wo."
-    label: "von Konzept bis Launch"
+detailStats: []
 mockupImages:
   - "/uploads/cases/scanservice-card.png"
 ---

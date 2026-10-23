@@ -34,13 +34,10 @@ caseTitle: "Tap2Link"
 caseSlug: "tap2link"
 caseSubtitle: "Tap2Link: more than a digital business card."
 caseImage: "/uploads/services/ai-products-case.png"
-caseStats:
-  - value: "+35%"
-    label: "Faster onboarding process"
-  - value: "-20%"
-    label: "Reduced support effort"
-  - value: "+40%"
-    label: "More user interactions"
+caseStats: []
+statsSource:
+  - value: "8 weeks"
+    source: "Christian Wenzel, terminal front desk, 2026-10-16: «Launch dauert 8 Wochen» (Tap2Link); answer Q1 of task 20260926-case-facts-remove-the-contradictions-source-the-, 2026-10-23"
 caseDescription: "A digital service portal for complex B2B processes — from idea to launch in just 8 weeks."
 ctaHeadline: "Ready for a product that thinks along?"
 ctaBody: "Let's find out in an honest intro call whether your next product needs classic software or a self-learning system."
