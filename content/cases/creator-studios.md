@@ -1,5 +1,7 @@
 ---
 language: "de"
+seoTitle: 'Creator Studio – Website mit Raumbuchung – Venture Labs'
+seoDescription: 'Für Creator Studio, ein Fotostudio in Düsseldorf, haben wir eine neue Website mit direkter Raumbuchung entwickelt, die aus Anfragen echte Buchungen macht.'
 slug: creator-studios
 order: 6
 title: "Creator Studio – Buchungsplattform für kreative Räume"

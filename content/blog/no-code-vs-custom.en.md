@@ -1,6 +1,8 @@
 ---
 slug: "no-code-vs-custom"
 language: "en"
+seoTitle: 'No-code vs. custom: when each one pays off – Venture Labs'
+seoDescription: 'No-code tools keep getting more powerful – but they''re not always the right choice. An honest breakdown of when no-code becomes a dead end.'
 order: 5
 title: "No-code vs. custom development: when each one pays off"
 excerpt: "No-code tools keep getting more powerful – but they're not always the right choice. An honest breakdown."

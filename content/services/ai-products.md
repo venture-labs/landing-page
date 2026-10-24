@@ -1,5 +1,7 @@
 ---
 language: "de"
+seoTitle: 'AI Products – Das Produkt mit KI bauen – Venture Labs'
+seoDescription: 'Wir entwickeln Produkte, die AI nicht nachträglich aufsetzen, sondern von Anfang an mitdenken – Prototyping, MVPs, Web Apps und Business Software.'
 slug: ai-products
 order: 2
 title: "AI Products"

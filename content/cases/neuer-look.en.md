@@ -1,6 +1,8 @@
 ---
 slug: neuer-look
 language: "en"
+seoTitle: 'New look, new impact – Website relaunch – Venture Labs'
+seoDescription: 'The existing website no longer matched the company''s current presence. We rethought design, structure, and content from scratch.'
 order: 5
 title: "New look, new website"
 subtitle: "A complete website relaunch for a fresh brand presence in just a few weeks."

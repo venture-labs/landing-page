@@ -8,6 +8,8 @@ export interface BlogContentBlock {
 export interface BlogPost {
   slug: string;
   title: string;
+  seoTitle: string;
+  seoDescription: string;
   excerpt: string;
   topicSlug: "ai-automation" | "ai-products" | "ai-experience" | "venture-building";
   topic: string;
@@ -22,6 +24,8 @@ export const blogPosts: BlogPost[] = [
   {
     "slug": "warum-mvps-floppen",
     "title": "Warum die meisten MVPs floppen – und wie du es besser machst",
+    "seoTitle": "Warum MVPs floppen – wie du es besser machst – Venture Labs",
+    "seoDescription": "Ein MVP ist kein halbfertiges Produkt – es ist ein Test. Wir zeigen, welche Fehler Teams am häufigsten machen und wie du mit weniger Aufwand mehr lernst.",
     "excerpt": "Ein MVP ist kein halbfertiges Produkt – es ist ein Test. Wir zeigen, welche Fehler Teams am häufigsten machen und wie du mit weniger Aufwand mehr lernst.",
     "topicSlug": "ai-products",
     "topic": "AI Products",
@@ -71,6 +75,8 @@ export const blogPosts: BlogPost[] = [
   {
     "slug": "ki-agenten-use-cases",
     "title": "KI-Agenten im Unternehmensalltag: 5 Use Cases, die wirklich funktionieren",
+    "seoTitle": "KI-Agenten im Unternehmen: 5 Use Cases – Venture Labs",
+    "seoDescription": "Von automatisierten Support-Workflows bis zu internen Wissens-Assistenten: fünf KI-Anwendungen, die heute schon echten Mehrwert liefern – ohne Hype.",
     "excerpt": "Von automatisierten Support-Workflows bis zu internen Wissens-Assistenten: fünf KI-Anwendungen, die heute schon echten Mehrwert liefern – ohne Hype.",
     "topicSlug": "ai-automation",
     "topic": "AI Automation",
@@ -120,6 +126,8 @@ export const blogPosts: BlogPost[] = [
   {
     "slug": "design-systems-hebel",
     "title": "Design Systems: Der unterschätzte Hebel für schnelleres Wachstum",
+    "seoTitle": "Design Systems: Der unterschätzte Hebel – Venture Labs",
+    "seoDescription": "Ein gutes Design System spart nicht nur Zeit im Design – es beschleunigt auch die Entwicklung. So baust du eins, das wirklich genutzt wird.",
     "excerpt": "Ein gutes Design System spart nicht nur Zeit im Design – es beschleunigt auch die Entwicklung. So baust du eins, das wirklich genutzt wird.",
     "topicSlug": "ai-experience",
     "topic": "AI Experience",
@@ -169,6 +177,8 @@ export const blogPosts: BlogPost[] = [
   {
     "slug": "pitch-zu-produkt",
     "title": "Vom Pitch zum Produkt: Wie wir in 12 Wochen ein MVP bauen",
+    "seoTitle": "Vom Pitch zum Produkt: MVP in 12 Wochen – Venture Labs",
+    "seoDescription": "Ein Blick hinter die Kulissen unseres Company-Building-Prozesses – von der ersten Idee bis zum ersten zahlenden Kunden in 12 Wochen.",
     "excerpt": "Ein Blick hinter die Kulissen unseres Company-Building-Prozesses – von der ersten Idee bis zum ersten zahlenden Kunden.",
     "topicSlug": "venture-building",
     "topic": "Venture Building",
@@ -218,6 +228,8 @@ export const blogPosts: BlogPost[] = [
   {
     "slug": "no-code-vs-custom",
     "title": "No-Code vs. Custom Development: Wann sich was lohnt",
+    "seoTitle": "No-Code vs. Custom: Wann sich was lohnt – Venture Labs",
+    "seoDescription": "No-Code-Tools werden immer mächtiger – aber sie sind nicht immer die richtige Wahl. Eine ehrliche Einordnung, wann No-Code zur Sackgasse wird.",
     "excerpt": "No-Code-Tools werden immer mächtiger – aber sie sind nicht immer die richtige Wahl. Eine ehrliche Einordnung.",
     "topicSlug": "ai-products",
     "topic": "AI Products",
@@ -267,6 +279,8 @@ export const blogPosts: BlogPost[] = [
   {
     "slug": "user-research-schnell",
     "title": "User Research auf die Schnelle: 3 Methoden für enge Timelines",
+    "seoTitle": "User Research auf die Schnelle: 3 Methoden – Venture Labs",
+    "seoDescription": "Auch mit wenig Zeit und Budget lässt sich fundiertes Nutzerfeedback einholen. Drei Methoden, die sich in der Praxis bewährt haben.",
     "excerpt": "Auch mit wenig Zeit und Budget lässt sich fundiertes Nutzerfeedback einholen. Drei Methoden, die sich in der Praxis bewährt haben.",
     "topicSlug": "ai-experience",
     "topic": "AI Experience",

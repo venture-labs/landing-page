@@ -1,5 +1,7 @@
 ---
 language: en
+seoTitle: 'Three steps, one pulse: Check, Build, Care – Venture Labs'
+seoDescription: 'First find out what is really going on. Then build what makes the biggest difference. Then stay with it. Everything else is detail.'
 heroEyebrow: 'Services'
 heroTitlePrefix: 'Three steps.'
 heroTitleHighlight: 'One pulse.'
@@ -73,8 +75,9 @@ strengthFeatures:
   - icon: handshake
     title: 'Close collaboration & transparency'
     subtitle: "You're part of the development process"
-situationsHeading: 'Does one of these sound familiar?'
-situationsCtaLabel: 'Book a free intro call'
+useCasesHeading: 'Possible use cases'
+useCasesLeadLine: 'Beleg-Inbox is already running in production for us today — the other four show you what else is possible with the same approach.'
+useCasesCtaLabel: 'Book a free intro call'
 situations:
   - id: receipts
     text: 'Every time money leaves the account, the receipt for it is missing.'
@@ -116,4 +119,59 @@ situations:
       - 'Monitor usage and errors continuously'
       - 'Automatically remind whoever is responsible'
       - 'Deliver a monthly health check'
+clusterStory:
+  heading: 'How your cluster takes shape with us'
+  intro: 'From your first input to a cluster that covers you 100% — a story in nine steps that builds itself as you scroll.'
+  steps:
+    - id: input
+      navLabel: 'Input'
+      heading: 'Input'
+      body: 'We collect your information — in a personal video call, via Slack and e-mail, and (in preparation) via WhatsApp. Nobody at Venture Labs relays it.'
+      channels:
+        - label: 'Video call'
+          status: live
+        - label: 'Slack'
+          status: live
+        - label: 'E-mail'
+          status: live
+        - label: 'WhatsApp'
+          status: planned
+    - id: concepts
+      navLabel: 'Concepts'
+      heading: 'Concepts'
+      body: 'Concept-building starts from your input at once — and it comes back to you, for your decision.'
+    - id: handover
+      navLabel: 'Handover'
+      heading: 'Handover to our agents'
+      body: 'The decided concept is handed over to our own agents.'
+    - id: build
+      navLabel: 'Build'
+      heading: 'Agents build your agents'
+      body: 'Our agents build your own agent cluster — shaped around your processes, not a template.'
+    - id: install
+      navLabel: 'Installation'
+      heading: 'Installation'
+      body: 'The cluster is installed at your site.'
+    - id: telemetry
+      navLabel: 'Data flow'
+      heading: 'Telemetry back, updates out'
+      body: 'Sensitive data stays local; outward only what you release — only runtime, error and cost telemetry flows back automatically, local AI models wherever possible, learning data only after you release it by hand. Every agent has its own budget with visible spend. In return, we ship updates.'
+    - id: loop
+      navLabel: 'Loop'
+      heading: 'The loop closes'
+      body: 'New calls or new input lead to new concepts — the arrow visibly draws back to the start.'
+    - id: growth
+      navLabel: 'Growth'
+      heading: 'The cluster grows ring by ring'
+      body: 'Your agents keep extending the cluster — area by area, until it covers your whole business.'
+      areas:
+        - label: 'Bookkeeping & bank data'
+        - label: 'Your own CRM'
+        - label: 'Your own frontends/apps'
+        - label: 'Local models'
+    - id: service
+      navLabel: 'Offer'
+      heading: 'Your cluster covers you 100%'
+      body: 'The build is one project. The ongoing operation after that: a monthly retainer.'
+      billingNote: 'Build = one project · Operation = monthly retainer'
 ---

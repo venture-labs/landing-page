@@ -1,6 +1,8 @@
 ---
 slug: tap2link
 language: "en"
+seoTitle: 'Tap2Link – Digital business card and more – Venture Labs'
+seoDescription: 'Tap2Link is an entirely new, multifunctional platform for events, services, and teams. We built the application from scratch with modern design.'
 order: 1
 title: "Tap2Link – more than a digital business card."
 subtitle: "A digital service portal for complex B2B processes in just 8 weeks."

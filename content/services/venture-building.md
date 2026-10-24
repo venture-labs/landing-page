@@ -1,5 +1,7 @@
 ---
 language: "de"
+seoTitle: 'Venture Building – Neues Geschäft aufbauen – Venture Labs'
+seoDescription: 'Aus Chancen neue Geschäfte machen: Wir validieren Geschäftsmodelle und bauen daraus funktionierende digitale Ventures – von der Idee bis zum Launch.'
 slug: venture-building
 order: 4
 title: "Venture Building"

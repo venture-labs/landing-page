@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router";
 import { useLocale } from "@/app/locale";
-import { EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
+import { CTAS, EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
 import { BOOKING_URL } from "@/app/links";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { navigationDE, navigationEN } from "@/data/navigation";
@@ -98,7 +98,7 @@ export function Navbar() {
             href={BOOKING_URL}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => trackEvent(EVENTS.callLinkClicked, PLACEMENTS.navbarDesktop)}
+            onClick={() => trackEvent(EVENTS.callLinkClicked, PLACEMENTS.navbarDesktop, CTAS.bookCall)}
             className="flex items-center gap-2 bg-[#8129ff] hover:bg-[#9140ff] text-white font-semibold px-5 py-2.5 rounded-lg transition-colors"
             style={{ fontSize: "var(--text-btn)" }}
           >
@@ -138,7 +138,7 @@ export function Navbar() {
             className="mt-2 inline-flex items-center justify-center bg-[#8129ff] text-white font-semibold px-5 py-3 rounded-lg"
             style={{ fontSize: "var(--text-btn)" }}
             onClick={() => {
-              trackEvent(EVENTS.callLinkClicked, PLACEMENTS.navbarMobile);
+              trackEvent(EVENTS.callLinkClicked, PLACEMENTS.navbarMobile, CTAS.bookCall);
               setOpen(false);
             }}
           >

@@ -1,6 +1,11 @@
 import { useEffect } from "react";
 import { LegalPage } from "@/app/components/LegalPage";
 import { useLocale } from "@/app/locale";
+import { CTAS, EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
+
+function trackImpressumMail() {
+  trackEvent(EVENTS.contactSent, PLACEMENTS.impressumMail, CTAS.mail);
+}
 
 function ImpressumDe() {
   return (
@@ -24,7 +29,7 @@ function ImpressumDe() {
         <p>
           Telefon: +49 156 78 387064
           <br />
-          E-Mail: <a href="mailto:contact@venturelabs.team">contact@venturelabs.team</a>
+          E-Mail: <a href="mailto:contact@venturelabs.team" onClick={trackImpressumMail}>contact@venturelabs.team</a>
           <br />
           Web: <a href="https://venturelabs.team">venturelabs.team</a>
         </p>
@@ -115,7 +120,7 @@ function ImpressumEn() {
         <p>
           Phone: +49 156 78 387064
           <br />
-          Email: <a href="mailto:contact@venturelabs.team">contact@venturelabs.team</a>
+          Email: <a href="mailto:contact@venturelabs.team" onClick={trackImpressumMail}>contact@venturelabs.team</a>
           <br />
           Web: <a href="https://venturelabs.team">venturelabs.team</a>
         </p>

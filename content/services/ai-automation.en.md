@@ -1,6 +1,8 @@
 ---
 slug: ai-automation
 language: "en"
+seoTitle: 'AI Automation – Improve processes with AI – Venture Labs'
+seoDescription: 'We turn manual business processes into intelligent, integrated workflows – automating where AI measurably saves time, cuts costs, and reduces errors.'
 order: 1
 title: "AI Automation"
 description: "Rethinking existing processes: we turn manual business processes into intelligent, integrated workflows."

@@ -10,6 +10,11 @@
   --popover-foreground: #ffffff;
   --primary: #8129ff;
   --primary-foreground: #ffffff;
+  /* ClusterStorySection (VL-11-S1) — the three brand-palette hexes design/PROJECT.md's
+     "no new hex values" rule asks to name, confirmed at the gate-2 pick (variant A). */
+  --brand-violet-bright: #a318f8;
+  --brand-lavender: #d9aeff;
+  --brand-muted: #c7c4d1;
   --secondary: #272530;
   --secondary-foreground: #ffffff;
   --muted: #272530;

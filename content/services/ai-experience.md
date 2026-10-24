@@ -1,5 +1,7 @@
 ---
 language: "de"
+seoTitle: 'AI Experience – Die Interaktion gestalten – Venture Labs'
+seoDescription: 'Die Zusammenarbeit von Mensch und AI gestalten: Wir gestalten Interfaces, Workflows und Interaktionen für eine neue Generation digitaler Produkte.'
 slug: ai-experience
 order: 3
 title: "AI Experience"

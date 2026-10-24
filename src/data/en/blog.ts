@@ -8,6 +8,8 @@ export interface BlogContentBlock {
 export interface BlogPost {
   slug: string;
   title: string;
+  seoTitle: string;
+  seoDescription: string;
   excerpt: string;
   topicSlug: "ai-automation" | "ai-products" | "ai-experience" | "venture-building";
   topic: string;
@@ -22,6 +24,8 @@ export const blogPosts: BlogPost[] = [
   {
     "slug": "warum-mvps-floppen",
     "title": "Why most MVPs fail – and how to do better",
+    "seoTitle": "Why most MVPs fail – and how to do better – Venture Labs",
+    "seoDescription": "An MVP isn't a half-finished product – it's a test. Here are the mistakes teams make most often, and how to learn more with less effort.",
     "excerpt": "An MVP isn't a half-finished product – it's a test. Here are the mistakes teams make most often, and how to learn more with less effort.",
     "topicSlug": "ai-products",
     "topic": "AI Products",
@@ -71,6 +75,8 @@ export const blogPosts: BlogPost[] = [
   {
     "slug": "ki-agenten-use-cases",
     "title": "AI agents in everyday business: 5 use cases that actually work",
+    "seoTitle": "AI agents in everyday business: 5 use cases – Venture Labs",
+    "seoDescription": "From automated support workflows to internal knowledge assistants: five AI applications delivering real value today – no hype attached.",
     "excerpt": "From automated support workflows to internal knowledge assistants: five AI applications delivering real value today – no hype attached.",
     "topicSlug": "ai-automation",
     "topic": "AI Automation",
@@ -120,6 +126,8 @@ export const blogPosts: BlogPost[] = [
   {
     "slug": "design-systems-hebel",
     "title": "Design systems: the underrated lever for faster growth",
+    "seoTitle": "Design systems: the underrated growth lever – Venture Labs",
+    "seoDescription": "A good design system doesn't just save time in design – it speeds up development too. Here's how to build one people actually use.",
     "excerpt": "A good design system doesn't just save time in design – it speeds up development too. Here's how to build one people actually use.",
     "topicSlug": "ai-experience",
     "topic": "AI Experience",
@@ -169,6 +177,8 @@ export const blogPosts: BlogPost[] = [
   {
     "slug": "pitch-zu-produkt",
     "title": "From pitch to product: how we build an MVP in 12 weeks",
+    "seoTitle": "From pitch to product: an MVP in 12 weeks – Venture Labs",
+    "seoDescription": "How we build an MVP in 12 weeks: a behind-the-scenes look at our company-building process – from first idea to first paying customer.",
     "excerpt": "A behind-the-scenes look at our company-building process – from first idea to first paying customer.",
     "topicSlug": "venture-building",
     "topic": "Venture Building",
@@ -218,6 +228,8 @@ export const blogPosts: BlogPost[] = [
   {
     "slug": "no-code-vs-custom",
     "title": "No-code vs. custom development: when each one pays off",
+    "seoTitle": "No-code vs. custom: when each one pays off – Venture Labs",
+    "seoDescription": "No-code tools keep getting more powerful – but they're not always the right choice. An honest breakdown of when no-code becomes a dead end.",
     "excerpt": "No-code tools keep getting more powerful – but they're not always the right choice. An honest breakdown.",
     "topicSlug": "ai-products",
     "topic": "AI Products",
@@ -267,6 +279,8 @@ export const blogPosts: BlogPost[] = [
   {
     "slug": "user-research-schnell",
     "title": "Fast user research: 3 methods for tight timelines",
+    "seoTitle": "Fast user research: 3 methods that hold up – Venture Labs",
+    "seoDescription": "Even with little time and budget, you can gather solid user feedback. Three methods that hold up in practice, from guerrilla interviews to surveys.",
     "excerpt": "Even with little time and budget, you can gather solid user feedback. Three methods that hold up in practice.",
     "topicSlug": "ai-experience",
     "topic": "AI Experience",

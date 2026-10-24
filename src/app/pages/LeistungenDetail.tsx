@@ -10,7 +10,7 @@ import { PulseCheckModal } from "@/app/components/PulseCheckModal";
 import { PulseLines, type PulseLinesProps } from "@/app/components/ui/PulseLines";
 import { useServicesData, useServiceDetail } from "@/data/content";
 import { useLocale } from "@/app/locale";
-import { EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
+import { CTAS, EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
 import { BOOKING_URL } from "@/app/links";
 
 
@@ -86,6 +86,7 @@ function DetailHero({ detail, accent, title }: { detail: any; accent: string; ti
           </p>
           <CtaButton
             href={localizedPath("/kontakt")}
+            onClick={() => trackEvent(EVENTS.contactSent, PLACEMENTS.leistungenDetailHeroCta, CTAS.contact)}
             backgroundColor={accent}
           >
             {t("leistungen.requestNow")}
@@ -323,7 +324,7 @@ function CtaBanner({ detail, accent }: { detail: any; accent: string }) {
           </CtaButton>
           <CtaButton
             href={BOOKING_URL}
-            onClick={() => trackEvent(EVENTS.callLinkClicked, PLACEMENTS.leistungenDetailCta)}
+            onClick={() => trackEvent(EVENTS.callLinkClicked, PLACEMENTS.leistungenDetailCta, CTAS.bookCall)}
             backgroundColor="rgba(255,255,255,0.1)"
             fontSize="var(--text-body)"
           >
@@ -331,7 +332,7 @@ function CtaBanner({ detail, accent }: { detail: any; accent: string }) {
           </CtaButton>
         </div>
       </div>
-      <PulseCheckModal open={quizOpen} onOpenChange={setQuizOpen} />
+      <PulseCheckModal open={quizOpen} onOpenChange={setQuizOpen} placement={PLACEMENTS.leistungenDetailQuiz} />
     </motion.section>
   );
 }
@@ -436,7 +437,7 @@ function ContactStrip() {
             href={BOOKING_URL}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => trackEvent(EVENTS.callLinkClicked, PLACEMENTS.leistungenDetailContact)}
+            onClick={() => trackEvent(EVENTS.callLinkClicked, PLACEMENTS.leistungenDetailContact, CTAS.bookCall)}
             className="font-semibold text-[#8129ff] hover:text-[#a318f8] transition-colors"
             style={{ fontSize: "clamp(1.2rem, 2vw, 1.75rem)" }}
           >
@@ -444,6 +445,7 @@ function ContactStrip() {
           </a>
           <a
             href="mailto:contact@venturelabs.team"
+            onClick={() => trackEvent(EVENTS.contactSent, PLACEMENTS.leistungenDetailMail, CTAS.mail)}
             className="font-semibold text-[#8129ff] hover:text-[#a318f8] transition-colors"
             style={{ fontSize: "clamp(1.2rem, 2vw, 1.75rem)" }}
           >

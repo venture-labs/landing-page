@@ -1,6 +1,8 @@
 ---
 slug: "warum-mvps-floppen"
 language: "en"
+seoTitle: 'Why most MVPs fail – and how to do better – Venture Labs'
+seoDescription: 'An MVP isn''t a half-finished product – it''s a test. Here are the mistakes teams make most often, and how to learn more with less effort.'
 order: 1
 title: "Why most MVPs fail – and how to do better"
 excerpt: "An MVP isn't a half-finished product – it's a test. Here are the mistakes teams make most often, and how to learn more with less effort."

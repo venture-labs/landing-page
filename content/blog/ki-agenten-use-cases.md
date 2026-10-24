@@ -1,6 +1,8 @@
 ---
 slug: "ki-agenten-use-cases"
 language: "de"
+seoTitle: 'KI-Agenten im Unternehmen: 5 Use Cases – Venture Labs'
+seoDescription: 'Von automatisierten Support-Workflows bis zu internen Wissens-Assistenten: fünf KI-Anwendungen, die heute schon echten Mehrwert liefern – ohne Hype.'
 order: 2
 title: "KI-Agenten im Unternehmensalltag: 5 Use Cases, die wirklich funktionieren"
 excerpt: "Von automatisierten Support-Workflows bis zu internen Wissens-Assistenten: fünf KI-Anwendungen, die heute schon echten Mehrwert liefern – ohne Hype."

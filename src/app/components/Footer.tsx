@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
 import { useLocale } from "@/app/locale";
-import { EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
+import { CTAS, EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
 import { BOOKING_URL } from "@/app/links";
 import svgPaths from "@/imports/🖌Homepage/svg-oa0apfkpzr";
 
@@ -12,6 +12,8 @@ interface FooterLink {
   track?: string;
   /** Plausible `placement` prop, required whenever `track` is set. */
   placement?: string;
+  /** Plausible `cta` prop, required whenever `track` is set. */
+  cta?: string;
 }
 
 function FooterLogo() {
@@ -69,7 +71,13 @@ export function Footer() {
       title: t("footer.aboutTitle"),
       links: [
         { label: t("footer.team"), href: localizedPath("/ueber-uns") },
-        { label: t("footer.jobs"), href: "mailto:contact@venturelabs.team" },
+        {
+          label: t("footer.jobs"),
+          href: "mailto:contact@venturelabs.team",
+          track: EVENTS.contactSent,
+          placement: PLACEMENTS.footerJobsMail,
+          cta: CTAS.mail,
+        },
         { label: t("footer.blog"), href: localizedPath("/blog") },
       ],
     },
@@ -81,8 +89,15 @@ export function Footer() {
           href: BOOKING_URL,
           track: EVENTS.callLinkClicked,
           placement: PLACEMENTS.footer,
+          cta: CTAS.bookCall,
         },
-        { label: "contact@venturelabs.team", href: "mailto:contact@venturelabs.team" },
+        {
+          label: "contact@venturelabs.team",
+          href: "mailto:contact@venturelabs.team",
+          track: EVENTS.contactSent,
+          placement: PLACEMENTS.footerContactMail,
+          cta: CTAS.mail,
+        },
       ],
     },
   ];
@@ -115,7 +130,7 @@ export function Footer() {
                     {link.href.startsWith("/") && !link.href.includes("#") ? (
                       <Link
                         to={link.href}
-                        onClick={link.track ? () => trackEvent(link.track!, link.placement) : undefined}
+                        onClick={link.track ? () => trackEvent(link.track!, link.placement, link.cta) : undefined}
                         className="text-white/40 hover:text-white/80 transition-colors font-light"
                         style={{ fontSize: "var(--text-small)" }}
                       >
@@ -124,7 +139,7 @@ export function Footer() {
                     ) : (
                       <a
                         href={link.href}
-                        onClick={link.track ? () => trackEvent(link.track!, link.placement) : undefined}
+                        onClick={link.track ? () => trackEvent(link.track!, link.placement, link.cta) : undefined}
                         {...(link.href.startsWith("http")
                           ? { target: "_blank", rel: "noopener noreferrer" }
                           : {})}

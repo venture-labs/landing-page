@@ -105,3 +105,281 @@ function hasUnattributedCallLinkClicked(src: string): boolean {
 export function findMissingPlacementCallSites(srcDir: string): string[] {
   return findSourceFiles(srcDir).filter((f) => hasUnattributedCallLinkClicked(readFileSync(f, "utf-8")));
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+ * 20261021-cta-tracking-every-call-to-action-fires-a-plausi — the `cta`
+ * prop, mailto:/tel: links, PulseCheckModal's placement and the booking/
+ * kontakt-link-without-onClick case. Four new, additive checks, in the same
+ * regex-over-raw-source style as the placement check above; none of them
+ * touch findMissingPlacementCallSites or hasUnattributedCallLinkClicked.
+ * ───────────────────────────────────────────────────────────────────────── */
+
+/** Number of top-level, comma-separated arguments in a call's argument text.
+ * No trackEvent(...) call site in this codebase nests a function call inside
+ * its arguments, so splitting on "," is safe. A lone trailing comma — still
+ * one argument in JS, never two — is stripped before splitting. */
+function countArgs(argsText: string): number {
+  const trimmed = argsText.trim().replace(/,\s*$/, "");
+  return trimmed === "" ? 0 : trimmed.split(",").length;
+}
+
+/**
+ * True when `src` fires EVENTS.callLinkClicked / EVENTS.contactSent (directly,
+ * or through Footer's `link.track` indirection) with fewer than three
+ * arguments — i.e. no `cta` — or when a `track: EVENTS.callLinkClicked |
+ * EVENTS.contactSent` config row has no sibling `cta:` field (the same
+ * "call site looks attributed, the config row isn't" gap
+ * hasUnattributedCallLinkClicked already guards for `placement`).
+ */
+function hasMissingCta(src: string): boolean {
+  const callRegex = /trackEvent\(([^)]*)\)/g;
+  let call: RegExpExecArray | null;
+  while ((call = callRegex.exec(src))) {
+    const firstArg = call[1].split(",")[0]?.trim() ?? "";
+    const isTrackedEventCall =
+      /^EVENTS\.(callLinkClicked|contactSent)$/.test(firstArg) || /^link\.track!?$/.test(firstArg);
+    if (isTrackedEventCall && countArgs(call[1]) < 3) return true;
+  }
+
+  const trackFieldRegex = /\btrack:\s*EVENTS\.(callLinkClicked|contactSent)\b/g;
+  let row: RegExpExecArray | null;
+  while ((row = trackFieldRegex.exec(src))) {
+    const enclosing = enclosingObjectLiteral(src, row.index);
+    if (!enclosing || !/\bcta:/.test(enclosing)) return true;
+  }
+
+  return false;
+}
+
+export function findMissingCtaCallSites(srcDir: string): string[] {
+  return findSourceFiles(srcDir).filter((f) => hasMissingCta(readFileSync(f, "utf-8")));
+}
+
+/**
+ * Every complete JSX opening-tag text (`<TagName ...>` or `<TagName ... />`)
+ * in `src` whose tag name matches `tagNameRegex`, found by balancing `{}`
+ * depth and string state so a `>` inside an arrow function's `=>` or a
+ * `style={{...}}` object, or a `>` sitting inside a template literal, never
+ * ends the tag early. Lifted to its own helper because this task's three new
+ * JSX-shaped checks below all need it (mailto/tel, PulseCheckModal,
+ * booking/kontakt links) and tag text, not line text, is what each needs to
+ * inspect — a `placement=`/`onClick=` attribute can sit on a different line
+ * than the `href=`/`to=` it has to accompany.
+ */
+function extractJsxTags(src: string, tagNameRegex: RegExp): string[] {
+  const tags: string[] = [];
+  const startRegex = /<([A-Za-z][\w.]*)\b/g;
+  let start: RegExpExecArray | null;
+  while ((start = startRegex.exec(src))) {
+    if (!tagNameRegex.test(start[1])) continue;
+
+    let i = startRegex.lastIndex;
+    let depth = 0;
+    let inString: string | null = null;
+    let end = -1;
+    while (i < src.length) {
+      const ch = src[i];
+      if (inString) {
+        if (ch === "\\") {
+          i += 2;
+          continue;
+        }
+        if (ch === inString) inString = null;
+        i++;
+        continue;
+      }
+      if (ch === '"' || ch === "'" || ch === "`") {
+        inString = ch;
+        i++;
+        continue;
+      }
+      if (ch === "{") {
+        depth++;
+        i++;
+        continue;
+      }
+      if (ch === "}") {
+        depth--;
+        i++;
+        continue;
+      }
+      if (ch === ">" && depth === 0) {
+        end = i;
+        break;
+      }
+      i++;
+    }
+
+    if (end === -1) continue; // unbalanced (shouldn't happen) — skip rather than false-positive
+    tags.push(src.slice(start.index, end + 1));
+    startRegex.lastIndex = end + 1;
+  }
+  return tags;
+}
+
+/**
+ * The `{...}`-wrapped (or bare-string) value text of `attrName=` inside a
+ * JSX opening tag's text, or the untouched identifier/expression when it
+ * isn't brace-wrapped. Null when the tag has no such attribute at all.
+ * Braces are balanced the same way `extractJsxTags` balances the whole
+ * tag's braces, so a value containing a nested arrow-function body or
+ * object literal is captured whole, not cut off at its first `}`.
+ */
+function extractAttributeValue(tag: string, attrName: string): string | null {
+  const marker = `${attrName}=`;
+  const idx = tag.indexOf(marker);
+  if (idx === -1) return null;
+  const after = idx + marker.length;
+  if (tag[after] !== "{") {
+    const quote = tag[after];
+    if (quote !== '"' && quote !== "'") return null;
+    const end = tag.indexOf(quote, after + 1);
+    return end === -1 ? null : tag.slice(after + 1, end);
+  }
+  let depth = 1;
+  let j = after + 1;
+  while (j < tag.length && depth > 0) {
+    if (tag[j] === "{") depth++;
+    else if (tag[j] === "}") depth--;
+    j++;
+  }
+  return tag.slice(after + 1, j - 1);
+}
+
+/** True when `expr` (an onClick value, or a resolved handler's body) actually invokes trackEvent. */
+function callsTrackEvent(expr: string): boolean {
+  return /trackEvent\(/.test(expr);
+}
+
+/**
+ * True when `tag`'s `onClick=` attribute actually invokes `trackEvent` —
+ * inline (`onClick={() => trackEvent(...)}`, or a block body that calls it
+ * among other statements, e.g. Navbar's mobile booking link which also
+ * closes the menu), or through a named handler function declared elsewhere
+ * in `src` (`onClick={trackImpressumMail}`, where `trackImpressumMail`
+ * itself calls `trackEvent` — the Impressum/Datenschutz pattern).
+ *
+ * Round 5, Reviewer finding 1: the previous checks here only asked "does an
+ * onClick= attribute exist at all", so `onClick={() => setOpen(false)}` on a
+ * booking/kontakt/mailto link passed every guard without ever firing an
+ * event. This requires the attribute's own value (or the named function it
+ * points at) to actually reach a `trackEvent(` call.
+ *
+ * Round 6: a named handler's definition can be a block body
+ * (`function f() { ... }` / `const f = () => { ... }`, the Impressum/
+ * Datenschutz pattern already handled) OR a concise arrow body with no
+ * braces at all (`const f = () => trackEvent(...)`). The codebase has no
+ * concise-body handler today (grep-verified), but the block-only resolver
+ * would otherwise flag a correctly-tracked one as untracked the day someone
+ * writes it that way — the same "named handler" case the Reviewer's
+ * suggested fix named, just the other valid-JS shape of it.
+ */
+function hasTrackedOnClick(src: string, tag: string): boolean {
+  const value = extractAttributeValue(tag, "onClick")?.trim();
+  if (!value) return false;
+  if (callsTrackEvent(value)) return true;
+
+  const identifierMatch = /^[A-Za-z_$][\w$]*$/.exec(value);
+  if (!identifierMatch) return false;
+  const name = identifierMatch[0];
+
+  const fnDeclRegex = new RegExp(`function\\s+${name}\\s*\\([^)]*\\)\\s*\\{`);
+  const fnMatch = fnDeclRegex.exec(src);
+  if (fnMatch && callsTrackEvent(extractBalancedBraceBody(src, fnMatch.index + fnMatch[0].length))) return true;
+
+  const arrowHeadRegex = new RegExp(`const\\s+${name}\\s*=\\s*\\([^)]*\\)\\s*=>\\s*`);
+  const arrowMatch = arrowHeadRegex.exec(src);
+  if (arrowMatch) {
+    const bodyStart = arrowMatch.index + arrowMatch[0].length;
+    if (src[bodyStart] === "{") {
+      if (callsTrackEvent(extractBalancedBraceBody(src, bodyStart + 1))) return true;
+    } else {
+      // Concise body — no braces, so it is exactly one expression. Its end
+      // is the first top-level `;`/`\n` (no trackEvent(...) call site in
+      // this codebase nests a semicolon or a newline inside its own
+      // arguments, same assumption countArgs already relies on above).
+      const end = /[;\n]/.exec(src.slice(bodyStart));
+      const body = end ? src.slice(bodyStart, bodyStart + end.index) : src.slice(bodyStart);
+      if (callsTrackEvent(body)) return true;
+    }
+  }
+
+  return false;
+}
+
+/** The text strictly inside the `{...}` body that starts right after `openBraceIndex - 1`
+ * (i.e. `src[openBraceIndex - 1]` is the opening `{`), balancing nested braces. */
+function extractBalancedBraceBody(src: string, openBraceIndex: number): string {
+  let depth = 1;
+  let j = openBraceIndex;
+  while (j < src.length && depth > 0) {
+    if (src[j] === "{") depth++;
+    else if (src[j] === "}") depth--;
+    j++;
+  }
+  return src.slice(openBraceIndex, j - 1);
+}
+
+/**
+ * True when `src` has an `<a>` tag whose href is a `mailto:`/`tel:` literal
+ * (plain string or a template literal, e.g. `` `mailto:${person.email}` ``)
+ * whose `onClick=` doesn't actually invoke tracking, or a Footer-style
+ * config row whose `href:` field is a `mailto:`/`tel:` literal with no
+ * sibling `track:` / `placement:` / `cta:` fields.
+ */
+function hasUntrackedMailtoOrTel(src: string): boolean {
+  const directOffender = extractJsxTags(src, /^a$/).some(
+    (tag) => /mailto:|tel:/.test(tag) && !hasTrackedOnClick(src, tag)
+  );
+  if (directOffender) return true;
+
+  const hrefFieldRegex = /\bhref:\s*["'`](?:mailto|tel):[^"'`]*["'`]/g;
+  let row: RegExpExecArray | null;
+  while ((row = hrefFieldRegex.exec(src))) {
+    const enclosing = enclosingObjectLiteral(src, row.index);
+    if (!enclosing || !/\btrack:/.test(enclosing) || !/\bplacement:/.test(enclosing) || !/\bcta:/.test(enclosing))
+      return true;
+  }
+
+  return false;
+}
+
+export function findUntrackedMailtoTelLinks(srcDir: string): string[] {
+  return findSourceFiles(srcDir).filter((f) => hasUntrackedMailtoOrTel(readFileSync(f, "utf-8")));
+}
+
+/** True when `src` renders `<PulseCheckModal ...>` with no `placement=` attribute. */
+function hasUntrackedPulseCheckModal(src: string): boolean {
+  return extractJsxTags(src, /^PulseCheckModal$/).some((tag) => !/\bplacement=/.test(tag));
+}
+
+export function findUntrackedPulseCheckModalUsages(srcDir: string): string[] {
+  return findSourceFiles(srcDir).filter((f) => hasUntrackedPulseCheckModal(readFileSync(f, "utf-8")));
+}
+
+/**
+ * True when `src` has an `<a>`, `<Link>` or `<CtaButton>` tag whose
+ * `href`/`to` is the booking URL (`BOOKING_URL`) or a `/kontakt` path
+ * (including the `?topic=` variant, carried in a template literal) whose
+ * `onClick=` doesn't actually invoke tracking. A tag whose destination is
+ * built from a variable (Navbar's generic nav-item renderer, Footer's
+ * `link.href`, CtaButton's own internal `<a href={href}>`) never contains
+ * the literal text `BOOKING_URL` or `/kontakt` and is correctly never
+ * flagged here — those are covered by findMissingPlacementCallSites /
+ * findMissingCtaCallSites / hasMailtoTelRowMissingTracking instead, at the
+ * config-row level.
+ */
+function hasUntrackedKontaktOrBookingLink(src: string): boolean {
+  const tags = [
+    ...extractJsxTags(src, /^a$/),
+    ...extractJsxTags(src, /^Link$/),
+    ...extractJsxTags(src, /^CtaButton$/),
+  ];
+  return tags.some(
+    (tag) => (/\bBOOKING_URL\b/.test(tag) || /\/kontakt\b/.test(tag)) && !hasTrackedOnClick(src, tag)
+  );
+}
+
+export function findUntrackedKontaktOrBookingLinks(srcDir: string): string[] {
+  return findSourceFiles(srcDir).filter((f) => hasUntrackedKontaktOrBookingLink(readFileSync(f, "utf-8")));
+}

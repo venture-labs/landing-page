@@ -1,6 +1,8 @@
 ---
 slug: venture-building
 language: "en"
+seoTitle: 'Venture Building – Create the new business – Venture Labs'
+seoDescription: 'Turning opportunities into new businesses: we validate business models and build them into working digital ventures – from idea to launch.'
 order: 4
 title: "Venture Building"
 description: "Turning opportunities into new businesses: we validate business models and build them into working digital ventures."

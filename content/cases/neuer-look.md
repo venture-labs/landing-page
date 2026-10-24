@@ -1,5 +1,7 @@
 ---
 language: "de"
+seoTitle: 'Neuer Look, neue Wirkung – Website-Relaunch – Venture Labs'
+seoDescription: 'Die bestehende Webseite passte nicht mehr zum heutigen Auftritt des Unternehmens. Wir haben Design, Struktur und Inhalte von Grund auf neu gedacht.'
 slug: neuer-look
 order: 5
 title: "Neuer Look, neue Webseite"

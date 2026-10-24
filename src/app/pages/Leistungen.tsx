@@ -6,12 +6,15 @@ import { useTranslation } from "react-i18next";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
 import { PulseJourney } from "@/app/components/PulseJourney";
-import { SituationsSection } from "@/app/components/SituationsSection";
+import { ClusterStorySection } from "@/app/components/ClusterStorySection";
+import { UseCasesSection } from "@/app/components/UseCasesSection";
 import { SkillMatrix } from "@/app/components/SkillMatrix";
+import { ToolProfile } from "@/app/components/ToolProfile";
 import { PulseCheckModal } from "@/app/components/PulseCheckModal";
 import { PulseLines } from "@/app/components/ui/PulseLines";
 import { useLeistungenData } from "@/data/content";
 import { useLocale } from "@/app/locale";
+import { CTAS, EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
 
 const ACCENT = "#8129ff";
 
@@ -87,6 +90,7 @@ function LeistungenHero({ onQuizOpen }: { onQuizOpen: () => void }) {
             </button>
             <Link
               to={localizedPath("/kontakt")}
+              onClick={() => trackEvent(EVENTS.contactSent, PLACEMENTS.leistungenHeroContact, CTAS.contact)}
               className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/12 text-white font-medium rounded-lg px-6 py-3 transition-colors"
               style={{ fontSize: "var(--text-btn)" }}
             >
@@ -152,6 +156,7 @@ function PulseCallout({ onQuizOpen }: { onQuizOpen: () => void }) {
           </button>
           <Link
             to={localizedPath("/kontakt")}
+            onClick={() => trackEvent(EVENTS.contactSent, PLACEMENTS.leistungenPulseCalloutContact, CTAS.contact)}
             className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-medium rounded-lg px-6 py-3 transition-colors"
             style={{ fontSize: "var(--text-btn)" }}
           >
@@ -187,6 +192,7 @@ function ContactStrip() {
         </p>
         <a
           href="mailto:contact@venturelabs.team"
+          onClick={() => trackEvent(EVENTS.contactSent, PLACEMENTS.leistungenMail, CTAS.mail)}
           className="font-semibold text-[#8129ff] hover:text-[#a318f8] transition-colors"
           style={{ fontSize: "clamp(1.2rem, 2vw, 1.75rem)" }}
         >
@@ -201,7 +207,11 @@ function ContactStrip() {
 
 export function Leistungen() {
   const glowRef = useRef<HTMLDivElement>(null);
-  const [quizOpen, setQuizOpen] = useState(false);
+  // Leistungen.tsx has two distinct quiz openers (LeistungenHero, PulseCallout)
+  // feeding one modal instance; the clicked opener's placement travels with
+  // the open state itself (null = closed) so Quiz Started/Completed fire with
+  // the placement of whichever button actually opened it.
+  const [quizPlacement, setQuizPlacement] = useState<string | null>(null);
   const location = useLocation();
 
   useEffect(() => {
@@ -213,9 +223,13 @@ export function Leistungen() {
   // (a fragment cannot be rewritten server-side), so it is answered here too.
   useEffect(() => {
     if (location.hash === "#pulse-score" || location.hash === "#quiz") {
-      setQuizOpen(true);
+      setQuizPlacement(PLACEMENTS.leistungenHero);
     }
   }, [location.hash]);
+
+  function handleQuizOpenChange(open: boolean) {
+    if (!open) setQuizPlacement(null);
+  }
 
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     if (!glowRef.current) return;
@@ -241,14 +255,20 @@ export function Leistungen() {
         aria-hidden
       />
       <Navbar />
-      <LeistungenHero onQuizOpen={() => setQuizOpen(true)} />
+      <LeistungenHero onQuizOpen={() => setQuizPlacement(PLACEMENTS.leistungenHero)} />
       <PulseJourney />
       <SkillMatrix />
-      <SituationsSection />
-      <PulseCallout onQuizOpen={() => setQuizOpen(true)} />
+      <ToolProfile />
+      <ClusterStorySection />
+      <UseCasesSection />
+      <PulseCallout onQuizOpen={() => setQuizPlacement(PLACEMENTS.leistungenPulseCallout)} />
       <ContactStrip />
       <Footer />
-      <PulseCheckModal open={quizOpen} onOpenChange={setQuizOpen} />
+      <PulseCheckModal
+        open={quizPlacement !== null}
+        onOpenChange={handleQuizOpenChange}
+        placement={quizPlacement ?? PLACEMENTS.leistungenHero}
+      />
     </div>
   );
 }

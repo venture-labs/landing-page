@@ -1,6 +1,11 @@
 import { useEffect } from "react";
 import { LegalPage } from "@/app/components/LegalPage";
 import { useLocale } from "@/app/locale";
+import { CTAS, EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
+
+function trackDatenschutzMail() {
+  trackEvent(EVENTS.contactSent, PLACEMENTS.datenschutzMail, CTAS.mail);
+}
 
 function DatenschutzDe() {
   return (
@@ -14,7 +19,7 @@ function DatenschutzDe() {
           <br />
           Breite Str. 27, 40213 Düsseldorf
           <br />
-          E-Mail: <a href="mailto:contact@venturelabs.team">contact@venturelabs.team</a>
+          E-Mail: <a href="mailto:contact@venturelabs.team" onClick={trackDatenschutzMail}>contact@venturelabs.team</a>
           <br />
           — weitere Angaben siehe <a href="/de/impressum">Impressum</a>.
         </address>
@@ -108,7 +113,7 @@ function DatenschutzDe() {
         <p>
           Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung,
           Datenübertragbarkeit sowie Widerspruch gegen die Verarbeitung Ihrer personenbezogenen Daten. Wenden Sie
-          sich hierzu an <a href="mailto:contact@venturelabs.team">contact@venturelabs.team</a> oder unseren
+          sich hierzu an <a href="mailto:contact@venturelabs.team" onClick={trackDatenschutzMail}>contact@venturelabs.team</a> oder unseren
           Datenschutzbeauftragten (siehe oben). Ihnen steht zudem ein Beschwerderecht bei einer
           Datenschutzaufsichtsbehörde zu, z. B. beim Landesbeauftragten für Datenschutz und Informationsfreiheit
           Nordrhein-Westfalen.
@@ -139,7 +144,7 @@ function DatenschutzEn() {
           <br />
           Breite Str. 27, 40213 Düsseldorf, Germany
           <br />
-          Email: <a href="mailto:contact@venturelabs.team">contact@venturelabs.team</a>
+          Email: <a href="mailto:contact@venturelabs.team" onClick={trackDatenschutzMail}>contact@venturelabs.team</a>
           <br />
           — see our <a href="/en/impressum">imprint</a> for further details.
         </address>
@@ -227,7 +232,7 @@ function DatenschutzEn() {
         <p>
           You have the right to access, rectification, erasure, restriction of processing, data portability, and
           objection regarding your personal data. Contact{" "}
-          <a href="mailto:contact@venturelabs.team">contact@venturelabs.team</a> or our data protection officer
+          <a href="mailto:contact@venturelabs.team" onClick={trackDatenschutzMail}>contact@venturelabs.team</a> or our data protection officer
           (above). You also have the right to lodge a complaint with a supervisory authority, e.g. the North
           Rhine-Westphalia data protection authority.
         </p>
