@@ -153,13 +153,24 @@ test.describe("server markup and first render", () => {
     expect((html.match(/<h3/g) ?? []).length).toBeGreaterThanOrEqual(10);
   });
 
-  test("EN: ten blocks and none of the forbidden claims", async ({ page }) => {
+  test("EN: ten blocks", async ({ page }) => {
     await page.goto("/en/leistungen", { waitUntil: "networkidle" });
     await expect(page.locator("li[data-step-index]")).toHaveCount(10);
-    const text = await page.locator("#cluster-story-heading").locator("xpath=ancestor::section[1]").innerText();
-    for (const word of ["Machine Brain", "15 Jahre", "15 years", "Second Brain", "€"]) expect(text).not.toContain(word);
     await expect(page.locator("li[data-step-index='9']")).toContainText("planned");
   });
+
+  for (const lang of ["de", "en"]) {
+    test(`${lang}: none of the forbidden strings in the prerendered section, graphic labels included (criterion 23)`, async ({ request }) => {
+      const html = await (await request.get(`/${lang}/leistungen/`)).text();
+      const at = html.indexOf('id="cluster-story-heading"');
+      expect(at).toBeGreaterThan(0);
+      const section = html.slice(html.lastIndexOf("<section", at), html.indexOf("</section>", at));
+      expect(section).toContain("cluster-story-stage");
+      for (const re of [/machine[\s-]*brain/i, /15\s+jahre/i, /15\s+years/i, /second[\s-]*brain/i]) {
+        expect(section, String(re)).not.toMatch(re);
+      }
+    });
+  }
 });
 
 test.describe("reduced motion", () => {
@@ -218,6 +229,36 @@ test.describe("?video=1", () => {
       [STAGE] as const
     );
     expect(viaStep).toBe(await frame(5 - 0.5 + 0.7 * 0.5, 1.3));
+  });
+
+  test("window.setF / window.setStep exist only with the query (criterion 20)", async ({ page }) => {
+    await page.goto("/de/leistungen", { waitUntil: "networkidle" });
+    expect(await page.evaluate(() => [typeof window.setF, typeof window.setStep])).toEqual(["undefined", "undefined"]);
+    await page.goto("/de/leistungen?video=1", { waitUntil: "networkidle" });
+    expect(await page.evaluate(() => [typeof window.setF, typeof window.setStep])).toEqual(["function", "function"]);
+  });
+
+  test("only the stage is visible and the page does not scroll (criterion 20)", async ({ page }) => {
+    await page.goto("/de/leistungen?video=1", { waitUntil: "networkidle" });
+    const { w, h } = await page.evaluate(() => ({ w: window.innerWidth, h: window.innerHeight }));
+    const points = [
+      [w * 0.1, h * 0.1],
+      [w * 0.9, h * 0.1],
+      [w * 0.5, h * 0.5],
+      [w * 0.1, h * 0.9],
+      [w * 0.9, h * 0.9],
+    ];
+    for (const [x, y] of points) {
+      const inside = await page.evaluate(
+        ([px, py, sel]) => !!document.elementFromPoint(px as number, py as number)?.closest(sel as string),
+        [x, y, STAGE] as const
+      );
+      expect(inside, `point ${Math.round(x)},${Math.round(y)}`).toBe(true);
+    }
+    await page.mouse.move(w / 2, h / 2);
+    await page.mouse.wheel(0, 1500);
+    await page.waitForTimeout(300);
+    expect(await page.evaluate(() => window.scrollY)).toBe(0);
   });
 
   test("at the mark of step 2 nothing of step 4 or later is visible", async ({ page }) => {

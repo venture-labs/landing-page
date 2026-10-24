@@ -9,6 +9,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import matter from "gray-matter";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as W from "../../src/app/components/cluster-story/world.ts";
@@ -18,13 +19,17 @@ const read = (p) => readFileSync(resolve(root, p), "utf8");
 const de = JSON.parse(read("src/locales/de.json")).leistungen;
 const en = JSON.parse(read("src/locales/en.json")).leistungen;
 
-const labels = (l, lang) => ({
-  g: l.clusterStory.graphic,
-  ch: ["Videocall", "Slack", "E-Mail", "Telefon"],
-  areas: ["Buchhaltung & Bankdaten", "Kundendaten und Anfragen", "Telefonie und Termine", "Eigene Systeme"],
-  planned: lang === "de" ? "geplant" : "planned",
-  example: l.exampleAgentLabel,
-});
+const story = (file) => matter(read(file)).data.clusterStory.steps;
+const labels = (l, lang) => {
+  const steps = story(lang === "de" ? "content/site/leistungen.md" : "content/site/leistungen.en.md");
+  return {
+    g: l.clusterStory.graphic,
+    ch: steps[0].channels.map((c) => c.label),
+    areas: steps[7].areas.map((a) => a.label),
+    planned: l.clusterStory.plannedChannelTag,
+    example: l.exampleAgentLabel,
+  };
+};
 const LB = labels(de, "de");
 const EXAMPLE_LB = labels(en, "en");
 const els = W.ELEMENTS;
@@ -72,22 +77,26 @@ const framed = (b, r) => b.x >= r.x - 1 && b.y >= r.y - 1 && b.x + b.w <= r.x + 
 const judged = (e) => e.layer >= 1 && e.layer <= 3 && !e.transforms;
 
 test("criterion 7 (a): the camera at k + 0.2 contains every judged element of step k, k = 0..9, both camera sets", () => {
-  for (const narrow of [false, true]) {
-    for (let k = 0; k <= 9; k++) {
-      const r = W.cameraRect(k + 0.2, narrow);
-      for (const el of els.filter((e) => e.k === k && judged(e))) {
-        assert.ok(framed(W.boxOf(el, LB), r), `${el.id} inside the camera at step ${k} (narrow ${narrow})`);
+  for (const [lang, lb] of [["de", LB], ["en", EXAMPLE_LB]]) {
+    for (const narrow of [false, true]) {
+      for (let k = 0; k <= 9; k++) {
+        const r = W.cameraRect(k + 0.2, narrow);
+        for (const el of els.filter((e) => e.k === k && judged(e))) {
+          assert.ok(framed(W.boxOf(el, lb), r), `${el.id} inside the camera at step ${k} (narrow ${narrow}, ${lang})`);
+        }
       }
     }
   }
 });
 
 test("criterion 7 (b): at k = 6 and k = 8 the camera contains every judged element built so far (the whole picture)", () => {
-  for (const narrow of [false, true]) {
-    for (const k of [6, 8]) {
-      const r = W.cameraRect(k + 0.2, narrow);
-      for (const el of els.filter((e) => e.k <= k && judged(e))) {
-        assert.ok(framed(W.boxOf(el, LB), r), `${el.id} (step ${el.k}) inside the camera at step ${k} (narrow ${narrow})`);
+  for (const [lang, lb] of [["de", LB], ["en", EXAMPLE_LB]]) {
+    for (const narrow of [false, true]) {
+      for (const k of [6, 8]) {
+        const r = W.cameraRect(k + 0.2, narrow);
+        for (const el of els.filter((e) => e.k <= k && judged(e))) {
+          assert.ok(framed(W.boxOf(el, lb), r), `${el.id} (step ${el.k}) inside the camera at step ${k} (narrow ${narrow}, ${lang})`);
+        }
       }
     }
   }
