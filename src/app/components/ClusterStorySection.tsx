@@ -356,7 +356,7 @@ const StepPill = memo(function StepPill({
       onClick={() => onGo(index)}
       className={`min-w-0 h-8 flex items-center justify-center gap-1.5 rounded-full font-semibold transition-colors motion-reduce:transition-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#fda700] ${
         current ? "flex-none md:px-3 w-8 md:w-auto" : "flex-1 max-w-8"
-      } ${planned && !current ? "border border-dashed border-[#fda700]/70" : ""}`}
+      } ${planned ? (current ? "border border-dashed border-[#0e0d13]/70" : "border border-dashed border-[#fda700]/70") : ""}`}
       style={{
         fontSize: "0.78rem",
         backgroundColor: current ? accent : "rgba(255,255,255,0.06)",
@@ -364,7 +364,12 @@ const StepPill = memo(function StepPill({
       }}
     >
       {done ? <Check size={14} strokeWidth={3} aria-hidden="true" /> : <span>{index + 1}</span>}
-      {current ? <span className="hidden md:inline whitespace-nowrap">{step.navLabel}</span> : null}
+      {current ? (
+        <span className="hidden md:inline whitespace-nowrap">
+          {step.navLabel}
+          {planned ? ` · ${plannedTag}` : ""}
+        </span>
+      ) : null}
     </button>
   );
 });

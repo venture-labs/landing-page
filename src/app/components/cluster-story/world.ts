@@ -100,7 +100,7 @@ export interface Rect {
   /** Card gradient plus the step-9 highlight overlay of the element's `hl` group. */
   card?: boolean;
   /** Fill with one of the gradients instead of a flat colour. */
-  grad?: "bar" | "fvio";
+  grad?: "fvio";
 }
 export interface Circle {
   t: "circle";
