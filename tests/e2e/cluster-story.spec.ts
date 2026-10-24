@@ -83,7 +83,16 @@ for (const [name, viewport] of [
       await openStory(page);
       for (const k of [0, 2, 5, 9, 4, 1]) {
         await pill(page, k).click();
-        await expect.poll(async () => Math.abs((await readF(page)) - k), { timeout: 8000 }).toBeLessThan(0.06);
+        // The smooth scroll needs a moment; wait until the stage settles on k, then assert the value at rest.
+        await page.waitForFunction(
+          ([sel, want]) => Math.abs(parseFloat((document.querySelector(sel as string) as HTMLElement).dataset.f ?? "NaN") - (want as number)) < 0.06,
+          [STAGE, k] as const,
+          { timeout: 8000 }
+        );
+        await page.waitForTimeout(300);
+        const atRest = await readF(page);
+        expect(Math.abs(atRest - k), `data-f ${atRest} after pill ${k}`).toBeLessThan(0.06);
+        await expect(pill(page, k)).toHaveAttribute("aria-current", "step");
       }
     });
 
