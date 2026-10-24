@@ -317,7 +317,6 @@ export function ClusterStorySection() {
                 key={step.id}
                 step={step}
                 index={index}
-                current={index === active}
                 accent={STEP_ACCENTS[index] ?? "#8129ff"}
                 setRef={blockRefCallbacks[index]}
                 ctaLabel={index === OFFER_STEP_INDEX ? useCasesCtaLabel : undefined}
@@ -373,14 +372,12 @@ const StepPill = memo(function StepPill({
 const StoryBlock = memo(function StoryBlock({
   step,
   index,
-  current,
   accent,
   setRef,
   ctaLabel,
 }: {
   step: ClusterStoryStep;
   index: number;
-  current: boolean;
   accent: string;
   setRef: (el: HTMLLIElement | null) => void;
   ctaLabel?: string;
@@ -392,9 +389,7 @@ const StoryBlock = memo(function StoryBlock({
     <li
       ref={setRef}
       data-step-index={index}
-      className={`min-h-[62vh] lg:min-h-[84vh] flex flex-col justify-center gap-3 py-8 transition-opacity motion-reduce:transition-none ${
-        current ? "opacity-100" : "opacity-60"
-      }`}
+      className="min-h-[62vh] lg:min-h-[84vh] flex flex-col justify-center gap-3 py-8"
     >
       {planned ? (
         <span className="flex items-center gap-3">
