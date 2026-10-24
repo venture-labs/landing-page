@@ -75,7 +75,10 @@ function activeNavTextColor(accent: string): string {
 function viewLine(sticky: HTMLElement | null): number {
   const vh = window.innerHeight;
   if (window.innerWidth >= 1024 || !sticky) return vh * 0.5;
-  return Math.min(sticky.getBoundingClientRect().bottom + 130, vh - 80);
+  // The stage's bottom edge once pinned (its `top` plus its height), never its current position:
+  // the target of a pill click must not move while the page is still scrolling it into place.
+  const pinnedBottom = (parseFloat(window.getComputedStyle(sticky).top) || 0) + sticky.offsetHeight;
+  return Math.min(pinnedBottom + 130, vh - 80);
 }
 
 /** The story position for the current scroll position: block centres against the viewline. */

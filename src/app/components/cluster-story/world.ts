@@ -264,7 +264,7 @@ export const GEO = {
   bar: { x: 600, y: 474, w: 284, h: 14 },
   pctX: 884,
   okRow: { x: 613, y: 511 },
-  tb: { x: 746, y: 632, w: 126, h: 10 },
+  tb: { x: 746, y: 642, w: 126, h: 10 },
   orb: { r: 70 },
   ord: { r: R_OUT + 24 },
   cpulse: { x: 78, y: chMid(3) },
@@ -510,13 +510,13 @@ add(
   "left",
   0.3,
   [
-    card(404, 336, 168, 96),
+    card(404, 336, 176, 100),
     ico("lock", 416, 346, 26, BLT, 1.8),
-    txt(416, 392, "g:lock", 17, W, { mw: 144 }),
+    txt(416, 392, "g:lock", 17, W, { mw: 152 }),
   ],
   { hl: "b" },
 );
-add(0, "lock-link", 5, 0.7, "fade", 0.3, [path("M572 384 H640", LAV, 3, { ...LINE, ...GLOW })]);
+add(0, "lock-link", 5, 0.7, "fade", 0.3, [path("M580 384 H640", LAV, 3, { ...LINE, ...GLOW })]);
 add(
   1,
   "release",
@@ -525,10 +525,10 @@ add(
   "left",
   0.3,
   [
-    card(404, 444, 168, 106),
-    rect(416, 456, 50, 28, 14, { f: W, fo: 0.08, s: W, so: 0.12, sw: 1.5 }),
-    { t: "circle", cx: 432.5, cy: 470, r: 9.5, f: DIM },
-    txt(416, 504, "g:release", 17, W, { mw: 144 }),
+    card(404, 448, 176, 118),
+    rect(416, 460, 50, 28, 14, { f: W, fo: 0.08, s: W, so: 0.12, sw: 1.5 }),
+    { t: "circle", cx: 432.5, cy: 474, r: 9.5, f: DIM },
+    txt(416, 508, "g:release", 17, W, { mw: 152 }),
   ],
   { hl: "b" },
 );
@@ -595,7 +595,7 @@ add(3, "tap-tag", 7, 0.9, "fade", 0.3, [
   }),
 ]);
 const metX = (i: number): number => 404 + i * 164;
-const MET_Y = 570;
+const MET_Y = 580;
 const MET_W = 154;
 const MET_H = 84;
 const METS: [string, string][] = [
@@ -613,7 +613,7 @@ METS.forEach(([key, kind], i) => {
   }
   add(1, `met${i}`, 7, 0.7 + i * 0.1, "up", 0.3, art, { hl: "b" });
 });
-add(3, "schem-8", 7, 0.95, "fade", 0.3, [txt(404, 676, "g:schematic", 17, MUT, { wt: 600, mw: 496 })]);
+add(3, "schem-8", 7, 0.95, "fade", 0.3, [txt(404, 682, "g:schematic", 17, MUT, { wt: 600, mw: 496 })]);
 
 /* ---- Step 9 (k = 8): the offer, Aufbau and Betrieb, frames, the ring around the company ------ */
 add(1, "build-card", 8, 0.1, "pop", 0.3, [
