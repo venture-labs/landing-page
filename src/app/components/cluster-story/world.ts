@@ -264,7 +264,7 @@ export const GEO = {
   bar: { x: 600, y: 474, w: 284, h: 14 },
   pctX: 884,
   okRow: { x: 613, y: 511 },
-  tb: { x: 0, y: 0, w: 126, h: 10 },
+  tb: { x: 746, y: 632, w: 126, h: 10 },
   orb: { r: 70 },
   ord: { r: R_OUT + 24 },
   cpulse: { x: 78, y: chMid(3) },
@@ -473,7 +473,6 @@ add(
   [
     card(584, 430, 316, 146),
     txt(600, 450, "g:install", 18, MUT),
-    txt(GEO.pctX, 452, "g:pct", 26, W, { wt: 800, a: "e" }),
     rect(GEO.bar.x, GEO.bar.y, GEO.bar.w, GEO.bar.h, 7, { f: W, fo: 0.08 }),
     dyn("bar"),
     dyn("pct"),
@@ -676,7 +675,8 @@ export const HL_COLOR = { a: VIO2, b: AMB } as const;
 /** Every graphic label key (`g:<key>`) the world draws; the locale files carry all of them. */
 export const LABEL_KEYS: readonly string[] = (() => {
   const s = new Set<string>();
-  for (const el of ELEMENTS) for (const p of el.art) if (p.t === "text" && p.src.startsWith("g:") && p.src !== "g:pct") s.add(p.src.slice(2));
+  for (const el of ELEMENTS) for (const p of el.art) if (p.t === "text" && p.src.startsWith("g:")) s.add(p.src.slice(2));
+  s.add("running");
   return [...s].sort();
 })();
 
@@ -896,7 +896,7 @@ const DYN_BOX: Record<DynName, Box> = {
   bar: { x: GEO.bar.x, y: GEO.bar.y, w: GEO.bar.w, h: GEO.bar.h },
   pct: { x: GEO.pctX - 80, y: 438, w: 80, h: 28 },
   ok: { x: 600, y: 498, w: 200, h: 26 },
-  tb: { x: metX(2) + 14, y: MET_Y + 62, w: GEO.tb.w, h: GEO.tb.h },
+  tb: { x: GEO.tb.x, y: GEO.tb.y, w: GEO.tb.w, h: GEO.tb.h },
   orb: { x: CC[0] - 77, y: CC[1] - 77, w: 154, h: 154 },
   ord: { x: CC[0] - GEO.ord.r - 7, y: CC[1] - GEO.ord.r - 7, w: 2 * GEO.ord.r + 14, h: 2 * GEO.ord.r + 14 },
   cpulse: { x: GEO.cpulse.x - 80, y: GEO.cpulse.y - 80, w: 160, h: 160 },
