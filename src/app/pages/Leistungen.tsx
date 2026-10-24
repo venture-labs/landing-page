@@ -258,9 +258,9 @@ export function Leistungen() {
       <LeistungenHero onQuizOpen={() => setQuizPlacement(PLACEMENTS.leistungenHero)} />
       <PulseJourney />
       <SkillMatrix />
-      <ToolProfile />
       <ClusterStorySection />
       <UseCasesSection />
+      <ToolProfile />
       <PulseCallout onQuizOpen={() => setQuizPlacement(PLACEMENTS.leistungenPulseCallout)} />
       <ContactStrip />
       <Footer />
