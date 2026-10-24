@@ -174,4 +174,9 @@ clusterStory:
       heading: 'Dein Cluster deckt dich zu 100 % ab'
       body: 'Der Aufbau ist ein Projekt. Der laufende Betrieb danach: eine monatliche Betreuung.'
       billingNote: 'Aufbau = ein Projekt · Betrieb = monatliche Betreuung'
+    - id: outlook
+      navLabel: 'Handy'
+      heading: 'Weniger Bildschirm, mehr Handy'
+      body: 'In Planung: der Anruf mit deinem Agenten statt des Klicks am Bildschirm – so wollen wir den Cluster weiter ausbauen. Heute ist das ein Ausblick, kein fertiges Angebot.'
+      status: planned
 ---

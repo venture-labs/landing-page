@@ -47,13 +47,16 @@ export interface ClusterStoryStep {
     | "telemetry"
     | "loop"
     | "growth"
-    | "service";
+    | "service"
+    | "outlook";
   navLabel: string;
   heading: string;
   body: string;
   channels?: ClusterStoryChannel[];
   areas?: ClusterStoryArea[];
   billingNote?: string;
+  /** Only the optional tenth step (outlook) carries a status; planned shows the "geplant" pill. */
+  status?: "live" | "planned";
 }
 
 export interface ClusterStoryData {
@@ -334,6 +337,13 @@ export const leistungenData: LeistungenData = {
       "heading": "Dein Cluster deckt dich zu 100 % ab",
       "body": "Der Aufbau ist ein Projekt. Der laufende Betrieb danach: eine monatliche Betreuung.",
       "billingNote": "Aufbau = ein Projekt · Betrieb = monatliche Betreuung"
+    },
+    {
+      "id": "outlook",
+      "navLabel": "Handy",
+      "heading": "Weniger Bildschirm, mehr Handy",
+      "body": "In Planung: der Anruf mit deinem Agenten statt des Klicks am Bildschirm – so wollen wir den Cluster weiter ausbauen. Heute ist das ein Ausblick, kein fertiges Angebot.",
+      "status": "planned"
     }
   ]
 },

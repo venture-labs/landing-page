@@ -469,13 +469,16 @@ export interface ClusterStoryStep {
     | "telemetry"
     | "loop"
     | "growth"
-    | "service";
+    | "service"
+    | "outlook";
   navLabel: string;
   heading: string;
   body: string;
   channels?: ClusterStoryChannel[];
   areas?: ClusterStoryArea[];
   billingNote?: string;
+  /** Only the optional tenth step (outlook) carries a status; planned shows the "geplant" pill. */
+  status?: "live" | "planned";
 }
 
 export interface ClusterStoryData {

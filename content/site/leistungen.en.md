@@ -174,4 +174,9 @@ clusterStory:
       heading: 'Your cluster covers you 100%'
       body: 'The build is one project. The ongoing operation after that: a monthly retainer.'
       billingNote: 'Build = one project · Operation = monthly retainer'
+    - id: outlook
+      navLabel: 'Phone'
+      heading: 'Less screen, more phone'
+      body: 'Planned: a phone call with your agent instead of a click on the screen – this is how we want to build the cluster further. Today this is an outlook, not a finished offer.'
+      status: planned
 ---
