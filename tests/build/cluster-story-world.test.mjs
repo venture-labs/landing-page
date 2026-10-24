@@ -68,13 +68,26 @@ test("the camera holds from k - 0.2 to k + 0.25 and moves only inside k - 0.75 .
   }
 });
 
-test("the visible camera rectangle contains the bounding box of steps up to k at k + 0.2 (steps 1..5)", () => {
+const framed = (b, r) => b.x >= r.x - 1 && b.y >= r.y - 1 && b.x + b.w <= r.x + r.w + 1 && b.y + b.h <= r.y + r.h + 1;
+const judged = (e) => e.layer >= 1 && e.layer <= 3 && !e.transforms;
+
+test("criterion 7 (a): the camera at k + 0.2 contains every judged element of step k, k = 0..9, both camera sets", () => {
   for (const narrow of [false, true]) {
-    for (let k = 0; k <= 4; k++) {
+    for (let k = 0; k <= 9; k++) {
       const r = W.cameraRect(k + 0.2, narrow);
-      for (const el of els.filter((e) => e.k === k && e.layer !== 0 && !e.transforms)) {
-        const b = W.boxOf(el, LB);
-        assert.ok(b.x >= r.x - 1 && b.y >= r.y - 1 && b.x + b.w <= r.x + r.w + 1 && b.y + b.h <= r.y + r.h + 1, `${el.id} inside the camera at step ${k} (narrow ${narrow})`);
+      for (const el of els.filter((e) => e.k === k && judged(e))) {
+        assert.ok(framed(W.boxOf(el, LB), r), `${el.id} inside the camera at step ${k} (narrow ${narrow})`);
+      }
+    }
+  }
+});
+
+test("criterion 7 (b): at k = 6 and k = 8 the camera contains every judged element built so far (the whole picture)", () => {
+  for (const narrow of [false, true]) {
+    for (const k of [6, 8]) {
+      const r = W.cameraRect(k + 0.2, narrow);
+      for (const el of els.filter((e) => e.k <= k && judged(e))) {
+        assert.ok(framed(W.boxOf(el, LB), r), `${el.id} (step ${el.k}) inside the camera at step ${k} (narrow ${narrow})`);
       }
     }
   }
