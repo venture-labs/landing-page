@@ -115,10 +115,10 @@ for (const [name, viewport] of [
       await expect.poll(() => readF(page), { timeout: 5000 }).toBeGreaterThan(0.94);
     });
 
-    test("the tenth pill and block are marked as planned (geplant), nothing else is", async ({ page }) => {
+    test("no pill or block carries a planned (geplant) marker", async ({ page }) => {
       await page.goto("/de/leistungen", { waitUntil: "networkidle" });
-      await expect(pill(page, 9)).toHaveAttribute("aria-label", /geplant/);
-      await expect(page.locator("li[data-step-index='9']")).toContainText("geplant");
+      await expect(page.locator("body")).not.toContainText(/geplant/i);
+      for (let i = 0; i < 10; i++) await expect(pill(page, i)).not.toHaveAttribute("aria-label", /geplant/i);
     });
 
     test("graphic text is at least 11px effective in the frames of every step mark", async ({ page }) => {
@@ -156,7 +156,7 @@ test.describe("server markup and first render", () => {
   test("EN: ten blocks", async ({ page }) => {
     await page.goto("/en/leistungen", { waitUntil: "networkidle" });
     await expect(page.locator("li[data-step-index]")).toHaveCount(10);
-    await expect(page.locator("li[data-step-index='9']")).toContainText("planned");
+    await expect(page.locator("li[data-step-index='9']")).not.toContainText(/planned/i);
   });
 
   for (const lang of ["de", "en"]) {

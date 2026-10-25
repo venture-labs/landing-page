@@ -46,7 +46,7 @@ test("every clusterStory value is a non-empty string and no value is a raw key",
   }
 });
 
-test("both content files have the same ten steps in the same order, only the tenth is planned", () => {
+test("both content files have the same ten steps in the same order, none is marked planned", () => {
   const steps = (file) => matter(read(file)).data.clusterStory.steps;
   const deSteps = steps("content/site/leistungen.md");
   const enSteps = steps("content/site/leistungen.en.md");
@@ -55,7 +55,7 @@ test("both content files have the same ten steps in the same order, only the ten
   assert.equal(deSteps[9].id, "outlook");
   for (const list of [deSteps, enSteps]) {
     list.forEach((s, i) => {
-      assert.equal(s.status, i === 9 ? "planned" : undefined, `step ${i + 1} status`);
+      assert.notEqual(s.status, "planned", `step ${i + 1} status`);
       assert.ok(typeof s.body === "string" && s.body.length > 0, `step ${i + 1} body`);
     });
   }

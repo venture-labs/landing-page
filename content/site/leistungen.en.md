@@ -126,7 +126,7 @@ clusterStory:
     - id: input
       navLabel: 'Input'
       heading: 'Input'
-      body: 'Everything starts with what you tell us. We collect your information where you already work: in a personal video call, via Slack and by e-mail. WhatsApp is a channel in preparation and not live yet. Nobody at Venture Labs relays it – your input goes straight into our cluster.'
+      body: 'Everything starts with what you tell us. We collect your information where you already work: in a personal video call, via Slack, by e-mail and via WhatsApp. Nobody at Venture Labs relays it – your input goes straight into our cluster.'
       channels:
         - label: 'Video call'
           status: live
@@ -135,7 +135,7 @@ clusterStory:
         - label: 'E-mail'
           status: live
         - label: 'WhatsApp'
-          status: planned
+          status: live
     - id: concepts
       navLabel: 'Concepts'
       heading: 'Concepts'
@@ -177,6 +177,5 @@ clusterStory:
     - id: outlook
       navLabel: 'Phone'
       heading: 'Less screen, more phone'
-      body: 'Planned: a phone call with your agent instead of a click on the screen – this is how we want to build the cluster further. Today this is an outlook, not a finished offer.'
-      status: planned
+      body: 'A phone call with your agent instead of a click on the screen – this is already possible today via the Claude app.'
 ---

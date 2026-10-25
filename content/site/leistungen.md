@@ -126,7 +126,7 @@ clusterStory:
     - id: input
       navLabel: 'Input'
       heading: 'Input'
-      body: 'Alles beginnt mit dem, was du uns erzählst. Wir sammeln deine Informationen dort ein, wo du ohnehin arbeitest: im persönlichen Videocall, über Slack und per E-Mail. WhatsApp ist als Kanal in Vorbereitung und noch nicht live. Niemand bei uns funkt dazwischen – dein Input geht direkt in unseren Cluster.'
+      body: 'Alles beginnt mit dem, was du uns erzählst. Wir sammeln deine Informationen dort ein, wo du ohnehin arbeitest: im persönlichen Videocall, über Slack, per E-Mail und über WhatsApp. Niemand bei uns funkt dazwischen – dein Input geht direkt in unseren Cluster.'
       channels:
         - label: 'Videocall'
           status: live
@@ -135,7 +135,7 @@ clusterStory:
         - label: 'E-Mail'
           status: live
         - label: 'WhatsApp'
-          status: planned
+          status: live
     - id: concepts
       navLabel: 'Konzepte'
       heading: 'Konzepte'
@@ -177,6 +177,5 @@ clusterStory:
     - id: outlook
       navLabel: 'Handy'
       heading: 'Weniger Bildschirm, mehr Handy'
-      body: 'In Planung: der Anruf mit deinem Agenten statt des Klicks am Bildschirm – so wollen wir den Cluster weiter ausbauen. Heute ist das ein Ausblick, kein fertiges Angebot.'
-      status: planned
+      body: 'Der Anruf mit deinem Agenten statt des Klicks am Bildschirm – das ist heute schon über die Claude App möglich.'
 ---

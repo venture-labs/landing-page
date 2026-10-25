@@ -30,7 +30,7 @@ export interface Situation {
 
 export interface ClusterStoryChannel {
   label: string;
-  status: "live" | "planned";
+  status: "live";
 }
 
 export interface ClusterStoryArea {
@@ -55,8 +55,6 @@ export interface ClusterStoryStep {
   channels?: ClusterStoryChannel[];
   areas?: ClusterStoryArea[];
   billingNote?: string;
-  /** Only the optional tenth step (outlook) carries a status; planned shows the "geplant" pill. */
-  status?: "live" | "planned";
 }
 
 export interface ClusterStoryData {
@@ -255,7 +253,7 @@ export const leistungenData: LeistungenData = {
       "id": "input",
       "navLabel": "Input",
       "heading": "Input",
-      "body": "Alles beginnt mit dem, was du uns erzählst. Wir sammeln deine Informationen dort ein, wo du ohnehin arbeitest: im persönlichen Videocall, über Slack und per E-Mail. WhatsApp ist als Kanal in Vorbereitung und noch nicht live. Niemand bei uns funkt dazwischen – dein Input geht direkt in unseren Cluster.",
+      "body": "Alles beginnt mit dem, was du uns erzählst. Wir sammeln deine Informationen dort ein, wo du ohnehin arbeitest: im persönlichen Videocall, über Slack, per E-Mail und über WhatsApp. Niemand bei uns funkt dazwischen – dein Input geht direkt in unseren Cluster.",
       "channels": [
         {
           "label": "Videocall",
@@ -271,7 +269,7 @@ export const leistungenData: LeistungenData = {
         },
         {
           "label": "WhatsApp",
-          "status": "planned"
+          "status": "live"
         }
       ]
     },
@@ -342,8 +340,7 @@ export const leistungenData: LeistungenData = {
       "id": "outlook",
       "navLabel": "Handy",
       "heading": "Weniger Bildschirm, mehr Handy",
-      "body": "In Planung: der Anruf mit deinem Agenten statt des Klicks am Bildschirm – so wollen wir den Cluster weiter ausbauen. Heute ist das ein Ausblick, kein fertiges Angebot.",
-      "status": "planned"
+      "body": "Der Anruf mit deinem Agenten statt des Klicks am Bildschirm – das ist heute schon über die Claude App möglich."
     }
   ]
 },
