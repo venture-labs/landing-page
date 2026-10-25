@@ -47,6 +47,7 @@ distinction is wanted in the dashboard.
 |---|---|---|---|
 | `navbarDesktop` | `navbar-desktop` | `Navbar` (desktop "Book a call" button) | `src/app/components/Navbar.tsx:101` |
 | `navbarMobile` | `navbar-mobile` | `Navbar` (mobile menu "Book a call" link) | `src/app/components/Navbar.tsx:141` |
+| `navbarMobileBar` | `navbar-mobile-bar` | `Navbar` (compact "Book a call" button in the mobile header bar, always visible, F-784c5f) | `src/app/components/Navbar.tsx` |
 | `finalCta` | `final-cta` | `FinalCTA` (homepage closing section) | `src/app/components/FinalCTA.tsx:44` |
 | `footer` | `footer` | `Footer` ("Book a call" row in the contact column) | `src/app/components/Footer.tsx:87-93` (config row), `133`/`142` (click handlers) |
 | `quizResult` | `quiz-result` | `PulseQuiz` (booking CTA on the result screen) | `src/app/components/PulseQuiz.tsx:620` |
