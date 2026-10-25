@@ -12,7 +12,7 @@ import svgPaths from "@/imports/🖌Homepage/svg-oa0apfkpzr";
 
 function LogoMark() {
   return (
-    <svg className="h-11 w-auto" fill="none" viewBox="0 0 239 63" aria-label="VentureLabs">
+    <svg className="h-9 sm:h-11 w-auto" fill="none" viewBox="0 0 239 63" aria-label="VentureLabs">
       <g clipPath="url(#clip-nav-logo)">
         <path d={svgPaths.p36555900} fill="white" />
         <path d={svgPaths.p8830c00} fill="white" />
@@ -79,8 +79,8 @@ export function Navbar() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
       <div className="absolute inset-0 bg-gradient-to-b from-[#0e0d13]/90 to-transparent backdrop-blur-[2px]" />
-      <nav className="relative max-w-[1400px] mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
-        <Link to={localizedPath("/")} aria-label="VentureLabs home" className="py-3 pr-6">
+      <nav className="relative max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 h-20 flex items-center justify-between gap-2">
+        <Link to={localizedPath("/")} aria-label="VentureLabs home" className="py-3 pr-2 sm:pr-6 shrink-0">
           <LogoMark />
         </Link>
 
@@ -106,13 +106,25 @@ export function Navbar() {
           </a>
         </div>
 
+        <div className="lg:hidden flex items-center gap-0.5 ml-auto">
+          <a
+            href={BOOKING_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackEvent(EVENTS.callLinkClicked, PLACEMENTS.navbarMobileBar, CTAS.bookCall)}
+            className="inline-flex items-center whitespace-nowrap bg-[#8129ff] active:bg-[#9140ff] text-white font-semibold px-3 py-2 rounded-lg"
+            style={{ fontSize: "var(--text-btn)" }}
+          >
+            {t("nav.bookCall")}
+          </a>
         <button
-          className="lg:hidden text-white p-2"
+          className="text-white p-1.5"
           onClick={() => setOpen(!open)}
           aria-label={open ? t("nav.menuClose") : t("nav.menuOpen")}
         >
           {open ? <X size={24} /> : <Menu size={24} />}
         </button>
+        </div>
       </nav>
 
       {open && (

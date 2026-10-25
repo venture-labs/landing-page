@@ -31,6 +31,7 @@ export const EVENTS = Object.freeze({
 export const PLACEMENTS = Object.freeze({
   navbarDesktop: "navbar-desktop",
   navbarMobile: "navbar-mobile",
+  navbarMobileBar: "navbar-mobile-bar",
   finalCta: "final-cta",
   footer: "footer",
   quizResult: "quiz-result",
