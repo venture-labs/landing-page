@@ -96,7 +96,6 @@
     "clusterStory": {
       "stepOf": "Schritt {{current}} von {{total}}",
       "stepNavLabel": "Schritte",
-      "plannedChannelTag": "geplant",
       "graphic": {
         "ours": "UNSER CLUSTER",
         "theirs": "DEIN CLUSTER",

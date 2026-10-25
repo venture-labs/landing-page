@@ -45,7 +45,7 @@
  *   lock and release cards ............... card, blue #5db1ff icon
  *   monthly call, rings, area tiles ...... lavender / blue / amber / violet per tile
  *   step 9 frames ........................ violet #a318f8 on steps 1..5, amber #fda700 on steps 6..8
- *   phone, waveform ...................... lavender #d9aeff / violet #a318f8 (planned: amber dashed tag)
+ *   phone, waveform ...................... lavender #d9aeff / violet #a318f8 
  *
  * Documented transformations (`transforms: true`; everything else only grows, AC "cumulative"):
  *   the concept card (flies hub -> Du -> back into the hub), the hub pulse, the build line
@@ -143,7 +143,7 @@ export interface Txt {
   t: "text";
   x: number;
   y: number;
-  /** `g:<key>` graphic label, `ch:<i>` channel, `area:<i>` area, `pl` planned tag, `ex` / `extap` example tags. */
+  /** `g:<key>` graphic label, `ch:<i>` channel, `area:<i>` area, `ex` / `extap` example tags. */
   src: string;
   fs: number;
   wt: number;
@@ -183,7 +183,6 @@ export interface Labels {
   g: Record<string, string>;
   ch: string[];
   areas: string[];
-  planned: string;
   example: string;
 }
 
@@ -383,7 +382,6 @@ add(
   { hl: "a" },
 );
 for (let k = 0; k < 4; k++) {
-  const planned = k === 3;
   const y = chY(k);
   add(
     1,
@@ -393,12 +391,9 @@ for (let k = 0; k < 4; k++) {
     "left",
     0.3,
     [
-      card(0, y, 156, 58, 20, planned ? { d: "7 6" } : {}),
+      card(0, y, 156, 58, 20),
       ico(CH_ICONS[k], 12, y + 15, 28, BLT),
-      txt(50, planned ? y + 17 : y + 29, `ch:${k}`, 18, W),
-      ...(planned
-        ? [txt(89, y + 41, "pl", 16, AMB, { a: "m", tier: "o", bg: { px: 9, h: 22, s: AMB, d: "4 3", sw: 1.5 } })]
-        : []),
+      txt(50, y + 29, `ch:${k}`, 18, W),
     ],
     { hl: "a" },
   );
@@ -633,13 +628,12 @@ add(0, "build-line", 8, 0.05, "draw", 0.3, [path("M0 706 V698 H450 V706", VIO2, 
 add(0, "run-line", 8, 0.2, "draw", 0.3, [path("M470 706 V698 H900 V706", AMB, 4)]);
 add(2, "ord", 8, 0.4, "none", 0.4, [dyn("ord")]);
 
-/* ---- Step 10 (k = 9): Ausblick, the phone docks at the company (planned) --------------------- */
+/* ---- Step 10 (k = 9): Ausblick, the phone docks at the company--------------------- */
 add(0, "phl", 9, 0.05, "draw", 0.35, [path(PATHS.phl, LAV, 3)]);
 add(0, "phl-head", 9, 0.35, "fade", 0.3, [arrow(962, 250, "r", LAV)]);
 add(1, "phone", 9, 0.1, "pop", 0.3, [
   card(980, 120, 220, 330, 40, { s: LAV, so: 0.55 }),
   txt(1090, 150, "g:callAgent", 17, LAV, { a: "m", mw: 196 }),
-  txt(1090, 202, "pl", 16, AMB, { a: "m", tier: "o", bg: { px: 12, h: 24, s: AMB, d: "4 3", sw: 1.5 } }),
 ]);
 add(2, "wave", 9, 0.5, "pop", 0.3, [dyn("wave")]);
 add(2, "mic", 9, 0.5, "pop", 0.3, [
@@ -822,7 +816,6 @@ export function wrapText(s: string, fs: number, wt: number, mw?: number): string
 }
 
 export function resolveText(src: string, lb: Labels): string {
-  if (src === "pl") return lb.planned;
   if (src === "ex") return lb.example;
   if (src === "extap") return `${lb.example}: Tap2Link`;
   const [kind, key] = [src.slice(0, src.indexOf(":")), src.slice(src.indexOf(":") + 1)];

@@ -17,7 +17,7 @@ import { FINAL_F, LABEL_KEYS, clamp, type Labels } from "./cluster-story/world";
  * ONE sticky "world" stage: a single connected map that only grows, panned and zoomed by a camera
  * as a pure function of the story position `f` (and a quiet clock `t`). `f` comes from the scroll
  * position (a block's centre against the viewline), so the picture scrubs both ways; the ten
- * step blocks (nine steps plus the optional, marked-as-planned "Ausblick") sit beside it on
+ * step blocks (nine steps plus the tenth, "Ausblick") sit beside it on
  * desktop and beneath it on phones, where the stage stays pinned to the top. Everything the
  * stage draws lives in `cluster-story/world.ts` (pure model; its docblock holds the `setF` /
  * `setStep` / `?video=1` contract, the step-mark rules and the colour of each element group)
@@ -37,7 +37,7 @@ const EXAMPLE_AREA_INDEX = 2;
 /** The step whose block carries the booking button (the offer: build and run). */
 const OFFER_STEP_INDEX = 8;
 
-/** One accent per step, in storyline order; the tenth (Ausblick) is amber like the "geplant" tags. */
+/** One accent per step, in storyline order; the tenth (Ausblick) is amber. */
 const STEP_ACCENTS = [
   "#2b95f6", // 0 input
   "#8129ff", // 1 concepts
@@ -142,7 +142,6 @@ export function ClusterStorySection() {
       g: Object.fromEntries(LABEL_KEYS.map((key) => [key, t(`leistungen.clusterStory.graphic.${key}`)])),
       ch: steps?.[0]?.channels?.map((c) => c.label) ?? [],
       areas: steps?.[7]?.areas?.map((a) => a.label) ?? [],
-      planned: t("leistungen.clusterStory.plannedChannelTag"),
       example: t("leistungen.exampleAgentLabel"),
     }),
     [t, steps],
@@ -297,8 +296,6 @@ export function ClusterStorySection() {
                   accent={STEP_ACCENTS[index] ?? "#8129ff"}
                   current={index === active}
                   done={index < active}
-                  planned={step.status === "planned"}
-                  plannedTag={labels.planned}
                   onGo={goTo}
                 />
               ))}
@@ -335,8 +332,6 @@ const StepPill = memo(function StepPill({
   accent,
   current,
   done,
-  planned,
-  plannedTag,
   onGo,
 }: {
   index: number;
@@ -344,19 +339,17 @@ const StepPill = memo(function StepPill({
   accent: string;
   current: boolean;
   done: boolean;
-  planned: boolean;
-  plannedTag: string;
   onGo: (index: number) => void;
 }) {
   return (
     <button
       type="button"
       aria-current={current ? "step" : undefined}
-      aria-label={`${index + 1}. ${step.navLabel}${planned ? ` (${plannedTag})` : ""}`}
+      aria-label={`${index + 1}. ${step.navLabel}`}
       onClick={() => onGo(index)}
       className={`min-w-0 h-8 flex items-center justify-center gap-1.5 rounded-full font-semibold transition-colors motion-reduce:transition-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#fda700] ${
         current ? "flex-none md:px-3 w-8 md:w-auto" : "flex-1 max-w-8"
-      } ${planned ? (current ? "border border-dashed border-[#0e0d13]/70" : "border border-dashed border-[#fda700]/70") : ""}`}
+      }`}
       style={{
         fontSize: "0.78rem",
         backgroundColor: current ? accent : "rgba(255,255,255,0.06)",
@@ -367,7 +360,6 @@ const StepPill = memo(function StepPill({
       {current ? (
         <span className="hidden md:inline whitespace-nowrap">
           {step.navLabel}
-          {planned ? ` · ${plannedTag}` : ""}
         </span>
       ) : null}
     </button>
@@ -388,7 +380,7 @@ const StoryBlock = memo(function StoryBlock({
   ctaLabel?: string;
 }) {
   const { t } = useTranslation();
-  const planned = step.status === "planned";
+  const outlook = step.id === "outlook";
 
   return (
     <li
@@ -396,17 +388,9 @@ const StoryBlock = memo(function StoryBlock({
       data-step-index={index}
       className="min-h-[62vh] lg:min-h-[84vh] flex flex-col justify-center gap-3 py-8"
     >
-      {planned ? (
-        <span className="flex items-center gap-3">
-          <span className="font-semibold uppercase tracking-[0.12em]" style={{ fontSize: "0.75rem", color: accent }}>
-            {t("leistungen.clusterStory.outlookEyebrow")}
-          </span>
-          <span
-            className="rounded-full border border-dashed border-[#fda700] font-bold uppercase tracking-wide px-2 py-0.5 text-[#fda700]"
-            style={{ fontSize: "0.62rem" }}
-          >
-            {t("leistungen.clusterStory.plannedChannelTag")}
-          </span>
+      {outlook ? (
+        <span className="font-semibold uppercase tracking-[0.12em]" style={{ fontSize: "0.75rem", color: accent }}>
+          {t("leistungen.clusterStory.outlookEyebrow")}
         </span>
       ) : (
         <span className="font-semibold uppercase tracking-[0.12em]" style={{ fontSize: "0.75rem", color: accent }}>
@@ -429,14 +413,6 @@ const StoryBlock = memo(function StoryBlock({
               style={{ fontSize: "0.86rem" }}
             >
               {channel.label}
-              {channel.status === "planned" && (
-                <span
-                  className="rounded-full font-bold uppercase tracking-wide px-2 py-0.5"
-                  style={{ fontSize: "0.62rem", background: "var(--brand-muted)", color: "#1E1C27" }}
-                >
-                  {t("leistungen.clusterStory.plannedChannelTag")}
-                </span>
-              )}
             </span>
           ))}
         </div>

@@ -452,7 +452,7 @@ export interface Situation {
 
 export interface ClusterStoryChannel {
   label: string;
-  status: "live" | "planned";
+  status: "live";
 }
 
 export interface ClusterStoryArea {
@@ -477,8 +477,6 @@ export interface ClusterStoryStep {
   channels?: ClusterStoryChannel[];
   areas?: ClusterStoryArea[];
   billingNote?: string;
-  /** Only the optional tenth step (outlook) carries a status; planned shows the "geplant" pill. */
-  status?: "live" | "planned";
 }
 
 export interface ClusterStoryData {

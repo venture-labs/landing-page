@@ -26,7 +26,6 @@ const labels = (l, lang) => {
     g: l.clusterStory.graphic,
     ch: steps[0].channels.map((c) => c.label),
     areas: steps[7].areas.map((a) => a.label),
-    planned: l.clusterStory.plannedChannelTag,
     example: l.exampleAgentLabel,
   };
 };
