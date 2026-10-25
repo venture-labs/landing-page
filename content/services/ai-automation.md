@@ -1,5 +1,7 @@
 ---
 language: "de"
+seoTitle: 'AI Automation – Prozesse mit KI verbessern – Venture Labs'
+seoDescription: 'Wir verwandeln manuelle Geschäftsprozesse in intelligente, integrierte Workflows – dort, wo KI messbar Zeit, Kosten und Fehler reduziert.'
 slug: ai-automation
 order: 1
 title: "AI Automation"

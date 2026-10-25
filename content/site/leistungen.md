@@ -1,5 +1,7 @@
 ---
 language: de
+seoTitle: 'Drei Schritte, ein Puls: Check, Build, Care – Venture Labs'
+seoDescription: 'Erst schauen, was wirklich los ist. Dann bauen, was den größten Unterschied macht. Und dann dranbleiben. Alles andere sind Details.'
 heroEyebrow: 'Leistungen'
 heroTitlePrefix: 'Drei Schritte.'
 heroTitleHighlight: 'Ein Puls.'
@@ -73,8 +75,9 @@ strengthFeatures:
   - icon: handshake
     title: 'Enge Zusammenarbeit & Transparenz'
     subtitle: 'Du bist Teil des Entwicklungsprozesses'
-situationsHeading: 'Kommt dir eine davon bekannt vor?'
-situationsCtaLabel: 'Kostenloses Erstgespräch buchen'
+useCasesHeading: 'Mögliche Use Cases'
+useCasesLeadLine: 'Beleg-Inbox läuft heute schon produktiv bei uns im Einsatz – die anderen vier zeigen dir, was mit demselben Ansatz sonst noch möglich ist.'
+useCasesCtaLabel: 'Kostenloses Erstgespräch buchen'
 situations:
   - id: receipts
     text: 'Zu jeder Abbuchung fehlt mir der Beleg.'
@@ -116,4 +119,63 @@ situations:
       - 'Nutzung und Fehler laufend überwachen'
       - 'Verantwortliche automatisch erinnern'
       - 'Monatlichen Gesundheitscheck liefern'
+clusterStory:
+  heading: 'Wie dein Cluster bei uns entsteht'
+  intro: 'Von deinem ersten Input bis zu einem Cluster, der dich zu 100 % abdeckt – eine Geschichte in neun Schritten, die sich beim Scrollen selbst aufbaut.'
+  steps:
+    - id: input
+      navLabel: 'Input'
+      heading: 'Input'
+      body: 'Alles beginnt mit dem, was du uns erzählst. Wir sammeln deine Informationen dort ein, wo du ohnehin arbeitest: im persönlichen Videocall, über Slack, per E-Mail und über WhatsApp. Niemand bei uns funkt dazwischen – dein Input geht direkt in unseren Cluster.'
+      channels:
+        - label: 'Videocall'
+          status: live
+        - label: 'Slack'
+          status: live
+        - label: 'E-Mail'
+          status: live
+        - label: 'WhatsApp'
+          status: live
+    - id: concepts
+      navLabel: 'Konzepte'
+      heading: 'Konzepte'
+      body: 'Aus deinem Input stößt unser Cluster sofort ein Konzept an. Das Konzept kommt zu dir zurück, und du entscheidest, ob und wie es weitergeht. Gebaut wird nur, was du freigegeben hast.'
+    - id: handover
+      navLabel: 'Übergabe'
+      heading: 'Übergabe an unsere Agenten'
+      body: 'Hast du dich entschieden, geht das Konzept an unsere eigenen Agenten. Sie übernehmen die Umsetzung – du musst nichts weiter anstoßen und nichts selbst zusammenbauen.'
+    - id: build
+      navLabel: 'Aufbau'
+      heading: 'Agenten bauen deine Agenten'
+      body: 'Unsere Agenten bauen deinen eigenen Agenten-Cluster, zugeschnitten auf deine Prozesse und nicht auf eine Vorlage. Wir fangen meist klein an, mit einer überschaubaren Aufgabe wie der Buchhaltung. So sammelst du Erfahrung damit, wo der Cluster funktioniert und wo nicht.'
+    - id: install
+      navLabel: 'Installation'
+      heading: 'Installation'
+      body: 'Der fertige Cluster wird bei dir installiert; der Balken läuft von 0 auf 100 %. Sobald er läuft, sehen wir, was funktioniert und was nicht, und lernen daraus für den nächsten Schritt.'
+    - id: telemetry
+      navLabel: 'Datenfluss'
+      heading: 'Telemetrie zurück, Updates raus'
+      body: 'Sensible Daten bleiben bei dir; nach außen geht nur, was du freigibst. Automatisch fließen nur Laufzeit-, Fehler- und Kosten-Telemetrie zu uns zurück, Lerndaten erst nach deiner manuellen Freigabe. Lokale KI-Modelle setzen wir ein, wo immer es möglich ist, und jeder Agent hat ein eigenes Budget mit sichtbaren Kosten. Mit Updates halten wir deinen Cluster auf Stand.'
+    - id: loop
+      navLabel: 'Kreislauf'
+      heading: 'Der Kreis schließt sich'
+      body: 'Einmal im Monat gehen wir mit dir in einen Call: Was hat funktioniert, was nicht? Welche Regeln schärfen wir nach, welche Modelle aktualisieren wir, welches Projekt setzen wir als Nächstes um? Neuer Input führt zu neuen Konzepten – der Kreis schließt sich.'
+    - id: growth
+      navLabel: 'Wachstum'
+      heading: 'Der Cluster wächst Ring für Ring'
+      body: 'Mit der Zeit stellt sich der Cluster genau auf dein Unternehmen ein: Die Fehler werden weniger, die Ergebnisse präziser, und er übernimmt mehr Aufgaben. So wächst er Bereich für Bereich, etwa mit Buchhaltung und Bankdaten, einem eigenen CRM, eigenen Frontends oder Apps und lokalen Modellen, bis er dein Unternehmen abdeckt.'
+      areas:
+        - label: 'Buchhaltung & Bankdaten'
+        - label: 'Eigenes CRM'
+        - label: 'Eigene Frontends/Apps'
+        - label: 'Lokale Modelle'
+    - id: service
+      navLabel: 'Angebot'
+      heading: 'Dein Cluster deckt dich zu 100 % ab'
+      body: 'Der Aufbau ist ein Projekt, der laufende Betrieb danach eine monatliche Betreuung. So bauen wir es – ohne Garantieversprechen, dafür Schritt für Schritt und nachvollziehbar. Im kostenlosen Erstgespräch klären wir, womit dein Cluster beginnt.'
+      billingNote: 'Aufbau = ein Projekt · Betrieb = monatliche Betreuung'
+    - id: outlook
+      navLabel: 'Handy'
+      heading: 'Weniger Bildschirm, mehr Handy'
+      body: 'Der Anruf mit deinem Agenten statt des Klicks am Bildschirm – das ist heute schon über die Claude App möglich.'
 ---

@@ -8,9 +8,14 @@ const ACCENT = "#8129ff";
 export function PulseCheckModal({
   open,
   onOpenChange,
+  placement,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  /** Which button opened the modal — forwarded into PulseQuiz's
+   * Quiz Started / Quiz Completed events so Plausible can tell two
+   * openers apart. */
+  placement: string;
 }) {
   const { lang } = useLocale();
   const copy = COPY[lang];
@@ -41,7 +46,7 @@ export function PulseCheckModal({
           {copy.quizHeading}
         </DialogTitle>
         <DialogDescription className="sr-only">{copy.quizIntro}</DialogDescription>
-        <PulseQuiz copy={copy} accent={ACCENT} onStepChange={setStep} />
+        <PulseQuiz copy={copy} accent={ACCENT} onStepChange={setStep} placement={placement} />
       </DialogContent>
     </Dialog>
   );

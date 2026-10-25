@@ -28,7 +28,44 @@ export interface Situation {
   capabilities: string[];
 }
 
+export interface ClusterStoryChannel {
+  label: string;
+  status: "live";
+}
+
+export interface ClusterStoryArea {
+  label: string;
+}
+
+export interface ClusterStoryStep {
+  id:
+    | "input"
+    | "concepts"
+    | "handover"
+    | "build"
+    | "install"
+    | "telemetry"
+    | "loop"
+    | "growth"
+    | "service"
+    | "outlook";
+  navLabel: string;
+  heading: string;
+  body: string;
+  channels?: ClusterStoryChannel[];
+  areas?: ClusterStoryArea[];
+  billingNote?: string;
+}
+
+export interface ClusterStoryData {
+  heading: string;
+  intro: string;
+  steps: ClusterStoryStep[];
+}
+
 export interface LeistungenData {
+  seoTitle: string;
+  seoDescription: string;
   heroEyebrow: string;
   heroTitlePrefix: string;
   heroTitleHighlight: string;
@@ -45,12 +82,16 @@ export interface LeistungenData {
   strengthHeadline: string;
   strengthDescription: string;
   strengthFeatures: StrengthFeature[];
-  situationsHeading: string;
-  situationsCtaLabel: string;
+  useCasesHeading: string;
+  useCasesLeadLine: string;
+  useCasesCtaLabel: string;
   situations: Situation[];
+  clusterStory: ClusterStoryData;
 }
 
 export const leistungenData: LeistungenData = {
+  seoTitle: "Three steps, one pulse: Check, Build, Care – Venture Labs",
+  seoDescription: "First find out what is really going on. Then build what makes the biggest difference. Then stay with it. Everything else is detail.",
   heroEyebrow: "Services",
   heroTitlePrefix: "Three steps.",
   heroTitleHighlight: "One pulse.",
@@ -144,8 +185,9 @@ export const leistungenData: LeistungenData = {
     "subtitle": "You're part of the development process"
   }
 ],
-  situationsHeading: "Does one of these sound familiar?",
-  situationsCtaLabel: "Book a free intro call",
+  useCasesHeading: "Possible use cases",
+  useCasesLeadLine: "Beleg-Inbox is already running in production for us today — the other four show you what else is possible with the same approach.",
+  useCasesCtaLabel: "Book a free intro call",
   situations: [
   {
     "id": "receipts",
@@ -203,4 +245,103 @@ export const leistungenData: LeistungenData = {
     ]
   }
 ],
+  clusterStory: {
+  "heading": "How your cluster takes shape with us",
+  "intro": "From your first input to a cluster that covers you 100% — a story in nine steps that builds itself as you scroll.",
+  "steps": [
+    {
+      "id": "input",
+      "navLabel": "Input",
+      "heading": "Input",
+      "body": "Everything starts with what you tell us. We collect your information where you already work: in a personal video call, via Slack, by e-mail and via WhatsApp. Nobody at Venture Labs relays it – your input goes straight into our cluster.",
+      "channels": [
+        {
+          "label": "Video call",
+          "status": "live"
+        },
+        {
+          "label": "Slack",
+          "status": "live"
+        },
+        {
+          "label": "E-mail",
+          "status": "live"
+        },
+        {
+          "label": "WhatsApp",
+          "status": "live"
+        }
+      ]
+    },
+    {
+      "id": "concepts",
+      "navLabel": "Concepts",
+      "heading": "Concepts",
+      "body": "From your input, our cluster kicks off a concept right away. The concept comes back to you, and you decide whether and how it goes on. Only what you have approved gets built."
+    },
+    {
+      "id": "handover",
+      "navLabel": "Handover",
+      "heading": "Handover to our agents",
+      "body": "Once you have decided, the concept goes to our own agents. They take over the implementation – you do not have to trigger anything further or assemble anything yourself."
+    },
+    {
+      "id": "build",
+      "navLabel": "Build",
+      "heading": "Agents build your agents",
+      "body": "Our agents build your own agent cluster, shaped around your processes and not around a template. We usually start small, with a manageable task such as bookkeeping. That way you gain experience of where the cluster works and where it does not."
+    },
+    {
+      "id": "install",
+      "navLabel": "Installation",
+      "heading": "Installation",
+      "body": "The finished cluster is installed at your site; the bar runs from 0 to 100 %. As soon as it is running, we see what works and what does not, and learn from it for the next step."
+    },
+    {
+      "id": "telemetry",
+      "navLabel": "Data flow",
+      "heading": "Telemetry back, updates out",
+      "body": "Sensitive data stays with you; outward only what you release. Automatically, only runtime, error and cost telemetry flows back to us, learning data only after you release it by hand. We use local AI models wherever possible, and every agent has its own budget with visible spend. With updates, we keep your cluster up to date."
+    },
+    {
+      "id": "loop",
+      "navLabel": "Loop",
+      "heading": "The loop closes",
+      "body": "Once a month we have a call with you: what worked, what did not? Which rules do we sharpen, which models do we update, which project do we take on next? New input leads to new concepts – the loop closes."
+    },
+    {
+      "id": "growth",
+      "navLabel": "Growth",
+      "heading": "The cluster grows ring by ring",
+      "body": "Over time the cluster tunes itself to your business: errors become fewer, results more precise, and it takes on more tasks. It grows area by area, for example with bookkeeping and bank data, your own CRM, your own frontends or apps and local models, until it covers your business.",
+      "areas": [
+        {
+          "label": "Bookkeeping & bank data"
+        },
+        {
+          "label": "Your own CRM"
+        },
+        {
+          "label": "Your own frontends/apps"
+        },
+        {
+          "label": "Local models"
+        }
+      ]
+    },
+    {
+      "id": "service",
+      "navLabel": "Offer",
+      "heading": "Your cluster covers you 100%",
+      "body": "The build is one project, the ongoing operation after that a monthly retainer. This is how we build it – without promising guarantees, but step by step and traceable. In the free intro call we clarify what your cluster starts with.",
+      "billingNote": "Build = one project · Operation = monthly retainer"
+    },
+    {
+      "id": "outlook",
+      "navLabel": "Phone",
+      "heading": "Less screen, more phone",
+      "body": "A phone call with your agent instead of a click on the screen – this is already possible today via the Claude app."
+    }
+  ]
+},
 };

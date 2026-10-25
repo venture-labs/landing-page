@@ -5,6 +5,12 @@
  *
  * All content lives in YAML frontmatter (there are no markdown bodies), so
  * reading it is a plain file read + YAML parse.
+ *
+ * Head copy: every file that backs a route may carry `seoTitle` (50-60
+ * characters) and `seoDescription` (120-160 characters) in its frontmatter -
+ * the COMPLETE <title> / meta description of that route, used verbatim by
+ * scripts/prerender.ts (no suffix is appended). Both are passed through below;
+ * scripts/check-meta.ts fails the build when a route's pair is out of range.
  */
 import { writeFileSync, mkdirSync, readFileSync, readdirSync } from "fs";
 import { resolve, dirname } from "path";
@@ -69,6 +75,7 @@ async function generateLocale(locale: Locale) {
   const services = readCollection("services", locale);
   const cases = readCollection("cases", locale);
   const blogPosts = readCollection("blog", locale);
+  const tools = readCollection("tools", locale);
 
   /* ── site.ts ─────────────────────────────────────────────────────────── */
   writeFileSync(
@@ -76,6 +83,8 @@ async function generateLocale(locale: Locale) {
     `${banner()}
 export const siteData = {
   heroHeadline: ${strLit(site.heroHeadline)},
+  seoTitle: ${strLit(site.seoTitle)},
+  seoDescription: ${strLit(site.seoDescription)},
   heroSubline: ${strLit(site.heroSubline)},
   heroCta: ${strLit(site.heroCta)},
   heroCtaSecondary: ${strLit(site.heroCtaSecondary)},
@@ -100,6 +109,8 @@ export interface ProcessStep {
 }
 
 export interface AboutData {
+  seoTitle: string;
+  seoDescription: string;
   heroTitle: string;
   heroSubheading: string;
   missionTitle: string;
@@ -114,6 +125,8 @@ export interface AboutData {
 }
 
 export const aboutData: AboutData = {
+  seoTitle: ${strLit(about.seoTitle)},
+  seoDescription: ${strLit(about.seoDescription)},
   heroTitle: ${strLit(about.heroTitle)},
   heroSubheading: ${strLit(about.heroSubheading)},
   missionTitle: ${strLit(about.missionTitle)},
@@ -153,6 +166,8 @@ export type PulseStep = "check" | "build" | "care";
 export interface Service {
   slug: string;
   title: string;
+  seoTitle: string;
+  seoDescription: string;
   description: string;
   gradient: string;
   icon: "code" | "grid" | "palette" | "bot";
@@ -165,6 +180,8 @@ export const services: Service[] = ${JSON.stringify(
       services.map((s) => ({
         slug: s.slug,
         title: s.title,
+        seoTitle: s.seoTitle ?? "",
+        seoDescription: s.seoDescription ?? "",
         description: s.description,
         gradient: s.gradient,
         icon: s.icon,
@@ -299,6 +316,9 @@ export const gridCases: GridCase[] = ${JSON.stringify(
     `${banner()}
 export interface CaseDetail {
   slug: string;
+  title: string;
+  seoTitle: string;
+  seoDescription: string;
   category: string;
   heroHeadline: string;
   heroSubline: string;
@@ -320,6 +340,9 @@ export const caseDetailsMap: Record<string, CaseDetail> = ${JSON.stringify(
           c.slug,
           {
             slug: c.slug,
+            title: c.title,
+            seoTitle: c.seoTitle ?? "",
+            seoDescription: c.seoDescription ?? "",
             category: c.category,
             heroHeadline: c.heroHeadline,
             heroSubline: c.heroSubline,
@@ -359,6 +382,8 @@ export interface BlogContentBlock {
 export interface BlogPost {
   slug: string;
   title: string;
+  seoTitle: string;
+  seoDescription: string;
   excerpt: string;
   topicSlug: "ai-automation" | "ai-products" | "ai-experience" | "venture-building";
   topic: string;
@@ -373,6 +398,8 @@ export const blogPosts: BlogPost[] = ${JSON.stringify(
       blogPosts.map((p) => ({
         slug: p.slug,
         title: p.title,
+        seoTitle: p.seoTitle ?? "",
+        seoDescription: p.seoDescription ?? "",
         excerpt: p.excerpt,
         topicSlug: p.topicSlug,
         topic: p.topic,
@@ -423,7 +450,44 @@ export interface Situation {
   capabilities: string[];
 }
 
+export interface ClusterStoryChannel {
+  label: string;
+  status: "live";
+}
+
+export interface ClusterStoryArea {
+  label: string;
+}
+
+export interface ClusterStoryStep {
+  id:
+    | "input"
+    | "concepts"
+    | "handover"
+    | "build"
+    | "install"
+    | "telemetry"
+    | "loop"
+    | "growth"
+    | "service"
+    | "outlook";
+  navLabel: string;
+  heading: string;
+  body: string;
+  channels?: ClusterStoryChannel[];
+  areas?: ClusterStoryArea[];
+  billingNote?: string;
+}
+
+export interface ClusterStoryData {
+  heading: string;
+  intro: string;
+  steps: ClusterStoryStep[];
+}
+
 export interface LeistungenData {
+  seoTitle: string;
+  seoDescription: string;
   heroEyebrow: string;
   heroTitlePrefix: string;
   heroTitleHighlight: string;
@@ -440,12 +504,16 @@ export interface LeistungenData {
   strengthHeadline: string;
   strengthDescription: string;
   strengthFeatures: StrengthFeature[];
-  situationsHeading: string;
-  situationsCtaLabel: string;
+  useCasesHeading: string;
+  useCasesLeadLine: string;
+  useCasesCtaLabel: string;
   situations: Situation[];
+  clusterStory: ClusterStoryData;
 }
 
 export const leistungenData: LeistungenData = {
+  seoTitle: ${strLit(leistungen.seoTitle)},
+  seoDescription: ${strLit(leistungen.seoDescription)},
   heroEyebrow: ${strLit(leistungen.heroEyebrow)},
   heroTitlePrefix: ${strLit(leistungen.heroTitlePrefix)},
   heroTitleHighlight: ${strLit(leistungen.heroTitleHighlight)},
@@ -470,15 +538,75 @@ export const leistungenData: LeistungenData = {
     null,
     2
   )},
-  situationsHeading: ${strLit(leistungen.situationsHeading)},
-  situationsCtaLabel: ${strLit(leistungen.situationsCtaLabel)},
+  useCasesHeading: ${strLit(leistungen.useCasesHeading)},
+  useCasesLeadLine: ${strLit(leistungen.useCasesLeadLine)},
+  useCasesCtaLabel: ${strLit(leistungen.useCasesCtaLabel)},
   situations: ${JSON.stringify(leistungen.situations ?? [], null, 2)},
+  clusterStory: ${JSON.stringify(
+    leistungen.clusterStory ?? { heading: "", intro: "", steps: [] },
+    null,
+    2
+  )},
 };
 `
   );
 
+  /* ── tools.ts ────────────────────────────────────────────────────────── */
+  writeFileSync(
+    resolve(outDir, "tools.ts"),
+    `${banner()}
+export type ToolCategory = "ai-automation" | "ai-products" | "ai-experience" | "venture-building";
+
+export interface AgentOption {
+  category: ToolCategory;
+  title: string;
+  description: string;
+}
+
+export interface ToolProfile {
+  slug: string;
+  category: ToolCategory;
+  name: string;
+  task: string;
+  input: string;
+  output: string;
+  whereItRuns: string;
+  releaseNote: string;
+  cancellationNote: string;
+  ctaLabel: string;
+  agentOptionsHeading: string;
+  agentOptionsIntro: string;
+  agentOptions: AgentOption[];
+}
+
+export const toolProfiles: ToolProfile[] = ${JSON.stringify(
+      tools.map((tool) => ({
+        slug: tool.slug,
+        category: tool.category,
+        name: tool.name,
+        task: tool.task,
+        input: tool.input,
+        output: tool.output,
+        whereItRuns: tool.whereItRuns,
+        releaseNote: tool.releaseNote,
+        cancellationNote: tool.cancellationNote,
+        ctaLabel: tool.ctaLabel,
+        agentOptionsHeading: tool.agentOptionsHeading,
+        agentOptionsIntro: tool.agentOptionsIntro,
+        agentOptions: (tool.agentOptions ?? []).map((o: any) => ({
+          category: o!.category,
+          title: o!.title,
+          description: o!.description,
+        })),
+      })),
+      null,
+      2
+    )};
+`
+  );
+
   console.log(
-    `generate-content[${locale}]: wrote site.ts, about.ts, leistungen.ts, services.ts, serviceDetails.ts, cases.ts (${featured.length} featured / ${grid.length} grid), caseDetails.ts (${withDetail.length} with detail), blog.ts (${blogPosts.length} posts)`
+    `generate-content[${locale}]: wrote site.ts, about.ts, leistungen.ts, services.ts, serviceDetails.ts, cases.ts (${featured.length} featured / ${grid.length} grid), caseDetails.ts (${withDetail.length} with detail), blog.ts (${blogPosts.length} posts), tools.ts (${tools.length} profiles)`
   );
 }
 

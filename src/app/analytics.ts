@@ -38,6 +38,45 @@ export const PLACEMENTS = Object.freeze({
   leistungenDetailCta: "leistungen-detail-cta",
   leistungenDetailContact: "leistungen-detail-contact",
   situations: "situations",
+  clusterStory: "cluster-story",
+  toolProfile: "tool-profile",
+  kontaktForm: "kontakt-form",
+  kontaktTeamMail: "kontakt-team-mail",
+  kontaktTeamPhone: "kontakt-team-phone",
+  kontaktBottomMail: "kontakt-bottom-mail",
+  footerJobsMail: "footer-jobs-mail",
+  footerContactMail: "footer-contact-mail",
+  leistungenDetailMail: "leistungen-detail-mail",
+  leistungenMail: "leistungen-mail",
+  impressumMail: "impressum-mail",
+  datenschutzMail: "datenschutz-mail",
+  heroContact: "hero-contact",
+  pulseJourney: "pulse-journey",
+  heroQuiz: "hero-quiz",
+  aiPulseTeaser: "ai-pulse-teaser",
+  leistungenHero: "leistungen-hero",
+  leistungenPulseCallout: "leistungen-pulse-callout",
+  leistungenDetailQuiz: "leistungen-detail-quiz",
+  leistungenHeroContact: "leistungen-hero-contact",
+  leistungenPulseCalloutContact: "leistungen-pulse-callout-contact",
+  leistungenDetailHeroCta: "leistungen-detail-hero-cta",
+  caseDetailCta: "case-detail-cta",
+  caseDetailBottomCta: "case-detail-bottom-cta",
+  blogDetailCta: "blog-detail-cta",
+  ueberUnsCta: "ueber-uns-cta",
+} as const);
+
+/**
+ * The five kinds of call-to-action Plausible can break any of the four
+ * events down by, via the `cta` custom property. Frozen, code constants —
+ * never translated, never extended without updating docs/analytics-events.md.
+ */
+export const CTAS = Object.freeze({
+  bookCall: "book-call",
+  contact: "contact",
+  quiz: "quiz",
+  mail: "mail",
+  phone: "phone",
 } as const);
 
 /**
@@ -61,11 +100,12 @@ function currentLang(): "de" | "en" {
 
 /**
  * Fires a Plausible custom event with `page` and `lang` always attached, plus
- * `placement` when the call site names one. Safe no-op when the script is
- * not loaded.
+ * `placement` and `cta` when the call site names them. Safe no-op when the
+ * script is not loaded.
  */
-export function trackEvent(name: string, placement?: string): void {
+export function trackEvent(name: string, placement?: string, cta?: string): void {
   const props: Record<string, string> = { page: currentPage(), lang: currentLang() };
   if (placement) props.placement = placement;
+  if (cta) props.cta = cta;
   window.plausible?.(name, { props });
 }

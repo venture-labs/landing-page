@@ -1,6 +1,8 @@
 ---
 slug: "no-code-vs-custom"
 language: "de"
+seoTitle: 'No-Code vs. Custom: Wann sich was lohnt – Venture Labs'
+seoDescription: 'No-Code-Tools werden immer mächtiger – aber sie sind nicht immer die richtige Wahl. Eine ehrliche Einordnung, wann No-Code zur Sackgasse wird.'
 order: 5
 title: "No-Code vs. Custom Development: Wann sich was lohnt"
 excerpt: "No-Code-Tools werden immer mächtiger – aber sie sind nicht immer die richtige Wahl. Eine ehrliche Einordnung."

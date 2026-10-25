@@ -1,6 +1,8 @@
 ---
 slug: "warum-mvps-floppen"
 language: "de"
+seoTitle: 'Warum MVPs floppen – wie du es besser machst – Venture Labs'
+seoDescription: 'Ein MVP ist kein halbfertiges Produkt – es ist ein Test. Wir zeigen, welche Fehler Teams am häufigsten machen und wie du mit weniger Aufwand mehr lernst.'
 order: 1
 title: "Warum die meisten MVPs floppen – und wie du es besser machst"
 excerpt: "Ein MVP ist kein halbfertiges Produkt – es ist ein Test. Wir zeigen, welche Fehler Teams am häufigsten machen und wie du mit weniger Aufwand mehr lernst."

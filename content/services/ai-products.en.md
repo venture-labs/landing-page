@@ -1,6 +1,8 @@
 ---
 slug: ai-products
 language: "en"
+seoTitle: 'AI Products – Build the product with AI – Venture Labs'
+seoDescription: 'We develop products that don''t bolt on AI as an afterthought, but design it in from day one – prototyping, MVPs, web apps and business software.'
 order: 2
 title: "AI Products"
 description: "Building new digital products: we develop products that don't bolt on AI as an afterthought, but design it in from day one."

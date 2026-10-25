@@ -5,6 +5,8 @@ export type PulseStep = "check" | "build" | "care";
 export interface Service {
   slug: string;
   title: string;
+  seoTitle: string;
+  seoDescription: string;
   description: string;
   gradient: string;
   icon: "code" | "grid" | "palette" | "bot";
@@ -17,6 +19,8 @@ export const services: Service[] = [
   {
     "slug": "ai-automation",
     "title": "AI Automation",
+    "seoTitle": "AI Automation – Prozesse mit KI verbessern – Venture Labs",
+    "seoDescription": "Wir verwandeln manuelle Geschäftsprozesse in intelligente, integrierte Workflows – dort, wo KI messbar Zeit, Kosten und Fehler reduziert.",
     "description": "Bestehende Prozesse neu denken: Wir verwandeln manuelle Geschäftsprozesse in intelligente, integrierte Workflows.",
     "gradient": "linear-gradient(-56.458deg, rgba(253, 167, 0, 0.8) 0%, rgba(253, 167, 0, 0) 100%)",
     "icon": "bot",
@@ -38,6 +42,8 @@ export const services: Service[] = [
   {
     "slug": "ai-products",
     "title": "AI Products",
+    "seoTitle": "AI Products – Das Produkt mit KI bauen – Venture Labs",
+    "seoDescription": "Wir entwickeln Produkte, die AI nicht nachträglich aufsetzen, sondern von Anfang an mitdenken – Prototyping, MVPs, Web Apps und Business Software.",
     "description": "Neue digitale Produkte bauen: Wir entwickeln Produkte, die AI nicht nachträglich aufsetzen, sondern von Anfang an mitdenken.",
     "gradient": "linear-gradient(146.383deg, rgba(163, 24, 248, 0.8) 0%, rgba(163, 24, 248, 0) 100%)",
     "icon": "code",
@@ -58,6 +64,8 @@ export const services: Service[] = [
   {
     "slug": "ai-experience",
     "title": "AI Experience",
+    "seoTitle": "AI Experience – Die Interaktion gestalten – Venture Labs",
+    "seoDescription": "Die Zusammenarbeit von Mensch und AI gestalten: Wir gestalten Interfaces, Workflows und Interaktionen für eine neue Generation digitaler Produkte.",
     "description": "Die Zusammenarbeit von Mensch und AI gestalten: Wir gestalten Interfaces, Workflows und Interaktionen für eine neue Generation digitaler Produkte.",
     "gradient": "linear-gradient(44.336deg, rgba(43, 149, 246, 0.8) 0%, rgba(43, 149, 246, 0) 100%)",
     "icon": "palette",
@@ -78,6 +86,8 @@ export const services: Service[] = [
   {
     "slug": "venture-building",
     "title": "Venture Building",
+    "seoTitle": "Venture Building – Neues Geschäft aufbauen – Venture Labs",
+    "seoDescription": "Aus Chancen neue Geschäfte machen: Wir validieren Geschäftsmodelle und bauen daraus funktionierende digitale Ventures – von der Idee bis zum Launch.",
     "description": "Aus Chancen neue Geschäfte machen: Wir validieren Geschäftsmodelle und bauen daraus funktionierende digitale Ventures.",
     "gradient": "linear-gradient(268.344deg, rgba(255, 0, 0, 0.8) 0%, rgba(255, 0, 0, 0) 100%)",
     "icon": "grid",

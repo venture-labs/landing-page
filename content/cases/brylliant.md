@@ -1,5 +1,7 @@
 ---
 language: "de"
+seoTitle: 'Brylliant – Das Tool für perfekte Briefings – Venture Labs'
+seoDescription: 'Brylliant ist ein Briefing-Tool, das Agenturen und Kunden auf eine gemeinsame Grundlage bringt – Interface und Workflow von Grund auf neu gedacht.'
 slug: brylliant
 order: 2
 title: "Brylliant – das Tool für perfekte Briefings"

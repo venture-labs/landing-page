@@ -87,7 +87,70 @@
     "backToOverview": "Zurück zur Übersicht",
     "pulseCta": "Kostenlosen Pulse Score starten",
     "allSteps": "Alle Schritte",
-    "allServices": "Alle Leistungen im Detail"
+    "allServices": "Alle Leistungen im Detail",
+    "toolInputLabel": "Kommt rein",
+    "toolOutputLabel": "Kommt raus",
+    "toolWhereItRunsLabel": "Läuft bei dir",
+    "toolReleaseLabel": "Freigabe",
+    "toolCancellationLabel": "Kündigung",
+    "clusterStory": {
+      "stepOf": "Schritt {{current}} von {{total}}",
+      "stepNavLabel": "Schritte",
+      "graphic": {
+        "ours": "UNSER CLUSTER",
+        "theirs": "DEIN CLUSTER",
+        "theirsBuilding": "DEIN CLUSTER (wird gebaut)",
+        "concept": "Konzept",
+        "handover": "Übergabe",
+        "build": "Aufbau",
+        "telemetry": "Telemetrie",
+        "updates": "Updates",
+        "loop": "Neue Calls / Input",
+        "area": {
+          "bookkeeping": "Buchhaltung & Bank",
+          "crm": "Eigenes CRM",
+          "apps": "Frontends/Apps",
+          "models": "Lokale Modelle"
+        },
+        "you": "Du",
+        "zone": "Venture Labs",
+        "decision": "Entscheidung",
+        "agents": "Unsere Agenten",
+        "company": "Dein Unternehmen",
+        "install": "Installation",
+        "running": "Cluster läuft",
+        "works": "funktioniert",
+        "worksNot": "funktioniert nicht, daraus lernen",
+        "onlyToUs": "zu uns fließt nur:",
+        "runtime": "Laufzeit",
+        "errors": "Fehler",
+        "costs": "Kosten",
+        "lock": "Sensible Daten bleiben bei dir",
+        "release": "Lerndaten nur nach deiner Freigabe",
+        "month": "Monats-Call",
+        "callWithYou": "Call mit dir",
+        "reviewWorked": "Was hat funktioniert, was nicht?",
+        "rules": "Regeln nachschärfen",
+        "models": "Modelle aktualisieren",
+        "nextProject": "Nächstes Projekt wählen",
+        "newInput": "neuer Input",
+        "metResults": "Ergebnisse präziser",
+        "metTasks": "mehr Aufgaben",
+        "schematic": "Schematische Darstellung, keine Messwerte",
+        "buildSub": "ein Projekt",
+        "run": "Betrieb",
+        "runSub": "monatliche Betreuung",
+        "callAgent": "Anruf mit dem Agenten",
+        "screenTime": "Zeit am Bildschirm",
+        "talkPhone": "Mit dem Handy sprechen"
+      },
+      "outlookEyebrow": "Ausblick"
+    },
+    "useCases": {
+      "stepOf": "Karte {{current}} von {{total}}",
+      "prevLabel": "Vorherige Karte",
+      "nextLabel": "Nächste Karte"
+    }
   },
   "cases": {
     "heroTitle": "Unsere Projekte",
@@ -213,6 +276,28 @@
     "thankYouBody": "Wir haben deine Anfrage erhalten und melden uns innerhalb von ein bis zwei Werktagen bei dir.",
     "errorText": "Das hat leider nicht geklappt. Bitte versuch es nochmal oder schreib uns direkt an contact@venturelabs.team.",
     "ctaQuestion": "Du möchtest eine kostenlose Erstberatung? Wir helfen dir gerne weiter. Buch dir direkt ein Gespräch oder schreib uns, wir melden uns bei dir."
+  },
+  "seo": {
+    "cases": {
+      "title": "Unsere Projekte: Cases aus allen Branchen – Venture Labs",
+      "description": "Unsere Projekte ziehen sich durch alle Branchen: KI-gestützte Vertriebstools, Serviceplattformen, Website-Relaunches – für Start-ups wie Großkonzerne."
+    },
+    "kontakt": {
+      "title": "Kontakt aufnehmen – Was ist dein Anliegen? – Venture Labs",
+      "description": "Wähle die Themen aus, die dich interessieren – das hilft uns, dir schneller zu antworten. Wir melden uns innerhalb von ein bis zwei Werktagen bei dir."
+    },
+    "blog": {
+      "title": "Blog – Gedanken, Learnings und Einblicke – Venture Labs",
+      "description": "Gedanken, Learnings und Einblicke aus unserer Arbeit mit digitalen Produkten, Teams und KI – von KI-Agenten und MVPs bis zu Design Systems."
+    },
+    "impressum": {
+      "title": "Impressum der Venture Labs GmbH – Angaben gemäß § 5 TMG",
+      "description": "Impressum der Venture Labs GmbH, Breite Str. 27, 40213 Düsseldorf – vertreten durch den Geschäftsführer Christian Wenzel. Angaben gemäß § 5 TMG."
+    },
+    "datenschutz": {
+      "title": "Datenschutzerklärung für venturelabs.team – Venture Labs",
+      "description": "Diese Datenschutzerklärung gilt für die Website venturelabs.team. Verantwortlicher: Venture Labs GmbH, Breite Str. 27, 40213 Düsseldorf."
+    }
   },
   "notFound": {
     "heading": "Seite nicht gefunden",

@@ -1,0 +1,61 @@
+<!doctype html>
+<!--
+  1200x630 share-image template for venturelabs.team (VL-16-S1, VL-16-D17).
+  One template, one line per language: ?lang=en (default) or ?lang=de.
+  Centre-square-safe: messengers crop the centre square of the image
+  (630x630, x 285-915). The mark sits fully inside it (box x 325-875 / y 40-590),
+  every line of text sits entirely outside it (left band x < 285, right band x > 915).
+  Colours: #0e0d13 (--background), #ffffff (--foreground), #8129ff (--primary),
+  #9ca3af (--muted-foreground) - the values of src/styles/theme.css, nothing else.
+  Font: Figtree, self-hosted in public/fonts/figtree/.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Venture Labs share image</title>
+    <style>
+      @font-face {
+        font-family: "Figtree";
+        src: url("../../public/fonts/figtree/Figtree-Variable.woff2") format("woff2");
+        font-weight: 300 900;
+      }
+      html, body { margin: 0; padding: 0; }
+      body {
+        width: 1200px;
+        height: 630px;
+        position: relative;
+        overflow: hidden;
+        background: #0e0d13;
+        color: #ffffff;
+        font-family: "Figtree", sans-serif;
+      }
+      /* The mark: favicon.svg is 64x64 with the mark centred; 480px puts the mark
+         (about 270x220 px) in the middle of the canvas, well inside x 325-875 / y 40-590. */
+      .mark { position: absolute; left: 360px; top: 75px; width: 480px; height: 480px; }
+      .band { position: absolute; top: 0; height: 630px; display: flex; flex-direction: column; justify-content: center; }
+      .left { left: 56px; width: 205px; }
+      .right { left: 939px; width: 205px; }
+      .line { margin: 0; font-size: 38px; line-height: 1.18; font-weight: 700; letter-spacing: -0.01em; }
+      .line em { font-style: normal; color: #8129ff; }
+      .name { margin: 0; font-size: 34px; line-height: 1.15; font-weight: 700; }
+      .url { margin: 14px 0 0; font-size: 22px; font-weight: 500; color: #9ca3af; }
+    </style>
+  </head>
+  <body>
+    <img class="mark" src="../../public/favicon.svg" alt="" />
+    <div class="band left"><p class="line" id="line"></p></div>
+    <div class="band right">
+      <p class="name">Venture<br />Labs</p>
+      <p class="url">venturelabs.team</p>
+    </div>
+    <script>
+      var lines = {
+        en: ["AI for", "mid-sized", "companies,", "<em>that pays</em>", "<em>off.</em>"],
+        de: ["KI im", "Mittelstand,", "<em>die sich</em>", "<em>rechnet.</em>"],
+      };
+      var lang = new URLSearchParams(location.search).get("lang") === "de" ? "de" : "en";
+      document.documentElement.lang = lang;
+      document.getElementById("line").innerHTML = lines[lang].join("<br />");
+    </script>
+  </body>
+</html>

@@ -5,6 +5,7 @@ import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
 import { useLeistungenData } from "@/data/content";
 import { useLocale } from "@/app/locale";
+import { CTAS, EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
 import type { CoreService } from "@/data/de/leistungen";
 
 export const STEP_ACCENTS: Record<CoreService["key"], string> = {
@@ -219,6 +220,7 @@ function StepDetail({
         </p>
         <Link
           to={`${localizedPath("/kontakt")}?topic=${step.key}`}
+          onClick={() => trackEvent(EVENTS.contactSent, PLACEMENTS.pulseJourney, CTAS.contact)}
           className="self-start inline-flex items-center gap-2 font-semibold text-white rounded-lg px-6 py-3 transition-transform hover:scale-[1.02]"
           style={{ fontSize: "var(--text-btn)", backgroundColor: accent }}
         >

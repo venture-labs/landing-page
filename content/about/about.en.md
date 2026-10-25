@@ -1,5 +1,7 @@
 ---
 language: en
+seoTitle: 'About – We build digital products that work – Venture Labs'
+seoDescription: 'Venture Labs is an agency for digital product development. We help companies and founders turn their visions into market-ready products.'
 heroTitle: We build digital products that work.
 heroSubheading: VentureLabs is an agency for digital product development. We help companies and founders turn their visions into market-ready products — with expertise in design, development, and AI.
 missionTitle: Our Mission

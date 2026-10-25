@@ -1,5 +1,7 @@
 ---
 language: "de"
+seoTitle: 'MachineMaster – KI-gestütztes Vertriebstool – Venture Labs'
+seoDescription: 'MachineMaster unterstützt Händler und Außendienst beim Verkauf von Landmaschinen mit KI-gestützter Produktberatung – das MVP in 12 Wochen gebaut.'
 slug: machinemaster
 order: 4
 title: "MachineMaster – Landmaschinen Vertriebsplattform"
