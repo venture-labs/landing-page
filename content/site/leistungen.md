@@ -126,7 +126,7 @@ clusterStory:
     - id: input
       navLabel: 'Input'
       heading: 'Input'
-      body: 'Wir sammeln deine Informationen ein – im persönlichen Videocall, über Slack und E-Mail, und (in Vorbereitung) über WhatsApp. Niemand bei uns funkt dazwischen.'
+      body: 'Alles beginnt mit dem, was du uns erzählst. Wir sammeln deine Informationen dort ein, wo du ohnehin arbeitest: im persönlichen Videocall, über Slack und per E-Mail. WhatsApp ist als Kanal in Vorbereitung und noch nicht live. Niemand bei uns funkt dazwischen – dein Input geht direkt in unseren Cluster.'
       channels:
         - label: 'Videocall'
           status: live
@@ -139,31 +139,31 @@ clusterStory:
     - id: concepts
       navLabel: 'Konzepte'
       heading: 'Konzepte'
-      body: 'Aus deinem Input wird sofort ein Konzept angestoßen – und kommt zu dir zurück, zur Entscheidung.'
+      body: 'Aus deinem Input stößt unser Cluster sofort ein Konzept an. Das Konzept kommt zu dir zurück, und du entscheidest, ob und wie es weitergeht. Gebaut wird nur, was du freigegeben hast.'
     - id: handover
       navLabel: 'Übergabe'
       heading: 'Übergabe an unsere Agenten'
-      body: 'Das entschiedene Konzept geht an unsere eigenen Agenten weiter.'
+      body: 'Hast du dich entschieden, geht das Konzept an unsere eigenen Agenten. Sie übernehmen die Umsetzung – du musst nichts weiter anstoßen und nichts selbst zusammenbauen.'
     - id: build
       navLabel: 'Aufbau'
       heading: 'Agenten bauen deine Agenten'
-      body: 'Unsere Agenten bauen deinen eigenen Agenten-Cluster – zugeschnitten auf deine Prozesse, nicht auf eine Vorlage.'
+      body: 'Unsere Agenten bauen deinen eigenen Agenten-Cluster, zugeschnitten auf deine Prozesse und nicht auf eine Vorlage. Wir fangen meist klein an, mit einer überschaubaren Aufgabe wie der Buchhaltung. So sammelst du Erfahrung damit, wo der Cluster funktioniert und wo nicht.'
     - id: install
       navLabel: 'Installation'
       heading: 'Installation'
-      body: 'Der Cluster wird bei dir installiert.'
+      body: 'Der fertige Cluster wird bei dir installiert; der Balken läuft von 0 auf 100 %. Sobald er läuft, sehen wir, was funktioniert und was nicht, und lernen daraus für den nächsten Schritt.'
     - id: telemetry
       navLabel: 'Datenfluss'
       heading: 'Telemetrie zurück, Updates raus'
-      body: 'Sensible Daten bleiben bei dir; nach außen geht nur, was du freigibst – nur Laufzeit-, Fehler- und Kosten-Telemetrie fließt automatisch zurück, lokale KI-Modelle wo immer möglich, Lerndaten erst nach deiner manuellen Freigabe. Jeder Agent hat ein eigenes Budget mit sichtbaren Kosten. Dafür schicken wir Updates.'
+      body: 'Sensible Daten bleiben bei dir; nach außen geht nur, was du freigibst. Automatisch fließen nur Laufzeit-, Fehler- und Kosten-Telemetrie zu uns zurück, Lerndaten erst nach deiner manuellen Freigabe. Lokale KI-Modelle setzen wir ein, wo immer es möglich ist, und jeder Agent hat ein eigenes Budget mit sichtbaren Kosten. Mit Updates halten wir deinen Cluster auf Stand.'
     - id: loop
       navLabel: 'Kreislauf'
       heading: 'Der Kreis schließt sich'
-      body: 'Neue Calls oder neuer Input führen zu neuen Konzepten – der Pfeil zieht sich sichtbar zurück zum Anfang.'
+      body: 'Einmal im Monat gehen wir mit dir in einen Call: Was hat funktioniert, was nicht? Welche Regeln schärfen wir nach, welche Modelle aktualisieren wir, welches Projekt setzen wir als Nächstes um? Neuer Input führt zu neuen Konzepten – der Kreis schließt sich.'
     - id: growth
       navLabel: 'Wachstum'
       heading: 'Der Cluster wächst Ring für Ring'
-      body: 'Deine Agenten bauen den Cluster immer weiter aus – Bereich für Bereich, bis er dein Unternehmen abdeckt.'
+      body: 'Mit der Zeit stellt sich der Cluster genau auf dein Unternehmen ein: Die Fehler werden weniger, die Ergebnisse präziser, und er übernimmt mehr Aufgaben. So wächst er Bereich für Bereich, etwa mit Buchhaltung und Bankdaten, einem eigenen CRM, eigenen Frontends oder Apps und lokalen Modellen, bis er dein Unternehmen abdeckt.'
       areas:
         - label: 'Buchhaltung & Bankdaten'
         - label: 'Eigenes CRM'
@@ -172,6 +172,11 @@ clusterStory:
     - id: service
       navLabel: 'Angebot'
       heading: 'Dein Cluster deckt dich zu 100 % ab'
-      body: 'Der Aufbau ist ein Projekt. Der laufende Betrieb danach: eine monatliche Betreuung.'
+      body: 'Der Aufbau ist ein Projekt, der laufende Betrieb danach eine monatliche Betreuung. So bauen wir es – ohne Garantieversprechen, dafür Schritt für Schritt und nachvollziehbar. Im kostenlosen Erstgespräch klären wir, womit dein Cluster beginnt.'
       billingNote: 'Aufbau = ein Projekt · Betrieb = monatliche Betreuung'
+    - id: outlook
+      navLabel: 'Handy'
+      heading: 'Weniger Bildschirm, mehr Handy'
+      body: 'In Planung: der Anruf mit deinem Agenten statt des Klicks am Bildschirm – so wollen wir den Cluster weiter ausbauen. Heute ist das ein Ausblick, kein fertiges Angebot.'
+      status: planned
 ---
