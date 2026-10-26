@@ -1,6 +1,6 @@
 # Plausible analytics events
 
-The four Plausible custom events venturelabs.team fires, and the custom properties attached to
+The four funnel events and the three explainer-video events (below) venturelabs.team fires, and the custom properties attached to
 them. The central helper is `src/app/analytics.ts`; every call site imports `EVENTS`, `PLACEMENTS`
 and `CTAS` from there — never a duplicated string literal.
 
@@ -47,6 +47,7 @@ distinction is wanted in the dashboard.
 |---|---|---|---|
 | `navbarDesktop` | `navbar-desktop` | `Navbar` (desktop "Book a call" button) | `src/app/components/Navbar.tsx:101` |
 | `navbarMobile` | `navbar-mobile` | `Navbar` (mobile menu "Book a call" link) | `src/app/components/Navbar.tsx:141` |
+| `videoEnd` | `video-end` | `ExplainerVideo` end card («Gespräch buchen») | `src/app/components/ExplainerVideo.tsx` |
 | `navbarMobileBar` | `navbar-mobile-bar` | `Navbar` (compact "Book a call" button in the mobile header bar, always visible, F-784c5f) | `src/app/components/Navbar.tsx` |
 | `finalCta` | `final-cta` | `FinalCTA` (homepage closing section) | `src/app/components/FinalCTA.tsx:44` |
 | `footer` | `footer` | `Footer` ("Book a call" row in the contact column) | `src/app/components/Footer.tsx:87-93` (config row), `133`/`142` (click handlers) |
@@ -106,6 +107,7 @@ for why they were tracked the same way rather than left out.
 | `heroQuiz` | `hero-quiz` | `Hero`'s Pulse Score button | `src/app/components/Hero.tsx:223` |
 | `aiPulseTeaser` | `ai-pulse-teaser` | `AIPulseTeaser` section (homepage) | `src/app/components/AIPulseTeaser.tsx:57` |
 | `leistungenHero` | `leistungen-hero` | `Leistungen` hero's Pulse button, and the `#pulse-score`/`#quiz` deep link | `src/app/pages/Leistungen.tsx:225,257` |
+| `videoEndQuiz` | `video-end-quiz` | `ExplainerVideo` end card's Pulse Score button | `src/app/components/ExplainerVideo.tsx` |
 | `leistungenPulseCallout` | `leistungen-pulse-callout` | `Leistungen`'s closing `PulseCallout` Pulse button | `src/app/pages/Leistungen.tsx:262` |
 | `leistungenDetailQuiz` | `leistungen-detail-quiz` | `LeistungenDetail`'s one Pulse button | `src/app/pages/LeistungenDetail.tsx:335` |
 
@@ -121,6 +123,23 @@ same event, never one collapsed id.
 link to the booking host or to `/kontakt` (including `?topic=`) with no tracked `onClick` — so a new
 unattributed CTA cannot ship, in `pnpm build` itself, not only in the separately run
 `pnpm check:analytics`.
+
+## Explainer video (`/de/leistungen`, hero)
+
+Three events from `ExplainerVideo.tsx`, all with `placement: leistungen-hero` (page and lang as always, no `cta`):
+
+| Event | When |
+|---|---|
+| `Video Played` | the facade's play button was clicked (the `<video>` is mounted then; before that only the poster is loaded) |
+| `Video 50` | once per play, when `currentTime` passes half the duration |
+| `Video Completed` | the `ended` event |
+
+The end card's booking button fires the existing `Call Link Clicked` with `placement: video-end`, `cta: book-call`; its quiz button opens
+the Pulse Score with `placement: video-end-quiz` (`Quiz Started`/`Quiz Completed`, `cta: quiz`). The video is German only: the English page
+has no video block, hence no video events there.
+
+**Plausible goals to create (Christian, a click in Site Settings → Goals, type "Custom event", exact names):** `Video Played`, `Video 50`,
+`Video Completed`. Until they exist the events are sent but not listed.
 
 ## Why Plausible has counted zero "Call Link Clicked" events so far
 
