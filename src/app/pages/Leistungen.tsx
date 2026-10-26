@@ -51,17 +51,18 @@ function LeistungenHero({
       </div>
 
       <div className="relative max-w-[1400px] mx-auto px-6 lg:px-12">
+        {/* The video column is outside the fading motion.div on purpose: the
+            poster is the page's LCP element and must paint with the prerendered
+            HTML, not after hydration starts the fade. */}
+        <div
+          className={hasVideo ? "grid grid-cols-1 lg:grid-cols-[5fr_6fr] gap-8 lg:gap-14 items-center" : undefined}
+        >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className={
-            hasVideo
-              ? "grid grid-cols-1 lg:grid-cols-[5fr_6fr] gap-8 lg:gap-14 items-center"
-              : "flex flex-col gap-8 max-w-3xl"
-          }
+          className="flex flex-col gap-8 max-w-3xl"
         >
-          <div className="flex flex-col gap-8 max-w-3xl">
           <span
             className="font-semibold uppercase tracking-[0.16em]"
             style={{ fontSize: "var(--text-small)", color: ACCENT }}
@@ -112,9 +113,9 @@ function LeistungenHero({
               {t("leistungen.ctaContact")}
             </Link>
           </div>
-          </div>
-          {hasVideo && <ExplainerVideo onQuizOpen={onVideoQuizOpen} />}
         </motion.div>
+        {hasVideo && <ExplainerVideo onQuizOpen={onVideoQuizOpen} />}
+        </div>
       </div>
     </section>
   );
