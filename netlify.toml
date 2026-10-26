@@ -18,3 +18,11 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+# The explainer video and its poster/captions (public/video/). The file names
+# carry the version (erklaervideo-v5-…), a new cut gets a new name, so the
+# files can be cached for a year without ever serving a stale cut.
+[[headers]]
+  for = "/video/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
