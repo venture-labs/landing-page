@@ -10,6 +10,7 @@ import { ClusterStorySection } from "@/app/components/ClusterStorySection";
 import { UseCasesSection } from "@/app/components/UseCasesSection";
 import { SkillMatrix } from "@/app/components/SkillMatrix";
 import { ToolProfile } from "@/app/components/ToolProfile";
+import { ExplainerVideo } from "@/app/components/ExplainerVideo";
 import { PulseCheckModal } from "@/app/components/PulseCheckModal";
 import { PulseLines } from "@/app/components/ui/PulseLines";
 import { useLeistungenData } from "@/data/content";
@@ -20,14 +21,23 @@ const ACCENT = "#8129ff";
 
 /* ─── hero ──────────────────────────────────────────────────────────── */
 
-function LeistungenHero({ onQuizOpen }: { onQuizOpen: () => void }) {
+function LeistungenHero({
+  onQuizOpen,
+  onVideoQuizOpen,
+}: {
+  onQuizOpen: () => void;
+  onVideoQuizOpen: () => void;
+}) {
   const { t } = useTranslation();
-  const { localizedPath } = useLocale();
+  const { localizedPath, lang } = useLocale();
+  // The explainer is German only (voice, captions, end card): the English page
+  // keeps the plain hero until an English cut exists.
+  const hasVideo = lang === "de";
   const data = useLeistungenData();
 
   return (
     <section
-      className="relative pt-40 pb-32 overflow-hidden"
+      className={`relative overflow-hidden ${hasVideo ? "pt-28 pb-16 lg:pt-40 lg:pb-32" : "pt-40 pb-32"}`}
       style={{ background: "linear-gradient(180deg, #1E1C27 0%, #1E1C27 45%, #181620 100%)" }}
     >
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -41,6 +51,12 @@ function LeistungenHero({ onQuizOpen }: { onQuizOpen: () => void }) {
       </div>
 
       <div className="relative max-w-[1400px] mx-auto px-6 lg:px-12">
+        {/* The video column is outside the fading motion.div on purpose: the
+            poster is the page's LCP element and must paint with the prerendered
+            HTML, not after hydration starts the fade. */}
+        <div
+          className={hasVideo ? "grid grid-cols-1 lg:grid-cols-[5fr_6fr] gap-8 lg:gap-14 items-center" : undefined}
+        >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -56,7 +72,7 @@ function LeistungenHero({ onQuizOpen }: { onQuizOpen: () => void }) {
 
           <h1
             className="font-semibold text-white leading-[1.05]"
-            style={{ fontSize: "var(--text-hero)" }}
+            style={{ fontSize: hasVideo ? "clamp(2.6rem, 4.6vw, 4.6rem)" : "var(--text-hero)" }}
           >
             {data.heroTitlePrefix}{" "}
             <span className="relative inline-block">
@@ -91,13 +107,15 @@ function LeistungenHero({ onQuizOpen }: { onQuizOpen: () => void }) {
             <Link
               to={localizedPath("/kontakt")}
               onClick={() => trackEvent(EVENTS.contactSent, PLACEMENTS.leistungenHeroContact, CTAS.contact)}
-              className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/12 text-white font-medium rounded-lg px-6 py-3 transition-colors"
+              className={`${hasVideo ? "hidden lg:inline-flex" : "inline-flex"} items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/12 text-white font-medium rounded-lg px-6 py-3 transition-colors`}
               style={{ fontSize: "var(--text-btn)" }}
             >
               {t("leistungen.ctaContact")}
             </Link>
           </div>
         </motion.div>
+        {hasVideo && <ExplainerVideo onQuizOpen={onVideoQuizOpen} />}
+        </div>
       </div>
     </section>
   );
@@ -255,7 +273,10 @@ export function Leistungen() {
         aria-hidden
       />
       <Navbar />
-      <LeistungenHero onQuizOpen={() => setQuizPlacement(PLACEMENTS.leistungenHero)} />
+      <LeistungenHero
+        onQuizOpen={() => setQuizPlacement(PLACEMENTS.leistungenHero)}
+        onVideoQuizOpen={() => setQuizPlacement(PLACEMENTS.videoEndQuiz)}
+      />
       <PulseJourney />
       <SkillMatrix />
       <ClusterStorySection />

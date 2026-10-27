@@ -1,11 +1,11 @@
 /**
- * Plausible custom events for the four funnel points of venturelabs.team.
+ * Plausible custom events for the funnel points and the explainer video of venturelabs.team.
  *
  * The loader tag and the queue stub are injected into the built HTML shell by
  * plausiblePlugin() in vite.config.ts (build only). In `pnpm dev` there is no
  * stub, so window.plausible is undefined and trackEvent() simply no-ops.
  *
- * The four values below are the Goal names Christian creates in the Plausible
+ * The values below are the Goal names Christian creates in the Plausible
  * UI (type "Custom event"). They are code constants, never translated — do not
  * move them into src/locales/*.json.
  */
@@ -21,6 +21,9 @@ export const EVENTS = Object.freeze({
   quizCompleted: "Quiz Completed",
   contactSent: "Contact Sent",
   callLinkClicked: "Call Link Clicked",
+  videoPlayed: "Video Played",
+  video50: "Video 50",
+  videoCompleted: "Video Completed",
 } as const);
 
 /**
@@ -31,6 +34,7 @@ export const EVENTS = Object.freeze({
 export const PLACEMENTS = Object.freeze({
   navbarDesktop: "navbar-desktop",
   navbarMobile: "navbar-mobile",
+  navbarMobileBar: "navbar-mobile-bar",
   finalCta: "final-cta",
   footer: "footer",
   quizResult: "quiz-result",
@@ -64,6 +68,8 @@ export const PLACEMENTS = Object.freeze({
   caseDetailBottomCta: "case-detail-bottom-cta",
   blogDetailCta: "blog-detail-cta",
   ueberUnsCta: "ueber-uns-cta",
+  videoEnd: "video-end",
+  videoEndQuiz: "video-end-quiz",
 } as const);
 
 /**
