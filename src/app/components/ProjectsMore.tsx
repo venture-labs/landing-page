@@ -18,6 +18,8 @@ function GridCard({ c }: { c: GridCase }) {
         <img
           src={c.image}
           alt={c.title}
+          loading="lazy"
+          decoding="async"
           className="w-full h-[260px] object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </div>
