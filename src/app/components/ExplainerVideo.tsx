@@ -170,7 +170,7 @@ export function ExplainerVideo({ onQuizOpen }: { onQuizOpen: () => void }) {
           ref={videoRef}
           controls
           playsInline
-          preload="auto"
+          preload={mounted ? "auto" : "metadata"}
           src={SRC}
           aria-label={t("leistungen.video.videoLabel")}
           aria-hidden={mounted ? undefined : true}
