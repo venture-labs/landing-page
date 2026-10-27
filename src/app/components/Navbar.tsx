@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { motion } from "motion/react";
 import { useTranslation } from "react-i18next";
@@ -6,6 +6,7 @@ import { Link, useLocation } from "react-router";
 import { useLocale } from "@/app/locale";
 import { CTAS, EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
 import { BOOKING_URL } from "@/app/links";
+import { isLeistungenHref, prefetchLeistungenPoster } from "@/app/prefetch";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { navigationDE, navigationEN } from "@/data/navigation";
 import svgPaths from "@/imports/🖌Homepage/svg-oa0apfkpzr";
@@ -56,7 +57,17 @@ function NavLink({
 
   if (isRoute) {
     return (
-      <Link to={item.href} className={cls} style={style} onClick={onClick}>
+      <Link
+        to={item.href}
+        className={cls}
+        style={style}
+        onClick={onClick}
+        {...(isLeistungenHref(item.href) && {
+          onPointerDown: prefetchLeistungenPoster,
+          onMouseEnter: prefetchLeistungenPoster,
+          onFocus: prefetchLeistungenPoster,
+        })}
+      >
         {item.label}
       </Link>
     );
@@ -72,6 +83,21 @@ export function Navbar() {
   const { lang, localizedPath } = useLocale();
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
+
+  // The poster is tiny (13 KB on a phone): fetch it once the page is idle, and
+  // at the latest when the menu opens, so /leistungen opens with its picture.
+  useEffect(() => {
+    if (open) prefetchLeistungenPoster();
+  }, [open]);
+  useEffect(() => {
+    const idle = window.requestIdleCallback
+      ? window.requestIdleCallback(prefetchLeistungenPoster, { timeout: 5000 })
+      : window.setTimeout(prefetchLeistungenPoster, 3000);
+    return () => {
+      if (window.cancelIdleCallback) window.cancelIdleCallback(idle);
+      else window.clearTimeout(idle);
+    };
+  }, []);
 
   const navigation = lang === "en" ? navigationEN : navigationDE;
   const navItems = navigation.map((item) => ({ ...item, href: localizedPath(item.href) }));
