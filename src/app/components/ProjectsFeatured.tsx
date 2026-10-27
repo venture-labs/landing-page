@@ -100,6 +100,8 @@ function CaseCard({ c, index }: { c: FeaturedCase; index: number }) {
             <img
               src={c.image}
               alt={c.title}
+              loading="lazy"
+              decoding="async"
               className="w-full h-[400px] lg:h-[480px] object-cover transition-transform duration-500 hover:scale-[1.02]"
             />
           </div>

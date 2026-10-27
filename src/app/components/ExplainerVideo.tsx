@@ -11,6 +11,12 @@ import { CTAS, EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
  * on by default. No autoplay: the video lives on the voice. Self-hosted
  * (public/video/), so no third-party request and no consent banner.
  *
+ * Fast start: once the page is loaded and the browser idle, the <video> is
+ * created hidden behind the poster and buffers its first seconds
+ * (preload="auto"), so the tap only has to call play(). Never on Save-Data or
+ * a slow connection (see canWarmVideo), and never before the page is
+ * interactive, so it cannot delay LCP or hydration.
+ *
  * The file names carry the version (v5): a new cut gets a new name, which is
  * what lets netlify.toml cache /video/* as immutable for a year. Duration
  * label and aria label (locales: leistungen.video.*) follow the file.
@@ -22,15 +28,50 @@ const POSTER_SMALL = "/video/erklaervideo-poster-v5-640.webp";
 
 type Phase = "poster" | "playing" | "ended";
 
+type NetworkInformation = { saveData?: boolean; effectiveType?: string };
+
+/** Warm the first video bytes only where it is cheap: no Save-Data, no 2G/3G. */
+function canWarmVideo(): boolean {
+  const c = (navigator as Navigator & { connection?: NetworkInformation }).connection;
+  if (!c) return true;
+  if (c.saveData) return false;
+  return !c.effectiveType || c.effectiveType === "4g";
+}
+
+function whenIdle(cb: () => void): () => void {
+  let cancelled = false;
+  let handle = 0;
+  const run = () => {
+    if (cancelled) return;
+    handle = window.requestIdleCallback
+      ? window.requestIdleCallback(cb, { timeout: 4000 })
+      : window.setTimeout(cb, 1500);
+  };
+  if (document.readyState === "complete") run();
+  else window.addEventListener("load", run, { once: true });
+  return () => {
+    cancelled = true;
+    window.removeEventListener("load", run);
+    if (window.cancelIdleCallback) window.cancelIdleCallback(handle);
+    else window.clearTimeout(handle);
+  };
+}
+
 export function ExplainerVideo({ onQuizOpen }: { onQuizOpen: () => void }) {
   const { t } = useTranslation();
   const [phase, setPhase] = useState<Phase>("poster");
   const [mounted, setMounted] = useState(false);
+  const [warm, setWarm] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const halfFired = useRef(false);
 
-  // The <video> only exists once the facade was clicked; start it in the same
-  // task chain as the click so the browser accepts the sound.
+  useEffect(() => {
+    if (!canWarmVideo()) return;
+    return whenIdle(() => setWarm(true));
+  }, []);
+
+  // The <video> exists hidden once warm, visible once the facade was clicked;
+  // start it in the same task chain as the click so the browser accepts the sound.
   useEffect(() => {
     if (!mounted) return;
     const v = videoRef.current;
@@ -80,7 +121,7 @@ export function ExplainerVideo({ onQuizOpen }: { onQuizOpen: () => void }) {
           <img
             src={POSTER}
             srcSet={`${POSTER_SMALL} 640w, ${POSTER} 1280w`}
-            sizes="(min-width: 1024px) 50vw, 100vw"
+            sizes="(min-width: 1024px) 560px, calc(100vw - 48px)"
             width={1280}
             height={720}
             alt={t("leistungen.video.posterAlt")}
@@ -124,17 +165,19 @@ export function ExplainerVideo({ onQuizOpen }: { onQuizOpen: () => void }) {
         </>
       )}
 
-      {mounted && (
+      {(mounted || warm) && (
         <video
           ref={videoRef}
           controls
           playsInline
-          preload="metadata"
+          preload="auto"
           src={SRC}
           aria-label={t("leistungen.video.videoLabel")}
+          aria-hidden={mounted ? undefined : true}
+          tabIndex={mounted ? undefined : -1}
           onTimeUpdate={handleTimeUpdate}
           onEnded={handleEnded}
-          className="absolute inset-0 h-full w-full bg-black object-cover"
+          className={`absolute inset-0 h-full w-full bg-black object-cover ${mounted ? "" : "invisible"}`}
         >
           <track kind="captions" srcLang="de" label={t("leistungen.video.trackLabel")} src={VTT} default />
         </video>
