@@ -22,16 +22,16 @@ export function PulseCheckModal({
   // The result step is the one step where the booking CTA has to be visible
   // without scrolling; the title keeps being the dialog's accessible name
   // but drops its visible footprint there, the same sr-only treatment
-  // quizIntro's DialogDescription already uses below. PulseCheckModal itself
+  // the DialogDescription already uses below. PulseCheckModal itself
   // stays mounted across opens/closes (only its Dialog content does not), so
-  // this step has to be reset back to "intro" on close explicitly — PulseQuiz
+  // this step has to be reset back to "question" on close explicitly — PulseQuiz
   // remounting fresh on reopen is not enough to bring this copy back in sync.
-  const [step, setStep] = useState<"intro" | "question" | "result">("intro");
+  const [step, setStep] = useState<"question" | "result">("question");
   const isResultStep = step === "result";
 
   function handleOpenChange(nextOpen: boolean) {
     if (!nextOpen) {
-      setStep("intro");
+      setStep("question");
     }
     onOpenChange(nextOpen);
   }
