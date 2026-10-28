@@ -265,8 +265,8 @@ export const GEO = {
   hub: HUB,
   cc: CC,
   tb: { x: 746, y: 642, w: 126, h: 10 },
-  /** The same bar on the phone, where the metric cards are larger. */
-  tbN: { x: 770, y: 664, w: 126, h: 10 },
+  /** The same bar on the phone, where the metric cards are larger: on its track in the third card (404 + 2 * 198 + 14, MET_Y + 88). */
+  tbN: { x: 814, y: 668, w: 126, h: 10 },
   orb: { r: 70 },
   ord: { r: R_OUT + 24 },
   cpulse: { x: 78, y: chMid(3) },
