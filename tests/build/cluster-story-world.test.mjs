@@ -229,3 +229,96 @@ test("no hex colour outside the set the page already used", () => {
     for (const h of read(`src/app/components/${f}`).match(/#[0-9a-fA-F]{6}\b/g) ?? []) assert.ok(known.has(h.toLowerCase()), `${f}: ${h}`);
   }
 });
+
+/* 20261028-leistungsseite-cluster-story-cards-show-their-la (VL-11-S11): on the phone every card of a step shows its labels */
+
+const cardOf = (el, narrow) => W.artOf(el, narrow).find((p) => p.t === "rect" && p.card);
+// The cards that carry the current step: every card of the step (and of the steps it stays current for)
+// plus the four call rows, which sit on the call card.
+const carrying = (k, narrow) =>
+  els
+    .filter((e) => (e.k === k || (e.cur ?? []).includes(k)) && (cardOf(e, narrow) || /^call-row\d$/.test(e.id)))
+    .map((e) => ({ el: e, card: cardOf(e, narrow) ?? cardOf(els.find((c) => c.id === "call"), narrow) }));
+const drawn = (el, narrow) => W.artOf(el, narrow).filter((p) => p.t === "text");
+
+test("phone: every text of every carrying card of step k is drawn at its mark, at 11px effective or more (DE and EN)", () => {
+  let checked = 0;
+  for (const [lang, lb] of [["de", LB], ["en", EXAMPLE_LB]]) {
+    for (let k = 0; k <= 8; k++) {
+      const f = k + 0.2;
+      const s = W.PHONE_STAGE_W / W.cameraAt(f, true)[2];
+      for (const { el } of carrying(k, true)) {
+        for (const p of drawn(el, true)) {
+          if (p.tier === "s" && W.textSize(p, el, f, true) === 0) continue; // a secondary pill, left out on purpose
+          const fs = W.textSize(p, el, f, true);
+          assert.ok(fs > 0, `${el.id} ${p.src} is drawn at step ${k} (${lang})`);
+          assert.ok(fs * s >= 11 - 1e-6, `${el.id} ${p.src} at step ${k} (${lang}): ${fs * s}px effective`);
+          assert.ok(W.resolveText(p.src, lb).length > 0, `${el.id} ${p.src} has text (${lang})`);
+          checked++;
+        }
+      }
+    }
+  }
+  assert.ok(checked > 40, `checked ${checked} texts`);
+});
+
+test("phone: the carrying cards of the steps with a call, a lock, a release and metric cards are not icon-only", () => {
+  const need = { 5: ["call", "call-row0", "call-row1", "call-row2", "call-row3"], 4: ["lock", "release"] };
+  for (const [k, ids] of Object.entries(need)) {
+    for (const id of ids) {
+      const el = els.find((e) => e.id === id);
+      assert.ok(el && el.k === Number(k), `${id} belongs to step ${k}`);
+      const f = Number(k) + 0.2;
+      assert.ok(drawn(el, true).some((p) => W.textSize(p, el, f, true) > 0), `${id} shows text on the phone at step ${k}`);
+    }
+  }
+});
+
+test("phone: the estimated size of every such text lies inside the card it sits on (DE and EN)", () => {
+  for (const [lang, lb] of [["de", LB], ["en", EXAMPLE_LB]]) {
+    for (let k = 0; k <= 8; k++) {
+      const f = k + 0.2;
+      for (const { el, card } of carrying(k, true)) {
+        for (const p of drawn(el, true)) {
+          const fs = W.textSize(p, el, f, true);
+          if (fs === 0) continue;
+          const lines = W.wrapText(W.resolveText(p.src, lb), fs, p.wt, p.mw);
+          const w = Math.max(...lines.map((l) => W.textWidth(l, fs, p.wt)));
+          const h = lines.length * fs * W.LINE_HEIGHT;
+          const x0 = p.a === "s" ? p.x : p.a === "m" ? p.x - w / 2 : p.x - w;
+          const y0 = p.vc ? p.y - h / 2 : p.y - (fs * W.LINE_HEIGHT) / 2;
+          const where = `${el.id} ${p.src} at step ${k} (${lang})`;
+          assert.ok(x0 >= card.x && x0 + w <= card.x + card.w, `${where}: width ${Math.round(x0)}..${Math.round(x0 + w)} in ${card.x}..${card.x + card.w}`);
+          assert.ok(y0 >= card.y && y0 + h <= card.y + card.h, `${where}: height ${Math.round(y0)}..${Math.round(y0 + h)} in ${card.y}..${card.y + card.h}`);
+        }
+      }
+    }
+  }
+});
+
+test("phone: the phone art of each step stays inside the camera at its mark (and the whole picture at k = 5 and 7)", () => {
+  for (const [lang, lb] of [["de", LB], ["en", EXAMPLE_LB]]) {
+    for (let k = 0; k <= 8; k++) {
+      const r = W.cameraRect(k + 0.2, true);
+      for (const el of els.filter((e) => (e.k === k || ((k === 5 || k === 7) && e.k <= k)) && judged(e))) {
+        assert.ok(framed(W.boxOf(el, lb, true), r), `${el.id} (step ${el.k}) phone art inside the camera at step ${k} (${lang})`);
+      }
+    }
+  }
+});
+
+test("desktop is unchanged: the design art is drawn, the desktop camera has not moved, the four call points read short", () => {
+  assert.deepEqual(W.CAM_D, {
+    pre: [315, 250, 300],
+    k: [[225, 209, 520], [225, 209, 520], [300, 235, 560], [640, 270, 720], [620, 316, 640], [470, 392, 990], [700, 394, 780], [470, 392, 990], [842, 380, 760]],
+  });
+  for (const el of els) assert.equal(W.artOf(el, false), el.art, el.id);
+  assert.deepEqual(
+    [de.clusterStory.graphic.reviewWorked, de.clusterStory.graphic.rules, de.clusterStory.graphic.models, de.clusterStory.graphic.nextProject],
+    ["Was lief, was nicht", "Regeln nachschärfen", "Modelle aktualisieren", "Nächstes Projekt"],
+  );
+  assert.deepEqual(
+    [en.clusterStory.graphic.reviewWorked, en.clusterStory.graphic.rules, en.clusterStory.graphic.models, en.clusterStory.graphic.nextProject],
+    ["What worked, what not", "Sharpen the rules", "Update models", "Next project"],
+  );
+});
