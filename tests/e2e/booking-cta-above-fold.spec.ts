@@ -177,7 +177,12 @@ test.describe("regression: the result step's hidden title does not survive close
       await expect(dialogTitle).toHaveText(QUIZ_HEADING[lang]);
       // And question 1 with its one-line meta confirms the step really is "question".
       await expect(reopenedDialog.getByText(FIRST_QUESTION[lang])).toBeVisible();
-      await expect(reopenedDialog.getByText(QUIZ_META[lang])).toBeVisible();
+      // The one-line meta sits above the question label on the reopened dialog.
+      const reopenedText = (await reopenedDialog.innerText()).replace(/\s+/g, " ").toLowerCase();
+      const metaAt = reopenedText.indexOf(QUIZ_META[lang].toLowerCase());
+      const labelAt = reopenedText.indexOf(FIRST_QUESTION[lang].toLowerCase());
+      expect(metaAt).toBeGreaterThanOrEqual(0);
+      expect(metaAt).toBeLessThan(labelAt);
       await expect(reopenedDialog.getByRole("button", { name: START_CTA[lang] })).toHaveCount(0);
     });
   }
