@@ -218,14 +218,22 @@ for (const lang of ["de", "en"] as const) {
       // No dot per card: the section has only the prev and next buttons.
       await expect(section.locator("button")).toHaveCount(2);
 
-      // Walk to the end; the last button is disabled on the last card.
-      for (let i = 0; i < total + 2 && (await next.isEnabled()); i++) {
+      // Walk to the end, waiting for each position text; the next button is
+      // disabled exactly on the last card.
+      for (let k = 3; k <= total; k++) {
         await next.click();
-        await page.waitForTimeout(60);
+        await expect(position(k), `position ${k} / ${total}`).toBeVisible();
       }
       await expect(next).toBeDisabled();
-      await expect(section.getByText(new RegExp(`^\\d+ / ${total}$`))).toBeVisible();
       await expect(prev).toBeEnabled();
+
+      // And back to card 1: the first button is disabled again.
+      for (let k = total - 1; k >= 1; k--) {
+        await prev.click();
+        await expect(position(k), `position ${k} / ${total}`).toBeVisible();
+      }
+      await expect(prev).toBeDisabled();
+      await expect(next).toBeEnabled();
     });
 
     test(`criterion 17: clicking the booking CTA fires exactly one "Call Link Clicked" with placement "situations" and cta "book-call" (${lang})`, async ({
