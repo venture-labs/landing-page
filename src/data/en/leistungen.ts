@@ -43,7 +43,6 @@ export interface ClusterStoryStep {
     | "concepts"
     | "handover"
     | "build"
-    | "install"
     | "telemetry"
     | "loop"
     | "growth"
@@ -252,8 +251,8 @@ export const leistungenData: LeistungenData = {
     {
       "id": "input",
       "navLabel": "Input",
-      "heading": "Input",
-      "body": "Everything starts with what you tell us. We collect your information where you already work: in a personal video call, via Slack, by e-mail and via WhatsApp. Nobody at Venture Labs relays it – your input goes straight into our cluster.",
+      "heading": "Your problem",
+      "body": "You have a task that eats up too much time. Tell us about it where you already work: in a personal video call, via Slack, by e-mail and via WhatsApp. Nobody at Venture Labs relays it – your input goes straight into our cluster.",
       "channels": [
         {
           "label": "Video call",
@@ -289,19 +288,13 @@ export const leistungenData: LeistungenData = {
       "id": "build",
       "navLabel": "Build",
       "heading": "Agents build your agents",
-      "body": "Our agents build your own agent cluster, shaped around your processes and not around a template. We usually start small, with a manageable task such as bookkeeping. That way you gain experience of where the cluster works and where it does not."
-    },
-    {
-      "id": "install",
-      "navLabel": "Installation",
-      "heading": "Installation",
-      "body": "The finished cluster is installed at your site; the bar runs from 0 to 100 %. As soon as it is running, we see what works and what does not, and learn from it for the next step."
+      "body": "Our agents build your own agent cluster, shaped around your processes and not around a template. We usually start small, with a manageable task such as bookkeeping. The cluster runs at your site, we learn from it – and you gain experience of where it works and where it does not."
     },
     {
       "id": "telemetry",
       "navLabel": "Data flow",
-      "heading": "Telemetry back, updates out",
-      "body": "Sensitive data stays with you; outward only what you release. Automatically, only runtime, error and cost telemetry flows back to us, learning data only after you release it by hand. We use local AI models wherever possible, and every agent has its own budget with visible spend. With updates, we keep your cluster up to date."
+      "heading": "We see whether it runs. Not what is inside.",
+      "body": "Only runtime, errors and costs come back to us. From that we build updates for your cluster. Sensitive data stays with you; outward only what you release, and learning data only after you release it by hand. We use local AI models wherever possible, and every agent has its own budget with visible spend."
     },
     {
       "id": "loop",
@@ -333,7 +326,7 @@ export const leistungenData: LeistungenData = {
       "id": "service",
       "navLabel": "Offer",
       "heading": "Your cluster covers you 100%",
-      "body": "The build is one project, the ongoing operation after that a monthly retainer. This is how we build it – without promising guarantees, but step by step and traceable. In the free intro call we clarify what your cluster starts with.",
+      "body": "The build is one project, the ongoing operation after that a monthly retainer. A cluster is never finished, it grows with your company. We keep building, step by step and traceably. In the free intro call we clarify what your cluster starts with.",
       "billingNote": "Build = one project · Operation = monthly retainer"
     },
     {
