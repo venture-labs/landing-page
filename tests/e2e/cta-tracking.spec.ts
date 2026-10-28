@@ -77,15 +77,14 @@ async function answerAllQuestions(page: Page): Promise<void> {
 }
 
 /**
- * Opens the quiz from the `nth` button named `openerName`, starts it,
- * answers every question through to the result step, then closes it —
+ * Opens the quiz from the `nth` button named `openerName` (it opens on
+ * question 1, which is when Quiz Started fires), answers every question through to the result step, then closes it —
  * one full Quiz Started -> Quiz Completed cycle for one opener.
  */
 async function openCompleteAndClose(page: Page, openerName: string, nth: number): Promise<void> {
   const dialog = page.locator('[role="dialog"]');
   await page.getByRole("button", { name: openerName }).nth(nth).click();
   await expect(dialog).toBeVisible();
-  await page.getByRole("button", { name: /Meinen Pulse Score prüfen/ }).click();
   await answerAllQuestions(page);
   await expect(dialog.getByText(QUIZ_RESULT_READY_TEXT)).toBeVisible();
   await page.keyboard.press("Escape");
@@ -156,13 +155,14 @@ test.describe("CTA tracking — cta and placement coverage", () => {
 
     await page.getByRole("button", { name: "Kostenlosen Pulse Score starten" }).first().click();
     await expect(page.locator('[role="dialog"]')).toBeVisible();
-    await page.getByRole("button", { name: /Meinen Pulse Score prüfen/ }).click();
-    await page.keyboard.press("Escape");
+    // The Radix close button: an Escape in the first milliseconds after the
+    // dialog renders can beat Radix's key listener (the dialog now opens on
+    // question 1, so there is no start click in between any more).
+    await page.getByRole("button", { name: "Close" }).click();
     await expect(page.locator('[role="dialog"]')).toBeHidden();
 
     await page.getByRole("button", { name: "Kostenlosen Pulse Score starten" }).nth(1).click();
     await expect(page.locator('[role="dialog"]')).toBeVisible();
-    await page.getByRole("button", { name: /Meinen Pulse Score prüfen/ }).click();
 
     const calls = await propsFor(page, "Quiz Started");
     expect(calls).toHaveLength(2);
