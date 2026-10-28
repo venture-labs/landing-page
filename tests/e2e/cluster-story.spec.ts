@@ -225,6 +225,53 @@ for (const [name, viewport] of [
   });
 }
 
+test.describe("phone: every carrying card shows its labels (VL-11-S11)", () => {
+  test.use({ viewport: PHONE });
+
+  test("at the mark of every step each card of that step has rendered text of 11px or more, inside the card", async ({ page }) => {
+    await page.goto("/de/leistungen?video=1", { waitUntil: "networkidle" });
+    for (let k = 0; k < STEPS; k++) {
+      await page.evaluate((f) => window.setF!(f, 0), k + 0.2);
+      const report = await page.evaluate(
+        ({ sel, k }) => {
+          const svg = document.querySelector(`${sel} svg`) as SVGSVGElement;
+          const inside = (a: DOMRect, b: DOMRect) => a.left >= b.left - 2 && a.right <= b.right + 2 && a.top >= b.top - 2 && a.bottom <= b.bottom + 2;
+          const out: { id: string; cards: number; texts: number; problems: string[] }[] = [];
+          const groups = Array.from(svg.querySelectorAll<SVGGElement>(`g[data-id][data-k="${k}"]`));
+          for (const g of groups) {
+            const id = g.getAttribute("data-id")!;
+            const own = Array.from(g.querySelectorAll<SVGRectElement>('rect[fill="url(#cs-card)"]'));
+            const rowOf = /^call-row\d$/.test(id);
+            // `cc` is the cluster core's container; its caption is the separate agents-lbl element.
+            if ((!own.length && !rowOf) || id === "cc") continue;
+            const cardRects = rowOf
+              ? [svg.querySelector<SVGRectElement>('g[data-id="call"] rect[fill="url(#cs-card)"]')!.getBoundingClientRect()]
+              : own.map((r) => r.getBoundingClientRect());
+            const texts = Array.from(g.querySelectorAll("text")).filter((t) => t.textContent?.trim());
+            const problems: string[] = [];
+            for (const t of texts) {
+              const px = parseFloat(getComputedStyle(t).fontSize) * (t.getScreenCTM()?.a ?? 1);
+              if (px < 10.95) problems.push(`${t.textContent} is ${px.toFixed(2)}px`);
+              const r = t.getBoundingClientRect();
+              if (!cardRects.some((c) => inside(r, c))) problems.push(`${t.textContent} leaves its card`);
+            }
+            out.push({ id, cards: cardRects.length, texts: texts.length, problems });
+          }
+          return out;
+        },
+        { sel: STAGE, k },
+      );
+      for (const g of report) {
+        expect(g.problems, `step ${k} ${g.id}`).toEqual([]);
+        expect(g.texts, `step ${k} ${g.id} shows text, not only an icon`).toBeGreaterThan(0);
+      }
+      const ids = report.map((g) => g.id);
+      if (k === 4) expect(ids).toEqual(expect.arrayContaining(["lock", "release"]));
+      if (k === 5) expect(ids).toEqual(expect.arrayContaining(["call", "call-row0", "call-row1", "call-row2", "call-row3"]));
+    }
+  });
+});
+
 test.describe("server markup and first render", () => {
   test("the prerendered page already shows the finished end state and the booking link", async ({ request }) => {
     const html = await (await request.get("/de/leistungen/")).text();
