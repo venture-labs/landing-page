@@ -252,7 +252,7 @@ export const leistungenData: LeistungenData = {
       "id": "input",
       "navLabel": "Input",
       "heading": "Dein Problem",
-      "body": "Du hast eine Aufgabe, die zu viel Zeit frisst. Erzähl sie uns da, wo du ohnehin arbeitest: im persönlichen Videocall, über Slack, per E-Mail und über WhatsApp. Niemand bei uns funkt dazwischen – dein Input geht direkt in unseren Cluster.",
+      "body": "Du hast eine Aufgabe, die zu viel Zeit frisst. Erzähl sie uns da, wo du ohnehin arbeitest. Das geht im persönlichen Videocall, über Slack, per E-Mail und über WhatsApp. Niemand bei uns funkt dazwischen – dein Input geht direkt in unseren Cluster.",
       "channels": [
         {
           "label": "Videocall",

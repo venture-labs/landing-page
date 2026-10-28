@@ -121,6 +121,20 @@ test("dynamic parts are finished by their step mark", () => {
   assert.equal(W.dynAt(5.2, null).fl, 0);
 });
 
+test("loop pulse and offer highlight fire in their shifted windows (the old, unshifted thresholds fail)", () => {
+  const pulse = (f) => W.dynAt(f, null).cpulse.o;
+  assert.equal(pulse(4.7), 0, "before the loop step's pulse window");
+  assert.ok(pulse(4.9) > 0, "the pulse has started at 4.9 (the old window opened at 5.75)");
+  assert.ok(pulse(5.2) > 0.3, "the pulse is at full strength at the loop mark");
+  assert.equal(pulse(5.8), 0, "the pulse has faded out by 5.8 (the old window faded until 7.45)");
+  const hv = (f) => W.dynAt(f, null).hv;
+  assert.equal(hv(6.7), 0, "before the highlight window");
+  assert.ok(hv(6.9) > 0 && hv(6.9) < 1, "the highlight rises at 6.9 (the old window opened at 7.8)");
+  assert.equal(hv(7.2), 1, "the highlight is full at the service mark");
+  assert.ok(hv(7.85) > 0 && hv(7.85) < 1, "the highlight falls at 7.85");
+  assert.equal(hv(8.2), 0, "the highlight is gone at the outlook mark (the old one was still full)");
+});
+
 test("nine steps: no element beyond step 8, no install element, no install dynamic parts", () => {
   assert.equal(W.CAM_D.k.length, 9);
   assert.equal(W.CAM_M.k.length, 9);

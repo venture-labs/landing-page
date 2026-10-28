@@ -126,7 +126,7 @@ clusterStory:
     - id: input
       navLabel: 'Input'
       heading: 'Your problem'
-      body: 'You have a task that eats up too much time. Tell us about it where you already work: in a personal video call, via Slack, by e-mail and via WhatsApp. Nobody at Venture Labs relays it – your input goes straight into our cluster.'
+      body: 'You have a task that eats up too much time. Tell us about it where you already work. That works in a personal video call, via Slack, by e-mail and via WhatsApp. Nobody at Venture Labs relays it – your input goes straight into our cluster.'
       channels:
         - label: 'Video call'
           status: live

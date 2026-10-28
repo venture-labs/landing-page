@@ -167,8 +167,12 @@ for (const [name, viewport] of [
           return intoView.apply(this, a);
         };
       });
+      const errors: string[] = [];
+      page.on("pageerror", (e) => errors.push(e.message));
+      page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
       await item(page, 6).click({ force: true });
       await frames(page, 30); // a smooth scroll or a re-render would show within these frames
+      expect(errors, "the click raised no page error").toEqual([]);
       expect(await page.evaluate(() => (window as unknown as { __scrolls: number }).__scrolls)).toBe(0);
       expect(await page.evaluate(() => window.scrollY)).toBe(y);
       await expect(item(page, 2)).toHaveAttribute("data-current", "");

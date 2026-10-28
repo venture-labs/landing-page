@@ -92,9 +92,9 @@ test("new copy: input, build, telemetry and service steps", () => {
   const d = steps(FILES.de);
   const e = steps(FILES.en);
   assert.equal(byId(d, "input").heading, "Dein Problem");
-  assert.ok(byId(d, "input").body.startsWith("Du hast eine Aufgabe, die zu viel Zeit frisst. Erzähl sie uns da, wo du ohnehin arbeitest"));
+  assert.ok(byId(d, "input").body.startsWith("Du hast eine Aufgabe, die zu viel Zeit frisst. Erzähl sie uns da, wo du ohnehin arbeitest."));
   assert.equal(byId(e, "input").heading, "Your problem");
-  assert.ok(byId(e, "input").body.startsWith("You have a task that eats up too much time. Tell us about it where you already work"));
+  assert.ok(byId(e, "input").body.startsWith("You have a task that eats up too much time. Tell us about it where you already work."));
   for (const list of [d, e]) {
     assert.deepEqual(byId(list, "input").channels.map((c) => c.status), ["live", "live", "live", "live"]);
     assert.equal(byId(list, "input").channels.length, 4);
