@@ -322,7 +322,7 @@ test.describe("criterion 14: layout at 390px and 1440px", () => {
 
 test.describe("criterion 15: keyboard and reduced motion", () => {
   for (const viewport of VIEWPORTS) {
-    test(`de/leistungen at ${viewport.width}px: Tab reaches prev, next and the CTA with a visible ring; Enter/Space on next moves one card`, async ({
+    test(`de/leistungen at ${viewport.width}px: Tab/Shift+Tab reach prev, next and the CTA with a visible ring; Enter/Space move the cards; Enter on the CTA opens the booking URL`, async ({
       page,
     }) => {
       await blockOutbound(page.context());
@@ -330,55 +330,87 @@ test.describe("criterion 15: keyboard and reduced motion", () => {
       await page.goto("/de/leistungen");
 
       const section = sectionOf(page, "de");
+      const n = SITUATIONS.de.length;
+      const prev = section.getByRole("button", { name: PREV_LABEL.de, exact: true });
       const next = section.getByRole("button", { name: NEXT_LABEL.de, exact: true });
       const cta = section.getByRole("link", { name: CTA_LABEL.de, exact: true });
       await expect(cta).toHaveCount(1);
+      const isActive = (locator: Locator) => locator.evaluate((el) => document.activeElement === el);
 
       const ringOf = (locator: Locator) =>
         locator.evaluate((el) => {
           const s = getComputedStyle(el);
           return { outlineStyle: s.outlineStyle, outlineWidth: s.outlineWidth, boxShadow: s.boxShadow };
         });
-      for (const control of [next, cta]) {
-        await control.scrollIntoViewIfNeeded();
+      // A focus ring must appear because of focus: the focused style differs from the unfocused one.
+      const expectRingOnFocus = async (control: Locator, name: string) => {
+        await control.evaluate((el) => (el as HTMLElement).blur());
         const unfocused = await ringOf(control);
         await control.focus();
         const focused = await ringOf(control);
         const drawsSomething =
           (focused.outlineStyle !== "none" && parseFloat(focused.outlineWidth) > 0) ||
           (focused.boxShadow !== "none" && focused.boxShadow !== "");
-        expect(drawsSomething, `no visible ring on focus: ${JSON.stringify(focused)}`).toBe(true);
-        expect(JSON.stringify(focused)).not.toBe(JSON.stringify(unfocused));
+        expect(drawsSomething, `${name}: no visible ring on focus: ${JSON.stringify(focused)}`).toBe(true);
+        expect(JSON.stringify(focused), `${name}: focused and unfocused styles are identical`).not.toBe(
+          JSON.stringify(unfocused)
+        );
+      };
+
+      // Move to card 2 first so the previous button is enabled and can take focus.
+      // (By keyboard, so the later programmatic focus() keeps :focus-visible semantics.)
+      await next.scrollIntoViewIfNeeded();
+      await next.focus();
+      await page.keyboard.press("Enter");
+      await expect(section.getByText(`2 / ${n}`, { exact: true })).toBeVisible();
+      await expect(prev).toBeEnabled();
+      for (const [control, name] of [
+        [prev, "prev"],
+        [next, "next"],
+        [cta, "cta"],
+      ] as const) {
+        await control.scrollIntoViewIfNeeded();
+        await expectRingOnFocus(control, name);
       }
 
-      // Real Tab-only reachability of the section's own prev/next/CTA (the navbar and footer carry
-      // their own booking links, so matching by href alone would prove nothing).
+      // Real Tab-only reachability of the section's own controls (the navbar and footer carry
+      // their own booking links, so matching by href alone would prove nothing). Start over on
+      // card 1, where prev is disabled and skipped: Tab reaches next, Enter and Space move on.
       await page.goto("/de/leistungen");
-      const handles = {
-        next: await next.elementHandle(),
-        cta: await cta.elementHandle(),
-      };
-      const reached = { next: false, cta: false };
-      for (let i = 0; i < 80 && !(reached.next && reached.cta); i++) {
+      let reachedNext = false;
+      for (let i = 0; i < 80 && !reachedNext; i++) {
         await page.keyboard.press("Tab");
-        const active = await page.evaluate(
-          ([n, c]) => ({
-            next: document.activeElement === n,
-            cta: document.activeElement === c,
-          }),
-          [handles.next, handles.cta]
-        );
-        reached.next ||= active.next;
-        reached.cta ||= active.cta;
-        if (active.next) {
-          await page.keyboard.press("Enter");
-          await expect(section.getByText(`2 / ${SITUATIONS.de.length}`, { exact: true })).toBeVisible();
-          await page.keyboard.press("Space");
-          await expect(section.getByText(`3 / ${SITUATIONS.de.length}`, { exact: true })).toBeVisible();
-        }
+        reachedNext = await isActive(next);
       }
-      expect(reached.next, "the next button never became document.activeElement via Tab").toBe(true);
-      expect(reached.cta, "the booking CTA never became document.activeElement via Tab").toBe(true);
+      expect(reachedNext, "the next button never became document.activeElement via Tab").toBe(true);
+      await page.keyboard.press("Enter");
+      await expect(section.getByText(`2 / ${n}`, { exact: true })).toBeVisible();
+      await page.keyboard.press("Space");
+      await expect(section.getByText(`3 / ${n}`, { exact: true })).toBeVisible();
+
+      // On card 3 the previous button is enabled: Shift+Tab reaches it, Enter moves back.
+      await page.keyboard.press("Shift+Tab");
+      expect(await isActive(prev), "Shift+Tab from next did not land on the previous button").toBe(true);
+      await page.keyboard.press("Enter");
+      await expect(section.getByText(`2 / ${n}`, { exact: true })).toBeVisible();
+
+      // Tab on to the booking CTA and activate it by keyboard: a new tab must open AND request
+      // BOOKING_URL (captured before blockOutbound's route.abort() turns it into an error page).
+      await page.keyboard.press("Tab");
+      expect(await isActive(next), "Tab from prev did not land on the next button").toBe(true);
+      await page.keyboard.press("Tab");
+      expect(await isActive(cta), "Tab from next did not land on the booking CTA").toBe(true);
+
+      const popupPromise = page.waitForEvent("popup").catch(() => null);
+      const requestPromise = page
+        .context()
+        .waitForEvent("request", { predicate: (req) => req.url() === BOOKING_URL, timeout: 5000 })
+        .catch(() => null);
+      await page.keyboard.press("Enter");
+      const [popup, bookingRequest] = await Promise.all([popupPromise, requestPromise]);
+      expect(popup, "pressing Enter on the focused CTA did not open a new tab").not.toBeNull();
+      expect(bookingRequest, "pressing Enter on the focused CTA did not request the booking URL").not.toBeNull();
+      if (popup) await popup.close();
     });
   }
 
