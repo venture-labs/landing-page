@@ -557,12 +557,6 @@ export const leistungenData: LeistungenData = {
     `${banner()}
 export type ToolCategory = "ai-automation" | "ai-products" | "ai-experience" | "venture-building";
 
-export interface AgentOption {
-  category: ToolCategory;
-  title: string;
-  description: string;
-}
-
 export interface ToolProfile {
   slug: string;
   category: ToolCategory;
@@ -574,9 +568,6 @@ export interface ToolProfile {
   releaseNote: string;
   cancellationNote: string;
   ctaLabel: string;
-  agentOptionsHeading: string;
-  agentOptionsIntro: string;
-  agentOptions: AgentOption[];
 }
 
 export const toolProfiles: ToolProfile[] = ${JSON.stringify(
@@ -591,13 +582,6 @@ export const toolProfiles: ToolProfile[] = ${JSON.stringify(
         releaseNote: tool.releaseNote,
         cancellationNote: tool.cancellationNote,
         ctaLabel: tool.ctaLabel,
-        agentOptionsHeading: tool.agentOptionsHeading,
-        agentOptionsIntro: tool.agentOptionsIntro,
-        agentOptions: (tool.agentOptions ?? []).map((o: any) => ({
-          category: o!.category,
-          title: o!.title,
-          description: o!.description,
-        })),
       })),
       null,
       2

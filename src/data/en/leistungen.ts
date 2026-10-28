@@ -186,7 +186,7 @@ export const leistungenData: LeistungenData = {
   }
 ],
   useCasesHeading: "Possible use cases",
-  useCasesLeadLine: "Beleg-Inbox is already running in production for us today — the other four show you what else is possible with the same approach.",
+  useCasesLeadLine: "Beleg-Inbox is already running in production at our company today — every other card is an example of what is possible with the same approach.",
   useCasesCtaLabel: "Book a free intro call",
   situations: [
   {
@@ -213,7 +213,7 @@ export const leistungenData: LeistungenData = {
   },
   {
     "id": "tool-fatigue",
-    "text": "We've been trying AI tools for months, but none of them actually run in daily work.",
+    "text": "We had a good concept. Nobody ever implemented it.",
     "agentName": "Rollout Guide",
     "agentKind": "example",
     "capabilities": [
@@ -242,6 +242,214 @@ export const leistungenData: LeistungenData = {
       "Monitor usage and errors continuously",
       "Automatically remind whoever is responsible",
       "Deliver a monthly health check"
+    ]
+  },
+  {
+    "id": "quote-drafts",
+    "text": "Turning every inquiry into a quote costs us time, every single time.",
+    "agentName": "Quote Drafter",
+    "agentKind": "example",
+    "capabilities": [
+      "Read product and quantity out of inquiries",
+      "Draft a quote in the CRM",
+      "Have a human approve it before it is sent"
+    ]
+  },
+  {
+    "id": "order-matching",
+    "text": "With incoming invoices I never know whether they match the purchase order.",
+    "agentName": "Order Matcher",
+    "agentKind": "example",
+    "capabilities": [
+      "Compare every invoice against its purchase order",
+      "Flag discrepancies",
+      "Never wave anything through silently"
+    ]
+  },
+  {
+    "id": "payment-reminders",
+    "text": "We only notice overdue invoices when they are long overdue.",
+    "agentName": "Reminder Assistant",
+    "agentKind": "example",
+    "capabilities": [
+      "Spot overdue invoices",
+      "Prepare a reminder",
+      "Your team only has to confirm"
+    ]
+  },
+  {
+    "id": "appointments",
+    "text": "Appointment requests sit in emails, and I type them into the calendar by hand.",
+    "agentName": "Appointment Secretary",
+    "agentKind": "example",
+    "capabilities": [
+      "Read requested times out of emails",
+      "Suggest free calendar slots",
+      "Enter them only after your confirmation"
+    ]
+  },
+  {
+    "id": "onboarding-questions",
+    "text": "New users keep asking the same questions, and we answer them from scratch every time.",
+    "agentName": "Onboarding Helper",
+    "agentKind": "example",
+    "capabilities": [
+      "Answer recurring questions from your own documentation",
+      "Pass the rest straight to your team"
+    ]
+  },
+  {
+    "id": "ticket-triage",
+    "text": "When a ticket comes in, nobody can tell right away how urgent it is.",
+    "agentName": "Ticket Sorter",
+    "agentKind": "example",
+    "capabilities": [
+      "Rank tickets by urgency",
+      "Assign them by topic",
+      "Hand them to the team pre-sorted"
+    ]
+  },
+  {
+    "id": "feature-requests",
+    "text": "Feature requests arrive from every channel, and nobody has the full picture.",
+    "agentName": "Request Collector",
+    "agentKind": "example",
+    "capabilities": [
+      "Bring feedback from several channels together",
+      "Rank it by effort and value",
+      "Prepare it for the next prioritisation round"
+    ]
+  },
+  {
+    "id": "usage-reports",
+    "text": "Our usage data is sitting somewhere, but nobody reads it.",
+    "agentName": "Data Interpreter",
+    "agentKind": "example",
+    "capabilities": [
+      "Translate raw product analytics into plain language",
+      "Write a weekly report for the team",
+      "No manual digging around"
+    ]
+  },
+  {
+    "id": "conversation-insights",
+    "text": "What customers tell us in conversations disappears into individual notes.",
+    "agentName": "Conversation Analyst",
+    "agentKind": "example",
+    "capabilities": [
+      "Analyse calls and chats by topic",
+      "Detect the sentiment",
+      "Make recurring patterns visible"
+    ]
+  },
+  {
+    "id": "reply-suggestions",
+    "text": "We write almost the same answer to standard questions every time.",
+    "agentName": "Reply Suggester",
+    "agentKind": "example",
+    "capabilities": [
+      "Suggest fitting reply snippets",
+      "Adapt them to the question at hand",
+      "Sending still happens through a human"
+    ]
+  },
+  {
+    "id": "knowledge-base",
+    "text": "Our knowledge is buried in chats and documents, and nobody keeps it up to date.",
+    "agentName": "Knowledge Gardener",
+    "agentKind": "example",
+    "capabilities": [
+      "Evaluate chats and documents",
+      "Keep the internal knowledge base current",
+      "With nobody updating it by hand"
+    ]
+  },
+  {
+    "id": "meeting-tasks",
+    "text": "After the meeting, everyone remembers something different about what needs doing.",
+    "agentName": "Task Writer",
+    "agentKind": "example",
+    "capabilities": [
+      "Turn meeting notes into tasks",
+      "Assign tasks per participant",
+      "Rank them by priority"
+    ]
+  },
+  {
+    "id": "competitor-watch",
+    "text": "What the competition is offering right now, we usually find out by accident.",
+    "agentName": "Competitor Watcher",
+    "agentKind": "example",
+    "capabilities": [
+      "Check prices and offers regularly",
+      "Flag changes",
+      "Summarise briefly what has changed"
+    ]
+  },
+  {
+    "id": "investor-updates",
+    "text": "We always write the investor update right before it is due.",
+    "agentName": "Update Preparer",
+    "agentKind": "example",
+    "capabilities": [
+      "Pull metrics from your existing tools",
+      "Draft the next update",
+      "You review and approve"
+    ]
+  },
+  {
+    "id": "market-trends",
+    "text": "Keeping an eye on the market is something we cannot manage next to daily business.",
+    "agentName": "Market Radar",
+    "agentKind": "example",
+    "capabilities": [
+      "Scan articles and industry news",
+      "Write a weekly market briefing",
+      "Summarise what matters most"
+    ]
+  },
+  {
+    "id": "social-drafts",
+    "text": "Our blog posts get published, but we have no time left for social media.",
+    "agentName": "Social Drafter",
+    "agentKind": "example",
+    "capabilities": [
+      "Derive post drafts from blog articles",
+      "Tailor them for social media",
+      "Publishing still happens manually"
+    ]
+  },
+  {
+    "id": "contract-deadlines",
+    "text": "We only remember contract deadlines and notice periods once they have passed.",
+    "agentName": "Deadline Guard",
+    "agentKind": "example",
+    "capabilities": [
+      "Search contracts for deadlines",
+      "Remind you of notice dates in time",
+      "Collect all deadlines in one overview"
+    ]
+  },
+  {
+    "id": "follow-ups",
+    "text": "Quotes go out, and after that nobody follows up.",
+    "agentName": "Follow-up Assistant",
+    "agentKind": "example",
+    "capabilities": [
+      "Keep track of open quotes",
+      "Prepare a follow-up email",
+      "Your team approves it before it is sent"
+    ]
+  },
+  {
+    "id": "supplier-prices",
+    "text": "We only compare supplier prices when it really hurts.",
+    "agentName": "Price Comparer",
+    "agentKind": "example",
+    "capabilities": [
+      "Put quotes from different suppliers side by side",
+      "Flag price changes",
+      "The decision stays with you"
     ]
   }
 ],

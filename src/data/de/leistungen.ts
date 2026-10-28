@@ -186,7 +186,7 @@ export const leistungenData: LeistungenData = {
   }
 ],
   useCasesHeading: "Mögliche Use Cases",
-  useCasesLeadLine: "Beleg-Inbox läuft heute schon produktiv bei uns im Einsatz – die anderen vier zeigen dir, was mit demselben Ansatz sonst noch möglich ist.",
+  useCasesLeadLine: "Beleg-Inbox läuft heute schon produktiv bei uns – alle anderen Karten sind Beispiele dafür, was mit demselben Ansatz möglich ist.",
   useCasesCtaLabel: "Kostenloses Erstgespräch buchen",
   situations: [
   {
@@ -213,7 +213,7 @@ export const leistungenData: LeistungenData = {
   },
   {
     "id": "tool-fatigue",
-    "text": "Wir probieren seit Monaten KI-Tools aus, aber im Alltag läuft keines davon wirklich.",
+    "text": "Wir hatten ein gutes Konzept. Umgesetzt hat es dann niemand.",
     "agentName": "Rollout-Lotse",
     "agentKind": "example",
     "capabilities": [
@@ -242,6 +242,214 @@ export const leistungenData: LeistungenData = {
       "Nutzung und Fehler laufend überwachen",
       "Verantwortliche automatisch erinnern",
       "Monatlichen Gesundheitscheck liefern"
+    ]
+  },
+  {
+    "id": "quote-drafts",
+    "text": "Aus jeder Anfrage ein Angebot zu bauen, kostet uns jedes Mal Zeit.",
+    "agentName": "Angebots-Entwurf",
+    "agentKind": "example",
+    "capabilities": [
+      "Produkt und Menge aus Anfragen herauslesen",
+      "Angebotsentwurf im CRM anlegen",
+      "Vor dem Versand von einem Menschen freigeben lassen"
+    ]
+  },
+  {
+    "id": "order-matching",
+    "text": "Bei Eingangsrechnungen weiß ich nie, ob sie zur Bestellung passen.",
+    "agentName": "Bestell-Abgleich",
+    "agentKind": "example",
+    "capabilities": [
+      "Jede Rechnung mit der Bestellung vergleichen",
+      "Abweichungen markieren",
+      "Nichts stillschweigend durchwinken"
+    ]
+  },
+  {
+    "id": "payment-reminders",
+    "text": "Überfällige Rechnungen fallen uns erst auf, wenn es schon lange her ist.",
+    "agentName": "Mahn-Assistent",
+    "agentKind": "example",
+    "capabilities": [
+      "Überfällige Rechnungen erkennen",
+      "Eine Erinnerung vorbereiten",
+      "Dein Team bestätigt nur noch"
+    ]
+  },
+  {
+    "id": "appointments",
+    "text": "Terminwünsche stehen in Mails, und ich tippe sie von Hand in den Kalender.",
+    "agentName": "Termin-Sekretär",
+    "agentKind": "example",
+    "capabilities": [
+      "Terminwünsche aus Mails herauslesen",
+      "Freie Slots im Kalender vorschlagen",
+      "Eintragen erst nach deiner Bestätigung"
+    ]
+  },
+  {
+    "id": "onboarding-questions",
+    "text": "Neue Nutzer stellen immer dieselben Fragen, und wir beantworten sie jedes Mal neu.",
+    "agentName": "Onboarding-Helfer",
+    "agentKind": "example",
+    "capabilities": [
+      "Wiederkehrende Fragen aus eurer Dokumentation beantworten",
+      "Den Rest direkt an euer Team weitergeben"
+    ]
+  },
+  {
+    "id": "ticket-triage",
+    "text": "Wenn ein Ticket reinkommt, weiß keiner sofort, wie dringend es ist.",
+    "agentName": "Ticket-Sortierer",
+    "agentKind": "example",
+    "capabilities": [
+      "Tickets nach Dringlichkeit einordnen",
+      "Nach Thema zuordnen",
+      "Vorsortiert ans Team übergeben"
+    ]
+  },
+  {
+    "id": "feature-requests",
+    "text": "Feature-Wünsche kommen aus allen Kanälen, und keiner überblickt sie.",
+    "agentName": "Wunsch-Sammler",
+    "agentKind": "example",
+    "capabilities": [
+      "Feedback aus mehreren Kanälen zusammenführen",
+      "Nach Aufwand und Nutzen ordnen",
+      "Für die nächste Priorisierung aufbereiten"
+    ]
+  },
+  {
+    "id": "usage-reports",
+    "text": "Unsere Nutzungsdaten liegen irgendwo, aber niemand liest sie.",
+    "agentName": "Daten-Dolmetscher",
+    "agentKind": "example",
+    "capabilities": [
+      "Rohe Produktanalytik in verständliche Sprache übersetzen",
+      "Wöchentlichen Bericht fürs Team erstellen",
+      "Ohne manuelles Zusammensuchen"
+    ]
+  },
+  {
+    "id": "conversation-insights",
+    "text": "Was Kunden in Gesprächen sagen, versickert in Einzelnotizen.",
+    "agentName": "Gesprächs-Analyst",
+    "agentKind": "example",
+    "capabilities": [
+      "Calls und Chats nach Thema auswerten",
+      "Die Stimmung erkennen",
+      "Wiederkehrende Muster sichtbar machen"
+    ]
+  },
+  {
+    "id": "reply-suggestions",
+    "text": "Auf Standardfragen schreiben wir jedes Mal fast dieselbe Antwort.",
+    "agentName": "Antwort-Vorschlag",
+    "agentKind": "example",
+    "capabilities": [
+      "Passende Antwortbausteine vorschlagen",
+      "An die jeweilige Frage anpassen",
+      "Abgeschickt wird weiterhin von einem Menschen"
+    ]
+  },
+  {
+    "id": "knowledge-base",
+    "text": "Unser Wissen steckt in Chats und Dokumenten, und niemand pflegt es nach.",
+    "agentName": "Wissens-Gärtner",
+    "agentKind": "example",
+    "capabilities": [
+      "Chats und Dokumente auswerten",
+      "Die interne Wissensdatenbank aktuell halten",
+      "Ohne dass jemand von Hand nachträgt"
+    ]
+  },
+  {
+    "id": "meeting-tasks",
+    "text": "Nach dem Meeting weiß jeder etwas anderes davon, was zu tun ist.",
+    "agentName": "Aufgaben-Schreiber",
+    "agentKind": "example",
+    "capabilities": [
+      "Mitschriften in Aufgaben verwandeln",
+      "Aufgaben je Teilnehmer zuordnen",
+      "Nach Priorität ordnen"
+    ]
+  },
+  {
+    "id": "competitor-watch",
+    "text": "Was die Konkurrenz gerade anbietet, erfahren wir meist zufällig.",
+    "agentName": "Konkurrenz-Beobachter",
+    "agentKind": "example",
+    "capabilities": [
+      "Preise und Angebote regelmäßig prüfen",
+      "Änderungen markieren",
+      "Kurz zusammenfassen, was sich getan hat"
+    ]
+  },
+  {
+    "id": "investor-updates",
+    "text": "Das Investoren-Update schreiben wir immer auf den letzten Drücker.",
+    "agentName": "Update-Vorbereiter",
+    "agentKind": "example",
+    "capabilities": [
+      "Kennzahlen aus euren bestehenden Tools ziehen",
+      "Einen Entwurf für das nächste Update vorbereiten",
+      "Du prüfst und gibst frei"
+    ]
+  },
+  {
+    "id": "market-trends",
+    "text": "Den Markt im Blick zu behalten, schaffen wir neben dem Tagesgeschäft nicht.",
+    "agentName": "Markt-Radar",
+    "agentKind": "example",
+    "capabilities": [
+      "Fachartikel und Branchenmeldungen sichten",
+      "Eine wöchentliche Markteinschätzung erstellen",
+      "Das Wichtigste kurz zusammenfassen"
+    ]
+  },
+  {
+    "id": "social-drafts",
+    "text": "Unsere Blogartikel erscheinen, aber für Social Media fehlt uns die Zeit.",
+    "agentName": "Social-Entwurf",
+    "agentKind": "example",
+    "capabilities": [
+      "Aus Blogartikeln Beitragsentwürfe ableiten",
+      "Für Social Media zuschneiden",
+      "Veröffentlicht wird weiterhin manuell"
+    ]
+  },
+  {
+    "id": "contract-deadlines",
+    "text": "Vertragsfristen und Kündigungstermine merken wir uns erst, wenn sie verstrichen sind.",
+    "agentName": "Fristen-Wächter",
+    "agentKind": "example",
+    "capabilities": [
+      "Verträge nach Fristen durchsuchen",
+      "Rechtzeitig an Kündigungstermine erinnern",
+      "Alle Fristen übersichtlich sammeln"
+    ]
+  },
+  {
+    "id": "follow-ups",
+    "text": "Angebote gehen raus, und danach fragt keiner mehr nach.",
+    "agentName": "Nachfass-Assistent",
+    "agentKind": "example",
+    "capabilities": [
+      "Offene Angebote im Blick behalten",
+      "Eine Nachfass-Mail vorbereiten",
+      "Dein Team gibt sie vor dem Versand frei"
+    ]
+  },
+  {
+    "id": "supplier-prices",
+    "text": "Lieferantenpreise vergleichen wir nur, wenn es wirklich weh tut.",
+    "agentName": "Preis-Vergleicher",
+    "agentKind": "example",
+    "capabilities": [
+      "Angebote verschiedener Lieferanten gegenüberstellen",
+      "Preisänderungen markieren",
+      "Die Entscheidung bleibt bei dir"
     ]
   }
 ],
