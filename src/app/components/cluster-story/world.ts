@@ -170,6 +170,13 @@ export interface WorldElement {
   /** 0 lines, 1 cards, 2 nodes, 3 labels */
   layer: 0 | 1 | 2 | 3;
   art: Prim[];
+  /**
+   * The same element drawn for the phone camera, where a text must be at least `MIN_EFF` px and a
+   * card has to grow with it. Absent: `art` is drawn on both. (Anchors, windows and tiers are the same.)
+   */
+  narrow?: Prim[];
+  /** Further steps at which the texts of this element count as the current step's (see `textSize`). */
+  cur?: number[];
   hl?: "a" | "b";
   transforms?: boolean;
   /** The element flies (see `moveAt`). */
@@ -258,6 +265,8 @@ export const GEO = {
   hub: HUB,
   cc: CC,
   tb: { x: 746, y: 642, w: 126, h: 10 },
+  /** The same bar on the phone, where the metric cards are larger. */
+  tbN: { x: 770, y: 664, w: 126, h: 10 },
   orb: { r: 70 },
   ord: { r: R_OUT + 24 },
   cpulse: { x: 78, y: chMid(3) },
@@ -445,7 +454,23 @@ const tileArt = (i: number, x: number, y: number): Prim[] => [
   ico(TILES[i].ic, x + 10, y + 18, 24, TILES[i].tx),
   txt(x + 42, y + TILE_H / 2, `area:${i}`, 16, W, { mw: TILE_W - 50, vc: true }),
 ];
-add(3, "excard", 3, 0.72, "pop", 0.3, tileArt(0, tx0[0], EX_START_Y), { hl: "b", transforms: true, fly: true });
+/* On the phone a tile is larger (text 26 on the step-7 camera), centred on the same dock point. */
+const TILE_NW = 262;
+const TILE_NH = 68;
+const TILE_NY = [EX_START_Y - 224, 154, 290, 366];
+const tileArtN = (i: number, x: number, y: number): Prim[] => [
+  card(x, y, TILE_NW, TILE_NH, 20, { s: TILES[i].c, so: 0.7 }),
+  ico(TILES[i].ic, x + 10, y + (TILE_NH - 28) / 2, 28, TILES[i].tx),
+  txt(x + 48, y + TILE_NH / 2, `area:${i}`, 26, W, { mw: TILE_NW - 60, vc: true }),
+];
+const tileXN = (i: number): number => Math.round(DOCK[i][0] - TILE_NW / 2);
+add(3, "excard", 3, 0.72, "pop", 0.3, tileArt(0, tx0[0], EX_START_Y), {
+  hl: "b",
+  transforms: true,
+  fly: true,
+  narrow: tileArtN(0, tileXN(0), EX_START_Y),
+  cur: [6],
+});
 add(3, "ex-tag", 3, 0.85, "fade", 0.3, [
   txt(CC[0], EX_START_Y + TILE_H + 18, "ex", 15, MUT, {
     a: "m",
@@ -460,11 +485,14 @@ add(0, "tel", 4, 0.1, "draw", 0.4, [path(PATHS.tel, BLUE, 3)]);
 add(0, "tel-head", 4, 0.45, "fade", 0.3, [arrow(402, 216, "l", BLUE)]);
 add(0, "upl", 4, 0.5, "fade", 0.4, [path(PATHS.upl, AMB, 3.5, GLOW)]);
 add(0, "upl-head", 4, 0.75, "fade", 0.3, [arrow(582, 284, "r", AMB)]);
-add(3, "only-lbl", 4, 0.2, "fade", 0.3, [txt(404, 76, "g:onlyToUs", 16, MUT, { wt: 600, tier: "s" })]);
+add(3, "only-lbl", 4, 0.2, "fade", 0.3, [txt(404, 76, "g:onlyToUs", 16, MUT, { wt: 600 })], {
+  narrow: [txt(404, 72, "g:onlyToUs", 20, MUT, { wt: 600 })],
+});
+const CHIP_BG: Bg = { px: 12, h: 30, f: BLUE, fo: 0.12, s: BLUE, so: 0.65, sw: 1.5 };
 ["runtime", "errors", "costs"].forEach((key, i) =>
-  add(3, `chip${i}`, 4, 0.3 + i * 0.1, "up", 0.3, [
-    txt(416, 106 + i * 34, `g:${key}`, 17, W, { bg: { px: 12, h: 30, f: BLUE, fo: 0.12, s: BLUE, so: 0.65, sw: 1.5 } }),
-  ]),
+  add(3, `chip${i}`, 4, 0.3 + i * 0.1, "up", 0.3, [txt(416, 106 + i * 34, `g:${key}`, 17, W, { bg: CHIP_BG })], {
+    narrow: [txt(416, 106 + i * 32, `g:${key}`, 20, W, { bg: { ...CHIP_BG, h: 28 } })],
+  }),
 );
 add(3, "tel-lbl", 4, 0.25, "fade", 0.3, [txt(404, 200, "g:telemetry", 18, LAV)]);
 add(3, "upd-lbl", 4, 0.6, "fade", 0.3, [txt(404, 304, "g:updates", 18, AMB)]);
@@ -480,9 +508,12 @@ add(
     ico("lock", 416, 346, 26, BLT, 1.8),
     txt(416, 392, "g:lock", 17, W, { mw: 152 }),
   ],
-  { hl: "b" },
+  /* phone: 44 units wider (the German label needs three lines at size 20 in the design width) */
+  { hl: "b", narrow: [card(404, 336, 220, 100), ico("lock", 416, 346, 26, BLT, 1.8), txt(416, 392, "g:lock", 20, W, { mw: 196 })] },
 );
-add(0, "lock-link", 4, 0.7, "fade", 0.3, [path("M580 384 H640", LAV, 3, { ...LINE, ...GLOW })]);
+add(0, "lock-link", 4, 0.7, "fade", 0.3, [path("M580 384 H640", LAV, 3, { ...LINE, ...GLOW })], {
+  narrow: [path("M624 384 H664", LAV, 3, { ...LINE, ...GLOW })],
+});
 add(
   1,
   "release",
@@ -496,7 +527,16 @@ add(
     { t: "circle", cx: 432.5, cy: 474, r: 9.5, f: DIM },
     txt(416, 508, "g:release", 17, W, { mw: 152 }),
   ],
-  { hl: "b" },
+  {
+    hl: "b",
+    /* wider to the right (nothing stands there below the company ring): two lines at text size 20 */
+    narrow: [
+      card(404, 448, 236, 118),
+      rect(416, 460, 50, 28, 14, { f: W, fo: 0.08, s: W, so: 0.12, sw: 1.5 }),
+      { t: "circle", cx: 432.5, cy: 474, r: 9.5, f: DIM },
+      txt(416, 508, "g:release", 20, W, { mw: 212 }),
+    ],
+  },
 );
 add(2, "orb", 4, 0.5, "none", 0.4, [dyn("orb")]);
 
@@ -525,17 +565,20 @@ add(
       bg: { px: 12, h: 28, f: VIO, fo: 0.3, s: VIO, sw: 1.5 },
     }),
   ],
-  { hl: "b" },
+  /* phone: the whole picture is on screen, so the card grows to hold its text at size 30 (no "Call mit dir" pill) */
+  { hl: "b", narrow: [card(0, 450, 396, 236), ico("cal", 16, 464, 30, LAV), txt(56, 484, "g:month", 30, LAV)] },
 );
 CALL_ROWS.forEach(([ic, key, c], i) =>
   add(1, `call-row${i}`, 5, 0.35 + i * 0.1, "left", 0.3, [
     ico(ic, 16, 502 + i * 33, 22, c),
-    txt(48, 513 + i * 33, `g:${key}`, 16, W, { tier: "s" }),
-  ]),
+    txt(48, 513 + i * 33, `g:${key}`, 16, W),
+  ], {
+    narrow: [ico(ic, 16, 517 + i * 40, 26, c), txt(52, 530 + i * 40, `g:${key}`, 30, W, { wt: 600 })],
+  }),
 );
 add(0, "loop-up", 5, 0.45, "draw", 0.3, [path("M60 450 V396", AMB, 3.5)]);
 add(0, "loop-up-head", 5, 0.65, "fade", 0.3, [arrow(60, 392, "u", AMB)]);
-add(3, "newinput", 5, 0.7, "fade", 0.3, [txt(74, 416, "g:newInput", 16, AMB, { wt: 600, tier: "s" })]);
+add(3, "newinput", 5, 0.7, "fade", 0.3, [txt(74, 416, "g:newInput", 16, AMB, { wt: 600 })]);
 add(0, "arc", 5, 0.55, "draw", 0.45, [path(PATHS.arc, AMB, 3.5)]);
 add(0, "arc-head", 5, 0.9, "fade", 0.3, [arrow(78, 20, "d", AMB)]);
 add(3, "loop-lbl", 5, 0.8, "up", 0.3, [txt(318, 26, "g:loop", 22, AMB)]);
@@ -550,7 +593,7 @@ RING2.forEach(([x, y], i) => add(2, `ring2-n${i}`, 6, 0.2 + i * 0.05, "pop", 0.3
 DOCK.forEach(([x, y], i) => add(2, `dock${i}`, 6, 0.45 + i * 0.06, "pop", 0.3, [{ t: "node", x, y, r: 8, g: "lav" }]));
 for (let i = 1; i < 4; i++) {
   const [x, y] = tileXY(i);
-  add(3, `tile${i}`, 6, 0.55 + i * 0.07, "pop", 0.3, tileArt(i, x, y), { hl: "b" });
+  add(3, `tile${i}`, 6, 0.55 + i * 0.07, "pop", 0.3, tileArt(i, x, y), { hl: "b", narrow: tileArtN(i, tileXN(i), TILE_NY[i]) });
 }
 add(3, "tap-tag", 6, 0.9, "fade", 0.3, [
   txt(DOCK[2][0], 272, "extap", 15, MUT, {
@@ -564,6 +607,9 @@ const metX = (i: number): number => 404 + i * 164;
 const MET_Y = 580;
 const MET_W = 154;
 const MET_H = 84;
+const MET_WN = 190;
+const MET_HN = 108;
+const metXN = (i: number): number => 404 + i * 198;
 const METS: [string, string][] = [
   ["errors", "down"],
   ["metResults", "up"],
@@ -572,29 +618,58 @@ const METS: [string, string][] = [
 METS.forEach(([key, kind], i) => {
   const x = metX(i);
   const art: Prim[] = [card(x, MET_Y, MET_W, MET_H, 18), txt(x + 14, MET_Y + 22, `g:${key}`, 18, W, { mw: 100 })];
+  /* phone: wider and taller cards, text 26, the bar under the text */
+  const xn = metXN(i);
+  const ax = xn + 166;
+  const nart: Prim[] = [card(xn, MET_Y, MET_WN, MET_HN, 18), txt(xn + 14, MET_Y + 26, `g:${key}`, 26, W, { mw: 140 })];
+  if (kind === "down") nart.push(path(`M${ax} ${MET_Y + 46} V${MET_Y + 76} M${ax - 9} ${MET_Y + 67}L${ax} ${MET_Y + 77}L${ax + 9} ${MET_Y + 67}`, AMB, 3.5));
+  if (kind === "up") nart.push(path(`M${ax} ${MET_Y + 77} V${MET_Y + 47} M${ax - 9} ${MET_Y + 56}L${ax} ${MET_Y + 47}L${ax + 9} ${MET_Y + 56}`, BLT, 3.5));
+  if (kind === "bar") nart.push(rect(xn + 14, MET_Y + 88, GEO.tbN.w, GEO.tbN.h, 5, { f: W, fo: 0.08 }), dyn("tb"));
   if (kind === "down") art.push(path(`M${x + 130} ${MET_Y + 48} V${MET_Y + 70} M${x + 121} ${MET_Y + 62}L${x + 130} ${MET_Y + 71}L${x + 139} ${MET_Y + 62}`, AMB, 3.5));
   if (kind === "up") art.push(path(`M${x + 130} ${MET_Y + 71} V${MET_Y + 49} M${x + 121} ${MET_Y + 58}L${x + 130} ${MET_Y + 49}L${x + 139} ${MET_Y + 58}`, BLT, 3.5));
   if (kind === "bar") {
     art.push(rect(x + 14, MET_Y + 62, GEO.tb.w, GEO.tb.h, 5, { f: W, fo: 0.08 }), dyn("tb"));
   }
-  add(1, `met${i}`, 6, 0.7 + i * 0.1, "up", 0.3, art, { hl: "b" });
+  add(1, `met${i}`, 6, 0.7 + i * 0.1, "up", 0.3, art, { hl: "b", narrow: nart });
 });
-add(3, "schem-8", 6, 0.95, "fade", 0.3, [txt(404, 682, "g:schematic", 17, MUT, { wt: 600, mw: 496 })]);
+add(3, "schem-8", 6, 0.95, "fade", 0.3, [txt(404, 682, "g:schematic", 17, MUT, { wt: 600, mw: 496 })], {
+  narrow: [txt(404, 712, "g:schematic", 26, MUT, { wt: 600, mw: 560 })],
+});
 
 /* ---- Step 8 (k = 7): the offer, Aufbau and Betrieb, frames, the ring around the company ------ */
-add(1, "build-card", 7, 0.1, "pop", 0.3, [
-  card(0, 706, 450, 72),
-  txt(18, 728, "g:build", 22, LAV),
-  txt(18, 758, "g:buildSub", 25, W, { wt: 800 }),
-  ...[22, 36, 50].map((h, i) =>
-    rect(450 - 24 - 30 - i * 40, 778 - 10 - h, 30, h, 8, { grad: "fvio" }),
-  ),
-]);
-add(1, "run-card", 7, 0.25, "pop", 0.3, [
-  card(470, 706, 430, 72),
-  txt(488, 728, "g:run", 22, LAV),
-  txt(488, 758, "g:runSub", 22, W, { wt: 800 }),
-]);
+/* phone: the whole picture is on screen again, the offer cards grow to hold their text at size 33 */
+add(
+  1,
+  "build-card",
+  7,
+  0.1,
+  "pop",
+  0.3,
+  [
+    card(0, 706, 450, 72),
+    txt(18, 728, "g:build", 22, LAV),
+    txt(18, 758, "g:buildSub", 25, W, { wt: 800 }),
+    ...[22, 36, 50].map((h, i) => rect(450 - 24 - 30 - i * 40, 778 - 10 - h, 30, h, 8, { grad: "fvio" })),
+  ],
+  {
+    narrow: [
+      card(0, 706, 450, 112),
+      txt(18, 732, "g:build", 33, LAV),
+      txt(18, 776, "g:buildSub", 33, W, { wt: 800 }),
+      ...[28, 46, 64].map((h, i) => rect(450 - 24 - 30 - i * 40, 808 - h, 30, h, 8, { grad: "fvio" })),
+    ],
+  },
+);
+add(
+  1,
+  "run-card",
+  7,
+  0.25,
+  "pop",
+  0.3,
+  [card(470, 706, 430, 72), txt(488, 728, "g:run", 22, LAV), txt(488, 758, "g:runSub", 22, W, { wt: 800 })],
+  { narrow: [card(470, 706, 430, 112), txt(488, 732, "g:run", 33, LAV), txt(488, 776, "g:runSub", 33, W, { wt: 800 })] },
+);
 add(0, "build-line", 7, 0.05, "draw", 0.3, [path("M0 706 V698 H450 V706", VIO2, 4)]);
 add(0, "run-line", 7, 0.2, "draw", 0.3, [path("M470 706 V698 H900 V706", AMB, 4)]);
 add(2, "ord", 7, 0.4, "none", 0.4, [dyn("ord")]);
@@ -640,7 +715,8 @@ export const HL_COLOR = { a: VIO2, b: AMB } as const;
 /** Every graphic label key (`g:<key>`) the world draws; the locale files carry all of them. */
 export const LABEL_KEYS: readonly string[] = (() => {
   const s = new Set<string>();
-  for (const el of ELEMENTS) for (const p of el.art) if (p.t === "text" && p.src.startsWith("g:")) s.add(p.src.slice(2));
+  for (const el of ELEMENTS)
+    for (const p of [...el.art, ...(el.narrow ?? [])]) if (p.t === "text" && p.src.startsWith("g:")) s.add(p.src.slice(2));
   return [...s].sort();
 })();
 
@@ -727,10 +803,10 @@ export const CAM_M: { pre: Cam; k: Cam[] } = {
     [200, 209, 490],
     [300, 240, 440],
     [604, 225, 540],
-    [596, 317, 610],
+    [596, 313, 610],
     [444, 325, 920],
-    [665, 391, 725],
-    [462, 392, 980],
+    [685, 405, 776],
+    [490, 412, 1010],
     [1010, 381, 640],
   ],
 };
@@ -807,7 +883,7 @@ export function textSize(tx: Txt, el: WorldElement, f: number, narrow: boolean):
   const s = PHONE_STAGE_W / cameraAt(f, true)[2];
   const need = MIN_EFF / s;
   if (tx.fs >= need) return tx.fs;
-  if (tx.tier === "c" && Math.round(f) === el.k) return need;
+  if (tx.tier === "c" && (Math.round(f) === el.k || el.cur?.includes(Math.round(f)))) return need;
   if (tx.tier === "o" && need <= tx.fs * 1.6) return need;
   return 0;
 }
@@ -870,10 +946,13 @@ function unite(a: Box | null, b: Box): Box {
   return { x, y, w: Math.max(a.x + a.w, b.x + b.w) - x, h: Math.max(a.y + a.h, b.y + b.h) - y };
 }
 
-/** Bounding box of an element in world units, at its resting place (texts at design size). */
-export function boxOf(el: WorldElement, lb: Labels): Box {
+/** What an element draws on the given camera set: its phone art when it has one, else the design art. */
+export const artOf = (el: WorldElement, narrow: boolean): Prim[] => (narrow && el.narrow ? el.narrow : el.art);
+
+/** Bounding box of an element in world units, at its resting place (texts at their drawn design size). */
+export function boxOf(el: WorldElement, lb: Labels, narrow = false): Box {
   let box: Box | null = null;
-  for (const p of el.art) {
+  for (const p of artOf(el, narrow)) {
     let b: Box;
     switch (p.t) {
       case "rect":
@@ -896,7 +975,7 @@ export function boxOf(el: WorldElement, lb: Labels): Box {
         break;
       }
       case "dyn":
-        b = DYN_BOX[p.n];
+        b = narrow && p.n === "tb" ? { ...GEO.tbN } : DYN_BOX[p.n];
         break;
       case "text": {
         const lines = wrapText(resolveText(p.src, lb), p.fs, p.wt, p.mw);

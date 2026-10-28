@@ -5,6 +5,7 @@ import {
   HL_COLOR,
   LINE_HEIGHT,
   STAGE_BG,
+  artOf,
   boxOf,
   cameraRect,
   dynAt,
@@ -310,7 +311,7 @@ function NodeEl({ x, y, r, g }: { x: number; y: number; r: number; g: Grad }) {
   );
 }
 
-function DynEl({ n, d }: { n: string; d: DynState }) {
+function DynEl({ n, d, narrow }: { n: string; d: DynState; narrow: boolean }) {
   switch (n) {
     case "cc":
       return (
@@ -324,7 +325,7 @@ function DynEl({ n, d }: { n: string; d: DynState }) {
         <circle cx={HUB[0]} cy={HUB[1]} r={n2(d.hubpulse.r)} fill="none" stroke={LAV} strokeWidth={2.5} strokeOpacity={n2(d.hubpulse.o)} />
       ) : null;
     case "tb":
-      return <rect x={GEO.tb.x} y={GEO.tb.y} width={n2(d.tbW)} height={GEO.tb.h} rx={5} fill="url(#cs-bar)" />;
+      return <rect x={(narrow ? GEO.tbN : GEO.tb).x} y={(narrow ? GEO.tbN : GEO.tb).y} width={n2(d.tbW)} height={GEO.tb.h} rx={5} fill="url(#cs-bar)" />;
     case "b1":
       return <rect x={GEO.b1.x} y={GEO.b1.y} width={n2(GEO.b1.w * d.b1)} height={GEO.b1.h} rx={8} fill="url(#cs-b1)" />;
     case "b2":
@@ -364,7 +365,7 @@ function primEl(p: Prim, i: number, el: WorldElement, f: number, narrow: boolean
     case "text":
       return <TextEl key={i} p={p} fs={textSize(p, el, f, narrow)} labels={labels} />;
     case "dyn":
-      return LOOP_DYN.has(p.n) ? null : <DynEl key={i} n={p.n} d={d} />;
+      return LOOP_DYN.has(p.n) ? null : <DynEl key={i} n={p.n} d={d} narrow={narrow} />;
   }
 }
 
@@ -384,24 +385,25 @@ function ElementG({ el, f, narrow, labels, d, box }: { el: WorldElement; f: numb
     transform = `translate(${n2(mx)} ${n2(my)})${transform ? ` ${transform}` : ""}`;
   }
   const hl = el.hl ? { c: HL_COLOR[el.hl], v: d.hv } : null;
-  const firstRect = el.art.findIndex((p) => p.t === "rect");
+  const art = artOf(el, narrow);
+  const firstRect = art.findIndex((p) => p.t === "rect");
   /* what the example card leaves behind fades while it flies */
   const op = el.id === "ex-tag" ? v.op * (1 - d.fl) : el.id === "exline" ? v.op * (1 - d.fl) : v.op;
   return (
     <g data-id={el.id} data-k={el.k} opacity={n2(op)} transform={transform}>
       {el.fx === "draw" ? (
         <g strokeDasharray={v.p < 1 ? "1 1" : undefined} strokeDashoffset={v.p < 1 ? n2(1 - v.p) : undefined}>
-          {el.art.map((p, i) => primEl(p, i, el, f, narrow, labels, d, hl, i === firstRect))}
+          {art.map((p, i) => primEl(p, i, el, f, narrow, labels, d, hl, i === firstRect))}
         </g>
       ) : (
-        el.art.map((p, i) => primEl(p, i, el, f, narrow, labels, d, hl, i === firstRect))
+        art.map((p, i) => primEl(p, i, el, f, narrow, labels, d, hl, i === firstRect))
       )}
     </g>
   );
 }
 
 const Elements = memo(function Elements({ f, narrow, labels }: { f: number; narrow: boolean; labels: Labels }) {
-  const boxes = useMemo(() => new Map(ELEMENTS.map((e) => [e.id, boxOf(e, labels)])), [labels]);
+  const boxes = useMemo(() => new Map(ELEMENTS.map((e) => [e.id, boxOf(e, labels, narrow)])), [labels, narrow]);
   const d = dynAt(f, null);
   return (
     <g>
