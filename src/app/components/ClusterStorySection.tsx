@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import { Check } from "lucide-react";
 import { useReducedMotion } from "motion/react";
@@ -16,39 +16,40 @@ import { FINAL_F, LABEL_KEYS, clamp, type Labels } from "./cluster-story/world";
  *
  * ONE sticky "world" stage: a single connected map that only grows, panned and zoomed by a camera
  * as a pure function of the story position `f` (and a quiet clock `t`). `f` comes from the scroll
- * position (a block's centre against the viewline), so the picture scrubs both ways; the ten
- * step blocks (nine steps plus the tenth, "Ausblick") sit beside it on
- * desktop and beneath it on phones, where the stage stays pinned to the top. Everything the
+ * position (a block's centre against the viewline), so the picture scrubs both ways; the nine
+ * step blocks (the ninth is the "Ausblick") sit beside it on desktop and beneath it on phones,
+ * where the stage stays pinned to the top. The dots under the stage are a pure, non-interactive
+ * progress indicator (`role="progressbar"`); the step count is always `steps.length`. Everything the
  * stage draws lives in `cluster-story/world.ts` (pure model; its docblock holds the `setF` /
  * `setStep` / `?video=1` contract, the step-mark rules and the colour of each element group)
  * and `cluster-story/ClusterStoryWorld.tsx` (the renderer).
  *
  * SSR-safe by construction: the server and the first client render show the finished picture
- * (`f = 8.2`, desktop camera, no clock) plus the complete ordered list of ten blocks. Scroll,
+ * (`f = 7.2`, desktop camera, no clock) plus the complete ordered list of nine blocks. Scroll,
  * narrow viewport, reduced motion and `?video=1` are read in effects only; nothing here touches
  * `window`, `document` or `matchMedia` at module scope or during render. Under
  * `prefers-reduced-motion: reduce` there is no clock and no transition: `f` snaps to the finished
  * state of the nearest step (`k + 0.2`).
  */
 
-const TOTAL_STEPS = 9;
-/** Index of the area that carries the "Beispiel"/"Example" Tap2Link tag (step 8's third tile). */
+/** Index of the area that carries the "Beispiel"/"Example" Tap2Link tag (the growth step's third tile). */
 const EXAMPLE_AREA_INDEX = 2;
 /** The step whose block carries the booking button (the offer: build and run). */
-const OFFER_STEP_INDEX = 8;
+const OFFER_STEP_ID = "service";
+/** The step that lists the growth areas the stage draws as tiles. */
+const GROWTH_STEP_ID = "growth";
 
-/** One accent per step, in storyline order; the tenth (Ausblick) is amber. */
+/** One accent per step, in storyline order; the ninth (Ausblick) is amber. */
 const STEP_ACCENTS = [
   "#2b95f6", // 0 input
   "#8129ff", // 1 concepts
   "#a318f8", // 2 handover
   "#a318f8", // 3 build
-  "#d9aeff", // 4 install
-  "#2b95f6", // 5 telemetry
-  "#fda700", // 6 loop
-  "#fda700", // 7 growth
-  "#a318f8", // 8 service
-  "#fda700", // 9 outlook
+  "#2b95f6", // 4 telemetry
+  "#fda700", // 5 loop
+  "#fda700", // 6 growth
+  "#a318f8", // 7 service
+  "#fda700", // 8 outlook
 ];
 
 const ACTIVE_TEXT_DARK = "#0e0d13";
@@ -76,7 +77,7 @@ function viewLine(sticky: HTMLElement | null): number {
   const vh = window.innerHeight;
   if (window.innerWidth >= 1024 || !sticky) return vh * 0.5;
   // The stage's bottom edge once pinned (its `top` plus its height), never its current position:
-  // the target of a pill click must not move while the page is still scrolling it into place.
+  // the viewline must not move while the page is still scrolling the stage into place.
   const pinnedBottom = (parseFloat(window.getComputedStyle(sticky).top) || 0) + sticky.offsetHeight;
   return Math.min(pinnedBottom + 130, vh - 80);
 }
@@ -141,7 +142,7 @@ export function ClusterStorySection() {
     () => ({
       g: Object.fromEntries(LABEL_KEYS.map((key) => [key, t(`leistungen.clusterStory.graphic.${key}`)])),
       ch: steps?.[0]?.channels?.map((c) => c.label) ?? [],
-      areas: steps?.[7]?.areas?.map((a) => a.label) ?? [],
+      areas: steps?.find((s) => s.id === GROWTH_STEP_ID)?.areas?.map((a) => a.label) ?? [],
       example: t("leistungen.exampleAgentLabel"),
     }),
     [t, steps],
@@ -226,17 +227,6 @@ export function ClusterStorySection() {
 
   const active = clamp(Math.floor(view.f + 0.3), 0, Math.max(stepCount - 1, 0));
 
-  const goTo = useCallback(
-    (index: number) => {
-      const el = blockRefs.current[index];
-      if (!el) return;
-      const r = el.getBoundingClientRect();
-      const top = window.scrollY + r.top + r.height / 2 - viewLine(stickyRef.current);
-      window.scrollTo({ top, behavior: motionOff ? "auto" : "smooth" });
-    },
-    [motionOff],
-  );
-
   if (!clusterStory || !steps || steps.length === 0) return null;
 
   return (
@@ -284,8 +274,13 @@ export function ClusterStorySection() {
               <ClusterStoryWorld f={view.f} t={view.t} narrow={narrow} labels={labels} />
             </div>
 
-            <nav
-              aria-label={t("leistungen.clusterStory.stepNavLabel")}
+            <div
+              role="progressbar"
+              aria-label={t("leistungen.clusterStory.progressLabel")}
+              aria-valuemin={1}
+              aria-valuemax={stepCount}
+              aria-valuenow={active + 1}
+              aria-valuetext={t("leistungen.clusterStory.stepOf", { current: active + 1, total: stepCount })}
               className={`mt-3 h-12 items-center gap-1 md:gap-2 max-w-[640px] ${video ? "hidden" : "flex"}`}
             >
               {steps.map((step, index) => (
@@ -296,10 +291,9 @@ export function ClusterStorySection() {
                   accent={STEP_ACCENTS[index] ?? "#8129ff"}
                   current={index === active}
                   done={index < active}
-                  onGo={goTo}
                 />
               ))}
-            </nav>
+            </div>
           </div>
 
           <ol
@@ -315,8 +309,9 @@ export function ClusterStorySection() {
                 step={step}
                 index={index}
                 accent={STEP_ACCENTS[index] ?? "#8129ff"}
+                total={stepCount}
                 setRef={blockRefCallbacks[index]}
-                ctaLabel={index === OFFER_STEP_INDEX ? useCasesCtaLabel : undefined}
+                ctaLabel={step.id === OFFER_STEP_ID ? useCasesCtaLabel : undefined}
               />
             ))}
           </ol>
@@ -332,22 +327,19 @@ const StepPill = memo(function StepPill({
   accent,
   current,
   done,
-  onGo,
 }: {
   index: number;
   step: ClusterStoryStep;
   accent: string;
   current: boolean;
   done: boolean;
-  onGo: (index: number) => void;
 }) {
   return (
-    <button
-      type="button"
-      aria-current={current ? "step" : undefined}
-      aria-label={`${index + 1}. ${step.navLabel}`}
-      onClick={() => onGo(index)}
-      className={`min-w-0 h-8 flex items-center justify-center gap-1.5 rounded-full font-semibold transition-colors motion-reduce:transition-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#fda700] ${
+    <div
+      aria-hidden="true"
+      data-progress-item=""
+      data-current={current ? "" : undefined}
+      className={`min-w-0 h-8 flex items-center justify-center gap-1.5 rounded-full font-semibold transition-colors motion-reduce:transition-none ${
         current ? "flex-none md:px-3 w-8 md:w-auto" : "flex-1 max-w-8"
       }`}
       style={{
@@ -362,7 +354,7 @@ const StepPill = memo(function StepPill({
           {step.navLabel}
         </span>
       ) : null}
-    </button>
+    </div>
   );
 });
 
@@ -370,33 +362,31 @@ const StoryBlock = memo(function StoryBlock({
   step,
   index,
   accent,
+  total,
   setRef,
   ctaLabel,
 }: {
   step: ClusterStoryStep;
   index: number;
   accent: string;
+  total: number;
   setRef: (el: HTMLLIElement | null) => void;
   ctaLabel?: string;
 }) {
   const { t } = useTranslation();
-  const outlook = step.id === "outlook";
+  const stepOf = t("leistungen.clusterStory.stepOf", { current: index + 1, total });
+  const eyebrow = step.id === "outlook" ? `${stepOf} · ${t("leistungen.clusterStory.outlookEyebrow")}` : stepOf;
 
   return (
     <li
       ref={setRef}
       data-step-index={index}
+      data-step-id={step.id}
       className="min-h-[62vh] lg:min-h-[84vh] flex flex-col justify-center gap-3 py-8"
     >
-      {outlook ? (
-        <span className="font-semibold uppercase tracking-[0.12em]" style={{ fontSize: "0.75rem", color: accent }}>
-          {t("leistungen.clusterStory.outlookEyebrow")}
-        </span>
-      ) : (
-        <span className="font-semibold uppercase tracking-[0.12em]" style={{ fontSize: "0.75rem", color: accent }}>
-          {t("leistungen.clusterStory.stepOf", { current: index + 1, total: TOTAL_STEPS })}
-        </span>
-      )}
+      <span className="font-semibold uppercase tracking-[0.12em]" style={{ fontSize: "0.75rem", color: accent }}>
+        {eyebrow}
+      </span>
       <h3 className="font-semibold text-white leading-tight" style={{ fontSize: "var(--text-h2)" }}>
         {step.heading}
       </h3>
