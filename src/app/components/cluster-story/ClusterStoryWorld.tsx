@@ -86,12 +86,6 @@ const ICONS: Record<string, JSX.Element> = {
       <path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21" />
     </>
   ),
-  warn: (
-    <>
-      <path d="M12 4.5l9 15.5H3z" />
-      <path d="M12 10v4.5M12 17.4v.1" />
-    </>
-  ),
   target: (
     <>
       <circle cx="12" cy="12" r="8.5" />
@@ -316,12 +310,7 @@ function NodeEl({ x, y, r, g }: { x: number; y: number; r: number; g: Grad }) {
   );
 }
 
-/** Size of a dynamic text (the percentage, the "running" label): the phone rules of any other text. */
-function dynFs(fs: number, el: WorldElement, f: number, narrow: boolean): number {
-  return textSize({ t: "text", x: 0, y: 0, src: "", fs, wt: 700, f: W, a: "s", tier: "o" }, el, f, narrow);
-}
-
-function DynEl({ n, d, labels, el, f, narrow }: { n: string; d: DynState; labels: Labels; el: WorldElement; f: number; narrow: boolean }) {
+function DynEl({ n, d }: { n: string; d: DynState }) {
   switch (n) {
     case "cc":
       return (
@@ -334,30 +323,6 @@ function DynEl({ n, d, labels, el, f, narrow }: { n: string; d: DynState; labels
       return d.hubpulse.o > 0 ? (
         <circle cx={HUB[0]} cy={HUB[1]} r={n2(d.hubpulse.r)} fill="none" stroke={LAV} strokeWidth={2.5} strokeOpacity={n2(d.hubpulse.o)} />
       ) : null;
-    case "bar":
-      return d.ip > 0 ? <rect x={GEO.bar.x} y={GEO.bar.y} width={n2(GEO.bar.w * d.ip)} height={GEO.bar.h} rx={7} fill="url(#cs-bar)" /> : null;
-    case "pct": {
-      const fs = dynFs(26, el, f, narrow);
-      return fs > 0 ? (
-        <text x={GEO.pctX} y={452 + fs * 0.35} fontSize={fs} fontWeight={800} fill={W} textAnchor="end">
-          {d.pct}
-        </text>
-      ) : null;
-    }
-    case "ok": {
-      const fs = dynFs(18, el, f, narrow);
-      return d.ok > 0 ? (
-        <g opacity={d.ok}>
-          <circle cx={GEO.okRow.x} cy={GEO.okRow.y} r={13} fill="url(#cs-f-vio)" />
-          <IconUse id="check" x={GEO.okRow.x - 8} y={GEO.okRow.y - 8} s={16} c={W} sw={3} />
-          {fs > 0 ? (
-            <text x={636} y={GEO.okRow.y + fs * 0.35} fontSize={fs} fontWeight={700} fill={LAV}>
-              {labels.g.running}
-            </text>
-          ) : null}
-        </g>
-      ) : null;
-    }
     case "tb":
       return <rect x={GEO.tb.x} y={GEO.tb.y} width={n2(d.tbW)} height={GEO.tb.h} rx={5} fill="url(#cs-bar)" />;
     case "b1":
@@ -399,7 +364,7 @@ function primEl(p: Prim, i: number, el: WorldElement, f: number, narrow: boolean
     case "text":
       return <TextEl key={i} p={p} fs={textSize(p, el, f, narrow)} labels={labels} />;
     case "dyn":
-      return LOOP_DYN.has(p.n) ? null : <DynEl key={i} n={p.n} d={d} labels={labels} el={el} f={f} narrow={narrow} />;
+      return LOOP_DYN.has(p.n) ? null : <DynEl key={i} n={p.n} d={d} />;
   }
 }
 

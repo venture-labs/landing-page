@@ -6,12 +6,12 @@
  *
  * ---------------------------------------------------------------------------------------------
  * Story position `f` (continuous, 0-based) and the step marks
- *   - Step k (k = 0..9; the page calls it "Schritt k+1", the tenth is the optional "Ausblick")
+ *   - Step k (k = 0..8; the page calls it "Schritt k+1", the ninth is the "Ausblick")
  *     is centred at `f = k`. Its elements build over `k - 0.5 ... k + 0.2` (`buildAt`).
  *   - The step mark is `f = k + 0.2` (`STEP_MARKS`): every element of steps 0..k is built
  *     (`buildAt = 1`, a documented transformation in its final form) and every element of the
  *     steps above k is not there yet (`buildAt = 0`). The server and the first client render
- *     show `FINAL_F = 8.2`, the finished step 9.
+ *     show `FINAL_F = 7.2`, the finished step 9 (k = 8).
  *   - The camera moves only inside `k - 0.75 ... k - 0.2` and holds its step-k value until
  *     `k + 0.25` (`cameraAt`). Before the first move it sits at the `pre` camera.
  *   - `f` is a pure function of the scroll position; scrolling back un-builds. `t` (seconds)
@@ -25,12 +25,12 @@
  *     page does not scroll; there is no clock and no scroll listener.
  *   - `window.setF(f, t = 0)` renders the frame for `(f, t)` synchronously and sets the stage
  *     root's `data-f` to `f`. Same arguments, same markup, whenever it is called.
- *   - `window.setStep(n, p = 1, t = 0)` is `setF(n - 0.5 + 0.7 * p, t)` (n = 0..9, p = 0..1):
+ *   - `window.setStep(n, p = 1, t = 0)` is `setF(n - 0.5 + 0.7 * p, t)` (n = 0..8, p = 0..1):
  *     `p = 1` is the step mark minus 0.0, i.e. step n fully built at `f = n + 0.2`.
  *   - Without the query neither function exists. The camera uses `preserveAspectRatio` "meet":
  *     in a 16:9 window the visible part is the camera rectangle widened to the window.
  *
- * Geometry: world units, 940 x 780 for steps 0..8, widened to 1220 for step 9. The camera is
+ * Geometry: world units, 940 x 780 for steps 0..7, widened to 1220 for step 9. The camera is
  * `[centreX, centreY, visibleWidth]`; the visible height is width * 470 / 600 (desktop) or
  * width * 300 / 358 (phone). Two camera sets: `CAM_D` and `CAM_M`.
  *
@@ -40,11 +40,11 @@
  *   hub, agents .......................... violet #8129ff / #a318f8, lavender #d9aeff, blue #2b95f6 nodes
  *   concept card, decision check ......... lavender #d9aeff, violet #a318f8
  *   company circle, first node, cluster .. blue #2b95f6 (dotted ring in lavender at 55 %)
- *   build line, install bar .............. lavender at 55 %, violet #8129ff -> lavender #d9aeff
+ *   build line, tile bar ................. lavender at 55 %, violet #8129ff -> lavender #d9aeff
  *   telemetry line ....................... blue #2b95f6; updates line, loop arrow, operating ring: amber #fda700
  *   lock and release cards ............... card, blue #5db1ff icon
  *   monthly call, rings, area tiles ...... lavender / blue / amber / violet per tile
- *   step 9 frames ........................ violet #a318f8 on steps 1..5, amber #fda700 on steps 6..8
+ *   offer frames ......................... violet #a318f8 on steps 1..4, amber #fda700 on steps 5..7
  *   phone, waveform ...................... lavender #d9aeff / violet #a318f8 
  *
  * Documented transformations (`transforms: true`; everything else only grows, AC "cumulative"):
@@ -63,9 +63,6 @@ export type Tier = "c" | "s" | "o";
 export type DynName =
   | "cc"
   | "hubpulse"
-  | "bar"
-  | "pct"
-  | "ok"
   | "tb"
   | "orb"
   | "ord"
@@ -164,7 +161,7 @@ export type Prim = Rect | Circle | PathP | NodeP | IconP | Txt | DynP;
 
 export interface WorldElement {
   id: string;
-  /** Step 0..9 */
+  /** Step 0..8 */
   k: number;
   /** Offset inside the build window (0..0.7) and length (0..1). */
   o: number;
@@ -260,9 +257,6 @@ const CH_ICONS = ["video", "hash", "mail", "chat"];
 export const GEO = {
   hub: HUB,
   cc: CC,
-  bar: { x: 600, y: 474, w: 284, h: 14 },
-  pctX: 884,
-  okRow: { x: 613, y: 511 },
   tb: { x: 746, y: 642, w: 126, h: 10 },
   orb: { r: 70 },
   ord: { r: R_OUT + 24 },
@@ -431,7 +425,7 @@ AGENTS.forEach(([x, y, g], i) => add(2, `agent${i}`, 2, 0.4 + i * 0.1, "pop", 0.
 add(3, "agents-lbl", 2, 0.7, "up", 0.3, [txt(315, 384, "g:agents", 18, LAV, { a: "m" })]);
 add(2, "hubpulse", 2, 0.1, "none", 0.1, [dyn("hubpulse")], { transforms: true });
 
-/* ---- Step 4 (k = 3): build line, the company circle, first node, example card --------------- */
+/* ---- Step 4 (k = 3): build line, the company circle, first node, the small cluster, example card ---- */
 add(0, "agent-b0", 3, 0, "draw", 0.3, [path("M358 170 L400 250", LAV, 2, LINE)]);
 add(0, "agent-b1", 3, 0.05, "draw", 0.3, [path("M358 330 L400 250", LAV, 2, LINE)]);
 add(0, "build", 3, 0.15, "draw", 0.45, [path(PATHS.build, LAV, 3, LINE)], { transforms: true });
@@ -440,6 +434,10 @@ add(0, "company-ring", 3, 0.2, "fade", 0.4, [
 ]);
 add(3, "company-lbl", 3, 0.3, "up", 0.3, [txt(CC[0], 62, "g:company", 21, MUT, { a: "m", tier: "o" })]);
 add(2, "seed", 3, 0.55, "pop", 0.3, [{ t: "node", x: CC[0], y: CC[1], r: 21, g: "blue" }]);
+SAT.forEach(([x, y], i) => add(0, `sat-l${i}`, 3, 0.75 + i * 0.05, "draw", 0.2, [path(`M${CC[0]} ${CC[1]} L${x} ${y}`, LAV, 2, LINE)]));
+SAT.forEach(([x, y], i) =>
+  add(2, `sat${i}`, 3, 0.8 + i * 0.05, "pop", 0.2, [{ t: "node", x, y, r: 11, g: i % 2 === 0 ? "blue" : "lav" }]),
+);
 add(0, "exline", 3, 0.7, "draw", 0.25, [path(`M${CC[0]} 270 V${EX_START_Y + 2}`, LAV, 2, LINE)], { transforms: true });
 const tx0 = tileXY(0);
 const tileArt = (i: number, x: number, y: number): Prim[] => [
@@ -457,50 +455,23 @@ add(3, "ex-tag", 3, 0.85, "fade", 0.3, [
   }),
 ], { transforms: true });
 
-/* ---- Step 5 (k = 4): installation, the first node becomes a small cluster -------------------- */
-add(
-  1,
-  "install",
-  4,
-  0,
-  "up",
-  0.35,
-  [
-    card(584, 430, 316, 146),
-    txt(600, 450, "g:install", 18, MUT),
-    rect(GEO.bar.x, GEO.bar.y, GEO.bar.w, GEO.bar.h, 7, { f: W, fo: 0.08 }),
-    dyn("bar"),
-    dyn("pct"),
-    dyn("ok"),
-    ico("check", 600, 530, 16, BLT, 3),
-    txt(622, 538, "g:works", 15, MUT),
-    ico("warn", 600, 552, 16, AMB, 2.2),
-    txt(622, 560, "g:worksNot", 15, MUT),
-  ],
-  { hl: "a" },
-);
-SAT.forEach(([x, y], i) => add(0, `sat-l${i}`, 4, 0.55 + i * 0.07, "draw", 0.25, [path(`M${CC[0]} ${CC[1]} L${x} ${y}`, LAV, 2, LINE)]));
-SAT.forEach(([x, y], i) =>
-  add(2, `sat${i}`, 4, 0.62 + i * 0.07, "pop", 0.3, [{ t: "node", x, y, r: 11, g: i % 2 === 0 ? "blue" : "lav" }]),
-);
-
-/* ---- Step 6 (k = 5): telemetry back, updates out, lock, release, operating ring --------------- */
-add(0, "tel", 5, 0.1, "draw", 0.4, [path(PATHS.tel, BLUE, 3)]);
-add(0, "tel-head", 5, 0.45, "fade", 0.3, [arrow(402, 216, "l", BLUE)]);
-add(0, "upl", 5, 0.5, "fade", 0.4, [path(PATHS.upl, AMB, 3.5, GLOW)]);
-add(0, "upl-head", 5, 0.75, "fade", 0.3, [arrow(582, 284, "r", AMB)]);
-add(3, "only-lbl", 5, 0.2, "fade", 0.3, [txt(404, 76, "g:onlyToUs", 16, MUT, { wt: 600, tier: "s" })]);
+/* ---- Step 5 (k = 4): telemetry back, updates out, lock, release, operating ring --------------- */
+add(0, "tel", 4, 0.1, "draw", 0.4, [path(PATHS.tel, BLUE, 3)]);
+add(0, "tel-head", 4, 0.45, "fade", 0.3, [arrow(402, 216, "l", BLUE)]);
+add(0, "upl", 4, 0.5, "fade", 0.4, [path(PATHS.upl, AMB, 3.5, GLOW)]);
+add(0, "upl-head", 4, 0.75, "fade", 0.3, [arrow(582, 284, "r", AMB)]);
+add(3, "only-lbl", 4, 0.2, "fade", 0.3, [txt(404, 76, "g:onlyToUs", 16, MUT, { wt: 600, tier: "s" })]);
 ["runtime", "errors", "costs"].forEach((key, i) =>
-  add(3, `chip${i}`, 5, 0.3 + i * 0.1, "up", 0.3, [
+  add(3, `chip${i}`, 4, 0.3 + i * 0.1, "up", 0.3, [
     txt(416, 106 + i * 34, `g:${key}`, 17, W, { bg: { px: 12, h: 30, f: BLUE, fo: 0.12, s: BLUE, so: 0.65, sw: 1.5 } }),
   ]),
 );
-add(3, "tel-lbl", 5, 0.25, "fade", 0.3, [txt(404, 200, "g:telemetry", 18, LAV)]);
-add(3, "upd-lbl", 5, 0.6, "fade", 0.3, [txt(404, 304, "g:updates", 18, AMB)]);
+add(3, "tel-lbl", 4, 0.25, "fade", 0.3, [txt(404, 200, "g:telemetry", 18, LAV)]);
+add(3, "upd-lbl", 4, 0.6, "fade", 0.3, [txt(404, 304, "g:updates", 18, AMB)]);
 add(
   1,
   "lock",
-  5,
+  4,
   0.55,
   "left",
   0.3,
@@ -511,11 +482,11 @@ add(
   ],
   { hl: "b" },
 );
-add(0, "lock-link", 5, 0.7, "fade", 0.3, [path("M580 384 H640", LAV, 3, { ...LINE, ...GLOW })]);
+add(0, "lock-link", 4, 0.7, "fade", 0.3, [path("M580 384 H640", LAV, 3, { ...LINE, ...GLOW })]);
 add(
   1,
   "release",
-  5,
+  4,
   0.7,
   "left",
   0.3,
@@ -527,9 +498,9 @@ add(
   ],
   { hl: "b" },
 );
-add(2, "orb", 5, 0.5, "none", 0.4, [dyn("orb")]);
+add(2, "orb", 4, 0.5, "none", 0.4, [dyn("orb")]);
 
-/* ---- Step 7 (k = 6): the monthly call, the loop back to the start ---------------------------- */
+/* ---- Step 6 (k = 5): the monthly call, the loop back to the start ---------------------------- */
 const CALL_ROWS: [string, string, string][] = [
   ["flag", "reviewWorked", BLT],
   ["sliders", "rules", LAV],
@@ -539,7 +510,7 @@ const CALL_ROWS: [string, string, string][] = [
 add(
   1,
   "call",
-  6,
+  5,
   0.1,
   "up",
   0.4,
@@ -557,31 +528,31 @@ add(
   { hl: "b" },
 );
 CALL_ROWS.forEach(([ic, key, c], i) =>
-  add(1, `call-row${i}`, 6, 0.35 + i * 0.1, "left", 0.3, [
+  add(1, `call-row${i}`, 5, 0.35 + i * 0.1, "left", 0.3, [
     ico(ic, 16, 502 + i * 33, 22, c),
     txt(48, 513 + i * 33, `g:${key}`, 16, W, { tier: "s" }),
   ]),
 );
-add(0, "loop-up", 6, 0.45, "draw", 0.3, [path("M60 450 V396", AMB, 3.5)]);
-add(0, "loop-up-head", 6, 0.65, "fade", 0.3, [arrow(60, 392, "u", AMB)]);
-add(3, "newinput", 6, 0.7, "fade", 0.3, [txt(74, 416, "g:newInput", 16, AMB, { wt: 600, tier: "s" })]);
-add(0, "arc", 6, 0.55, "draw", 0.45, [path(PATHS.arc, AMB, 3.5)]);
-add(0, "arc-head", 6, 0.9, "fade", 0.3, [arrow(78, 20, "d", AMB)]);
-add(3, "loop-lbl", 6, 0.8, "up", 0.3, [txt(318, 26, "g:loop", 22, AMB)]);
-add(2, "cpulse", 6, 0.1, "none", 0.1, [dyn("cpulse")], { transforms: true });
+add(0, "loop-up", 5, 0.45, "draw", 0.3, [path("M60 450 V396", AMB, 3.5)]);
+add(0, "loop-up-head", 5, 0.65, "fade", 0.3, [arrow(60, 392, "u", AMB)]);
+add(3, "newinput", 5, 0.7, "fade", 0.3, [txt(74, 416, "g:newInput", 16, AMB, { wt: 600, tier: "s" })]);
+add(0, "arc", 5, 0.55, "draw", 0.45, [path(PATHS.arc, AMB, 3.5)]);
+add(0, "arc-head", 5, 0.9, "fade", 0.3, [arrow(78, 20, "d", AMB)]);
+add(3, "loop-lbl", 5, 0.8, "up", 0.3, [txt(318, 26, "g:loop", 22, AMB)]);
+add(2, "cpulse", 5, 0.1, "none", 0.1, [dyn("cpulse")], { transforms: true });
 
-/* ---- Step 8 (k = 7): second ring, dock points, four area tiles, schematic indicators ---------- */
+/* ---- Step 7 (k = 6): second ring, dock points, four area tiles, schematic indicators ---------- */
 [48, 92, R_OUT].forEach((r, i) =>
-  add(0, `ring${i}`, 7, i * 0.1, "fade", 0.3, [{ t: "circle", cx: CC[0], cy: CC[1], r, s: LAV, so: 0.55, sw: 2.5 }]),
+  add(0, `ring${i}`, 6, i * 0.1, "fade", 0.3, [{ t: "circle", cx: CC[0], cy: CC[1], r, s: LAV, so: 0.55, sw: 2.5 }]),
 );
 const NODE_G: Grad[] = ["vio", "blue", "lav"];
-RING2.forEach(([x, y], i) => add(2, `ring2-n${i}`, 7, 0.2 + i * 0.05, "pop", 0.3, [{ t: "node", x, y, r: 10, g: NODE_G[i % 3] }]));
-DOCK.forEach(([x, y], i) => add(2, `dock${i}`, 7, 0.45 + i * 0.06, "pop", 0.3, [{ t: "node", x, y, r: 8, g: "lav" }]));
+RING2.forEach(([x, y], i) => add(2, `ring2-n${i}`, 6, 0.2 + i * 0.05, "pop", 0.3, [{ t: "node", x, y, r: 10, g: NODE_G[i % 3] }]));
+DOCK.forEach(([x, y], i) => add(2, `dock${i}`, 6, 0.45 + i * 0.06, "pop", 0.3, [{ t: "node", x, y, r: 8, g: "lav" }]));
 for (let i = 1; i < 4; i++) {
   const [x, y] = tileXY(i);
-  add(3, `tile${i}`, 7, 0.55 + i * 0.07, "pop", 0.3, tileArt(i, x, y), { hl: "b" });
+  add(3, `tile${i}`, 6, 0.55 + i * 0.07, "pop", 0.3, tileArt(i, x, y), { hl: "b" });
 }
-add(3, "tap-tag", 7, 0.9, "fade", 0.3, [
+add(3, "tap-tag", 6, 0.9, "fade", 0.3, [
   txt(DOCK[2][0], 272, "extap", 15, MUT, {
     a: "m",
     tier: "s",
@@ -606,12 +577,12 @@ METS.forEach(([key, kind], i) => {
   if (kind === "bar") {
     art.push(rect(x + 14, MET_Y + 62, GEO.tb.w, GEO.tb.h, 5, { f: W, fo: 0.08 }), dyn("tb"));
   }
-  add(1, `met${i}`, 7, 0.7 + i * 0.1, "up", 0.3, art, { hl: "b" });
+  add(1, `met${i}`, 6, 0.7 + i * 0.1, "up", 0.3, art, { hl: "b" });
 });
-add(3, "schem-8", 7, 0.95, "fade", 0.3, [txt(404, 682, "g:schematic", 17, MUT, { wt: 600, mw: 496 })]);
+add(3, "schem-8", 6, 0.95, "fade", 0.3, [txt(404, 682, "g:schematic", 17, MUT, { wt: 600, mw: 496 })]);
 
-/* ---- Step 9 (k = 8): the offer, Aufbau and Betrieb, frames, the ring around the company ------ */
-add(1, "build-card", 8, 0.1, "pop", 0.3, [
+/* ---- Step 8 (k = 7): the offer, Aufbau and Betrieb, frames, the ring around the company ------ */
+add(1, "build-card", 7, 0.1, "pop", 0.3, [
   card(0, 706, 450, 72),
   txt(18, 728, "g:build", 22, LAV),
   txt(18, 758, "g:buildSub", 25, W, { wt: 800 }),
@@ -619,58 +590,57 @@ add(1, "build-card", 8, 0.1, "pop", 0.3, [
     rect(450 - 24 - 30 - i * 40, 778 - 10 - h, 30, h, 8, { grad: "fvio" }),
   ),
 ]);
-add(1, "run-card", 8, 0.25, "pop", 0.3, [
+add(1, "run-card", 7, 0.25, "pop", 0.3, [
   card(470, 706, 430, 72),
   txt(488, 728, "g:run", 22, LAV),
   txt(488, 758, "g:runSub", 22, W, { wt: 800 }),
 ]);
-add(0, "build-line", 8, 0.05, "draw", 0.3, [path("M0 706 V698 H450 V706", VIO2, 4)]);
-add(0, "run-line", 8, 0.2, "draw", 0.3, [path("M470 706 V698 H900 V706", AMB, 4)]);
-add(2, "ord", 8, 0.4, "none", 0.4, [dyn("ord")]);
+add(0, "build-line", 7, 0.05, "draw", 0.3, [path("M0 706 V698 H450 V706", VIO2, 4)]);
+add(0, "run-line", 7, 0.2, "draw", 0.3, [path("M470 706 V698 H900 V706", AMB, 4)]);
+add(2, "ord", 7, 0.4, "none", 0.4, [dyn("ord")]);
 
-/* ---- Step 10 (k = 9): Ausblick, the phone docks at the company--------------------- */
-add(0, "phl", 9, 0.05, "draw", 0.35, [path(PATHS.phl, LAV, 3)]);
-add(0, "phl-head", 9, 0.35, "fade", 0.3, [arrow(962, 250, "r", LAV)]);
-add(1, "phone", 9, 0.1, "pop", 0.3, [
+/* ---- Step 9 (k = 8): Ausblick, the phone docks at the company ------------------------ */
+add(0, "phl", 8, 0.05, "draw", 0.35, [path(PATHS.phl, LAV, 3)]);
+add(0, "phl-head", 8, 0.35, "fade", 0.3, [arrow(962, 250, "r", LAV)]);
+add(1, "phone", 8, 0.1, "pop", 0.3, [
   card(980, 120, 220, 330, 40, { s: LAV, so: 0.55 }),
   txt(1090, 150, "g:callAgent", 17, LAV, { a: "m", mw: 196 }),
 ]);
-add(2, "wave", 9, 0.5, "pop", 0.3, [dyn("wave")]);
-add(2, "mic", 9, 0.5, "pop", 0.3, [
+add(2, "wave", 8, 0.5, "pop", 0.3, [dyn("wave")]);
+add(2, "mic", 8, 0.5, "pop", 0.3, [
   { t: "circle", cx: 1090, cy: 402, r: 26, grad: "fvio" },
   ico("mic", 1077, 389, 26, W, 1.8),
 ]);
-add(3, "screen-lbl", 9, 0.55, "up", 0.3, [
+add(3, "screen-lbl", 8, 0.55, "up", 0.3, [
   ico("monitor", 930, 472, 24, MUT),
   txt(962, 484, "g:screenTime", 18, MUT, { mw: 258 }),
 ]);
-add(3, "screen-bar", 9, 0.55, "fade", 0.3, [
+add(3, "screen-bar", 8, 0.55, "fade", 0.3, [
   rect(GEO.b1.x, GEO.b1.y, GEO.b1.w, GEO.b1.h, 8, { f: W, fo: 0.08 }),
   dyn("b1"),
 ]);
-add(3, "talk-lbl", 9, 0.65, "up", 0.3, [
+add(3, "talk-lbl", 8, 0.65, "up", 0.3, [
   ico("phone", 930, 534, 24, LAV),
   txt(962, 546, "g:talkPhone", 18, LAV, { mw: 258 }),
 ]);
-add(3, "talk-bar", 9, 0.65, "fade", 0.3, [
+add(3, "talk-bar", 8, 0.65, "fade", 0.3, [
   rect(GEO.b2.x, GEO.b2.y, GEO.b2.w, GEO.b2.h, 8, { f: W, fo: 0.08 }),
   dyn("b2"),
 ]);
-add(3, "schem-10", 9, 0.8, "fade", 0.3, [txt(930, 606, "g:schematic", 16, MUT, { wt: 600, mw: 290 })]);
+add(3, "schem-10", 8, 0.8, "fade", 0.3, [txt(930, 606, "g:schematic", 16, MUT, { wt: 600, mw: 290 })]);
 
 export const ELEMENTS: readonly WorldElement[] = [...L[0], ...L[1], ...L[2], ...L[3]];
-export const STEP_COUNT = 10;
-export const FINAL_F = 8.2;
+export const STEP_COUNT = 9;
+export const FINAL_F = 7.2;
 export const STEP_MARKS: readonly number[] = Array.from({ length: STEP_COUNT }, (_, k) => k + 0.2);
 
-/** Highlight groups of the finished picture: violet on steps 1..5, amber on 6..8. */
+/** Highlight groups of the finished picture: violet on steps 1..4, amber on 5..7. */
 export const HL_COLOR = { a: VIO2, b: AMB } as const;
 
 /** Every graphic label key (`g:<key>`) the world draws; the locale files carry all of them. */
 export const LABEL_KEYS: readonly string[] = (() => {
   const s = new Set<string>();
   for (const el of ELEMENTS) for (const p of el.art) if (p.t === "text" && p.src.startsWith("g:")) s.add(p.src.slice(2));
-  s.add("running");
   return [...s].sort();
 })();
 
@@ -731,7 +701,7 @@ export function moveAt(el: WorldElement, f: number): Pt {
   if (!el.fly) return [0, 0];
   return [0, -GEO.exFlight * flightAt(f)];
 }
-const flightAt = (f: number): number => ease.io(clamp((f - 6.55) / 0.4));
+const flightAt = (f: number): number => ease.io(clamp((f - 5.55) / 0.4));
 
 /* ------------------------------------------------------------------------------------------- */
 /* Camera                                                                                       */
@@ -743,7 +713,6 @@ export const CAM_D: { pre: Cam; k: Cam[] } = {
     [225, 209, 520],
     [300, 235, 560],
     [640, 270, 720],
-    [690, 320, 740],
     [620, 316, 640],
     [470, 392, 990],
     [700, 394, 780],
@@ -758,7 +727,6 @@ export const CAM_M: { pre: Cam; k: Cam[] } = {
     [200, 209, 490],
     [300, 240, 440],
     [604, 225, 540],
-    [735, 392, 450],
     [596, 317, 610],
     [444, 325, 920],
     [665, 391, 725],
@@ -886,9 +854,6 @@ export function pathPoints(d: string): Pt[] {
 const DYN_BOX: Record<DynName, Box> = {
   cc: { x: 126, y: 10, w: 120, h: 120 },
   hubpulse: { x: HUB[0] - 54, y: HUB[1] - 54, w: 108, h: 108 },
-  bar: { x: GEO.bar.x, y: GEO.bar.y, w: GEO.bar.w, h: GEO.bar.h },
-  pct: { x: GEO.pctX - 80, y: 438, w: 80, h: 28 },
-  ok: { x: 600, y: 498, w: 200, h: 26 },
   tb: { x: GEO.tb.x, y: GEO.tb.y, w: GEO.tb.w, h: GEO.tb.h },
   orb: { x: CC[0] - 77, y: CC[1] - 77, w: 154, h: 154 },
   ord: { x: CC[0] - GEO.ord.r - 7, y: CC[1] - GEO.ord.r - 7, w: 2 * GEO.ord.r + 14, h: 2 * GEO.ord.r + 14 },
@@ -956,10 +921,6 @@ export interface DynState {
   /** concept card: visibility, centre, scale */
   cc: { vis: number; x: number; y: number; s: number };
   hubpulse: { r: number; o: number };
-  /** install bar 0..1, percentage text, "Cluster läuft" opacity */
-  ip: number;
-  pct: string;
-  ok: number;
   orbRot: number;
   ordRot: number;
   cpulse: { r: number; o: number };
@@ -968,7 +929,7 @@ export interface DynState {
   waveH: number[];
   b1: number;
   b2: number;
-  /** step 9 frame highlight 0..1 */
+  /** offer-step frame highlight 0..1 */
   hv: number;
   /** example card flight 0..1 and the opacity of what it leaves behind */
   fl: number;
@@ -980,27 +941,23 @@ export function dynAt(f: number, t: number | null): DynState {
   const vis = clamp((f - 0.75) / 0.1) * (1 - clamp((f - 1.95) / 0.2));
   const u = ease.io(out) * (1 - ease.io(back));
   const hp = clamp((f - 1.7) / 0.45);
-  const ip = ease.io(clamp((f - 3.6) / 0.5));
-  const cp = clamp((f - 5.75) / 0.2);
+  const cp = clamp((f - 4.75) / 0.2);
   const ck = t === null ? 0.5 : (t * 0.8) % 1;
   const met = ELEMENTS.find((e) => e.id === "met2") as WorldElement;
   const wa = buildAt(ELEMENTS.find((e) => e.id === "wave") as WorldElement, f);
   return {
     cc: { vis, x: lerp(HUB[0], 186, u), y: lerp(HUB[1], 70, u), s: 0.7 + 0.3 * u },
     hubpulse: { r: 30 + hp * 24, o: hp > 0 && hp < 1 ? (1 - hp) * 0.9 : 0 },
-    ip,
-    pct: `${Math.round(ip * 100)} %`,
-    ok: clamp((ip - 0.95) / 0.05),
     orbRot: t === null ? 0 : t * 40,
     ordRot: t === null ? 0 : -t * 28,
-    cpulse: { r: 20 + ck * 60, o: cp > 0 ? (1 - ck) * 0.7 * cp * (1 - clamp((f - 6.45) / 0.3)) : 0 },
+    cpulse: { r: 20 + ck * 60, o: cp > 0 ? (1 - ck) * 0.7 * cp * (1 - clamp((f - 5.45) / 0.3)) : 0 },
     tbW: GEO.tb.w * (0.18 + 0.72 * ease.io(buildAt(met, f))),
     waveH: Array.from({ length: GEO.wave.n }, (_, i) =>
       (t === null ? 50 : 14 + Math.abs(Math.sin(t * 5 + i * 0.9)) * 50 + Math.abs(Math.sin(t * 2.3 + i * 1.7)) * 30) * wa,
     ),
-    b1: 1 - 0.62 * ease.io(clamp((f - 8.6) / 0.5)),
-    b2: 0.25 + 0.58 * ease.io(clamp((f - 8.7) / 0.5)),
-    hv: clamp((f - 7.8) / 0.3) * (1 - clamp((f - 8.7) / 0.3)),
+    b1: 1 - 0.62 * ease.io(clamp((f - 7.6) / 0.5)),
+    b2: 0.25 + 0.58 * ease.io(clamp((f - 7.7) / 0.5)),
+    hv: clamp((f - 6.8) / 0.3) * (1 - clamp((f - 7.7) / 0.3)),
     fl: flightAt(f),
   };
 }
@@ -1020,7 +977,7 @@ const TRACK_DEFS: TrackDef[] = [
   { id: "chl0", g: "blue", col: BLT, n: 1, sp: 0.4 },
   { id: "chl1", g: "blue", col: BLT, n: 1, sp: 0.4 },
   { id: "chl2", g: "blue", col: BLT, n: 1, sp: 0.4 },
-  { id: "build", g: "vio", col: LAV, n: 3, sp: 0.35, fade: [4.35, 4.7] },
+  { id: "build", g: "vio", col: LAV, n: 3, sp: 0.35, fade: [3.35, 3.7] },
   { id: "tel", g: "vio", col: LAV, n: 3, sp: 0.4 },
   { id: "upl", g: "amber", col: AMB, n: 2, sp: 0.35 },
   { id: "arc", g: "amber", col: AMB, n: 2, sp: 0.18 },
