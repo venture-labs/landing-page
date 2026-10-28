@@ -53,6 +53,18 @@ const BAR = `${STAGE} ~ [role="progressbar"]`;
 const item = (page: Page, k: number) => page.locator(`${BAR} > [data-progress-item]`).nth(k);
 const STEPS = 9;
 
+/** Resolves after `n` rendered animation frames in the page: a wait on the browser's own render loop, not on wall-clock time. */
+const frames = (page: Page, n: number): Promise<void> =>
+  page.evaluate(
+    (count) =>
+      new Promise<void>((done) => {
+        let left = count;
+        const tick = () => (--left <= 0 ? done() : requestAnimationFrame(tick));
+        requestAnimationFrame(tick);
+      }),
+    n
+  );
+
 /** Scroll (instantly) so block k sits on the viewline; the page reads f = k from the scroll position. */
 async function scrollToBlock(page: Page, k: number, want = k): Promise<void> {
   await page.evaluate((index) => {
@@ -106,9 +118,7 @@ for (const [name, viewport] of [
       await openStory(page);
       for (const k of [0, 2, 5, 8, 4, 1]) {
         await scrollToBlock(page, k);
-        await page.waitForTimeout(300);
-        const atRest = await readF(page);
-        expect(Math.abs(atRest - k), `data-f ${atRest} at block ${k}`).toBeLessThan(0.06);
+        await expect.poll(async () => Math.abs((await readF(page)) - k), { message: `data-f at block ${k}` }).toBeLessThan(0.06);
         await expect(page.locator(`${BAR} > [data-current]`)).toHaveCount(1);
         await expect(item(page, k)).toHaveAttribute("data-current", "");
         await expect(page.locator(`${BAR} svg`)).toHaveCount(k); // one check mark per earlier item
@@ -141,8 +151,25 @@ for (const [name, viewport] of [
       await openStory(page);
       await scrollToBlock(page, 2);
       const y = await page.evaluate(() => window.scrollY);
+      // Count every way a click handler could move the page: scroll events and the scroll APIs.
+      await page.evaluate(() => {
+        const w = window as unknown as { __scrolls: number };
+        w.__scrolls = 0;
+        const bump = () => void w.__scrolls++;
+        window.addEventListener("scroll", bump);
+        for (const name of ["scrollTo", "scrollBy"] as const) {
+          const orig = window[name].bind(window) as (...a: unknown[]) => void;
+          (window as unknown as Record<string, unknown>)[name] = (...a: unknown[]) => (bump(), orig(...a));
+        }
+        const intoView = Element.prototype.scrollIntoView;
+        Element.prototype.scrollIntoView = function (this: Element, ...a: Parameters<typeof intoView>) {
+          bump();
+          return intoView.apply(this, a);
+        };
+      });
       await item(page, 6).click({ force: true });
-      await page.waitForTimeout(600);
+      await frames(page, 30); // a smooth scroll or a re-render would show within these frames
+      expect(await page.evaluate(() => (window as unknown as { __scrolls: number }).__scrolls)).toBe(0);
       expect(await page.evaluate(() => window.scrollY)).toBe(y);
       await expect(item(page, 2)).toHaveAttribute("data-current", "");
     });
@@ -245,7 +272,15 @@ test.describe("reduced motion", () => {
       await expect(item(page, k)).toHaveAttribute("data-current", "");
     }
     const a = await page.locator(STAGE).innerHTML();
-    await page.waitForTimeout(1200);
+    // Watch the stage's whole subtree while the render loop runs; a clock or an animation would mutate it.
+    await page.evaluate((sel) => {
+      const w = window as unknown as { __mutations: MutationRecord[]; __mo: MutationObserver };
+      w.__mutations = [];
+      w.__mo = new MutationObserver((records) => w.__mutations.push(...records));
+      w.__mo.observe(document.querySelector(sel)!, { subtree: true, attributes: true, childList: true, characterData: true });
+    }, STAGE);
+    await frames(page, 90);
+    expect(await page.evaluate(() => (window as unknown as { __mutations: MutationRecord[] }).__mutations.length)).toBe(0);
     expect(await page.locator(STAGE).innerHTML()).toBe(a);
     expect(await page.evaluate(() => document.getAnimations().length)).toBe(0);
   });
@@ -257,11 +292,10 @@ test.describe("motion on: the quiet clock", () => {
   test("only the loops change over time while f stays put", async ({ page }) => {
     await openStory(page);
     await scrollToBlock(page, 7);
-    await page.waitForTimeout(1500);
+    const fBefore = await readF(page);
     const a = await page.locator(STAGE).innerHTML();
-    await page.waitForTimeout(500);
-    const b = await page.locator(STAGE).innerHTML();
-    expect(a).not.toBe(b);
+    await expect.poll(() => page.locator(STAGE).innerHTML(), { timeout: 8000, message: "the loops of the stage move" }).not.toBe(a);
+    expect(await readF(page)).toBe(fBefore);
   });
 });
 
@@ -318,7 +352,7 @@ test.describe("?video=1", () => {
     }
     await page.mouse.move(w / 2, h / 2);
     await page.mouse.wheel(0, 1500);
-    await page.waitForTimeout(300);
+    await frames(page, 20);
     expect(await page.evaluate(() => window.scrollY)).toBe(0);
   });
 
