@@ -269,7 +269,9 @@ test("phone: the carrying cards of the steps with a call, a lock, a release and 
       const el = els.find((e) => e.id === id);
       assert.ok(el && el.k === Number(k), `${id} belongs to step ${k}`);
       const f = Number(k) + 0.2;
-      assert.ok(drawn(el, true).some((p) => W.textSize(p, el, f, true) > 0), `${id} shows text on the phone at step ${k}`);
+      const texts = drawn(el, true);
+      assert.ok(texts.length > 0, `${id} has text on the phone`);
+      for (const p of texts) assert.ok(W.textSize(p, el, f, true) > 0, `${id} ${p.src} is drawn on the phone at step ${k}`);
     }
   }
 });
@@ -294,6 +296,34 @@ test("phone: the estimated size of every such text lies inside the card it sits 
       }
     }
   }
+});
+
+test("phone: the free captions and chips added for the phone are drawn at their step mark, 11px effective or more", () => {
+  const ids = ["only-lbl", "chip0", "chip1", "chip2", "tel-lbl", "upd-lbl", "newinput", "loop-lbl", "schem-8"];
+  for (const id of ids) {
+    const el = els.find((e) => e.id === id);
+    assert.ok(el, `${id} exists`);
+    const f = el.k + 0.2;
+    const s = W.PHONE_STAGE_W / W.cameraAt(f, true)[2];
+    const texts = drawn(el, true);
+    assert.ok(texts.length > 0, `${id} has text on the phone`);
+    for (const p of texts) {
+      const fs = W.textSize(p, el, f, true);
+      assert.ok(fs > 0, `${id} ${p.src} is drawn at step ${el.k}`);
+      assert.ok(fs * s >= 11 - 1e-6, `${id} ${p.src}: ${fs * s}px effective`);
+    }
+  }
+});
+
+test("phone: the animated progress bar of the third metric card lies on its track, inside the card", () => {
+  const met = els.find((e) => e.id === "met2");
+  const art = W.artOf(met, true);
+  const card = art.find((p) => p.t === "rect" && p.card);
+  const track = art.find((p) => p.t === "rect" && !p.card);
+  const bar = W.GEO.tbN;
+  assert.deepEqual([bar.x, bar.y, bar.w, bar.h], [track.x, track.y, track.w, track.h], "the bar starts on its track");
+  assert.ok(bar.x >= card.x && bar.x + bar.w <= card.x + card.w, "bar inside the card in x");
+  assert.ok(bar.y >= card.y && bar.y + bar.h <= card.y + card.h, "bar inside the card in y");
 });
 
 test("phone: the phone art of each step stays inside the camera at its mark (and the whole picture at k = 5 and 7)", () => {
