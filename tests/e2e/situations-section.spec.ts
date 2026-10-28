@@ -175,6 +175,24 @@ for (const lang of ["de", "en"] as const) {
         await expect(cards.nth(i).getByText(LIVE_MARKER[lang], { exact: true }), `card ${i + 1}`).toHaveCount(0);
       }
       await expect(section.getByText(EXAMPLE_MARKER[lang], { exact: true })).toHaveCount(total - 1);
+
+      // Visible, not merely present: walk through the carousel with the next button and check
+      // that each card's own pill is rendered and lies inside the viewport when its card is
+      // the selected one (a display:none or off-screen pill would leave the counts above intact).
+      const next = section.getByRole("button", { name: NEXT_LABEL[lang], exact: true });
+      const viewportWidth = page.viewportSize()!.width;
+      for (let i = 0; i < total; i++) {
+        if (i > 0) {
+          await next.click();
+          await expect(section.getByText(`${i + 1} / ${total}`, { exact: true })).toBeVisible();
+        }
+        const pill = cards.nth(i).getByText(i === 0 ? LIVE_MARKER[lang] : EXAMPLE_MARKER[lang], { exact: true });
+        await expect(pill, `card ${i + 1} pill`).toBeVisible();
+        await expect.poll(async () => {
+          const box = await pill.boundingBox();
+          return box !== null && box.x >= 0 && box.x + box.width <= viewportWidth;
+        }, { message: `card ${i + 1} pill lies inside the viewport` }).toBe(true);
+      }
     });
 
     test(`criterion 12: each card shows its quoted problem text on top, then the agent name and one check-mark item per capability (${lang})`, async ({
