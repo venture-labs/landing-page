@@ -56,7 +56,7 @@ distinction is wanted in the dashboard.
 | `leistungenDetailCta` | `leistungen-detail-cta` | `LeistungenDetail` (service CTA block, next to the Pulse-check button) | `src/app/pages/LeistungenDetail.tsx:327` |
 | `leistungenDetailContact` | `leistungen-detail-contact` | `LeistungenDetail` (bottom contact strip, same page, different section) | `src/app/pages/LeistungenDetail.tsx:440` |
 
-| `situations` | `situations` | `UseCasesSection` ("Mögliche Use Cases" carousel on `/leistungen`, renamed from `SituationsSection` by VL-11-S3) | `src/app/components/UseCasesSection.tsx` |
+| `situations` | `situations` | `UseCasesSection` ("Mögliche Use Cases" carousel on `/leistungen`, renamed from `SituationsSection` by VL-11-S3; since VL-11-S9 it is the one section of all 20 to 24 use cases and sits directly after `PulseJourney` ("Check. Build. Care."), the old "Was sonst noch möglich ist" section is gone) | `src/app/components/UseCasesSection.tsx` |
 | `clusterStory` | `cluster-story` | `ClusterStorySection` (booking CTA in the last live step, "Wir lösen es"/"We solve it", on `/leistungen`) | `src/app/components/ClusterStorySection.tsx` |
 | `toolProfile` | `tool-profile` | **Retired** (VL-11-S3) — the "Im Einsatz: Beleg-Inbox" Steckbrief this placement belonged to (`ToolProfileCard`'s `CtaButton` in `ToolProfile.tsx`) was deleted; no call site uses this placement any more. `PLACEMENTS.toolProfile` itself is left in `analytics.ts` (out of this task's scope). | — |
 
