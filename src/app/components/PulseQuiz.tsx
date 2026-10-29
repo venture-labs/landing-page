@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router";
 import { ArrowRight, Check } from "lucide-react";
 import { CTAS, EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
@@ -31,8 +31,11 @@ interface QuizQuestion {
 export interface Copy {
   areaLabels: Record<Area, string>;
   quizHeading: string;
+  /* The one line shown on question 1 only; it replaced the intro step. Keep it
+   * right after quizHeading, away from the booking button label (the naming
+   * guard reads a duration near a conversation word as a call length). */
+  quizMeta: string;
   quizIntro: string;
-  startCta: string;
   questionLabel: (n: number) => string;
   resultReady: string;
   scoreLabel: string;
@@ -44,9 +47,10 @@ export interface Copy {
   ctaBody: string;
   ctaButton: string;
   questions: QuizQuestion[];
-  /* Optional lead capture box on the result step (item 1 of the 2026-10-16
-   * funnel fixes) — its own copy, same pattern as the rest of this file. */
-  leadHeading: string;
+  /* Optional lead capture form on the result step (item 1 of the 2026-10-16
+   * funnel fixes), folded open by leadToggle — its own copy, same pattern as
+   * the rest of this file. */
+  leadToggle: string;
   leadIntro: string;
   leadEmailPlaceholder: string;
   leadConsentText: string;
@@ -67,9 +71,9 @@ export const COPY: Record<"de" | "en", Copy> = {
       governance: "Governance & Risiko",
     },
     quizHeading: "AI Pulse Score: Wie gesund ist dein KI-Einsatz?",
+    quizMeta: "10 Fragen, 5 Minuten",
     quizIntro:
       "Beantworte 10 kurze Fragen zu fünf Bereichen und erhalte sofort deinen Pulse Score sowie eine kurze, persönliche Einschätzung.",
-    startCta: "Meinen Pulse Score prüfen →",
     questionLabel: (n) => `Frage ${n} von 10`,
     resultReady: "Dein Pulse Score ist bereit.",
     scoreLabel: "/ 100 Pulse Score",
@@ -92,8 +96,8 @@ export const COPY: Record<"de" | "en", Copy> = {
     ],
     ctaHeading: "Lass uns den größten Hebel finden.",
     ctaBody: "Ein gezielter Pulse Check zeigt genau, welche verbleibenden Lücken es zuerst zu schließen lohnt – und welche nicht.",
-    ctaButton: "Kostenloses Erstgespräch buchen",
-    leadHeading: "Ergebnis festhalten?",
+    ctaButton: "Erstgespräch buchen",
+    leadToggle: "Ergebnis festhalten",
     leadIntro: "Trag deine E-Mail-Adresse ein, wenn du deinen Pulse Score festhalten oder mit uns darüber sprechen möchtest.",
     leadEmailPlaceholder: "Deine E-Mail-Adresse",
     leadConsentText: "Ich bin einverstanden, dass meine Angaben zur Kontaktaufnahme zu meinem Pulse Score verwendet werden, gemäß der",
@@ -206,8 +210,8 @@ export const COPY: Record<"de" | "en", Copy> = {
       governance: "Governance & Risk",
     },
     quizHeading: "AI Pulse Score: how healthy is your AI use?",
+    quizMeta: "10 questions, 5 minutes",
     quizIntro: "Answer 10 quick questions across five dimensions and get an instant Pulse Score plus a short personalised benchmark.",
-    startCta: "Check my Pulse Score →",
     questionLabel: (n) => `Question ${n} of 10`,
     resultReady: "Your Pulse Score is ready.",
     scoreLabel: "/ 100 Pulse Score",
@@ -230,8 +234,8 @@ export const COPY: Record<"de" | "en", Copy> = {
     ],
     ctaHeading: "Let's find the highest-leverage next step.",
     ctaBody: "A focused Pulse Check will show you exactly where the remaining gaps are worth closing first, and where they're not.",
-    ctaButton: "Book a free intro call",
-    leadHeading: "Keep your result?",
+    ctaButton: "Book an intro call",
+    leadToggle: "Save my result",
     leadIntro: "Leave your email if you'd like to hold on to your Pulse Score or talk it through with us.",
     leadEmailPlaceholder: "Your email address",
     leadConsentText: "I agree that my details may be used to get in touch about my Pulse Score, per the",
@@ -335,7 +339,9 @@ export const COPY: Record<"de" | "en", Copy> = {
   },
 };
 
-type QuizState = { step: "intro" } | { step: "question"; index: number; answers: number[] } | { step: "result"; answers: number[] };
+type QuizState = { step: "question"; index: number; answers: number[] } | { step: "result"; answers: number[] };
+
+const INITIAL_STATE: QuizState = { step: "question", index: 0, answers: [] };
 
 /** Netlify Forms AJAX submission, the same pattern already proven on
  * pulse-landing-page/index.html's `pulse-score-leads` form (see Kontakt.tsx,
@@ -349,23 +355,25 @@ function encodeFormData(data: Record<string, string>): string {
 type LeadStatus = "idle" | "submitting" | "sent" | "error";
 
 /**
- * The result step's optional lead capture box — item 1 of the 2026-10-16
- * funnel fixes. Sits beside the score/band/breakdown/booking CTA without
- * gating any of it: a visitor who never touches this box still sees the full
- * result above and below it.
+ * The result step's optional lead capture form — item 1 of the 2026-10-16
+ * funnel fixes. It lives inside the result box and is folded open by the
+ * "Ergebnis festhalten" button; a visitor who never touches it still sees the
+ * full result and the booking link.
  */
-function PulseLeadBox({
+function PulseLeadForm({
   copy,
   accent,
   score,
   band,
   weakest,
+  emailRef,
 }: {
   copy: Copy;
   accent: string;
   score: number;
   band: string;
   weakest: string;
+  emailRef: React.RefObject<HTMLInputElement | null>;
 }) {
   const { lang, localizedPath } = useLocale();
   const [email, setEmail] = useState("");
@@ -402,7 +410,7 @@ function PulseLeadBox({
 
   if (status === "sent") {
     return (
-      <div className="flex items-center gap-2 p-5 rounded-xl border border-white/8 bg-white/[0.02] max-w-2xl">
+      <div className="flex items-center gap-2 pt-1">
         <Check size={16} style={{ color: accent }} />
         <p className="text-white/70 font-light" style={{ fontSize: "var(--text-small)" }}>
           {copy.leadThankYou}
@@ -412,18 +420,13 @@ function PulseLeadBox({
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="flex flex-col gap-3 p-5 rounded-xl border border-white/8 bg-white/[0.02] max-w-2xl"
-    >
-      <h4 className="font-semibold text-white" style={{ fontSize: "var(--text-body)" }}>
-        {copy.leadHeading}
-      </h4>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-3 pt-1">
       <p className="text-white/60 font-light leading-snug" style={{ fontSize: "var(--text-small)" }}>
         {copy.leadIntro}
       </p>
       <div className="flex flex-col sm:flex-row gap-3">
         <input
+          ref={emailRef}
           type="email"
           required
           value={email}
@@ -467,6 +470,73 @@ function PulseLeadBox({
   );
 }
 
+/**
+ * The one box under the breakdown: heading, body and exactly two controls —
+ * the booking link (primary) and the "Ergebnis festhalten" toggle (secondary)
+ * that folds the lead form open. The form is mounted on the first click and
+ * stays mounted when folded shut again, so a half-typed address survives.
+ */
+function ResultBox({
+  copy,
+  accent,
+  score,
+  band,
+  weakest,
+}: {
+  copy: Copy;
+  accent: string;
+  score: number;
+  band: string;
+  weakest: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const emailRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (open) emailRef.current?.focus();
+  }, [open]);
+
+  function toggle() {
+    setMounted(true);
+    setOpen(!open);
+  }
+
+  return (
+    <div className="flex flex-col gap-3 p-4 rounded-xl border border-white/8 bg-white/[0.02]">
+      <h4 className="font-semibold text-white" style={{ fontSize: "var(--text-body)" }}>
+        {copy.ctaHeading}
+      </h4>
+      <p className="text-white/60 font-light leading-snug" style={{ fontSize: "var(--text-small)" }}>
+        {copy.ctaBody}
+      </p>
+      <div className="flex flex-wrap items-center gap-3">
+        <CtaButton
+          href={BOOKING_URL}
+          onClick={() => trackEvent(EVENTS.callLinkClicked, PLACEMENTS.quizResult, CTAS.bookCall)}
+          backgroundColor={accent}
+          showArrow={false}
+        >
+          {copy.ctaButton}
+        </CtaButton>
+        <button
+          type="button"
+          onClick={toggle}
+          aria-expanded={open}
+          aria-controls="pulse-lead-form"
+          className="inline-flex items-center justify-center font-semibold text-white px-[24px] py-[11px] min-h-11 rounded-lg border border-white/30 hover:bg-white/10 hover:border-white/50 transition-colors"
+          style={{ fontSize: "var(--text-btn)" }}
+        >
+          {copy.leadToggle}
+        </button>
+      </div>
+      <div id="pulse-lead-form" hidden={!open}>
+        {mounted && <PulseLeadForm copy={copy} accent={accent} score={score} band={band} weakest={weakest} emailRef={emailRef} />}
+      </div>
+    </div>
+  );
+}
+
 export function PulseQuiz({
   copy,
   accent,
@@ -483,7 +553,31 @@ export function PulseQuiz({
    * Completed so Plausible can tell two openers apart. */
   placement: string;
 }) {
-  const [state, setState] = useState<QuizState>({ step: "intro" });
+  const [state, setState] = useState<QuizState>(INITIAL_STATE);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const resultRef = useRef<HTMLDivElement>(null);
+  // Set when an answer or a restart replaces the focused button, so the next
+  // render moves focus to the new question (or the result) instead of leaving
+  // it on a removed element. Not set on open: Radix focuses the dialog itself.
+  const moveFocus = useRef(false);
+  const startedTracked = useRef(false);
+
+  // The dialog opens on question 1, so "the first question is shown" is the
+  // moment PulseQuiz mounts. The ref keeps a StrictMode re-run of the effect
+  // from counting twice; the dialog content unmounts on close, so a reopen
+  // mounts a fresh PulseQuiz and counts once more.
+  useEffect(() => {
+    if (startedTracked.current) return;
+    startedTracked.current = true;
+    trackEvent(EVENTS.quizStarted, placement, CTAS.quiz);
+  }, [placement]);
+
+  useEffect(() => {
+    if (!moveFocus.current) return;
+    moveFocus.current = false;
+    if (state.step === "question") headingRef.current?.focus();
+    else resultRef.current?.focus();
+  }, [state]);
 
   // Notify the parent synchronously, in the same event-handler tick as the
   // local step change (not via a useEffect, which would commit one render
@@ -515,6 +609,7 @@ export function PulseQuiz({
     if (state.step !== "question") return;
     const answers = [...state.answers];
     answers[state.index] = optionIndex;
+    moveFocus.current = true;
     if (state.index + 1 < copy.questions.length) {
       update({ step: "question", index: state.index + 1, answers });
     } else {
@@ -523,24 +618,10 @@ export function PulseQuiz({
     }
   }
 
-  if (state.step === "intro") {
-    return (
-      <div className="flex flex-col gap-6 items-start">
-        <p className="text-white/60 font-light leading-relaxed max-w-xl" style={{ fontSize: "var(--text-body)" }}>
-          {copy.quizIntro}
-        </p>
-        <button
-          onClick={() => {
-            trackEvent(EVENTS.quizStarted, placement, CTAS.quiz);
-            update({ step: "question", index: 0, answers: [] });
-          }}
-          className="inline-flex items-center gap-2 text-white font-semibold px-6 py-3 rounded-lg transition-all hover:scale-[1.02]"
-          style={{ fontSize: "var(--text-btn)", backgroundColor: accent }}
-        >
-          {copy.startCta}
-        </button>
-      </div>
-    );
+  function restart() {
+    trackEvent(EVENTS.quizStarted, placement, CTAS.quiz);
+    moveFocus.current = true;
+    update(INITIAL_STATE);
   }
 
   if (state.step === "question") {
@@ -548,22 +629,34 @@ export function PulseQuiz({
     return (
       <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-2">
+          {state.index === 0 && (
+            <p className="text-white/60 font-light" style={{ fontSize: "var(--text-body)" }}>
+              {copy.quizMeta}
+            </p>
+          )}
           <span className="font-semibold uppercase tracking-wide" style={{ fontSize: "var(--text-small)", color: accent }}>
             {copy.questionLabel(state.index + 1)} · {copy.areaLabels[q.area]}
           </span>
-          <h3 className="font-semibold text-white leading-snug max-w-2xl" style={{ fontSize: "var(--text-h2)" }}>
+          <h3
+            ref={headingRef}
+            tabIndex={-1}
+            className="font-semibold text-white leading-snug max-w-2xl outline-none"
+            style={{ fontSize: "var(--text-h3)" }}
+          >
             {q.question}
           </h3>
         </div>
-        <div className="flex flex-col gap-3 max-w-2xl">
+        <div className="flex flex-col gap-3 max-w-2xl" style={{ "--quiz-accent": accent } as React.CSSProperties}>
           {q.options.map((option, i) => (
             <button
               key={option}
+              type="button"
               onClick={() => selectOption(i)}
-              className="text-left px-5 py-4 rounded-lg border border-white/10 text-white/80 hover:text-white hover:border-white/30 transition-colors font-light leading-snug"
+              className="group flex items-center justify-between gap-4 w-full min-h-11 text-left px-5 py-4 rounded-lg bg-white/10 text-white/90 hover:text-white hover:bg-[var(--quiz-accent)] focus-visible:text-white focus-visible:bg-[var(--quiz-accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition-colors font-light leading-snug"
               style={{ fontSize: "var(--text-body)" }}
             >
-              {option}
+              <span>{option}</span>
+              <ArrowRight size={18} aria-hidden="true" className="shrink-0 opacity-60 group-hover:opacity-100 group-focus-visible:opacity-100" />
             </button>
           ))}
         </div>
@@ -581,63 +674,35 @@ export function PulseQuiz({
   const band = [...copy.bands].reverse().find((b) => scores.score >= b.min) ?? copy.bands[0];
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-4">
+      <div ref={resultRef} tabIndex={-1} className="flex flex-col gap-2 outline-none">
         <p className="font-light text-white/50" style={{ fontSize: "var(--text-small)" }}>
           {copy.resultReady}
         </p>
-        <div className="flex items-end gap-3">
-          <span className="font-semibold" style={{ fontSize: "var(--text-hero)", color: accent }}>
-            {band.label}
-          </span>
-        </div>
-        <div className="flex items-baseline gap-2">
-          <span className="font-semibold text-white" style={{ fontSize: "var(--text-hero)" }}>
+        <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+          <span className="font-semibold text-white" style={{ fontSize: "var(--text-section)" }}>
             {scores.score}
           </span>
           <span className="text-white/50 font-light" style={{ fontSize: "var(--text-body)" }}>
             {copy.scoreLabel}
           </span>
+          <span className="font-semibold" style={{ fontSize: "var(--text-h3)", color: accent }}>
+            {band.label}
+          </span>
         </div>
-        <p className="text-white/60 font-light leading-snug max-w-2xl" style={{ fontSize: "var(--text-small)" }}>
+        <p className="text-white/60 font-light leading-snug" style={{ fontSize: "var(--text-small)" }}>
           {band.narrative}
         </p>
-        <p className="text-white/70 font-light leading-snug max-w-2xl" style={{ fontSize: "var(--text-small)" }}>
+        <p className="text-white/70 font-light leading-snug" style={{ fontSize: "var(--text-small)" }}>
           {copy.weakestSentence(copy.areaLabels[scores.weakest[0]], copy.areaLabels[scores.weakest[1]])}
         </p>
       </div>
 
-      <div className="flex flex-col gap-3 p-5 rounded-xl border border-white/8 bg-white/[0.02] max-w-2xl">
-        <h4 className="font-semibold text-white" style={{ fontSize: "var(--text-body)" }}>
-          {copy.ctaHeading}
-        </h4>
-        <p className="text-white/60 font-light leading-snug" style={{ fontSize: "var(--text-small)" }}>
-          {copy.ctaBody}
-        </p>
-        <div className="flex flex-wrap items-center gap-4 mt-1">
-          <CtaButton
-            href={BOOKING_URL}
-            onClick={() => trackEvent(EVENTS.callLinkClicked, PLACEMENTS.quizResult, CTAS.bookCall)}
-            backgroundColor={accent}
-            showArrow={false}
-          >
-            {copy.ctaButton}
-          </CtaButton>
-          <button
-            onClick={() => update({ step: "intro" })}
-            className="inline-flex items-center gap-1 text-white/50 hover:text-white transition-colors font-light"
-            style={{ fontSize: "var(--text-small)" }}
-          >
-            {copy.restart} <ArrowRight size={12} />
-          </button>
-        </div>
-      </div>
-
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-3">
         <h4 className="font-semibold text-white" style={{ fontSize: "var(--text-body)" }}>
           {copy.breakdownHeading}
         </h4>
-        <div className="flex flex-col gap-3 max-w-xl">
+        <div className="flex flex-col gap-2 max-w-xl">
           {AREA_ORDER.map((area) => (
             <div key={area} className="flex items-center gap-4">
               <span className="text-white/60 font-light w-40 shrink-0" style={{ fontSize: "var(--text-small)" }}>
@@ -654,13 +719,22 @@ export function PulseQuiz({
         </div>
       </div>
 
-      <PulseLeadBox
+      <ResultBox
         copy={copy}
         accent={accent}
         score={scores.score}
         band={band.label}
         weakest={`${copy.areaLabels[scores.weakest[0]]}, ${copy.areaLabels[scores.weakest[1]]}`}
       />
+
+      <button
+        type="button"
+        onClick={restart}
+        className="self-start inline-flex items-center gap-1 text-white/50 hover:text-white transition-colors font-light"
+        style={{ fontSize: "var(--text-small)" }}
+      >
+        {copy.restart} <ArrowRight size={12} />
+      </button>
     </div>
   );
 }

@@ -5,14 +5,13 @@
  * acceptance criteria (the Implementer verified by hand with a throwaway
  * Chromium script, see its report). This spec proves:
  *
- *   criterion 1 — the quiz result's booking CTA reads the new label, renders
- *                 before the five-area breakdown in the DOM, and is checked
- *                 for visibility without scrolling the dialog at 1440 and 390
- *                 (DE + EN). The visibility half is expected to FAIL today —
- *                 see the implementation report's "Needs a decision" #1 and
- *                 the Tester's spec-intent verdict on this criterion: the
- *                 spec's own "Files to change"/"Out of scope" rows forbid the
- *                 restyling that would be needed to close the gap.
+ *   criterion 1 — the quiz result's booking CTA reads the label, and (since
+ *                 VL-11-S8, the quiz opens on question 1 and the result puts
+ *                 the five-area breakdown first) renders AFTER the breakdown
+ *                 in the DOM. It is visible without scrolling the dialog at
+ *                 1440x900; at 390x844 the score is visible without scrolling
+ *                 and the CTA is reachable by scrolling inside the dialog
+ *                 (DE + EN).
  *   criterion 2 — `#pulse-score` (DE + EN) auto-opens the quiz dialog.
  *   criterion 3 — each Check/Build/Care step's CTA links to
  *                 `kontakt?topic=check|build|care`, and that preselects the
@@ -30,9 +29,12 @@ import { test, expect, type BrowserContext, type Page } from "@playwright/test";
 
 const BOOKING_URL = "https://calendar.app.google/SsabAjwxnbUjhoGo8";
 const OPTION_BUTTONS = '[role="dialog"] button.text-left';
-const CTA_LABEL = { de: "Kostenloses Erstgespräch buchen", en: "Book a free intro call" } as const;
+const CTA_LABEL = { de: "Erstgespräch buchen", en: "Book an intro call" } as const;
+const SAVE_LABEL = { de: "Ergebnis festhalten", en: "Save my result" } as const;
+const QUIZ_META = { de: "10 Fragen, 5 Minuten", en: "10 questions, 5 minutes" } as const;
 const BREAKDOWN_HEADING = { de: "Deine Auswertung nach fünf Bereichen", en: "Your five-dimension breakdown" } as const;
 const START_CTA = { de: /Meinen Pulse Score prüfen/, en: /Check my Pulse Score/ } as const;
+const FIRST_QUESTION = { de: "Frage 1 von 10", en: "Question 1 of 10" } as const;
 const HERO_PULSE_CTA = { de: "Kostenlosen Pulse Score starten", en: "Start your free Pulse Score" } as const;
 const QUIZ_HEADING = {
   de: "AI Pulse Score: Wie gesund ist dein KI-Einsatz?",
@@ -49,7 +51,6 @@ async function completeQuiz(page: Page, lang: "de" | "en", optionIndex: number):
   await page.goto(`/${lang}/leistungen#pulse-score`);
   const dialog = page.locator('[role="dialog"]');
   await expect(dialog).toBeVisible();
-  await dialog.getByRole("button", { name: START_CTA[lang] }).click();
   for (let i = 0; i < 10; i++) {
     const options = page.locator(OPTION_BUTTONS);
     await expect(options.nth(optionIndex)).toBeVisible();
@@ -66,11 +67,11 @@ test.describe("criterion 1: the result CTA is relabelled and reordered", () => {
       const cta = page.getByRole("link", { name: CTA_LABEL[lang] });
       await expect(cta, "the booking CTA must read the new label").toBeVisible();
 
-      // DOM order: the CTA's bounding position in the document must precede
-      // the breakdown heading's.
+      // DOM order: the breakdown heading must precede the CTA (Martin's
+      // feedback L5: score and breakdown first, then the one box).
       const order = await page.evaluate(
         ([ctaText, breakdownText]) => {
-          const all = Array.from(document.querySelectorAll("a, h4"));
+          const all = Array.from(document.querySelectorAll('[role="dialog"] a, [role="dialog"] h4'));
           const ctaIndex = all.findIndex((el) => el.textContent?.includes(ctaText as string));
           const breakdownIndex = all.findIndex((el) => el.textContent?.includes(breakdownText as string));
           return { ctaIndex, breakdownIndex };
@@ -79,35 +80,62 @@ test.describe("criterion 1: the result CTA is relabelled and reordered", () => {
       );
       expect(order.ctaIndex, "the CTA must be found in the DOM").toBeGreaterThanOrEqual(0);
       expect(order.breakdownIndex, "the breakdown heading must be found in the DOM").toBeGreaterThanOrEqual(0);
-      expect(order.ctaIndex, "the CTA must render before the breakdown block").toBeLessThan(order.breakdownIndex);
+      expect(order.breakdownIndex, "the breakdown block must render before the CTA").toBeLessThan(order.ctaIndex);
     });
 
-    for (const vp of [
-      { name: "1440x900", width: 1440, height: 900 },
-      { name: "390x844", width: 390, height: 844 },
-    ]) {
-      test(`criterion 1: /${lang}/leistungen quiz result — CTA visible without scrolling at ${vp.name}`, async ({
-        page,
-      }) => {
-        await page.setViewportSize({ width: vp.width, height: vp.height });
-        await blockOutbound(page.context());
-        await completeQuiz(page, lang, 0);
+    test(`criterion 1: /${lang}/leistungen quiz result — both buttons visible without scrolling at 1440x900`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width: 1440, height: 900 });
+      await blockOutbound(page.context());
+      await completeQuiz(page, lang, 0);
 
-        const cta = page.getByRole("link", { name: CTA_LABEL[lang] });
-        const dialog = page.locator('[role="dialog"]');
-        const ctaBox = await cta.boundingBox();
-        const dialogBox = await dialog.boundingBox();
-        expect(ctaBox, "CTA must have a bounding box").not.toBeNull();
-        expect(dialogBox, "dialog must have a bounding box").not.toBeNull();
-        const ctaBottom = ctaBox!.y + ctaBox!.height;
-        const dialogVisibleBottom = dialogBox!.y + dialogBox!.height;
+      const dialog = page.locator('[role="dialog"]');
+      const dialogBox = await dialog.boundingBox();
+      expect(dialogBox, "dialog must have a bounding box").not.toBeNull();
+      const dialogVisibleBottom = dialogBox!.y + dialogBox!.height;
+      for (const control of [
+        page.getByRole("link", { name: CTA_LABEL[lang] }),
+        page.getByRole("button", { name: SAVE_LABEL[lang] }),
+      ]) {
+        const box = await control.boundingBox();
+        expect(box, "control must have a bounding box").not.toBeNull();
+        const bottom = box!.y + box!.height;
         expect(
-          ctaBottom,
-          `CTA bottom (${ctaBottom}) must be within the dialog's visible area (ends at ${dialogVisibleBottom}) ` +
-            `and the viewport (${vp.height}) — no scrolling required`
-        ).toBeLessThanOrEqual(Math.min(dialogVisibleBottom, vp.height));
-      });
-    }
+          bottom,
+          `control bottom (${bottom}) must be within the dialog's visible area (ends at ${dialogVisibleBottom}) ` +
+            `and the viewport (900) — no scrolling required`
+        ).toBeLessThanOrEqual(Math.min(dialogVisibleBottom, 900));
+        expect(box!.y, "control must start inside the dialog").toBeGreaterThanOrEqual(dialogBox!.y);
+        // The dialog itself is not scrolled.
+        expect(await dialog.evaluate((el) => el.scrollTop)).toBe(0);
+      }
+    });
+
+    test(`criterion 1: /${lang}/leistungen quiz result — score visible, buttons reachable inside the dialog at 390x844`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width: 390, height: 844 });
+      await blockOutbound(page.context());
+      await completeQuiz(page, lang, 0);
+
+      const dialog = page.locator('[role="dialog"]');
+      const dialogBox = (await dialog.boundingBox())!;
+      const scoreBox = (await page.getByText("/ 100 Pulse Score").boundingBox())!;
+      expect(scoreBox.y + scoreBox.height, "the score is visible without scrolling").toBeLessThanOrEqual(
+        Math.min(dialogBox.y + dialogBox.height, 844)
+      );
+      for (const control of [
+        page.getByRole("link", { name: CTA_LABEL[lang] }),
+        page.getByRole("button", { name: SAVE_LABEL[lang] }),
+      ]) {
+        await control.scrollIntoViewIfNeeded();
+        await expect(control).toBeInViewport();
+        const box = (await control.boundingBox())!;
+        expect(box.height, "tap target at least 44 px").toBeGreaterThanOrEqual(44);
+      }
+      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+    });
   }
 });
 
@@ -115,10 +143,10 @@ test.describe("regression: the result step's hidden title does not survive close
   // Reviewer finding (reviewer-r1.md #1, blocking): PulseCheckModal's own
   // `step` state is lifted from PulseQuiz but PulseCheckModal itself stays
   // mounted across opens/closes — only the Dialog's content unmounts. Without
-  // resetting `step` back to "intro" on close, a dialog reopened after
+  // resetting `step` back to "question" on close, a dialog reopened after
   // completing the quiz once still thinks it is on the result step, so the
   // (sr-only-for-result-only) DialogTitle stays hidden on the freshly
-  // reopened intro screen.
+  // reopened question 1.
   for (const lang of ["de", "en"] as const) {
     test(`regression: /${lang}/leistungen — closing and reopening the quiz after completing it restores the visible title`, async ({
       page,
@@ -143,12 +171,19 @@ test.describe("regression: the result step's hidden title does not survive close
       const reopenedDialog = page.locator('[role="dialog"]');
       await expect(reopenedDialog).toBeVisible();
 
-      // Back on the intro step: the title must be visible again, not sr-only.
+      // Back on question 1: the title must be visible again, not sr-only.
       await expect(dialogTitle).not.toHaveClass(/sr-only/);
       await expect(dialogTitle).toBeVisible();
       await expect(dialogTitle).toHaveText(QUIZ_HEADING[lang]);
-      // And the intro's own start button confirms the step really is "intro".
-      await expect(reopenedDialog.getByRole("button", { name: START_CTA[lang] })).toBeVisible();
+      // And question 1 with its one-line meta confirms the step really is "question".
+      await expect(reopenedDialog.getByText(FIRST_QUESTION[lang])).toBeVisible();
+      // The one-line meta sits above the question label on the reopened dialog.
+      const reopenedText = (await reopenedDialog.innerText()).replace(/\s+/g, " ").toLowerCase();
+      const metaAt = reopenedText.indexOf(QUIZ_META[lang].toLowerCase());
+      const labelAt = reopenedText.indexOf(FIRST_QUESTION[lang].toLowerCase());
+      expect(metaAt).toBeGreaterThanOrEqual(0);
+      expect(metaAt).toBeLessThan(labelAt);
+      await expect(reopenedDialog.getByRole("button", { name: START_CTA[lang] })).toHaveCount(0);
     });
   }
 });
@@ -227,7 +262,6 @@ test.describe("criterion 7: a 50/100 score never returns the top band", () => {
     await blockOutbound(page.context());
     await page.goto("/de/leistungen#pulse-score");
     const dialog = page.locator('[role="dialog"]');
-    await dialog.getByRole("button", { name: START_CTA.de }).click();
     // 10 questions, 0-3 each; alternate 1 and 2 to sum to exactly 15.
     const pattern = [1, 2, 1, 2, 1, 2, 1, 2, 1, 2];
     for (const idx of pattern) {
@@ -245,7 +279,6 @@ test.describe("criterion 7: a 50/100 score never returns the top band", () => {
     await blockOutbound(page.context());
     await page.goto("/de/leistungen#pulse-score");
     const dialog = page.locator('[role="dialog"]');
-    await dialog.getByRole("button", { name: START_CTA.de }).click();
     // All areas tied at the same per-question answer -> weakest two are the
     // first two in AREA_ORDER ("data", "process") deterministically.
     for (let i = 0; i < 10; i++) {
