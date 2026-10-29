@@ -109,7 +109,7 @@
     "toolCancellationLabel": "Kündigung",
     "clusterStory": {
       "stepOf": "Schritt {{current}} von {{total}}",
-      "stepNavLabel": "Schritte",
+      "progressLabel": "Fortschritt",
       "graphic": {
         "ours": "UNSER CLUSTER",
         "theirs": "DEIN CLUSTER",
@@ -131,10 +131,6 @@
         "decision": "Entscheidung",
         "agents": "Unsere Agenten",
         "company": "Dein Unternehmen",
-        "install": "Installation",
-        "running": "Cluster läuft",
-        "works": "funktioniert",
-        "worksNot": "funktioniert nicht, daraus lernen",
         "onlyToUs": "zu uns fließt nur:",
         "runtime": "Laufzeit",
         "errors": "Fehler",
@@ -163,7 +159,8 @@
     "useCases": {
       "stepOf": "Karte {{current}} von {{total}}",
       "prevLabel": "Vorherige Karte",
-      "nextLabel": "Nächste Karte"
+      "nextLabel": "Nächste Karte",
+      "position": "{{current}} / {{total}}"
     }
   },
   "cases": {

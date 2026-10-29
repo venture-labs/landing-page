@@ -37,7 +37,7 @@ const DIALOG_NAME: Record<Lang, string> = {
   en: "AI Pulse Score: how healthy is your AI use?",
 };
 
-/** The quiz's start button and its result screen, per locale. */
+/** The old intro button (gone since VL-11-S8) and the result screen, per locale. */
 const START_CTA: Record<Lang, RegExp> = {
   de: /Meinen Pulse Score prüfen/,
   en: /Check my Pulse Score/,
@@ -85,9 +85,9 @@ async function selectCheckStep(page: Page, lang: Lang) {
   return ablauf;
 }
 
-/** Answer all ten questions from an already-open dialog. */
+/** Answer all ten questions from an already-open dialog (it opens on question 1). */
 async function completeQuiz(page: Page, lang: Lang): Promise<void> {
-  await page.getByRole("button", { name: START_CTA[lang] }).click();
+  await expect(page.getByRole("button", { name: START_CTA[lang] })).toHaveCount(0);
   for (let i = 0; i < 10; i++) {
     await page.locator(OPTION_BUTTONS).first().click();
   }

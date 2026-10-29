@@ -94,19 +94,20 @@ test.describe("Plausible funnel events", () => {
     await withRecorder(page);
   });
 
-  test('opening the quiz modal fires nothing; starting it fires "Quiz Started" once', async ({ page }) => {
+  test('opening the quiz modal shows question 1 and fires "Quiz Started" once', async ({ page }) => {
     await openQuiz(page);
-    expect(await callsFor(page, "Quiz Started")).toBe(0);
-
-    await page.getByRole("button", { name: /Meinen Pulse Score prüfen/ }).click();
     await expect(page.locator(OPTION_BUTTONS).first()).toBeVisible();
+    // No intro step and no start click: the first question is shown on open.
+    await expect(page.getByRole("button", { name: /Meinen Pulse Score prüfen/ })).toHaveCount(0);
 
+    expect(await callsFor(page, "Quiz Started")).toBe(1);
+    // Answering a question does not fire it again.
+    await page.locator(OPTION_BUTTONS).first().click();
     expect(await callsFor(page, "Quiz Started")).toBe(1);
   });
 
   test('answering all ten questions fires "Quiz Completed" once', async ({ page }) => {
     await openQuiz(page);
-    await page.getByRole("button", { name: /Meinen Pulse Score prüfen/ }).click();
 
     for (let i = 0; i < 10; i++) {
       await page.locator(OPTION_BUTTONS).first().click();
@@ -168,7 +169,6 @@ test.describe("Plausible funnel events", () => {
 
   test("the site sets no cookies across the whole funnel", async ({ page, context }) => {
     await openQuiz(page);
-    await page.getByRole("button", { name: /Meinen Pulse Score prüfen/ }).click();
     for (let i = 0; i < 10; i++) {
       await page.locator(OPTION_BUTTONS).first().click();
     }

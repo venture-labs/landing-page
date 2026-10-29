@@ -14,26 +14,23 @@ import {
 } from "@/app/components/ui/carousel";
 
 /**
- * "Mögliche Use Cases" — VL-11-S3 (CONCEPT.md §S3).
+ * "Mögliche Use Cases" — VL-11-S3 (CONCEPT.md §S3), extended by VL-11-S9
+ * (CONCEPT.md §S9, VL-11-D19).
  *
- * Replaces this file's former `SituationsSection` ("Kommt dir eine davon
- * bekannt vor?", a vertical stack of quote bubbles) and deletes the large
- * "Im Einsatz: Beleg-Inbox" Steckbrief box that used to live in
- * `ToolProfile.tsx` — the two are merged into one horizontal, navigable
- * carousel of uniform cards, built on the existing, previously-unused
- * `ui/carousel.tsx` (embla-carousel-react) wrapper. The former `receipts`
- * situation (`agentName: 'Beleg-Inbox'`, `agentKind: live`) stays the
- * carousel's Beleg-Inbox card — no new, differently-shaped card is built
- * from `content/tools/beleg-inbox.md`'s richer fields (see the spec's
- * Assumptions).
+ * ONE carousel of every use case, all in the situation format (a sentence the
+ * customer would say about his problem on top, the agent name and what it takes
+ * over with check marks below): 20 to 24 cards from `data.situations`. It is
+ * built on the `ui/carousel.tsx` (embla-carousel-react) wrapper. The first card
+ * is the Beleg-Inbox situation. The cards carry no status pill (removed
+ * 2026-10-29); VL-11-D3's truth rule lives in the `useCasesLeadLine` content
+ * field beneath the heading. The former second
+ * section ("Was sonst noch möglich ist", `ToolProfile.tsx`) is gone — its
+ * sixteen options are cards here.
  *
- * The per-card "Beispiel"/"Example" badge (`agentKind === "example"`) is
- * dropped entirely — VL-11-D3's truth rule is kept instead by the section's
- * own heading ("**Mögliche** Use Cases" / "**Possible** use cases") and the
- * `useCasesLeadLine` content field beneath it, which names the one use case
- * that runs today and marks the rest as examples (criterion 7a). `agentKind`
- * itself stays in the content and the generated data — only the per-card
- * badge markup is gone.
+ * Navigation is the prev/next pair plus a short "k / n" position text
+ * (`leistungen.useCases.position`); the former dot row does not fit 20 to 24
+ * cards at 390 px. A screen-reader-only live region keeps the "Card k of n"
+ * announcement (`leistungen.useCases.stepOf`).
  *
  * Carousel behaviour follows `ClusterStorySection`'s established, SSR-safe
  * pattern: `useReducedMotion()` (motion/react) is read client-side only,
@@ -45,13 +42,14 @@ import {
  * through i18next — this section writes its own prev/next buttons against
  * the Embla `api` obtained via `<Carousel setApi={setApi}>`, with
  * `aria-label`s from `leistungen.useCases.{prevLabel,nextLabel}`. Every
- * programmatic move (`scrollPrev`/`scrollNext`/`scrollTo`) passes
+ * programmatic move (`scrollPrev`/`scrollNext`) passes
  * `jump = Boolean(reducedMotion)`, which asks Embla to snap instead of
- * animate (criterion 11). `opts={{ align: "start", containScroll: false }}`
- * keeps one Embla scroll-snap per card regardless of how many cards fit a
- * given viewport, so the dot row stays a true one-dot-per-card index.
+ * animate. `opts={{ align: "start", containScroll: false }}` keeps one Embla
+ * scroll-snap per card regardless of how many cards fit a given viewport, so
+ * the position text stays a true card index.
  *
- * Mounted in Leistungen.tsx directly after <ClusterStorySection />.
+ * Mounted in Leistungen.tsx directly after <PulseJourney /> (`#ablauf`),
+ * ahead of <SkillMatrix />.
  */
 
 const ACCENTS = ["#2b95f6", "#a318f8", "#fda700", "#8129ff", "#2b95f6"];
@@ -124,7 +122,7 @@ export function UseCasesSection() {
                   className="basis-[88%] sm:basis-[62%] lg:basis-[34%]"
                 >
                   <div
-                    className="h-full rounded-3xl p-6 md:p-8 flex flex-col gap-4"
+                    className="h-full rounded-3xl p-6 md:p-7 flex flex-col gap-3"
                     style={{
                       backgroundColor: `${accent}1a`,
                       boxShadow: `inset 0 0 0 1px ${accent}59`,
@@ -185,25 +183,13 @@ export function UseCasesSection() {
             <ArrowLeft size={18} />
           </button>
 
-          <div className="flex items-center gap-2">
-            {data.situations.map((situation, index) => (
-              <button
-                key={situation.id}
-                type="button"
-                aria-label={t("leistungen.useCases.stepOf", { current: index + 1, total })}
-                aria-current={index === selected ? "true" : undefined}
-                onClick={() => api?.scrollTo(index, jump)}
-                className="rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                style={{
-                  width: index === selected ? "1.5rem" : "0.5rem",
-                  height: "0.5rem",
-                  backgroundColor:
-                    index === selected ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.25)",
-                  transition: reducedMotion ? "none" : "width 0.2s ease, background-color 0.2s ease",
-                }}
-              />
-            ))}
-          </div>
+          <span
+            aria-hidden
+            className="min-w-[4.5rem] text-center text-white/60 font-light tabular-nums"
+            style={{ fontSize: "var(--text-small)" }}
+          >
+            {t("leistungen.useCases.position", { current: selected + 1, total })}
+          </span>
 
           <button
             type="button"

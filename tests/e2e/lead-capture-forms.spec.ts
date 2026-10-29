@@ -49,11 +49,16 @@ async function answerAllQuestions(page: Page): Promise<void> {
   await page.goto("/de");
   await page.getByRole("button", { name: "Kostenlosen Pulse Score starten" }).first().click();
   await expect(page.locator('[role="dialog"]')).toBeVisible();
-  await page.getByRole("button", { name: /Meinen Pulse Score prüfen/ }).click();
   for (let i = 0; i < 10; i++) {
     await page.locator(OPTION_BUTTONS).first().click();
   }
   await expect(page.getByText("/ 100 Pulse Score")).toBeVisible();
+}
+
+/** The e-mail form only exists after the "Ergebnis festhalten" toggle. */
+async function openLeadForm(page: Page): Promise<void> {
+  await page.getByRole("button", { name: "Ergebnis festhalten" }).click();
+  await expect(page.getByPlaceholder("Deine E-Mail-Adresse")).toBeVisible();
 }
 
 test.describe("Pulse Score quiz result: optional lead capture", () => {
@@ -67,9 +72,14 @@ test.describe("Pulse Score quiz result: optional lead capture", () => {
     await answerAllQuestions(page);
 
     await expect(page.getByText("/ 100 Pulse Score")).toBeVisible();
-    await expect(page.getByRole("link", { name: "Kostenloses Erstgespräch buchen" })).toBeVisible();
-    // The breakdown heading and the lead box both render, untouched.
-    await expect(page.getByText("Ergebnis festhalten?")).toBeVisible();
+    await expect(page.getByRole("link", { name: "Erstgespräch buchen" })).toBeVisible();
+    // The toggle renders, the old separate lead heading is gone, and the
+    // e-mail form, consent and submit stay folded shut until the toggle is used.
+    await expect(page.getByRole("button", { name: "Ergebnis festhalten" })).toBeVisible();
+    await expect(page.getByText("Ergebnis festhalten?")).toHaveCount(0);
+    await expect(page.getByPlaceholder("Deine E-Mail-Adresse")).toBeHidden();
+    await expect(page.getByRole("button", { name: "Absenden" })).toBeHidden();
+    await expect(page.getByRole("link", { name: "Datenschutzerklärung" })).toBeHidden();
   });
 
   test("criterion 2: the email field is blocked by native validation without consent, and the checkbox links to /de/datenschutz", async ({
@@ -77,6 +87,7 @@ test.describe("Pulse Score quiz result: optional lead capture", () => {
   }) => {
     const { requests } = await mockFormPost(page, 200);
     await answerAllQuestions(page);
+    await openLeadForm(page);
 
     const consentLink = page.getByRole("link", { name: "Datenschutzerklärung" });
     await expect(consentLink).toHaveAttribute("href", "/de/datenschutz");
@@ -94,6 +105,7 @@ test.describe("Pulse Score quiz result: optional lead capture", () => {
   }) => {
     const { requests } = await mockFormPost(page, 200);
     await answerAllQuestions(page);
+    await openLeadForm(page);
 
     await page.getByPlaceholder("Deine E-Mail-Adresse").fill("lead@example.com");
     await page.locator('form:has(input[type="email"]) input[type="checkbox"]').check();
@@ -116,6 +128,7 @@ test.describe("Pulse Score quiz result: optional lead capture", () => {
   }) => {
     await mockFormPost(page, 500);
     await answerAllQuestions(page);
+    await openLeadForm(page);
 
     await page.getByPlaceholder("Deine E-Mail-Adresse").fill("lead@example.com");
     await page.locator('form:has(input[type="email"]) input[type="checkbox"]').check();

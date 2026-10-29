@@ -1,8 +1,10 @@
 /**
- * 20261024-leistungsseite-the-growing-cluster-story-design- (VL-11-S7)
+ * 20261024-leistungsseite-the-growing-cluster-story-design- (VL-11-S7), amended by
+ * 20261028-leistungsseite-cluster-story-cleanup-dots-not-cl (VL-11-S10): nine steps, the dots are a
+ * non-interactive progress indicator
  *
  * Browser behaviour of the cluster story on /:lang/leistungen: one world stage, the story position
- * `f` on the stage root (`data-f`), the rail, the SSR end state, reduced motion, the `?video=1`
+ * `f` on the stage root (`data-f`), the progress indicator, the SSR end state, reduced motion, the `?video=1`
  * contract (`window.setF` / `window.setStep`), the tracked booking button and the phone checks
  * (no horizontal overflow, graphic text at least 11px effective). The pure model is covered by
  * tests/build/cluster-story-world.test.mjs.
@@ -46,8 +48,43 @@ async function openStory(page: Page, path = "/de/leistungen"): Promise<void> {
   });
 }
 
-/** The rail's buttons are the stage's following sibling `nav`. */
-const pill = (page: Page, k: number) => page.locator(`${STAGE} ~ nav button`).nth(k);
+/** The progress indicator is the stage's following sibling with `role="progressbar"`; its items are its children. */
+const BAR = `${STAGE} ~ [role="progressbar"]`;
+const item = (page: Page, k: number) => page.locator(`${BAR} > [data-progress-item]`).nth(k);
+const STEPS = 9;
+
+/** Resolves after `n` rendered animation frames in the page: a wait on the browser's own render loop, not on wall-clock time. */
+const frames = (page: Page, n: number): Promise<void> =>
+  page.evaluate(
+    (count) =>
+      new Promise<void>((done) => {
+        let left = count;
+        const tick = () => (--left <= 0 ? done() : requestAnimationFrame(tick));
+        requestAnimationFrame(tick);
+      }),
+    n
+  );
+
+/** Scroll (instantly) so block k sits on the viewline; the page reads f = k from the scroll position. */
+async function scrollToBlock(page: Page, k: number, want = k): Promise<void> {
+  await page.evaluate((index) => {
+    const el = document.querySelector(`li[data-step-index='${index}']`) as HTMLElement;
+    const sticky = document.getElementById("cluster-story-stage")!.parentElement as HTMLElement;
+    const vh = window.innerHeight;
+    let line = vh * 0.5;
+    if (window.innerWidth < 1024) {
+      const top = parseFloat(getComputedStyle(sticky).top) || 0;
+      line = Math.min(top + sticky.offsetHeight + 130, vh - 80);
+    }
+    const r = el.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + r.top + r.height / 2 - line, behavior: "instant" });
+  }, k);
+  await page.waitForFunction(
+    ([sel, want]) => Math.abs(parseFloat((document.querySelector(sel as string) as HTMLElement).dataset.f ?? "NaN") - (want as number)) < 0.06,
+    [STAGE, want] as const,
+    { timeout: 8000 }
+  );
+}
 
 for (const [name, viewport] of [
   ["1440", DESKTOP],
@@ -56,12 +93,12 @@ for (const [name, viewport] of [
   test.describe(`cluster story at ${name}px`, () => {
     test.use({ viewport });
 
-    test("one world svg, ten blocks, ten pills, no horizontal overflow", async ({ page }) => {
+    test("one world svg, nine blocks, nine progress items, no horizontal overflow", async ({ page }) => {
       await page.goto("/de/leistungen", { waitUntil: "networkidle" });
       await expect(page.locator(`${STAGE} svg`)).toHaveCount(1);
       await expect(page.locator(`${STAGE} > svg`)).toHaveAttribute("aria-hidden", "true");
-      await expect(page.locator("li[data-step-index]")).toHaveCount(10);
-      await expect(page.locator(`${STAGE} ~ nav button`)).toHaveCount(10);
+      await expect(page.locator("li[data-step-index]")).toHaveCount(STEPS);
+      await expect(page.locator(`${BAR} > [data-progress-item]`)).toHaveCount(STEPS);
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
       expect(overflow).toBeLessThanOrEqual(0);
     });
@@ -69,61 +106,104 @@ for (const [name, viewport] of [
     test("the stage stays pinned while its blocks scroll by", async ({ page }) => {
       await openStory(page);
       const top = () => page.locator(STAGE).evaluate((el) => el.getBoundingClientRect().top);
-      await pill(page, 3).click();
-      await page.waitForTimeout(1200);
+      await scrollToBlock(page, 3);
       const a = await top();
-      await pill(page, 6).click();
-      await page.waitForTimeout(1200);
+      await scrollToBlock(page, 6);
       const b = await top();
       expect(Math.abs(a - b)).toBeLessThan(2);
       expect(a).toBeGreaterThanOrEqual(0);
     });
 
-    test("pill k brings block k to the viewline so data-f reads k, in both directions", async ({ page }) => {
+    test("scrolling to block k makes data-f read k and marks that item as current, in both directions", async ({ page }) => {
       await openStory(page);
-      for (const k of [0, 2, 5, 9, 4, 1]) {
-        await pill(page, k).click();
-        // The smooth scroll needs a moment; wait until the stage settles on k, then assert the value at rest.
-        await page.waitForFunction(
-          ([sel, want]) => Math.abs(parseFloat((document.querySelector(sel as string) as HTMLElement).dataset.f ?? "NaN") - (want as number)) < 0.06,
-          [STAGE, k] as const,
-          { timeout: 8000 }
-        );
-        await page.waitForTimeout(300);
-        const atRest = await readF(page);
-        expect(Math.abs(atRest - k), `data-f ${atRest} after pill ${k}`).toBeLessThan(0.06);
-        await expect(pill(page, k)).toHaveAttribute("aria-current", "step");
+      for (const k of [0, 2, 5, 8, 4, 1]) {
+        await scrollToBlock(page, k);
+        await expect.poll(async () => Math.abs((await readF(page)) - k), { message: `data-f at block ${k}` }).toBeLessThan(0.06);
+        await expect(page.locator(`${BAR} > [data-current]`)).toHaveCount(1);
+        await expect(item(page, k)).toHaveAttribute("data-current", "");
+        await expect(page.locator(`${BAR} svg`)).toHaveCount(k); // one check mark per earlier item
       }
     });
 
-    test("Tab reaches every pill in order and shows a focus ring", async ({ page }) => {
+    test("the indicator is a progressbar: named, valued, with no interactive element, no pointer cursor", async ({ page }) => {
       await openStory(page);
-      await pill(page, 0).focus();
-      for (let k = 0; k < 10; k++) {
-        await expect(pill(page, k)).toBeFocused();
-        const outline = await pill(page, k).evaluate((el) => {
-          const s = getComputedStyle(el);
-          return { style: s.outlineStyle, width: parseFloat(s.outlineWidth) };
-        });
-        expect(outline.style).not.toBe("none");
-        expect(outline.width).toBeGreaterThanOrEqual(2);
-        if (k < 9) await page.keyboard.press("Tab");
-      }
-      await pill(page, 0).focus();
-      await page.keyboard.press("Tab");
-      await page.keyboard.press("Enter");
-      await expect.poll(() => readF(page), { timeout: 5000 }).toBeGreaterThan(0.94);
+      await scrollToBlock(page, 4);
+      const bar = page.locator(BAR);
+      await expect(bar).toHaveCount(1);
+      await expect(bar).toHaveAttribute("aria-label", "Fortschritt");
+      await expect(bar).toHaveAttribute("aria-valuemin", "1");
+      await expect(bar).toHaveAttribute("aria-valuemax", String(STEPS));
+      await expect(bar).toHaveAttribute("aria-valuenow", "5");
+      await expect(bar).toHaveAttribute("aria-valuetext", `Schritt 5 von ${STEPS}`);
+      await expect(page.locator(`${BAR} button, ${BAR} a, ${BAR} [tabindex], ${BAR} [role="button"], ${BAR} [onclick]`)).toHaveCount(0);
+      await expect(page.locator(`${BAR} [aria-label]`)).toHaveCount(0);
+      for (let k = 0; k < STEPS; k++) await expect(item(page, k)).toHaveAttribute("aria-hidden", "true");
+      const cursors = await page.locator(`${BAR}, ${BAR} *`).evaluateAll((els) => els.map((e) => getComputedStyle(e).cursor));
+      expect(cursors.filter((c) => c === "pointer")).toEqual([]);
+      const hover = await page.evaluate(
+        (sel) => !Array.from(document.querySelectorAll(`${sel}, ${sel} *`)).some((e) => /(^|\s)hover:/.test(e.getAttribute("class") ?? "")),
+        BAR
+      );
+      expect(hover).toBe(true);
     });
 
-    test("no pill or block carries a planned (geplant) marker", async ({ page }) => {
+    test("clicking a progress item changes neither the scroll position nor the current item", async ({ page }) => {
+      await openStory(page);
+      await scrollToBlock(page, 2);
+      const y = await page.evaluate(() => window.scrollY);
+      // Count every way a click handler could move the page: scroll events and the scroll APIs.
+      await page.evaluate(() => {
+        const w = window as unknown as { __scrolls: number };
+        w.__scrolls = 0;
+        const bump = () => void w.__scrolls++;
+        window.addEventListener("scroll", bump);
+        for (const name of ["scrollTo", "scrollBy"] as const) {
+          const orig = window[name].bind(window) as (...a: unknown[]) => void;
+          (window as unknown as Record<string, unknown>)[name] = (...a: unknown[]) => (bump(), orig(...a));
+        }
+        const intoView = Element.prototype.scrollIntoView;
+        Element.prototype.scrollIntoView = function (this: Element, ...a: Parameters<typeof intoView>) {
+          bump();
+          return intoView.apply(this, a);
+        };
+      });
+      const errors: string[] = [];
+      page.on("pageerror", (e) => errors.push(e.message));
+      page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
+      await item(page, 6).click({ force: true });
+      await frames(page, 30); // a smooth scroll or a re-render would show within these frames
+      expect(errors, "the click raised no page error").toEqual([]);
+      expect(await page.evaluate(() => (window as unknown as { __scrolls: number }).__scrolls)).toBe(0);
+      expect(await page.evaluate(() => window.scrollY)).toBe(y);
+      await expect(item(page, 2)).toHaveAttribute("data-current", "");
+    });
+
+    test("Tab never lands in the progress indicator", async ({ page }) => {
+      await openStory(page);
+      for (let i = 0; i < 12; i++) {
+        await page.keyboard.press("Tab");
+        const inside = await page.evaluate((sel) => !!document.activeElement?.closest(sel), BAR);
+        expect(inside).toBe(false);
+      }
+    });
+
+    test("every eyebrow reads Schritt n von N with N the block count; the last one adds Ausblick", async ({ page }) => {
+      await page.goto("/de/leistungen", { waitUntil: "networkidle" });
+      const eyebrows = await page.locator("li[data-step-index] > span").allTextContents();
+      expect(eyebrows).toHaveLength(STEPS);
+      eyebrows.forEach((t, i) => {
+        expect(t).toBe(i === STEPS - 1 ? `Schritt ${STEPS} von ${STEPS} · Ausblick` : `Schritt ${i + 1} von ${STEPS}`);
+      });
+    });
+
+    test("no block or progress item carries a planned (geplant) marker", async ({ page }) => {
       await page.goto("/de/leistungen", { waitUntil: "networkidle" });
       await expect(page.locator("body")).not.toContainText(/geplant/i);
-      for (let i = 0; i < 10; i++) await expect(pill(page, i)).not.toHaveAttribute("aria-label", /geplant/i);
     });
 
     test("graphic text is at least 11px effective in the frames of every step mark", async ({ page }) => {
       await page.goto("/de/leistungen?video=1", { waitUntil: "networkidle" });
-      for (let k = 0; k < 10; k++) {
+      for (let k = 0; k < STEPS; k++) {
         await page.evaluate((f) => window.setF!(f, 0), k + 0.2);
         const small = await page.evaluate((sel) => {
           const svg = document.querySelector(`${sel} svg`) as SVGSVGElement;
@@ -146,17 +226,28 @@ for (const [name, viewport] of [
 }
 
 test.describe("server markup and first render", () => {
-  test("the prerendered page already shows the step-9 end state and the booking link", async ({ request }) => {
+  test("the prerendered page already shows the finished end state and the booking link", async ({ request }) => {
     const html = await (await request.get("/de/leistungen/")).text();
-    expect(html).toContain('data-f="8.2"');
+    expect(html).toContain('data-f="7.2"');
     expect(html).toContain(BOOKING_URL);
-    expect((html.match(/<h3/g) ?? []).length).toBeGreaterThanOrEqual(10);
   });
 
-  test("EN: ten blocks", async ({ page }) => {
+  for (const lang of ["de", "en"]) {
+    test(`${lang}: the prerendered story has nine h3 blocks and nine progress items, no Installation`, async ({ request }) => {
+      const html = await (await request.get(`/${lang}/leistungen/`)).text();
+      const at = html.indexOf('id="cluster-story-heading"');
+      const section = html.slice(html.lastIndexOf("<section", at), html.indexOf("</section>", at));
+      expect((section.match(/<h3/g) ?? []).length).toBe(STEPS);
+      expect((section.match(/data-progress-item/g) ?? []).length).toBe(STEPS);
+      expect(section).not.toMatch(/Installation/);
+    });
+  }
+
+  test("EN: nine blocks, the last one is the outlook and not planned", async ({ page }) => {
     await page.goto("/en/leistungen", { waitUntil: "networkidle" });
-    await expect(page.locator("li[data-step-index]")).toHaveCount(10);
-    await expect(page.locator("li[data-step-index='9']")).not.toContainText(/planned/i);
+    await expect(page.locator("li[data-step-index]")).toHaveCount(STEPS);
+    await expect(page.locator("li[data-step-index='8']")).not.toContainText(/planned/i);
+    await expect(page.locator("li[data-step-index='8'] > span")).toHaveText("Step 9 of 9 · Outlook");
   });
 
   for (const lang of ["de", "en"]) {
@@ -179,12 +270,21 @@ test.describe("reduced motion", () => {
   test("each step stands finished at k + 0.2 and nothing runs", async ({ page }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await openStory(page);
-    for (const k of [0, 3, 7, 9]) {
-      await pill(page, k).click();
+    for (const k of [0, 3, 6, 8]) {
+      await scrollToBlock(page, k, k + 0.2);
       await expect.poll(() => readF(page), { timeout: 5000 }).toBeCloseTo(k + 0.2, 3);
+      await expect(item(page, k)).toHaveAttribute("data-current", "");
     }
     const a = await page.locator(STAGE).innerHTML();
-    await page.waitForTimeout(1200);
+    // Watch the stage's whole subtree while the render loop runs; a clock or an animation would mutate it.
+    await page.evaluate((sel) => {
+      const w = window as unknown as { __mutations: MutationRecord[]; __mo: MutationObserver };
+      w.__mutations = [];
+      w.__mo = new MutationObserver((records) => w.__mutations.push(...records));
+      w.__mo.observe(document.querySelector(sel)!, { subtree: true, attributes: true, childList: true, characterData: true });
+    }, STAGE);
+    await frames(page, 90);
+    expect(await page.evaluate(() => (window as unknown as { __mutations: MutationRecord[] }).__mutations.length)).toBe(0);
     expect(await page.locator(STAGE).innerHTML()).toBe(a);
     expect(await page.evaluate(() => document.getAnimations().length)).toBe(0);
   });
@@ -195,12 +295,11 @@ test.describe("motion on: the quiet clock", () => {
 
   test("only the loops change over time while f stays put", async ({ page }) => {
     await openStory(page);
-    await pill(page, 8).click();
-    await page.waitForTimeout(1500);
+    await scrollToBlock(page, 7);
+    const fBefore = await readF(page);
     const a = await page.locator(STAGE).innerHTML();
-    await page.waitForTimeout(500);
-    const b = await page.locator(STAGE).innerHTML();
-    expect(a).not.toBe(b);
+    await expect.poll(() => page.locator(STAGE).innerHTML(), { timeout: 8000, message: "the loops of the stage move" }).not.toBe(a);
+    expect(await readF(page)).toBe(fBefore);
   });
 });
 
@@ -257,7 +356,7 @@ test.describe("?video=1", () => {
     }
     await page.mouse.move(w / 2, h / 2);
     await page.mouse.wheel(0, 1500);
-    await page.waitForTimeout(300);
+    await frames(page, 20);
     expect(await page.evaluate(() => window.scrollY)).toBe(0);
   });
 
@@ -274,14 +373,15 @@ test.describe("?video=1", () => {
   });
 });
 
-test.describe("booking button of step 9", () => {
+test.describe("booking button of the offer step (id service)", () => {
   test.use({ viewport: DESKTOP });
 
   test("one click fires exactly one Call Link Clicked with placement cluster-story", async ({ page }) => {
     await recorder(page);
     await openStory(page);
-    const link = page.locator("li[data-step-index='8'] a[href='" + BOOKING_URL + "']");
+    const link = page.locator("li[data-step-id='service'] a[href='" + BOOKING_URL + "']");
     await expect(link).toHaveCount(1);
+    await expect(page.locator("li[data-step-id='service']")).toHaveAttribute("data-step-index", "7");
     await link.scrollIntoViewIfNeeded();
     const popup = page.waitForEvent("popup").catch(() => null);
     await link.click();

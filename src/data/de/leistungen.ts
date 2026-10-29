@@ -24,7 +24,6 @@ export interface Situation {
   id: string;
   text: string;
   agentName: string;
-  agentKind: "live" | "example";
   capabilities: string[];
 }
 
@@ -43,7 +42,6 @@ export interface ClusterStoryStep {
     | "concepts"
     | "handover"
     | "build"
-    | "install"
     | "telemetry"
     | "loop"
     | "growth"
@@ -186,14 +184,13 @@ export const leistungenData: LeistungenData = {
   }
 ],
   useCasesHeading: "Mögliche Use Cases",
-  useCasesLeadLine: "Beleg-Inbox läuft heute schon produktiv bei uns im Einsatz – die anderen vier zeigen dir, was mit demselben Ansatz sonst noch möglich ist.",
+  useCasesLeadLine: "Beleg-Inbox läuft heute schon produktiv bei uns – alle anderen Karten sind Beispiele dafür, was mit demselben Ansatz möglich ist.",
   useCasesCtaLabel: "Kostenloses Erstgespräch buchen",
   situations: [
   {
     "id": "receipts",
     "text": "Zu jeder Abbuchung fehlt mir der Beleg.",
     "agentName": "Beleg-Inbox",
-    "agentKind": "live",
     "capabilities": [
       "Belege automatisch einsammeln",
       "Belegprüfungen",
@@ -204,7 +201,6 @@ export const leistungenData: LeistungenData = {
     "id": "invoice-coverage",
     "text": "Ich weiß nicht, ob alle Rechnungen eines Projekts erfasst sind.",
     "agentName": "Rechnungs-Radar",
-    "agentKind": "example",
     "capabilities": [
       "Rechnungen automatisch dem passenden Projekt zuordnen",
       "Fehlende Rechnungen markieren",
@@ -213,9 +209,8 @@ export const leistungenData: LeistungenData = {
   },
   {
     "id": "tool-fatigue",
-    "text": "Wir probieren seit Monaten KI-Tools aus, aber im Alltag läuft keines davon wirklich.",
+    "text": "Wir hatten ein gutes Konzept. Umgesetzt hat es dann niemand.",
     "agentName": "Rollout-Lotse",
-    "agentKind": "example",
     "capabilities": [
       "Einführung Schritt für Schritt pro Team begleiten",
       "Blockaden im Alltag früh erkennen",
@@ -226,7 +221,6 @@ export const leistungenData: LeistungenData = {
     "id": "prioritization",
     "text": "Ich weiß nicht, wo wir mit KI anfangen sollen – überall wird es empfohlen, aber keiner sagt, was zuerst dran ist.",
     "agentName": "Fokus-Kompass",
-    "agentKind": "example",
     "capabilities": [
       "Anwendungsfälle nach Aufwand und Wirkung sortieren",
       "Einen konkreten ersten Schritt vorschlagen",
@@ -237,23 +231,211 @@ export const leistungenData: LeistungenData = {
     "id": "neglected-tool",
     "text": "Wir haben mal ein Tool eingeführt – seitdem kümmert sich niemand mehr darum.",
     "agentName": "Tool-Wächter",
-    "agentKind": "example",
     "capabilities": [
       "Nutzung und Fehler laufend überwachen",
       "Verantwortliche automatisch erinnern",
       "Monatlichen Gesundheitscheck liefern"
     ]
+  },
+  {
+    "id": "quote-drafts",
+    "text": "Aus jeder Anfrage ein Angebot zu bauen, kostet uns jedes Mal Zeit.",
+    "agentName": "Angebots-Entwurf",
+    "capabilities": [
+      "Produkt und Menge aus Anfragen herauslesen",
+      "Angebotsentwurf im CRM anlegen",
+      "Vor dem Versand von einem Menschen freigeben lassen"
+    ]
+  },
+  {
+    "id": "order-matching",
+    "text": "Bei Eingangsrechnungen weiß ich nie, ob sie zur Bestellung passen.",
+    "agentName": "Bestell-Abgleich",
+    "capabilities": [
+      "Jede Rechnung mit der Bestellung vergleichen",
+      "Abweichungen markieren",
+      "Nichts stillschweigend durchwinken"
+    ]
+  },
+  {
+    "id": "payment-reminders",
+    "text": "Überfällige Rechnungen fallen uns erst auf, wenn es schon lange her ist.",
+    "agentName": "Mahn-Assistent",
+    "capabilities": [
+      "Überfällige Rechnungen erkennen",
+      "Eine Erinnerung vorbereiten",
+      "Dein Team bestätigt nur noch"
+    ]
+  },
+  {
+    "id": "appointments",
+    "text": "Terminwünsche stehen in Mails, und ich tippe sie von Hand in den Kalender.",
+    "agentName": "Termin-Sekretär",
+    "capabilities": [
+      "Terminwünsche aus Mails herauslesen",
+      "Freie Slots im Kalender vorschlagen",
+      "Eintragen erst nach deiner Bestätigung"
+    ]
+  },
+  {
+    "id": "onboarding-questions",
+    "text": "Neue Nutzer stellen immer dieselben Fragen, und wir beantworten sie jedes Mal neu.",
+    "agentName": "Onboarding-Helfer",
+    "capabilities": [
+      "Wiederkehrende Fragen aus eurer Dokumentation beantworten",
+      "Den Rest direkt an euer Team weitergeben"
+    ]
+  },
+  {
+    "id": "ticket-triage",
+    "text": "Wenn ein Ticket reinkommt, weiß keiner sofort, wie dringend es ist.",
+    "agentName": "Ticket-Sortierer",
+    "capabilities": [
+      "Tickets nach Dringlichkeit einordnen",
+      "Nach Thema zuordnen",
+      "Vorsortiert ans Team übergeben"
+    ]
+  },
+  {
+    "id": "feature-requests",
+    "text": "Feature-Wünsche kommen aus allen Kanälen, und keiner überblickt sie.",
+    "agentName": "Wunsch-Sammler",
+    "capabilities": [
+      "Feedback aus mehreren Kanälen zusammenführen",
+      "Nach Aufwand und Nutzen ordnen",
+      "Für die nächste Priorisierung aufbereiten"
+    ]
+  },
+  {
+    "id": "usage-reports",
+    "text": "Unsere Nutzungsdaten liegen irgendwo, aber niemand liest sie.",
+    "agentName": "Daten-Dolmetscher",
+    "capabilities": [
+      "Rohe Produktanalytik in verständliche Sprache übersetzen",
+      "Wöchentlichen Bericht fürs Team erstellen",
+      "Ohne manuelles Zusammensuchen"
+    ]
+  },
+  {
+    "id": "conversation-insights",
+    "text": "Was Kunden in Gesprächen sagen, versickert in Einzelnotizen.",
+    "agentName": "Gesprächs-Analyst",
+    "capabilities": [
+      "Calls und Chats nach Thema auswerten",
+      "Die Stimmung erkennen",
+      "Wiederkehrende Muster sichtbar machen"
+    ]
+  },
+  {
+    "id": "reply-suggestions",
+    "text": "Auf Standardfragen schreiben wir jedes Mal fast dieselbe Antwort.",
+    "agentName": "Antwort-Vorschlag",
+    "capabilities": [
+      "Passende Antwortbausteine vorschlagen",
+      "An die jeweilige Frage anpassen",
+      "Abgeschickt wird weiterhin von einem Menschen"
+    ]
+  },
+  {
+    "id": "knowledge-base",
+    "text": "Unser Wissen steckt in Chats und Dokumenten, und niemand pflegt es nach.",
+    "agentName": "Wissens-Gärtner",
+    "capabilities": [
+      "Chats und Dokumente auswerten",
+      "Die interne Wissensdatenbank aktuell halten",
+      "Ohne dass jemand von Hand nachträgt"
+    ]
+  },
+  {
+    "id": "meeting-tasks",
+    "text": "Nach dem Meeting weiß jeder etwas anderes davon, was zu tun ist.",
+    "agentName": "Aufgaben-Schreiber",
+    "capabilities": [
+      "Mitschriften in Aufgaben verwandeln",
+      "Aufgaben je Teilnehmer zuordnen",
+      "Nach Priorität ordnen"
+    ]
+  },
+  {
+    "id": "competitor-watch",
+    "text": "Was die Konkurrenz gerade anbietet, erfahren wir meist zufällig.",
+    "agentName": "Konkurrenz-Beobachter",
+    "capabilities": [
+      "Preise und Angebote regelmäßig prüfen",
+      "Änderungen markieren",
+      "Kurz zusammenfassen, was sich getan hat"
+    ]
+  },
+  {
+    "id": "investor-updates",
+    "text": "Das Investoren-Update schreiben wir immer auf den letzten Drücker.",
+    "agentName": "Update-Vorbereiter",
+    "capabilities": [
+      "Kennzahlen aus euren bestehenden Tools ziehen",
+      "Einen Entwurf für das nächste Update vorbereiten",
+      "Du prüfst und gibst frei"
+    ]
+  },
+  {
+    "id": "market-trends",
+    "text": "Den Markt im Blick zu behalten, schaffen wir neben dem Tagesgeschäft nicht.",
+    "agentName": "Markt-Radar",
+    "capabilities": [
+      "Fachartikel und Branchenmeldungen sichten",
+      "Eine wöchentliche Markteinschätzung erstellen",
+      "Das Wichtigste kurz zusammenfassen"
+    ]
+  },
+  {
+    "id": "social-drafts",
+    "text": "Unsere Blogartikel erscheinen, aber für Social Media fehlt uns die Zeit.",
+    "agentName": "Social-Entwurf",
+    "capabilities": [
+      "Aus Blogartikeln Beitragsentwürfe ableiten",
+      "Für Social Media zuschneiden",
+      "Veröffentlicht wird weiterhin manuell"
+    ]
+  },
+  {
+    "id": "contract-deadlines",
+    "text": "Vertragsfristen und Kündigungstermine merken wir uns erst, wenn sie verstrichen sind.",
+    "agentName": "Fristen-Wächter",
+    "capabilities": [
+      "Verträge nach Fristen durchsuchen",
+      "Rechtzeitig an Kündigungstermine erinnern",
+      "Alle Fristen übersichtlich sammeln"
+    ]
+  },
+  {
+    "id": "follow-ups",
+    "text": "Angebote gehen raus, und danach fragt keiner mehr nach.",
+    "agentName": "Nachfass-Assistent",
+    "capabilities": [
+      "Offene Angebote im Blick behalten",
+      "Eine Nachfass-Mail vorbereiten",
+      "Dein Team gibt sie vor dem Versand frei"
+    ]
+  },
+  {
+    "id": "supplier-prices",
+    "text": "Lieferantenpreise vergleichen wir nur, wenn es wirklich weh tut.",
+    "agentName": "Preis-Vergleicher",
+    "capabilities": [
+      "Angebote verschiedener Lieferanten gegenüberstellen",
+      "Preisänderungen markieren",
+      "Die Entscheidung bleibt bei dir"
+    ]
   }
 ],
   clusterStory: {
   "heading": "Wie dein Cluster bei uns entsteht",
-  "intro": "Von deinem ersten Input bis zu einem Cluster, der dich zu 100 % abdeckt – eine Geschichte in neun Schritten, die sich beim Scrollen selbst aufbaut.",
+  "intro": "Von deinem ersten Input bis zu einem Cluster, der dich zu 100 % abdeckt – eine Geschichte in neun Schritten, die sich beim Scrollen selbst aufbaut.",
   "steps": [
     {
       "id": "input",
       "navLabel": "Input",
-      "heading": "Input",
-      "body": "Alles beginnt mit dem, was du uns erzählst. Wir sammeln deine Informationen dort ein, wo du ohnehin arbeitest: im persönlichen Videocall, über Slack, per E-Mail und über WhatsApp. Niemand bei uns funkt dazwischen – dein Input geht direkt in unseren Cluster.",
+      "heading": "Dein Problem",
+      "body": "Du hast eine Aufgabe, die zu viel Zeit frisst. Erzähl sie uns da, wo du ohnehin arbeitest. Das geht im persönlichen Videocall, über Slack, per E-Mail und über WhatsApp. Niemand bei uns funkt dazwischen – dein Input geht direkt in unseren Cluster.",
       "channels": [
         {
           "label": "Videocall",
@@ -289,19 +471,13 @@ export const leistungenData: LeistungenData = {
       "id": "build",
       "navLabel": "Aufbau",
       "heading": "Agenten bauen deine Agenten",
-      "body": "Unsere Agenten bauen deinen eigenen Agenten-Cluster, zugeschnitten auf deine Prozesse und nicht auf eine Vorlage. Wir fangen meist klein an, mit einer überschaubaren Aufgabe wie der Buchhaltung. So sammelst du Erfahrung damit, wo der Cluster funktioniert und wo nicht."
-    },
-    {
-      "id": "install",
-      "navLabel": "Installation",
-      "heading": "Installation",
-      "body": "Der fertige Cluster wird bei dir installiert; der Balken läuft von 0 auf 100 %. Sobald er läuft, sehen wir, was funktioniert und was nicht, und lernen daraus für den nächsten Schritt."
+      "body": "Unsere Agenten bauen deinen eigenen Agenten-Cluster, zugeschnitten auf deine Prozesse und nicht auf eine Vorlage. Wir fangen meist klein an, mit einer überschaubaren Aufgabe wie der Buchhaltung. Der Cluster läuft bei dir, wir lernen daraus – und du sammelst Erfahrung damit, wo er funktioniert und wo nicht."
     },
     {
       "id": "telemetry",
       "navLabel": "Datenfluss",
-      "heading": "Telemetrie zurück, Updates raus",
-      "body": "Sensible Daten bleiben bei dir; nach außen geht nur, was du freigibst. Automatisch fließen nur Laufzeit-, Fehler- und Kosten-Telemetrie zu uns zurück, Lerndaten erst nach deiner manuellen Freigabe. Lokale KI-Modelle setzen wir ein, wo immer es möglich ist, und jeder Agent hat ein eigenes Budget mit sichtbaren Kosten. Mit Updates halten wir deinen Cluster auf Stand."
+      "heading": "Wir sehen, ob es läuft. Nicht, was drin ist.",
+      "body": "Zu uns kommen nur Laufzeit, Fehler und Kosten. Daraus bauen wir Updates für deinen Cluster. Sensible Daten bleiben bei dir; nach außen geht nur, was du freigibst, und Lerndaten erst nach deiner manuellen Freigabe. Lokale KI-Modelle setzen wir ein, wo immer es möglich ist, und jeder Agent hat ein eigenes Budget mit sichtbaren Kosten."
     },
     {
       "id": "loop",
@@ -332,8 +508,8 @@ export const leistungenData: LeistungenData = {
     {
       "id": "service",
       "navLabel": "Angebot",
-      "heading": "Dein Cluster deckt dich zu 100 % ab",
-      "body": "Der Aufbau ist ein Projekt, der laufende Betrieb danach eine monatliche Betreuung. So bauen wir es – ohne Garantieversprechen, dafür Schritt für Schritt und nachvollziehbar. Im kostenlosen Erstgespräch klären wir, womit dein Cluster beginnt.",
+      "heading": "Dein Cluster deckt dich zu 100 % ab",
+      "body": "Der Aufbau ist ein Projekt, der laufende Betrieb danach eine monatliche Betreuung. Fertig wird ein Cluster nie, er wächst mit deinem Unternehmen. Wir bauen weiter, Schritt für Schritt und nachvollziehbar. Im kostenlosen Erstgespräch klären wir, womit dein Cluster beginnt.",
       "billingNote": "Aufbau = ein Projekt · Betrieb = monatliche Betreuung"
     },
     {

@@ -9,7 +9,6 @@ import { PulseJourney } from "@/app/components/PulseJourney";
 import { ClusterStorySection } from "@/app/components/ClusterStorySection";
 import { UseCasesSection } from "@/app/components/UseCasesSection";
 import { SkillMatrix } from "@/app/components/SkillMatrix";
-import { ToolProfile } from "@/app/components/ToolProfile";
 import { ExplainerVideo } from "@/app/components/ExplainerVideo";
 import { PulseCheckModal } from "@/app/components/PulseCheckModal";
 import { PulseLines } from "@/app/components/ui/PulseLines";
@@ -278,10 +277,9 @@ export function Leistungen() {
         onVideoQuizOpen={() => setQuizPlacement(PLACEMENTS.videoEndQuiz)}
       />
       <PulseJourney />
+      <UseCasesSection />
       <SkillMatrix />
       <ClusterStorySection />
-      <UseCasesSection />
-      <ToolProfile />
       <PulseCallout onQuizOpen={() => setQuizPlacement(PLACEMENTS.leistungenPulseCallout)} />
       <ContactStrip />
       <Footer />

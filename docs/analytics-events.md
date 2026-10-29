@@ -8,8 +8,8 @@ and `CTAS` from there — never a duplicated string literal.
 
 | Event | Fired from | Props |
 |---|---|---|
-| `Quiz Started` | `PulseQuiz.tsx:530`, when the first quiz question is shown | `page`, `lang`, `placement`, `cta: "quiz"` |
-| `Quiz Completed` | `PulseQuiz.tsx:517`, when the result screen renders | `page`, `lang`, `placement`, `cta: "quiz"` |
+| `Quiz Started` | `PulseQuiz.tsx:572` (mount effect, once per opened dialog) and `PulseQuiz.tsx:622` ("Test erneut starten"), when the first quiz question is shown: the dialog opens straight on question 1, there is no intro or start click any more | `page`, `lang`, `placement`, `cta: "quiz"` |
+| `Quiz Completed` | `PulseQuiz.tsx:616`, when the result screen renders | `page`, `lang`, `placement`, `cta: "quiz"` |
 | `Contact Sent` | the contact form's `200` response (not on click), every `mailto:`/`tel:` link, and every other CTA that navigates to `/kontakt` without being the booking link or the form itself — see the placement table below | `page`, `lang`, `placement`, `cta: "contact" \| "mail" \| "phone"` |
 | `Call Link Clicked` | every booking CTA, see the placement table below | `page`, `lang`, `placement`, `cta: "book-call"` |
 
@@ -51,12 +51,12 @@ distinction is wanted in the dashboard.
 | `navbarMobileBar` | `navbar-mobile-bar` | `Navbar` (compact "Book a call" button in the mobile header bar, always visible, F-784c5f) | `src/app/components/Navbar.tsx` |
 | `finalCta` | `final-cta` | `FinalCTA` (homepage closing section) | `src/app/components/FinalCTA.tsx:44` |
 | `footer` | `footer` | `Footer` ("Book a call" row in the contact column) | `src/app/components/Footer.tsx:87-93` (config row), `133`/`142` (click handlers) |
-| `quizResult` | `quiz-result` | `PulseQuiz` (booking CTA on the result screen) | `src/app/components/PulseQuiz.tsx:620` |
+| `quizResult` | `quiz-result` | `PulseQuiz` (booking CTA on the result screen) | `src/app/components/PulseQuiz.tsx:516` |
 | `kontakt` | `kontakt` | `Kontakt` page (booking CTA in the bottom contact strip) | `src/app/pages/Kontakt.tsx:479` |
 | `leistungenDetailCta` | `leistungen-detail-cta` | `LeistungenDetail` (service CTA block, next to the Pulse-check button) | `src/app/pages/LeistungenDetail.tsx:327` |
 | `leistungenDetailContact` | `leistungen-detail-contact` | `LeistungenDetail` (bottom contact strip, same page, different section) | `src/app/pages/LeistungenDetail.tsx:440` |
 
-| `situations` | `situations` | `UseCasesSection` ("Mögliche Use Cases" carousel on `/leistungen`, renamed from `SituationsSection` by VL-11-S3) | `src/app/components/UseCasesSection.tsx` |
+| `situations` | `situations` | `UseCasesSection` ("Mögliche Use Cases" carousel on `/leistungen`, renamed from `SituationsSection` by VL-11-S3; since VL-11-S9 it is the one section of all 20 to 24 use cases and sits directly after `PulseJourney` ("Check. Build. Care."), the old "Was sonst noch möglich ist" section is gone) | `src/app/components/UseCasesSection.tsx` |
 | `clusterStory` | `cluster-story` | `ClusterStorySection` (booking CTA in the last live step, "Wir lösen es"/"We solve it", on `/leistungen`) | `src/app/components/ClusterStorySection.tsx` |
 | `toolProfile` | `tool-profile` | **Retired** (VL-11-S3) — the "Im Einsatz: Beleg-Inbox" Steckbrief this placement belonged to (`ToolProfileCard`'s `CtaButton` in `ToolProfile.tsx`) was deleted; no call site uses this placement any more. `PLACEMENTS.toolProfile` itself is left in `analytics.ts` (out of this task's scope). | — |
 

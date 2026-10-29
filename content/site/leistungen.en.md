@@ -76,13 +76,12 @@ strengthFeatures:
     title: 'Close collaboration & transparency'
     subtitle: "You're part of the development process"
 useCasesHeading: 'Possible use cases'
-useCasesLeadLine: 'Beleg-Inbox is already running in production for us today — the other four show you what else is possible with the same approach.'
+useCasesLeadLine: 'Beleg-Inbox is already running in production at our company today — every other card is an example of what is possible with the same approach.'
 useCasesCtaLabel: 'Book a free intro call'
 situations:
   - id: receipts
     text: 'Every time money leaves the account, the receipt for it is missing.'
     agentName: 'Beleg-Inbox'
-    agentKind: live
     capabilities:
       - 'Collects receipts automatically'
       - 'Checks every receipt'
@@ -90,15 +89,13 @@ situations:
   - id: invoice-coverage
     text: "I don't know if every invoice for a project has actually been captured."
     agentName: 'Invoice Radar'
-    agentKind: example
     capabilities:
       - 'Match invoices to the right project automatically'
       - 'Flag invoices that are missing'
       - 'Summarise the monthly reconciliation per project'
   - id: tool-fatigue
-    text: "We've been trying AI tools for months, but none of them actually run in daily work."
+    text: 'We had a good concept. Nobody ever implemented it.'
     agentName: 'Rollout Guide'
-    agentKind: example
     capabilities:
       - 'Walk each team through the rollout step by step'
       - 'Spot friction in daily use early'
@@ -106,7 +103,6 @@ situations:
   - id: prioritization
     text: "I don't know where to start with AI — everyone recommends it, but nobody says what comes first."
     agentName: 'Focus Compass'
-    agentKind: example
     capabilities:
       - 'Rank use cases by effort and impact'
       - 'Suggest one concrete first step'
@@ -114,19 +110,150 @@ situations:
   - id: neglected-tool
     text: 'We rolled out a tool once — nobody has looked after it since.'
     agentName: 'Tool Watchdog'
-    agentKind: example
     capabilities:
       - 'Monitor usage and errors continuously'
       - 'Automatically remind whoever is responsible'
       - 'Deliver a monthly health check'
+  - id: quote-drafts
+    text: 'Turning every inquiry into a quote costs us time, every single time.'
+    agentName: 'Quote Drafter'
+    capabilities:
+      - 'Read product and quantity out of inquiries'
+      - 'Draft a quote in the CRM'
+      - 'Have a human approve it before it is sent'
+  - id: order-matching
+    text: "With incoming invoices I never know whether they match the purchase order."
+    agentName: 'Order Matcher'
+    capabilities:
+      - 'Compare every invoice against its purchase order'
+      - 'Flag discrepancies'
+      - 'Never wave anything through silently'
+  - id: payment-reminders
+    text: 'We only notice overdue invoices when they are long overdue.'
+    agentName: 'Reminder Assistant'
+    capabilities:
+      - 'Spot overdue invoices'
+      - 'Prepare a reminder'
+      - 'Your team only has to confirm'
+  - id: appointments
+    text: 'Appointment requests sit in emails, and I type them into the calendar by hand.'
+    agentName: 'Appointment Secretary'
+    capabilities:
+      - 'Read requested times out of emails'
+      - 'Suggest free calendar slots'
+      - 'Enter them only after your confirmation'
+  - id: onboarding-questions
+    text: 'New users keep asking the same questions, and we answer them from scratch every time.'
+    agentName: 'Onboarding Helper'
+    capabilities:
+      - 'Answer recurring questions from your own documentation'
+      - 'Pass the rest straight to your team'
+  - id: ticket-triage
+    text: 'When a ticket comes in, nobody can tell right away how urgent it is.'
+    agentName: 'Ticket Sorter'
+    capabilities:
+      - 'Rank tickets by urgency'
+      - 'Assign them by topic'
+      - 'Hand them to the team pre-sorted'
+  - id: feature-requests
+    text: 'Feature requests arrive from every channel, and nobody has the full picture.'
+    agentName: 'Request Collector'
+    capabilities:
+      - 'Bring feedback from several channels together'
+      - 'Rank it by effort and value'
+      - 'Prepare it for the next prioritisation round'
+  - id: usage-reports
+    text: 'Our usage data is sitting somewhere, but nobody reads it.'
+    agentName: 'Data Interpreter'
+    capabilities:
+      - 'Translate raw product analytics into plain language'
+      - 'Write a weekly report for the team'
+      - 'No manual digging around'
+  - id: conversation-insights
+    text: 'What customers tell us in conversations disappears into individual notes.'
+    agentName: 'Conversation Analyst'
+    capabilities:
+      - 'Analyse calls and chats by topic'
+      - 'Detect the sentiment'
+      - 'Make recurring patterns visible'
+  - id: reply-suggestions
+    text: 'We write almost the same answer to standard questions every time.'
+    agentName: 'Reply Suggester'
+    capabilities:
+      - 'Suggest fitting reply snippets'
+      - 'Adapt them to the question at hand'
+      - 'Sending still happens through a human'
+  - id: knowledge-base
+    text: 'Our knowledge is buried in chats and documents, and nobody keeps it up to date.'
+    agentName: 'Knowledge Gardener'
+    capabilities:
+      - 'Evaluate chats and documents'
+      - 'Keep the internal knowledge base current'
+      - 'With nobody updating it by hand'
+  - id: meeting-tasks
+    text: 'After the meeting, everyone remembers something different about what needs doing.'
+    agentName: 'Task Writer'
+    capabilities:
+      - 'Turn meeting notes into tasks'
+      - 'Assign tasks per participant'
+      - 'Rank them by priority'
+  - id: competitor-watch
+    text: 'What the competition is offering right now, we usually find out by accident.'
+    agentName: 'Competitor Watcher'
+    capabilities:
+      - 'Check prices and offers regularly'
+      - 'Flag changes'
+      - 'Summarise briefly what has changed'
+  - id: investor-updates
+    text: 'We always write the investor update right before it is due.'
+    agentName: 'Update Preparer'
+    capabilities:
+      - 'Pull metrics from your existing tools'
+      - 'Draft the next update'
+      - 'You review and approve'
+  - id: market-trends
+    text: 'Keeping an eye on the market is something we cannot manage next to daily business.'
+    agentName: 'Market Radar'
+    capabilities:
+      - 'Scan articles and industry news'
+      - 'Write a weekly market briefing'
+      - 'Summarise what matters most'
+  - id: social-drafts
+    text: 'Our blog posts get published, but we have no time left for social media.'
+    agentName: 'Social Drafter'
+    capabilities:
+      - 'Derive post drafts from blog articles'
+      - 'Tailor them for social media'
+      - 'Publishing still happens manually'
+  - id: contract-deadlines
+    text: 'We only remember contract deadlines and notice periods once they have passed.'
+    agentName: 'Deadline Guard'
+    capabilities:
+      - 'Search contracts for deadlines'
+      - 'Remind you of notice dates in time'
+      - 'Collect all deadlines in one overview'
+  - id: follow-ups
+    text: 'Quotes go out, and after that nobody follows up.'
+    agentName: 'Follow-up Assistant'
+    capabilities:
+      - 'Keep track of open quotes'
+      - 'Prepare a follow-up email'
+      - 'Your team approves it before it is sent'
+  - id: supplier-prices
+    text: 'We only compare supplier prices when it really hurts.'
+    agentName: 'Price Comparer'
+    capabilities:
+      - 'Put quotes from different suppliers side by side'
+      - 'Flag price changes'
+      - 'The decision stays with you'
 clusterStory:
   heading: 'How your cluster takes shape with us'
   intro: 'From your first input to a cluster that covers you 100% — a story in nine steps that builds itself as you scroll.'
   steps:
     - id: input
       navLabel: 'Input'
-      heading: 'Input'
-      body: 'Everything starts with what you tell us. We collect your information where you already work: in a personal video call, via Slack, by e-mail and via WhatsApp. Nobody at Venture Labs relays it – your input goes straight into our cluster.'
+      heading: 'Your problem'
+      body: 'You have a task that eats up too much time. Tell us about it where you already work. That works in a personal video call, via Slack, by e-mail and via WhatsApp. Nobody at Venture Labs relays it – your input goes straight into our cluster.'
       channels:
         - label: 'Video call'
           status: live
@@ -147,15 +274,11 @@ clusterStory:
     - id: build
       navLabel: 'Build'
       heading: 'Agents build your agents'
-      body: 'Our agents build your own agent cluster, shaped around your processes and not around a template. We usually start small, with a manageable task such as bookkeeping. That way you gain experience of where the cluster works and where it does not.'
-    - id: install
-      navLabel: 'Installation'
-      heading: 'Installation'
-      body: 'The finished cluster is installed at your site; the bar runs from 0 to 100 %. As soon as it is running, we see what works and what does not, and learn from it for the next step.'
+      body: 'Our agents build your own agent cluster, shaped around your processes and not around a template. We usually start small, with a manageable task such as bookkeeping. The cluster runs at your site, we learn from it – and you gain experience of where it works and where it does not.'
     - id: telemetry
       navLabel: 'Data flow'
-      heading: 'Telemetry back, updates out'
-      body: 'Sensitive data stays with you; outward only what you release. Automatically, only runtime, error and cost telemetry flows back to us, learning data only after you release it by hand. We use local AI models wherever possible, and every agent has its own budget with visible spend. With updates, we keep your cluster up to date.'
+      heading: 'We see whether it runs. Not what is inside.'
+      body: 'Only runtime, errors and costs come back to us. From that we build updates for your cluster. Sensitive data stays with you; outward only what you release, and learning data only after you release it by hand. We use local AI models wherever possible, and every agent has its own budget with visible spend.'
     - id: loop
       navLabel: 'Loop'
       heading: 'The loop closes'
@@ -172,7 +295,7 @@ clusterStory:
     - id: service
       navLabel: 'Offer'
       heading: 'Your cluster covers you 100%'
-      body: 'The build is one project, the ongoing operation after that a monthly retainer. This is how we build it – without promising guarantees, but step by step and traceable. In the free intro call we clarify what your cluster starts with.'
+      body: 'The build is one project, the ongoing operation after that a monthly retainer. A cluster is never finished, it grows with your company. We keep building, step by step and traceably. In the free intro call we clarify what your cluster starts with.'
       billingNote: 'Build = one project · Operation = monthly retainer'
     - id: outlook
       navLabel: 'Phone'
