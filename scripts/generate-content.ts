@@ -465,7 +465,6 @@ export interface ClusterStoryStep {
     | "concepts"
     | "handover"
     | "build"
-    | "install"
     | "telemetry"
     | "loop"
     | "growth"

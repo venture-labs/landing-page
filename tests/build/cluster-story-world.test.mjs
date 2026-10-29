@@ -1,5 +1,6 @@
 /**
- * 20261024-leistungsseite-the-growing-cluster-story-design- (VL-11-S7)
+ * 20261024-leistungsseite-the-growing-cluster-story-design- (VL-11-S7), amended by
+ * 20261028-leistungsseite-cluster-story-cleanup-dots-not-cl (VL-11-S10): nine steps, no Installation
  *
  * Checks of the pure model behind the cluster story (src/app/components/cluster-story/world.ts):
  * build completeness at the step marks, the camera hold, the nothing-before-its-window rule,
@@ -25,7 +26,7 @@ const labels = (l, lang) => {
   return {
     g: l.clusterStory.graphic,
     ch: steps[0].channels.map((c) => c.label),
-    areas: steps[7].areas.map((a) => a.label),
+    areas: steps.find((s) => s.id === "growth").areas.map((a) => a.label),
     example: l.exampleAgentLabel,
   };
 };
@@ -34,7 +35,8 @@ const EXAMPLE_LB = labels(en, "en");
 const els = W.ELEMENTS;
 
 test("step marks: everything up to the step is built, everything above is not there yet", () => {
-  assert.equal(W.STEP_MARKS.length, 10);
+  assert.equal(W.STEP_COUNT, 9);
+  assert.equal(W.STEP_MARKS.length, 9);
   for (const [k, mark] of W.STEP_MARKS.entries()) {
     for (const el of els) {
       const p = W.buildAt(el, mark);
@@ -42,7 +44,7 @@ test("step marks: everything up to the step is built, everything above is not th
       else assert.equal(p, 0, `${el.id} (step ${el.k}) is not built at the mark of step ${k}`);
     }
   }
-  assert.equal(W.FINAL_F, 8.2);
+  assert.equal(W.FINAL_F, 7.2);
 });
 
 test("nothing of a step is visible before its window opens (k - 0.5)", () => {
@@ -52,7 +54,7 @@ test("nothing of a step is visible before its window opens (k - 0.5)", () => {
 test("build progress never goes backwards while f grows (the scroll-back un-builds exactly)", () => {
   for (const el of els) {
     let prev = 0;
-    for (let f = -1; f <= 9.5; f += 0.05) {
+    for (let f = -1; f <= 8.5; f += 0.05) {
       const p = W.buildAt(el, f);
       assert.ok(p >= prev - 1e-9, `${el.id} at ${f}`);
       prev = p;
@@ -62,7 +64,7 @@ test("build progress never goes backwards while f grows (the scroll-back un-buil
 
 test("the camera holds from k - 0.2 to k + 0.25 and moves only inside k - 0.75 ... k - 0.2", () => {
   for (const narrow of [false, true]) {
-    for (let k = 0; k < 10; k++) {
+    for (let k = 0; k < 9; k++) {
       const hold = W.cameraAt(k - 0.2, narrow);
       for (let f = k - 0.2; f <= k + 0.25 + 1e-9; f += 0.05) {
         W.cameraAt(f, narrow).forEach((v, i) => assert.ok(Math.abs(v - hold[i]) < 1e-9, `k${k} f${f} narrow ${narrow}`));
@@ -75,10 +77,10 @@ test("the camera holds from k - 0.2 to k + 0.25 and moves only inside k - 0.75 .
 const framed = (b, r) => b.x >= r.x - 1 && b.y >= r.y - 1 && b.x + b.w <= r.x + r.w + 1 && b.y + b.h <= r.y + r.h + 1;
 const judged = (e) => e.layer >= 1 && e.layer <= 3 && !e.transforms;
 
-test("criterion 7 (a): the camera at k + 0.2 contains every judged element of step k, k = 0..9, both camera sets", () => {
+test("criterion 7 (a): the camera at k + 0.2 contains every judged element of step k, k = 0..8, both camera sets", () => {
   for (const [lang, lb] of [["de", LB], ["en", EXAMPLE_LB]]) {
     for (const narrow of [false, true]) {
-      for (let k = 0; k <= 9; k++) {
+      for (let k = 0; k <= 8; k++) {
         const r = W.cameraRect(k + 0.2, narrow);
         for (const el of els.filter((e) => e.k === k && judged(e))) {
           assert.ok(framed(W.boxOf(el, lb), r), `${el.id} inside the camera at step ${k} (narrow ${narrow}, ${lang})`);
@@ -88,10 +90,10 @@ test("criterion 7 (a): the camera at k + 0.2 contains every judged element of st
   }
 });
 
-test("criterion 7 (b): at k = 6 and k = 8 the camera contains every judged element built so far (the whole picture)", () => {
+test("criterion 7 (b): at k = 5 and k = 7 the camera contains every judged element built so far (the whole picture)", () => {
   for (const [lang, lb] of [["de", LB], ["en", EXAMPLE_LB]]) {
     for (const narrow of [false, true]) {
-      for (const k of [6, 8]) {
+      for (const k of [5, 7]) {
         const r = W.cameraRect(k + 0.2, narrow);
         for (const el of els.filter((e) => e.k <= k && judged(e))) {
           assert.ok(framed(W.boxOf(el, lb), r), `${el.id} (step ${el.k}) inside the camera at step ${k} (narrow ${narrow}, ${lang})`);
@@ -110,25 +112,68 @@ test("packets sit on the drawn lines and only start after the line is complete",
 });
 
 test("dynamic parts are finished by their step mark", () => {
-  const d = W.dynAt(4.2, 0);
-  assert.equal(d.pct, "100 %");
-  assert.equal(d.ok, 1);
   assert.ok(W.dynAt(1.2, null).cc.vis > 0.9, "the concept card has reached Du at the mark of step 2");
   assert.equal(W.dynAt(2.2, null).cc.vis, 0, "and is back in the hub at the mark of step 3");
-  assert.equal(W.dynAt(8.2, null).b1, 1);
-  assert.ok(Math.abs(W.dynAt(9.2, null).b1 - 0.38) < 1e-9);
-  assert.ok(Math.abs(W.dynAt(9.2, null).b2 - 0.83) < 1e-9);
-  assert.equal(W.dynAt(7.2, null).fl, 1);
-  assert.equal(W.dynAt(6.2, null).fl, 0);
+  assert.equal(W.dynAt(7.2, null).b1, 1);
+  assert.ok(Math.abs(W.dynAt(8.2, null).b1 - 0.38) < 1e-9);
+  assert.ok(Math.abs(W.dynAt(8.2, null).b2 - 0.83) < 1e-9);
+  assert.equal(W.dynAt(6.2, null).fl, 1);
+  assert.equal(W.dynAt(5.2, null).fl, 0);
+});
+
+test("loop pulse and offer highlight fire in their shifted windows (the old, unshifted thresholds fail)", () => {
+  const pulse = (f) => W.dynAt(f, null).cpulse.o;
+  assert.equal(pulse(4.7), 0, "before the loop step's pulse window");
+  assert.ok(pulse(4.9) > 0, "the pulse has started at 4.9 (the old window opened at 5.75)");
+  assert.ok(pulse(5.2) > 0.3, "the pulse is at full strength at the loop mark");
+  assert.equal(pulse(5.8), 0, "the pulse has faded out by 5.8 (the old window faded until 7.45)");
+  const hv = (f) => W.dynAt(f, null).hv;
+  assert.equal(hv(6.7), 0, "before the highlight window");
+  assert.ok(hv(6.9) > 0 && hv(6.9) < 1, "the highlight rises at 6.9 (the old window opened at 7.8)");
+  assert.equal(hv(7.2), 1, "the highlight is full at the service mark");
+  assert.ok(hv(7.85) > 0 && hv(7.85) < 1, "the highlight falls at 7.85");
+  assert.equal(hv(8.2), 0, "the highlight is gone at the outlook mark (the old one was still full)");
+});
+
+test("nine steps: no element beyond step 8, no install element, no install dynamic parts", () => {
+  assert.equal(W.CAM_D.k.length, 9);
+  assert.equal(W.CAM_M.k.length, 9);
+  for (const el of els) {
+    assert.ok(el.k >= 0 && el.k <= 8, `${el.id} has step ${el.k}`);
+    assert.notEqual(el.id, "install");
+    for (const p of el.art) if (p.t === "dyn") assert.ok(!["bar", "pct", "ok"].includes(p.n), `${el.id} uses ${p.n}`);
+  }
+  const d = W.dynAt(3.2, 0);
+  for (const key of ["ip", "pct", "ok"]) assert.ok(!(key in d), `dynAt has no ${key}`);
+  for (const key of ["bar", "pctX", "okRow"]) assert.ok(!(key in W.GEO), `GEO has no ${key}`);
+});
+
+test("the five-node cluster is built within step 4 (k = 3) and stays on screen to the end", () => {
+  const ids = ["sat-l0", "sat-l1", "sat-l2", "sat-l3", "sat0", "sat1", "sat2", "sat3"];
+  for (const id of ids) {
+    const el = els.find((e) => e.id === id);
+    assert.ok(el, id);
+    assert.equal(el.k, 3, id);
+    assert.equal(W.buildAt(el, 2.2), 0, `${id} not there at the mark of step 3`);
+    assert.equal(W.buildAt(el, 3.2), 1, `${id} built at the mark of step 4`);
+    assert.equal(W.buildAt(el, W.FINAL_F), 1, id);
+    assert.equal(W.buildAt(el, 8.2), 1, id);
+  }
+});
+
+test("the build line's packets fade out while the telemetry step builds", () => {
+  const on = (f) => W.packetsAt(f, null).length;
+  assert.ok(on(3.3) > on(3.8), "packets of the build line are still there at 3.3 and gone at 3.8");
+  assert.ok(on(3.8) >= 0);
 });
 
 test("same arguments, same frame (no hidden state)", () => {
-  assert.deepEqual(W.dynAt(4.7, 2.2), W.dynAt(4.7, 2.2));
+  assert.deepEqual(W.dynAt(3.7, 2.2), W.dynAt(3.7, 2.2));
   assert.deepEqual(W.cameraAt(3.3, true), W.cameraAt(3.3, true));
 });
 
 test("phone: at every step mark no drawn text is under 11px effective, desktop text keeps its size", () => {
-  for (let k = 0; k < 10; k++) {
+  for (let k = 0; k < 9; k++) {
     const f = k + 0.2;
     const s = W.PHONE_STAGE_W / W.cameraAt(f, true)[2];
     for (const el of els.filter((e) => e.k <= k)) {
@@ -143,7 +188,7 @@ test("phone: at every step mark no drawn text is under 11px effective, desktop t
 });
 
 test("phone: the text that carries the current step is drawn at its step mark", () => {
-  for (let k = 0; k < 10; k++) {
+  for (let k = 0; k < 9; k++) {
     const f = k + 0.2;
     const core = els.filter((e) => e.k === k).flatMap((e) => e.art.filter((p) => p.t === "text" && p.tier === "c").map((p) => [e, p]));
     for (const [el, p] of core) assert.ok(W.textSize(p, el, f, true) > 0, `${el.id} ${p.src}`);
@@ -154,6 +199,26 @@ test("every graphic label of the world exists in both locales", () => {
   for (const l of [de, en]) for (const k of W.LABEL_KEYS) assert.ok(typeof l.clusterStory.graphic[k] === "string" && l.clusterStory.graphic[k].length > 0, k);
   assert.ok(de.clusterStory.outlookEyebrow && en.clusterStory.outlookEyebrow);
   for (const k of W.LABEL_KEYS) assert.ok(W.resolveText(`g:${k}`, EXAMPLE_LB).length > 0, k);
+});
+
+test("no SVG text of any frame names the removed installation scene", () => {
+  for (const [lang, l] of [["de", de], ["en", en]]) {
+    for (const key of ["install", "running", "works", "worksNot"]) {
+      assert.ok(!(key in l.clusterStory.graphic), `${lang}: graphic.${key} is gone`);
+      assert.ok(!W.LABEL_KEYS.includes(key), `LABEL_KEYS has no ${key}`);
+    }
+  }
+  const removed = new Set(["100 %", "100%", "Installation", "Cluster läuft", "Cluster running", "funktioniert", "works", "funktioniert nicht, daraus lernen", "doesn't work, we learn from it"]);
+  for (const lb of [LB, EXAMPLE_LB]) {
+    for (let f = -0.5; f <= 8.2 + 1e-9; f += 0.1) {
+      for (const el of els) {
+        if (W.buildAt(el, f) === 0) continue;
+        for (const p of el.art) {
+          if (p.t === "text") assert.ok(!removed.has(W.resolveText(p.src, lb)), `${el.id}: ${p.src}`);
+        }
+      }
+    }
+  }
 });
 
 test("no hex colour outside the set the page already used", () => {

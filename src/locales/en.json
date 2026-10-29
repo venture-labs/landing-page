@@ -95,7 +95,7 @@
     "toolCancellationLabel": "Cancellation",
     "clusterStory": {
       "stepOf": "Step {{current}} of {{total}}",
-      "stepNavLabel": "Steps",
+      "progressLabel": "Progress",
       "graphic": {
         "ours": "OUR CLUSTER",
         "theirs": "YOUR CLUSTER",
@@ -117,10 +117,6 @@
         "decision": "Decision",
         "agents": "Our agents",
         "company": "Your company",
-        "install": "Installation",
-        "running": "Cluster running",
-        "works": "works",
-        "worksNot": "doesn't work, we learn from it",
         "onlyToUs": "only this flows to us:",
         "runtime": "Runtime",
         "errors": "Errors",
