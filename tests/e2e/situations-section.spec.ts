@@ -5,9 +5,8 @@
  * change with the design but never disappear" the old file's checks stay where they still apply
  * (the card shape, the single shared CTA with a ring and a keyboard path, the allowed accent
  * palette, the overflow probe) and move to the new shape - ONE carousel of 20 to 24 situation
- * cards directly after "Check. Build. Care.", Beleg-Inbox first with "läuft bei uns" /
- * "Runs at our company", every other card marked "Beispiel" / "Example", prev/next buttons and a
- * "k / n" position text instead of the dot row.
+ * cards directly after "Check. Build. Care.", Beleg-Inbox first, no status pill on any card
+ * (removed 2026-10-29), prev/next buttons and a "k / n" position text instead of the dot row.
  *
  * The cards are read from content/site/leistungen*.md (gray-matter), so this file holds no copy
  * of the texts. Run exactly as `tests/e2e/playwright.config.ts` documents (a `pnpm build` and a
@@ -54,7 +53,6 @@ interface Situation {
   id: string;
   text: string;
   agentName: string;
-  agentKind: "live" | "example";
   capabilities: string[];
 }
 
@@ -158,41 +156,16 @@ for (const lang of ["de", "en"] as const) {
       await expect(section.locator("button")).toHaveCount(2);
     });
 
-    test(`criterion 11: Beleg-Inbox says "${LIVE_MARKER[lang]}", every other card carries exactly one "${EXAMPLE_MARKER[lang]}" pill (${lang})`, async ({
+    test(`criterion 11: no card carries a status pill, Beleg-Inbox is still the first card (${lang})`, async ({
       page,
     }) => {
       await page.goto(`/${lang}/leistungen`);
       const section = sectionOf(page, lang);
       const cards = cardsOf(section);
 
-      const first = cards.nth(0);
-      await expect(first.getByText(LIVE_MARKER[lang], { exact: true })).toHaveCount(1);
-      await expect(first.getByText(EXAMPLE_MARKER[lang], { exact: true })).toHaveCount(0);
-      await expect(first.getByText("Beleg-Inbox", { exact: true })).toHaveCount(1);
-
-      for (let i = 1; i < total; i++) {
-        await expect(cards.nth(i).getByText(EXAMPLE_MARKER[lang], { exact: true }), `card ${i + 1}`).toHaveCount(1);
-        await expect(cards.nth(i).getByText(LIVE_MARKER[lang], { exact: true }), `card ${i + 1}`).toHaveCount(0);
-      }
-      await expect(section.getByText(EXAMPLE_MARKER[lang], { exact: true })).toHaveCount(total - 1);
-
-      // Visible, not merely present: walk through the carousel with the next button and check
-      // that each card's own pill is rendered and lies inside the viewport when its card is
-      // the selected one (a display:none or off-screen pill would leave the counts above intact).
-      const next = section.getByRole("button", { name: NEXT_LABEL[lang], exact: true });
-      const viewportWidth = page.viewportSize()!.width;
-      for (let i = 0; i < total; i++) {
-        if (i > 0) {
-          await next.click();
-          await expect(section.getByText(`${i + 1} / ${total}`, { exact: true })).toBeVisible();
-        }
-        const pill = cards.nth(i).getByText(i === 0 ? LIVE_MARKER[lang] : EXAMPLE_MARKER[lang], { exact: true });
-        await expect(pill, `card ${i + 1} pill`).toBeVisible();
-        await expect.poll(async () => {
-          const box = await pill.boundingBox();
-          return box !== null && box.x >= 0 && box.x + box.width <= viewportWidth;
-        }, { message: `card ${i + 1} pill lies inside the viewport` }).toBe(true);
-      }
+      await expect(cards.nth(0).getByText("Beleg-Inbox", { exact: true })).toHaveCount(1);
+      await expect(section.getByText(EXAMPLE_MARKER[lang], { exact: true })).toHaveCount(0);
+      await expect(section.getByText(LIVE_MARKER[lang], { exact: true })).toHaveCount(0);
     });
 
     test(`criterion 12: each card shows its quoted problem text on top, then the agent name and one check-mark item per capability (${lang})`, async ({
@@ -291,12 +264,10 @@ for (const lang of ["de", "en"] as const) {
       const page = await context.newPage();
       // With the trailing slash vite preview serves the route's own prerendered shell.
       await page.goto(`/${lang}/leistungen/`);
-      const html = await page.content();
       const rootText = (await page.locator("#root").textContent()) ?? "";
       for (const situation of situations) {
         expect(rootText, situation.id).toContain(situation.text);
       }
-      expect((html.match(new RegExp(`>${EXAMPLE_MARKER[lang]}<`, "g")) ?? []).length).toBeGreaterThanOrEqual(total - 1);
       await context.close();
     });
   });

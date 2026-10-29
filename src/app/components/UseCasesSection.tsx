@@ -21,12 +21,9 @@ import {
  * customer would say about his problem on top, the agent name and what it takes
  * over with check marks below): 20 to 24 cards from `data.situations`. It is
  * built on the `ui/carousel.tsx` (embla-carousel-react) wrapper. The first card
- * is the Beleg-Inbox situation (`agentKind: live`) and shows the
- * `leistungen.useCases.liveLabel` pill ("läuft bei uns" / "Runs at our
- * company"); every other card (`agentKind: example`) shows the
- * `leistungen.exampleAgentLabel` pill ("Beispiel" / "Example"), which keeps
- * VL-11-D3's truth rule on the card itself as well as in the
- * `useCasesLeadLine` content field beneath the heading. The former second
+ * is the Beleg-Inbox situation. The cards carry no status pill (removed
+ * 2026-10-29); VL-11-D3's truth rule lives in the `useCasesLeadLine` content
+ * field beneath the heading. The former second
  * section ("Was sonst noch möglich ist", `ToolProfile.tsx`) is gone — its
  * sixteen options are cards here.
  *
@@ -119,39 +116,18 @@ export function UseCasesSection() {
           <CarouselContent>
             {data.situations.map((situation, index) => {
               const accent = ACCENTS[index % ACCENTS.length];
-              const isLive = situation.agentKind === "live";
               return (
                 <CarouselItem
                   key={situation.id}
                   className="basis-[88%] sm:basis-[62%] lg:basis-[34%]"
                 >
                   <div
-                    className="h-full rounded-3xl p-6 md:p-8 flex flex-col gap-4"
+                    className="h-full rounded-3xl p-6 md:p-7 flex flex-col gap-3"
                     style={{
                       backgroundColor: `${accent}1a`,
                       boxShadow: `inset 0 0 0 1px ${accent}59`,
                     }}
                   >
-                    <div className="flex justify-end">
-                      <span
-                        className="font-bold uppercase tracking-[0.09em] rounded-full px-2.5 py-1 whitespace-nowrap"
-                        style={
-                          isLive
-                            ? {
-                                fontSize: "0.66rem",
-                                color: "rgba(255,255,255,0.92)",
-                                backgroundColor: `${accent}40`,
-                              }
-                            : {
-                                fontSize: "0.66rem",
-                                color: "rgba(255,255,255,0.42)",
-                                backgroundColor: "rgba(255,255,255,0.05)",
-                              }
-                        }
-                      >
-                        {isLive ? t("leistungen.useCases.liveLabel") : t("leistungen.exampleAgentLabel")}
-                      </span>
-                    </div>
                     <p
                       className="font-light text-white leading-snug"
                       style={{ fontSize: "var(--text-h3)" }}

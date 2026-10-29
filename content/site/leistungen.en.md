@@ -82,7 +82,6 @@ situations:
   - id: receipts
     text: 'Every time money leaves the account, the receipt for it is missing.'
     agentName: 'Beleg-Inbox'
-    agentKind: live
     capabilities:
       - 'Collects receipts automatically'
       - 'Checks every receipt'
@@ -90,7 +89,6 @@ situations:
   - id: invoice-coverage
     text: "I don't know if every invoice for a project has actually been captured."
     agentName: 'Invoice Radar'
-    agentKind: example
     capabilities:
       - 'Match invoices to the right project automatically'
       - 'Flag invoices that are missing'
@@ -98,7 +96,6 @@ situations:
   - id: tool-fatigue
     text: 'We had a good concept. Nobody ever implemented it.'
     agentName: 'Rollout Guide'
-    agentKind: example
     capabilities:
       - 'Walk each team through the rollout step by step'
       - 'Spot friction in daily use early'
@@ -106,7 +103,6 @@ situations:
   - id: prioritization
     text: "I don't know where to start with AI — everyone recommends it, but nobody says what comes first."
     agentName: 'Focus Compass'
-    agentKind: example
     capabilities:
       - 'Rank use cases by effort and impact'
       - 'Suggest one concrete first step'
@@ -114,7 +110,6 @@ situations:
   - id: neglected-tool
     text: 'We rolled out a tool once — nobody has looked after it since.'
     agentName: 'Tool Watchdog'
-    agentKind: example
     capabilities:
       - 'Monitor usage and errors continuously'
       - 'Automatically remind whoever is responsible'
@@ -122,7 +117,6 @@ situations:
   - id: quote-drafts
     text: 'Turning every inquiry into a quote costs us time, every single time.'
     agentName: 'Quote Drafter'
-    agentKind: example
     capabilities:
       - 'Read product and quantity out of inquiries'
       - 'Draft a quote in the CRM'
@@ -130,7 +124,6 @@ situations:
   - id: order-matching
     text: "With incoming invoices I never know whether they match the purchase order."
     agentName: 'Order Matcher'
-    agentKind: example
     capabilities:
       - 'Compare every invoice against its purchase order'
       - 'Flag discrepancies'
@@ -138,7 +131,6 @@ situations:
   - id: payment-reminders
     text: 'We only notice overdue invoices when they are long overdue.'
     agentName: 'Reminder Assistant'
-    agentKind: example
     capabilities:
       - 'Spot overdue invoices'
       - 'Prepare a reminder'
@@ -146,7 +138,6 @@ situations:
   - id: appointments
     text: 'Appointment requests sit in emails, and I type them into the calendar by hand.'
     agentName: 'Appointment Secretary'
-    agentKind: example
     capabilities:
       - 'Read requested times out of emails'
       - 'Suggest free calendar slots'
@@ -154,14 +145,12 @@ situations:
   - id: onboarding-questions
     text: 'New users keep asking the same questions, and we answer them from scratch every time.'
     agentName: 'Onboarding Helper'
-    agentKind: example
     capabilities:
       - 'Answer recurring questions from your own documentation'
       - 'Pass the rest straight to your team'
   - id: ticket-triage
     text: 'When a ticket comes in, nobody can tell right away how urgent it is.'
     agentName: 'Ticket Sorter'
-    agentKind: example
     capabilities:
       - 'Rank tickets by urgency'
       - 'Assign them by topic'
@@ -169,7 +158,6 @@ situations:
   - id: feature-requests
     text: 'Feature requests arrive from every channel, and nobody has the full picture.'
     agentName: 'Request Collector'
-    agentKind: example
     capabilities:
       - 'Bring feedback from several channels together'
       - 'Rank it by effort and value'
@@ -177,7 +165,6 @@ situations:
   - id: usage-reports
     text: 'Our usage data is sitting somewhere, but nobody reads it.'
     agentName: 'Data Interpreter'
-    agentKind: example
     capabilities:
       - 'Translate raw product analytics into plain language'
       - 'Write a weekly report for the team'
@@ -185,7 +172,6 @@ situations:
   - id: conversation-insights
     text: 'What customers tell us in conversations disappears into individual notes.'
     agentName: 'Conversation Analyst'
-    agentKind: example
     capabilities:
       - 'Analyse calls and chats by topic'
       - 'Detect the sentiment'
@@ -193,7 +179,6 @@ situations:
   - id: reply-suggestions
     text: 'We write almost the same answer to standard questions every time.'
     agentName: 'Reply Suggester'
-    agentKind: example
     capabilities:
       - 'Suggest fitting reply snippets'
       - 'Adapt them to the question at hand'
@@ -201,7 +186,6 @@ situations:
   - id: knowledge-base
     text: 'Our knowledge is buried in chats and documents, and nobody keeps it up to date.'
     agentName: 'Knowledge Gardener'
-    agentKind: example
     capabilities:
       - 'Evaluate chats and documents'
       - 'Keep the internal knowledge base current'
@@ -209,7 +193,6 @@ situations:
   - id: meeting-tasks
     text: 'After the meeting, everyone remembers something different about what needs doing.'
     agentName: 'Task Writer'
-    agentKind: example
     capabilities:
       - 'Turn meeting notes into tasks'
       - 'Assign tasks per participant'
@@ -217,7 +200,6 @@ situations:
   - id: competitor-watch
     text: 'What the competition is offering right now, we usually find out by accident.'
     agentName: 'Competitor Watcher'
-    agentKind: example
     capabilities:
       - 'Check prices and offers regularly'
       - 'Flag changes'
@@ -225,7 +207,6 @@ situations:
   - id: investor-updates
     text: 'We always write the investor update right before it is due.'
     agentName: 'Update Preparer'
-    agentKind: example
     capabilities:
       - 'Pull metrics from your existing tools'
       - 'Draft the next update'
@@ -233,7 +214,6 @@ situations:
   - id: market-trends
     text: 'Keeping an eye on the market is something we cannot manage next to daily business.'
     agentName: 'Market Radar'
-    agentKind: example
     capabilities:
       - 'Scan articles and industry news'
       - 'Write a weekly market briefing'
@@ -241,7 +221,6 @@ situations:
   - id: social-drafts
     text: 'Our blog posts get published, but we have no time left for social media.'
     agentName: 'Social Drafter'
-    agentKind: example
     capabilities:
       - 'Derive post drafts from blog articles'
       - 'Tailor them for social media'
@@ -249,7 +228,6 @@ situations:
   - id: contract-deadlines
     text: 'We only remember contract deadlines and notice periods once they have passed.'
     agentName: 'Deadline Guard'
-    agentKind: example
     capabilities:
       - 'Search contracts for deadlines'
       - 'Remind you of notice dates in time'
@@ -257,7 +235,6 @@ situations:
   - id: follow-ups
     text: 'Quotes go out, and after that nobody follows up.'
     agentName: 'Follow-up Assistant'
-    agentKind: example
     capabilities:
       - 'Keep track of open quotes'
       - 'Prepare a follow-up email'
@@ -265,7 +242,6 @@ situations:
   - id: supplier-prices
     text: 'We only compare supplier prices when it really hurts.'
     agentName: 'Price Comparer'
-    agentKind: example
     capabilities:
       - 'Put quotes from different suppliers side by side'
       - 'Flag price changes'

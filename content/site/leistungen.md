@@ -82,7 +82,6 @@ situations:
   - id: receipts
     text: 'Zu jeder Abbuchung fehlt mir der Beleg.'
     agentName: 'Beleg-Inbox'
-    agentKind: live
     capabilities:
       - 'Belege automatisch einsammeln'
       - 'Belegprüfungen'
@@ -90,7 +89,6 @@ situations:
   - id: invoice-coverage
     text: 'Ich weiß nicht, ob alle Rechnungen eines Projekts erfasst sind.'
     agentName: 'Rechnungs-Radar'
-    agentKind: example
     capabilities:
       - 'Rechnungen automatisch dem passenden Projekt zuordnen'
       - 'Fehlende Rechnungen markieren'
@@ -98,7 +96,6 @@ situations:
   - id: tool-fatigue
     text: 'Wir hatten ein gutes Konzept. Umgesetzt hat es dann niemand.'
     agentName: 'Rollout-Lotse'
-    agentKind: example
     capabilities:
       - 'Einführung Schritt für Schritt pro Team begleiten'
       - 'Blockaden im Alltag früh erkennen'
@@ -106,7 +103,6 @@ situations:
   - id: prioritization
     text: 'Ich weiß nicht, wo wir mit KI anfangen sollen – überall wird es empfohlen, aber keiner sagt, was zuerst dran ist.'
     agentName: 'Fokus-Kompass'
-    agentKind: example
     capabilities:
       - 'Anwendungsfälle nach Aufwand und Wirkung sortieren'
       - 'Einen konkreten ersten Schritt vorschlagen'
@@ -114,7 +110,6 @@ situations:
   - id: neglected-tool
     text: 'Wir haben mal ein Tool eingeführt – seitdem kümmert sich niemand mehr darum.'
     agentName: 'Tool-Wächter'
-    agentKind: example
     capabilities:
       - 'Nutzung und Fehler laufend überwachen'
       - 'Verantwortliche automatisch erinnern'
@@ -122,7 +117,6 @@ situations:
   - id: quote-drafts
     text: 'Aus jeder Anfrage ein Angebot zu bauen, kostet uns jedes Mal Zeit.'
     agentName: 'Angebots-Entwurf'
-    agentKind: example
     capabilities:
       - 'Produkt und Menge aus Anfragen herauslesen'
       - 'Angebotsentwurf im CRM anlegen'
@@ -130,7 +124,6 @@ situations:
   - id: order-matching
     text: 'Bei Eingangsrechnungen weiß ich nie, ob sie zur Bestellung passen.'
     agentName: 'Bestell-Abgleich'
-    agentKind: example
     capabilities:
       - 'Jede Rechnung mit der Bestellung vergleichen'
       - 'Abweichungen markieren'
@@ -138,7 +131,6 @@ situations:
   - id: payment-reminders
     text: 'Überfällige Rechnungen fallen uns erst auf, wenn es schon lange her ist.'
     agentName: 'Mahn-Assistent'
-    agentKind: example
     capabilities:
       - 'Überfällige Rechnungen erkennen'
       - 'Eine Erinnerung vorbereiten'
@@ -146,7 +138,6 @@ situations:
   - id: appointments
     text: 'Terminwünsche stehen in Mails, und ich tippe sie von Hand in den Kalender.'
     agentName: 'Termin-Sekretär'
-    agentKind: example
     capabilities:
       - 'Terminwünsche aus Mails herauslesen'
       - 'Freie Slots im Kalender vorschlagen'
@@ -154,14 +145,12 @@ situations:
   - id: onboarding-questions
     text: 'Neue Nutzer stellen immer dieselben Fragen, und wir beantworten sie jedes Mal neu.'
     agentName: 'Onboarding-Helfer'
-    agentKind: example
     capabilities:
       - 'Wiederkehrende Fragen aus eurer Dokumentation beantworten'
       - 'Den Rest direkt an euer Team weitergeben'
   - id: ticket-triage
     text: 'Wenn ein Ticket reinkommt, weiß keiner sofort, wie dringend es ist.'
     agentName: 'Ticket-Sortierer'
-    agentKind: example
     capabilities:
       - 'Tickets nach Dringlichkeit einordnen'
       - 'Nach Thema zuordnen'
@@ -169,7 +158,6 @@ situations:
   - id: feature-requests
     text: 'Feature-Wünsche kommen aus allen Kanälen, und keiner überblickt sie.'
     agentName: 'Wunsch-Sammler'
-    agentKind: example
     capabilities:
       - 'Feedback aus mehreren Kanälen zusammenführen'
       - 'Nach Aufwand und Nutzen ordnen'
@@ -177,7 +165,6 @@ situations:
   - id: usage-reports
     text: 'Unsere Nutzungsdaten liegen irgendwo, aber niemand liest sie.'
     agentName: 'Daten-Dolmetscher'
-    agentKind: example
     capabilities:
       - 'Rohe Produktanalytik in verständliche Sprache übersetzen'
       - 'Wöchentlichen Bericht fürs Team erstellen'
@@ -185,7 +172,6 @@ situations:
   - id: conversation-insights
     text: 'Was Kunden in Gesprächen sagen, versickert in Einzelnotizen.'
     agentName: 'Gesprächs-Analyst'
-    agentKind: example
     capabilities:
       - 'Calls und Chats nach Thema auswerten'
       - 'Die Stimmung erkennen'
@@ -193,7 +179,6 @@ situations:
   - id: reply-suggestions
     text: 'Auf Standardfragen schreiben wir jedes Mal fast dieselbe Antwort.'
     agentName: 'Antwort-Vorschlag'
-    agentKind: example
     capabilities:
       - 'Passende Antwortbausteine vorschlagen'
       - 'An die jeweilige Frage anpassen'
@@ -201,7 +186,6 @@ situations:
   - id: knowledge-base
     text: 'Unser Wissen steckt in Chats und Dokumenten, und niemand pflegt es nach.'
     agentName: 'Wissens-Gärtner'
-    agentKind: example
     capabilities:
       - 'Chats und Dokumente auswerten'
       - 'Die interne Wissensdatenbank aktuell halten'
@@ -209,7 +193,6 @@ situations:
   - id: meeting-tasks
     text: 'Nach dem Meeting weiß jeder etwas anderes davon, was zu tun ist.'
     agentName: 'Aufgaben-Schreiber'
-    agentKind: example
     capabilities:
       - 'Mitschriften in Aufgaben verwandeln'
       - 'Aufgaben je Teilnehmer zuordnen'
@@ -217,7 +200,6 @@ situations:
   - id: competitor-watch
     text: 'Was die Konkurrenz gerade anbietet, erfahren wir meist zufällig.'
     agentName: 'Konkurrenz-Beobachter'
-    agentKind: example
     capabilities:
       - 'Preise und Angebote regelmäßig prüfen'
       - 'Änderungen markieren'
@@ -225,7 +207,6 @@ situations:
   - id: investor-updates
     text: 'Das Investoren-Update schreiben wir immer auf den letzten Drücker.'
     agentName: 'Update-Vorbereiter'
-    agentKind: example
     capabilities:
       - 'Kennzahlen aus euren bestehenden Tools ziehen'
       - 'Einen Entwurf für das nächste Update vorbereiten'
@@ -233,7 +214,6 @@ situations:
   - id: market-trends
     text: 'Den Markt im Blick zu behalten, schaffen wir neben dem Tagesgeschäft nicht.'
     agentName: 'Markt-Radar'
-    agentKind: example
     capabilities:
       - 'Fachartikel und Branchenmeldungen sichten'
       - 'Eine wöchentliche Markteinschätzung erstellen'
@@ -241,7 +221,6 @@ situations:
   - id: social-drafts
     text: 'Unsere Blogartikel erscheinen, aber für Social Media fehlt uns die Zeit.'
     agentName: 'Social-Entwurf'
-    agentKind: example
     capabilities:
       - 'Aus Blogartikeln Beitragsentwürfe ableiten'
       - 'Für Social Media zuschneiden'
@@ -249,7 +228,6 @@ situations:
   - id: contract-deadlines
     text: 'Vertragsfristen und Kündigungstermine merken wir uns erst, wenn sie verstrichen sind.'
     agentName: 'Fristen-Wächter'
-    agentKind: example
     capabilities:
       - 'Verträge nach Fristen durchsuchen'
       - 'Rechtzeitig an Kündigungstermine erinnern'
@@ -257,7 +235,6 @@ situations:
   - id: follow-ups
     text: 'Angebote gehen raus, und danach fragt keiner mehr nach.'
     agentName: 'Nachfass-Assistent'
-    agentKind: example
     capabilities:
       - 'Offene Angebote im Blick behalten'
       - 'Eine Nachfass-Mail vorbereiten'
@@ -265,7 +242,6 @@ situations:
   - id: supplier-prices
     text: 'Lieferantenpreise vergleichen wir nur, wenn es wirklich weh tut.'
     agentName: 'Preis-Vergleicher'
-    agentKind: example
     capabilities:
       - 'Angebote verschiedener Lieferanten gegenüberstellen'
       - 'Preisänderungen markieren'
