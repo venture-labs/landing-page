@@ -33,11 +33,10 @@ for (const lang of ["de", "en"]) {
     assert.equal(new Set(situations.map((s) => s.id)).size, situations.length);
   });
 
-  test(`${lang}: criterion 2 - receipts / Beleg-Inbox / live first, every other card is an example`, () => {
+  test(`${lang}: criterion 2 - receipts / Beleg-Inbox first, no status field on any card`, () => {
     assert.equal(situations[0].id, "receipts");
     assert.equal(situations[0].agentName, "Beleg-Inbox");
-    assert.equal(situations[0].agentKind, "live");
-    for (const s of situations.slice(1)) assert.equal(s.agentKind, "example", s.id);
+    for (const s of situations) assert.equal("agentKind" in s, false, s.id);
   });
 
   test(`${lang}: criterion 3 - text, unique agent name and capabilities are within the limits`, () => {

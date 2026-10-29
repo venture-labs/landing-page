@@ -146,7 +146,6 @@
       "stepOf": "Card {{current}} of {{total}}",
       "prevLabel": "Previous card",
       "nextLabel": "Next card",
-      "liveLabel": "Runs at our company",
       "position": "{{current}} / {{total}}"
     }
   },

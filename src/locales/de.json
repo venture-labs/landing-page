@@ -160,7 +160,6 @@
       "stepOf": "Karte {{current}} von {{total}}",
       "prevLabel": "Vorherige Karte",
       "nextLabel": "Nächste Karte",
-      "liveLabel": "läuft bei uns",
       "position": "{{current}} / {{total}}"
     }
   },
