@@ -332,6 +332,7 @@ export interface CaseDetail {
     label: string;
   }[];
   mockupImages: string[];
+  externalUrl?: string;
 }
 
 export const caseDetailsMap: Record<string, CaseDetail> = ${JSON.stringify(
@@ -356,6 +357,7 @@ export const caseDetailsMap: Record<string, CaseDetail> = ${JSON.stringify(
               label: s!.label,
             })),
             mockupImages: c.mockupImages ?? [],
+            ...(c.externalUrl ? { externalUrl: c.externalUrl } : {}),
           },
         ])
       ),
