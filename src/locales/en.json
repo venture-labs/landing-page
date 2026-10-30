@@ -154,6 +154,7 @@
     "heroSubheading": "Our projects span every industry. Our clients range from startups to large enterprises.",
     "viewProject": "View project",
     "caseStudyLabel": "Case study ·",
+    "visitProduct": "Visit the product:",
     "requestNow": "Get in touch",
     "overviewHeading": "Overview",
     "whatWeDid": "What we did",
@@ -251,6 +252,7 @@
     "directContact": "Direct Contact",
     "team": {
       "christianRole": "Managing Director",
+      "personalSite": "Personal website:",
       "martinRole": "Head of Design"
     },
     "formHeading": "Your message to us",

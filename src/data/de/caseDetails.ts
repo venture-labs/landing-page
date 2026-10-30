@@ -18,6 +18,7 @@ export interface CaseDetail {
     label: string;
   }[];
   mockupImages: string[];
+  externalUrl?: string;
 }
 
 export const caseDetailsMap: Record<string, CaseDetail> = {
@@ -51,7 +52,8 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
     "mockupImages": [
       "/uploads/cases/tap2link-mockup-1.png",
       "/uploads/cases/tap2link-mockup-3.png"
-    ]
+    ],
+    "externalUrl": "https://t2l.ink"
   },
   "brylliant": {
     "slug": "brylliant",
@@ -148,7 +150,8 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
       "/uploads/cases/case-machinemaster-1.png",
       "/uploads/cases/case-machinemaster-2.png",
       "/uploads/cases/case-machinemaster-3.png"
-    ]
+    ],
+    "externalUrl": "https://www.machinemaster.de"
   },
   "neuer-look": {
     "slug": "neuer-look",
