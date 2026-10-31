@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, type CSSProperties } from "react";
 import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
 import { ArrowRight, Check } from "lucide-react";
 import { Link } from "react-router";
@@ -130,7 +130,7 @@ function StepRail({
   onSelect: (key: CoreService["key"]) => void;
 }) {
   return (
-    <div className="grid grid-cols-3 gap-2 md:gap-4">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 lg:gap-4">
       {steps.map((step) => {
         const accent = STEP_ACCENTS[step.key];
         const active = step.key === activeKey;
@@ -140,33 +140,78 @@ function StepRail({
             type="button"
             onClick={() => onSelect(step.key)}
             aria-pressed={active}
-            className="group relative flex flex-col items-start gap-1 rounded-xl px-3 py-4 md:px-5 text-left transition-colors"
-            style={{
-              backgroundColor: active ? `${accent}1f` : "rgba(255,255,255,0.02)",
-              boxShadow: `inset 0 0 0 1px ${active ? `${accent}59` : "rgba(255,255,255,0.07)"}`,
-            }}
+            data-cue={active ? "off" : "on"}
+            className="pulse-tab group relative flex flex-col items-start gap-1 rounded-xl px-4 pt-4 pb-[1.15rem] lg:px-5 lg:pb-[1.2rem] text-left transition-colors"
+            style={
+              {
+                "--ac": accent,
+                // Care starts its heartbeat 0.5 s after the other two (handoff leistungen-tabs-v2.html).
+                "--stag": step.key === "care" ? "0.5s" : "0s",
+                ...(active
+                  ? { backgroundColor: `${accent}1f`, boxShadow: `inset 0 0 0 1px ${accent}59` }
+                  : {}),
+              } as CSSProperties
+            }
           >
-            <span
-              className="font-semibold uppercase tracking-[0.14em] transition-colors"
-              style={{
-                fontSize: "var(--text-small)",
-                color: active ? accent : "rgba(255,255,255,0.4)",
-              }}
-            >
-              {step.step} · {step.label}
+            {/* The label is the largest text of the tab (L7). "01 ·" and the word sit in one
+                line with a plain space between, so the accessible name keeps "01 · Verstehen". */}
+            <span className="block leading-[1.1]">
+              <span
+                className="font-semibold uppercase tracking-[0.14em] transition-colors mr-[0.1em]"
+                style={{
+                  fontSize: "var(--text-small)",
+                  color: active ? accent : "rgba(255,255,255,0.4)",
+                }}
+              >
+                {step.step} ·
+              </span>{" "}
+              <span
+                className="font-semibold tracking-[-0.01em] transition-colors"
+                style={{
+                  fontSize: "var(--text-h2)",
+                  color: active ? "#ffffff" : "rgba(255,255,255,0.88)",
+                }}
+              >
+                {step.label}
+              </span>
             </span>
             <span
-              className="font-semibold text-white leading-tight"
-              style={{ fontSize: "var(--text-h3)" }}
+              className="font-medium leading-[1.3]"
+              style={{
+                fontSize: "var(--text-body)",
+                color: active ? "rgba(255,255,255,0.82)" : "rgba(255,255,255,0.6)",
+              }}
             >
               {step.title}
             </span>
-            {active && (
+            {active ? (
               <motion.span
                 layoutId="pulse-step-underline"
-                className="absolute left-3 right-3 md:left-5 md:right-5 bottom-2 h-[2px] rounded-full"
+                className="absolute left-4 right-4 lg:left-5 lg:right-5 bottom-2 h-[2px] rounded-full"
                 style={{ backgroundColor: accent }}
               />
+            ) : (
+              <>
+                {/* L6 "Puls + Unterlinie": one heartbeat of a waveform (top right) and an
+                    underline stub (bottom), CSS only, see .pulse-cue-* in theme.css. */}
+                <svg
+                  className="pulse-cue-wave"
+                  aria-hidden="true"
+                  focusable="false"
+                  viewBox="0 0 46 18"
+                  fill="none"
+                >
+                  <path
+                    d="M1 9H12L16 3L21 15L26 6L29 9H45"
+                    stroke="currentColor"
+                    strokeWidth="1.75"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    vectorEffect="non-scaling-stroke"
+                  />
+                </svg>
+                <span className="pulse-cue-stub" aria-hidden="true" />
+              </>
             )}
           </button>
         );
