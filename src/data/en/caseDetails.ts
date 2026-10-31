@@ -19,6 +19,8 @@ export interface CaseDetail {
   }[];
   mockupImages: string[];
   externalUrl?: string;
+  dealerUrl?: string;
+  dealerLabel?: string;
 }
 
 export const caseDetailsMap: Record<string, CaseDetail> = {
@@ -151,7 +153,9 @@ export const caseDetailsMap: Record<string, CaseDetail> = {
       "/uploads/cases/case-machinemaster-2.png",
       "/uploads/cases/case-machinemaster-3.png"
     ],
-    "externalUrl": "https://www.machinemaster.de"
+    "externalUrl": "https://www.machinemaster.de",
+    "dealerUrl": "https://retailer.machinemaster.de",
+    "dealerLabel": "MachineMaster Merchant"
   },
   "neuer-look": {
     "slug": "neuer-look",

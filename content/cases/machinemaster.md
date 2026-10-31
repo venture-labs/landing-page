@@ -33,4 +33,6 @@ mockupImages:
   - "/uploads/cases/case-machinemaster-2.png"
   - "/uploads/cases/case-machinemaster-3.png"
 externalUrl: "https://www.machinemaster.de"
+dealerUrl: "https://retailer.machinemaster.de"
+dealerLabel: "MachineMaster Merchant"
 ---

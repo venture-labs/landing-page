@@ -333,6 +333,8 @@ export interface CaseDetail {
   }[];
   mockupImages: string[];
   externalUrl?: string;
+  dealerUrl?: string;
+  dealerLabel?: string;
 }
 
 export const caseDetailsMap: Record<string, CaseDetail> = ${JSON.stringify(
@@ -358,6 +360,7 @@ export const caseDetailsMap: Record<string, CaseDetail> = ${JSON.stringify(
             })),
             mockupImages: c.mockupImages ?? [],
             ...(c.externalUrl ? { externalUrl: c.externalUrl } : {}),
+            ...(c.dealerUrl ? { dealerUrl: c.dealerUrl, dealerLabel: c.dealerLabel ?? new URL(c.dealerUrl).hostname } : {}),
           },
         ])
       ),

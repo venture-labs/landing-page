@@ -69,6 +69,21 @@ function CaseHero({ detail }: { detail: any }) {
               >
                 {new URL(detail.externalUrl).hostname.replace(/^www\./, "")}
               </a>
+              {detail.dealerUrl && (
+                <>
+                  {" · "}
+                  {t("cases.visitDealerArea")}{" "}
+                  <a
+                    href={detail.dealerUrl}
+                    target="_blank"
+                    rel="noopener"
+                    className="underline underline-offset-4 hover:text-white transition-colors"
+                    style={{ color: accentColor }}
+                  >
+                    {detail.dealerLabel}
+                  </a>
+                </>
+              )}
             </p>
           )}
           <CtaButton
