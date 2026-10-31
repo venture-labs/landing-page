@@ -178,11 +178,154 @@
   animation: pulse-curve-travel 3.2s linear infinite;
 }
 
+/**
+ * "Check. Build. Care." rail, L6 cue "Puls + Unterlinie" (design handoff
+ * leistungen-check-build-care-tabs, leistungen-tabs-v2.html, .v-cb): on each
+ * inactive tab a waveform (top right) and an underline stub (bottom) beat as ONE
+ * heartbeat. Every 3 s two beats in the first ~1 s, then rest; 2 s and brighter
+ * on hover and keyboard focus. The tab sets --ac (step accent) and --stag (start
+ * offset). Only transform, opacity and (static) glow are animated.
+ */
+@keyframes cb-beat {
+  0% { transform: scaleY(0.55); opacity: 0.5; }
+  8% { transform: scaleY(1.15); opacity: 0.9; }
+  16% { transform: scaleY(0.45); opacity: 0.55; }
+  24% { transform: scaleY(0.95); opacity: 0.8; }
+  36%, 100% { transform: scaleY(0.55); opacity: 0.5; }
+}
+
+@keyframes cb-stub {
+  0% { transform: scaleX(0.16); opacity: 0.45; }
+  8% { transform: scaleX(0.5); opacity: 0.85; }
+  16% { transform: scaleX(0.26); opacity: 0.55; }
+  24% { transform: scaleX(0.42); opacity: 0.75; }
+  36%, 100% { transform: scaleX(0.16); opacity: 0.45; }
+}
+
+@keyframes cb-beat-hi {
+  0% { transform: scaleY(0.9); opacity: 0.9; }
+  8% { transform: scaleY(1.5); opacity: 1; }
+  16% { transform: scaleY(0.7); opacity: 0.9; }
+  24% { transform: scaleY(1.3); opacity: 1; }
+  36%, 100% { transform: scaleY(0.9); opacity: 0.9; }
+}
+
+@keyframes cb-stub-hi {
+  0% { transform: scaleX(0.8); opacity: 0.9; }
+  8% { transform: scaleX(1); opacity: 1; }
+  16% { transform: scaleX(0.86); opacity: 0.92; }
+  24% { transform: scaleX(0.98); opacity: 1; }
+  36%, 100% { transform: scaleX(0.8); opacity: 0.9; }
+}
+
+.pulse-tab {
+  background-color: rgba(255, 255, 255, 0.02);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.07);
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.pulse-tab:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
+.pulse-cue-wave {
+  display: block;
+  position: absolute;
+  top: 1.1rem;
+  right: 1rem;
+  width: 46px;
+  height: 18px;
+  overflow: visible;
+  transform-origin: center;
+  transform: scaleY(0.55);
+  opacity: 0.5;
+  pointer-events: none;
+  color: var(--ac);
+}
+
+.pulse-cue-stub {
+  display: block;
+  position: absolute;
+  left: 1rem;
+  bottom: 0.5rem;
+  width: calc(100% - 2rem);
+  height: 2px;
+  border-radius: 999px;
+  background-color: var(--ac);
+  transform-origin: left center;
+  transform: scaleX(0.16);
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+@media (min-width: 1024px) {
+  .pulse-cue-wave {
+    right: 1.25rem;
+  }
+
+  .pulse-cue-stub {
+    left: 1.25rem;
+    width: calc(100% - 2.5rem);
+  }
+}
+
+.pulse-tab[data-cue="on"] .pulse-cue-wave {
+  animation: cb-beat 3s ease-in-out var(--stag, 0s) infinite;
+}
+
+.pulse-tab[data-cue="on"] .pulse-cue-stub {
+  animation: cb-stub 3s ease-in-out var(--stag, 0s) infinite;
+}
+
+.pulse-tab[data-cue="on"]:is(:hover, :focus-visible) {
+  background-color: rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ac) 30%, transparent);
+}
+
+.pulse-tab[data-cue="on"]:is(:hover, :focus-visible) .pulse-cue-wave {
+  animation: cb-beat-hi 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 4px var(--ac));
+}
+
+.pulse-tab[data-cue="on"]:is(:hover, :focus-visible) .pulse-cue-stub {
+  animation: cb-stub-hi 2s ease-in-out infinite;
+  height: 3px;
+  box-shadow: 0 0 10px var(--ac);
+}
+
+/* Reduced motion: nothing runs; the cue stays as a calm, still visible state
+   (stub 30 % wide at 30 % opacity, pulse line 80 % high at 80 % opacity, as recorded in
+   the design pick's change request; hover/focus show the full-width stub). */
 @media (prefers-reduced-motion: reduce) {
   .pulse-drift,
   .pulse-breathe,
-  .pulse-curve-travel {
+  .pulse-curve-travel,
+  .pulse-tab[data-cue="on"] .pulse-cue-wave,
+  .pulse-tab[data-cue="on"] .pulse-cue-stub,
+  .pulse-tab[data-cue="on"]:is(:hover, :focus-visible) .pulse-cue-wave,
+  .pulse-tab[data-cue="on"]:is(:hover, :focus-visible) .pulse-cue-stub {
     animation: none !important;
+  }
+
+  .pulse-tab,
+  .pulse-tab[data-cue="on"] {
+    transition: none;
+  }
+
+  .pulse-tab[data-cue="on"] .pulse-cue-wave {
+    transform: scaleY(0.8);
+    opacity: 0.8;
+  }
+
+  .pulse-tab[data-cue="on"] .pulse-cue-stub {
+    transform: scaleX(0.3);
+    opacity: 0.3;
+  }
+
+  .pulse-tab[data-cue="on"]:is(:hover, :focus-visible) .pulse-cue-stub {
+    transform: scaleX(1);
+    opacity: 1;
   }
 }
 
