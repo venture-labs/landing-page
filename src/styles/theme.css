@@ -295,7 +295,8 @@
 }
 
 /* Reduced motion: nothing runs; the cue stays as a calm, still visible state
-   (stub 30 % wide, pulse line 80 % high; hover/focus show the full-width stub). */
+   (stub 30 % wide at 30 % opacity, pulse line 80 % high at 80 % opacity, as recorded in
+   the design pick's change request; hover/focus show the full-width stub). */
 @media (prefers-reduced-motion: reduce) {
   .pulse-drift,
   .pulse-breathe,
@@ -314,12 +315,12 @@
 
   .pulse-tab[data-cue="on"] .pulse-cue-wave {
     transform: scaleY(0.8);
-    opacity: 0.7;
+    opacity: 0.8;
   }
 
   .pulse-tab[data-cue="on"] .pulse-cue-stub {
     transform: scaleX(0.3);
-    opacity: 0.65;
+    opacity: 0.3;
   }
 
   .pulse-tab[data-cue="on"]:is(:hover, :focus-visible) .pulse-cue-stub {

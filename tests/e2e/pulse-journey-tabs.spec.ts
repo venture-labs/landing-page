@@ -186,17 +186,32 @@ test.describe("cue: Puls + Unterlinie", () => {
     page,
   }) => {
     await open(page, "/de/leistungen");
-    for (let sample = 0; sample < 5; sample++) {
-      const alphas = await page.locator(RAIL).evaluateAll((buttons) =>
-        buttons.map((b) => {
-          const m = getComputedStyle(b).backgroundColor.match(/rgba?\(([^)]+)\)/);
-          const parts = m ? m[1].split(",").map((x) => parseFloat(x)) : [0, 0, 0, 0];
-          return parts.length === 4 ? parts[3] : 1;
-        })
-      );
-      for (const a of alphas) expect(a).toBeLessThanOrEqual(0.13);
-      await page.waitForTimeout(1000);
-    }
+    // Sample every animation frame for four seconds of page time (no fixed sleep).
+    const alphas = await page.evaluate(
+      (selector) =>
+        new Promise<{ samples: number; max: number[] }>((resolve) => {
+          const buttons = Array.from(document.querySelectorAll(selector));
+          const max = buttons.map(() => 0);
+          const start = performance.now();
+          let samples = 0;
+          const tick = () => {
+            buttons.forEach((b, i) => {
+              const m = getComputedStyle(b).backgroundColor.match(/rgba?\(([^)]+)\)/);
+              const parts = m ? m[1].split(",").map((x) => parseFloat(x)) : [0, 0, 0, 0];
+              max[i] = Math.max(max[i], parts.length === 4 ? parts[3] : 1);
+            });
+            samples++;
+            if (performance.now() - start >= 4000) resolve({ samples, max });
+            else requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        }),
+      RAIL
+    );
+    expect(alphas.samples).toBeGreaterThan(5);
+    expect(alphas.max).toHaveLength(3);
+    // The active tint is the accent at 0x1f, about 12 %.
+    for (const a of alphas.max) expect(a).toBeLessThanOrEqual(0.13);
   });
 
   test("criterion 10: no auto-switch; hover and focus do not switch, click Enter and Space do", async ({
@@ -205,7 +220,29 @@ test.describe("cue: Puls + Unterlinie", () => {
     await open(page, "/de/leistungen");
     const pressed = () =>
       page.locator(RAIL).evaluateAll((bs) => bs.map((b) => b.getAttribute("aria-pressed")));
-    await page.waitForTimeout(15_000);
+    // Watch aria-pressed for 15 s of page time without input: no attribute may change.
+    const changes = await page.evaluate(
+      (selector) =>
+        new Promise<number>((resolve) => {
+          let count = 0;
+          const observer = new MutationObserver((records) => {
+            count += records.length;
+          });
+          document
+            .querySelectorAll(selector)
+            .forEach((b) => observer.observe(b, { attributes: true, attributeFilter: ["aria-pressed"] }));
+          const start = performance.now();
+          const tick = () => {
+            if (performance.now() - start >= 15_000) {
+              observer.disconnect();
+              resolve(count);
+            } else requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        }),
+      RAIL
+    );
+    expect(changes).toBe(0);
     expect(await pressed()).toEqual(["true", "false", "false"]);
 
     await page.locator(RAIL).nth(1).hover();
@@ -269,8 +306,9 @@ test.describe("reduced motion", () => {
     console.log("reduced-motion cue:", JSON.stringify(cue));
     expect(cue.waveTransform).toBe("matrix(1, 0, 0, 0.8, 0, 0)");
     expect(cue.stubTransform).toBe("matrix(0.3, 0, 0, 1, 0, 0)");
-    expect(cue.waveOpacity).toBeGreaterThan(0.5);
-    expect(cue.stubOpacity).toBeGreaterThan(0.5);
+    // Recorded change request: pulse line 80 %, stub 30 %.
+    expect(cue.waveOpacity).toBeCloseTo(0.8, 2);
+    expect(cue.stubOpacity).toBeCloseTo(0.3, 2);
 
     await page.locator(RAIL).nth(2).click();
     await expect(page.locator(RAIL).nth(2)).toHaveAttribute("aria-pressed", "true");
