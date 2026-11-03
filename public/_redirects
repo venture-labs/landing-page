@@ -1,3 +1,8 @@
+# Short legal paths without the locale prefix (privacy URL given to Google/Meta).
+/datenschutz  /de/datenschutz  301
+/impressum    /de/impressum    301
+/privacy      /en/datenschutz  301
+
 # The /ai-pulse page was retired; the services page replaces it.
 # App.tsx still redirects it client-side, this makes it a server-side 301.
 /de/ai-pulse  /de/leistungen  301
