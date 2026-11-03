@@ -26,3 +26,10 @@
   for = "/video/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# The mail signature logo (agent-cluster Correspondent): external recipients load it from here.
+# The path is stable and the file may change, so a week, not immutable.
+[[headers]]
+  for = "/email/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
