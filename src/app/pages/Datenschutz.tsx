@@ -10,7 +10,7 @@ function trackDatenschutzMail() {
 function DatenschutzDe() {
   return (
     <>
-      <p>Diese Erklärung gilt für die Website venturelabs.team.</p>
+      <p>Diese Erklärung gilt für die Website venturelabs.team und für die Kontaktaufnahme per WhatsApp (Abschnitt X.).</p>
 
       <div>
         <h2>I. Verantwortlicher</h2>
@@ -104,7 +104,8 @@ function DatenschutzDe() {
           begründet keine Weitergabe an Dritte. Eine Verarbeitung Ihrer Daten in den USA findet im Rahmen der
           Netlify-Verbindung statt; Netlify ist nach dem EU-U.S. Data Privacy Framework zertifiziert bzw. setzt
           EU-Standardvertragsklauseln ein. Beim Anklicken des Buchungslinks (siehe Abschnitt III.) findet zudem eine
-          Verbindung zu Google Calendar statt.
+          Verbindung zu Google Calendar statt. Wenn Sie uns über WhatsApp schreiben, sind Meta und unser
+          Weiterleitungsdienst bei Google Cloud beteiligt (siehe Abschnitt X.).
         </p>
       </div>
 
@@ -125,8 +126,55 @@ function DatenschutzDe() {
         <p>Die Übertragung Ihrer Daten erfolgt verschlüsselt über SSL/TLS (https).</p>
       </div>
 
+      <div id="whatsapp">
+        <h2>X. Kontaktaufnahme per WhatsApp</h2>
+        <p>
+          Wenn Sie uns über WhatsApp schreiben (WhatsApp-Business-Rufnummer der Venture Labs GmbH), verarbeiten wir
+          Ihre Daten wie folgt. Bitte beachten Sie: Wir schreiben Ihnen nur zurück, wenn Sie uns zuerst geschrieben
+          haben.
+        </p>
+        <p>
+          <strong>Anbieter und Plattform.</strong> WhatsApp wird von Meta betrieben; für die Business-Plattform ist
+          Meta Platforms Ireland Limited (Merrion Road, Dublin 4, Irland) die Vertragspartnerin, die Muttergesellschaft
+          ist Meta Platforms, Inc. (USA). Über die WhatsApp-Business-Plattform werden Ihre Nachricht, Ihre
+          Rufnummer, Ihr WhatsApp-Profilname sowie Verbindungs- und Zustelldaten an uns übermittelt. Meta verarbeitet
+          dabei Daten auch zu eigenen Zwecken; hierfür gelten die Datenschutzhinweise von WhatsApp und Meta. Soweit
+          Daten in die USA übermittelt werden, stützt sich Meta auf das EU-U.S. Data Privacy Framework bzw.
+          EU-Standardvertragsklauseln.
+        </p>
+        <p>
+          <strong>Zweck und Daten.</strong> Wir nutzen WhatsApp, um Anfragen, Rückmeldungen und Feedback zu
+          Projekten entgegenzunehmen und zu beantworten. Verarbeitet werden Ihre Rufnummer, gegebenenfalls Ihr
+          Vorname bzw. Profilname, der Inhalt Ihrer Nachricht (Text, Sprachnachricht, Bild, Dokument) und
+          Zeitangaben. Sprachnachrichten werden bei uns lokal in Text umgewandelt; es findet keine Umwandlung durch
+          einen Cloud-Dienst statt.
+        </p>
+        <p>
+          <strong>Rechtsgrundlage.</strong> Ihre Einwilligung, die Sie erteilen, indem Sie uns nach dem Lesen dieser
+          Hinweise schreiben (Art. 6 Abs. 1 lit. a DSGVO), sowie die Beantwortung Ihrer Anfrage und die Durchführung
+          vorvertraglicher Maßnahmen bzw. Zusammenarbeit (Art. 6 Abs. 1 lit. b DSGVO). Sie können eine Einwilligung
+          jederzeit mit Wirkung für die Zukunft widerrufen.
+        </p>
+        <p>
+          <strong>Verarbeitung in unserer Infrastruktur.</strong> Eingehende WhatsApp-Ereignisse nimmt ein kleiner
+          Weiterleitungsdienst bei Google Cloud in Frankfurt am Main entgegen (Google Cloud EMEA Limited, mit
+          Auftragsverarbeitungsvertrag nach Art. 28 DSGVO). Er speichert nichts dauerhaft: Die Ereignisse liegen
+          höchstens 7 Tage in einer Warteschlange und werden gelöscht, sobald unser eigenes System sie abgeholt hat.
+          Die Nachrichten werden anschließend auf unseren eigenen Rechnern in Deutschland gespeichert und
+          ausgewertet. Eine Auswertung zu Werbezwecken, ein Profiling oder eine automatisierte Entscheidung mit
+          Rechtswirkung findet nicht statt; die Inhalte eines Projekts werden nicht für ein anderes Projekt genutzt.
+        </p>
+        <p>
+          <strong>Speicherdauer.</strong> Sprachaufnahmen löschen wir nach der Umwandlung in Text spätestens nach 14
+          Tagen. Texte und Umschriften bewahren wir für die Dauer des jeweiligen Projekts auf, danach löschen wir
+          sie. Auf Ihren Wunsch löschen wir alles sofort: Schreiben Sie uns „LÖSCHEN“ per WhatsApp oder eine E-Mail
+          an <a href="mailto:contact@venturelabs.team" onClick={trackDatenschutzMail}>contact@venturelabs.team</a>.
+          Ihre Rechte finden Sie in Abschnitt VIII.
+        </p>
+      </div>
+
       <p className="text-white/40" style={{ fontSize: "var(--text-small)" }}>
-        Stand: September 2026
+        Stand: November 2026
       </p>
     </>
   );
@@ -135,7 +183,7 @@ function DatenschutzDe() {
 function DatenschutzEn() {
   return (
     <>
-      <p>This policy covers the website venturelabs.team.</p>
+      <p>This policy covers the website venturelabs.team and contact via WhatsApp (section X).</p>
 
       <div>
         <h2>I. Controller</h2>
@@ -223,7 +271,8 @@ function DatenschutzEn() {
           is self-hosted and involves no disclosure to third parties. Your data is processed in the USA through
           this connection; Netlify is certified under the EU-U.S. Data Privacy Framework and/or applies EU Standard
           Contractual Clauses. Clicking the booking link (see section III) also establishes a connection to Google
-          Calendar.
+          Calendar. If you write to us on WhatsApp, Meta and our relay service at Google Cloud are involved (see
+          section X).
         </p>
       </div>
 
@@ -243,8 +292,50 @@ function DatenschutzEn() {
         <p>Your data is transmitted in encrypted form via SSL/TLS (https).</p>
       </div>
 
+      <div id="whatsapp">
+        <h2>X. Contacting us via WhatsApp</h2>
+        <p>
+          If you write to us on WhatsApp (the WhatsApp Business number of Venture Labs GmbH), we process your data
+          as described here. We only write back if you wrote to us first.
+        </p>
+        <p>
+          <strong>Provider and platform.</strong> WhatsApp is operated by Meta; for the Business Platform the
+          contracting entity is Meta Platforms Ireland Limited (Merrion Road, Dublin 4, Ireland), and its parent is
+          Meta Platforms, Inc. (USA). Through the WhatsApp Business Platform your message, your phone number, your
+          WhatsApp profile name and connection and delivery data are passed to us. Meta also processes data for its
+          own purposes; WhatsApp's and Meta's privacy notices apply to that. Where data is transferred to the USA,
+          Meta relies on the EU-U.S. Data Privacy Framework and/or EU Standard Contractual Clauses.
+        </p>
+        <p>
+          <strong>Purpose and data.</strong> We use WhatsApp to receive and answer enquiries, replies and project
+          feedback. We process your phone number, where applicable your first or profile name, the content of your
+          message (text, voice message, image, document) and timestamps. Voice messages are converted to text
+          locally on our own systems; no cloud service is used for this.
+        </p>
+        <p>
+          <strong>Legal basis.</strong> Your consent, which you give by writing to us after reading this notice (Art.
+          6(1)(a) GDPR), and answering your request and performing pre-contractual measures or the collaboration
+          (Art. 6(1)(b) GDPR). You can withdraw consent at any time with effect for the future.
+        </p>
+        <p>
+          <strong>Processing in our infrastructure.</strong> Incoming WhatsApp events are received by a small relay
+          service at Google Cloud in Frankfurt am Main, Germany (Google Cloud EMEA Limited, under a data processing
+          agreement pursuant to Art. 28 GDPR). It stores nothing permanently: events wait in a queue for at most 7
+          days and are deleted as soon as our own system has collected them. The messages are then stored and
+          evaluated on our own machines in Germany. There is no use for advertising, no profiling and no
+          automated decision with legal effect; the content of one project is not used for another project.
+        </p>
+        <p>
+          <strong>Retention.</strong> We delete voice recordings after conversion to text, at the latest after 14
+          days. We keep texts and transcripts for the duration of the respective project and delete them
+          afterwards. On request we delete everything immediately: send us "LÖSCHEN" on WhatsApp or an email to{" "}
+          <a href="mailto:contact@venturelabs.team" onClick={trackDatenschutzMail}>contact@venturelabs.team</a>. Your
+          rights are listed in section VIII.
+        </p>
+      </div>
+
       <p className="text-white/40" style={{ fontSize: "var(--text-small)" }}>
-        Last updated: September 2026
+        Last updated: November 2026
       </p>
     </>
   );
