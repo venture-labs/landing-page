@@ -10,7 +10,7 @@ function trackDatenschutzMail() {
 function DatenschutzDe() {
   return (
     <>
-      <p>Diese Erklärung gilt für die Website venturelabs.team und für die Kontaktaufnahme per WhatsApp (Abschnitt X.).</p>
+      <p>Diese Erklärung gilt für die Website venturelabs.team für die Kontaktaufnahme per WhatsApp (Abschnitt X.) und für das Kundenportal (Abschnitt XI.).</p>
 
       <div>
         <h2>I. Verantwortlicher</h2>
@@ -173,6 +173,36 @@ function DatenschutzDe() {
         </p>
       </div>
 
+      <div id="kundenportal">
+        <h2>XI. Kundenportal (hub.venturelabs.team): Anmeldung mit Google oder Apple</h2>
+        <p>
+          Das Kundenportal unter hub.venturelabs.team ist nur für Kundinnen und Kunden zugänglich, die wir
+          eingeladen haben. Eine öffentliche Registrierung gibt es nicht; ohne Einladung erhalten Sie keinen
+          Zugang.
+        </p>
+        <p>
+          <strong>Daten.</strong> Wenn Sie sich mit Google (Google Ireland Limited, Gordon House, Barrow Street,
+          Dublin 4, Irland) oder mit Apple (Apple Distribution International Limited, Hollyhill Industrial Estate,
+          Cork, Irland) anmelden, übermittelt der Anbieter uns Ihren Namen, Ihre E-Mail-Adresse (bei Apple
+          gegebenenfalls eine Weiterleitungsadresse) und eine Kennung Ihres Kontos (Google- bzw. Apple-ID). Wir
+          erhalten keine Passwörter und keinen Zugriff auf weitere Inhalte Ihres Kontos. Beim Anmeldevorgang
+          verarbeitet der jeweilige Anbieter zusätzlich Daten nach seinen eigenen Datenschutzhinweisen.
+        </p>
+        <p>
+          <strong>Zweck und Rechtsgrundlage.</strong> Wir nutzen die Daten, um Sie als eingeladene Person zu
+          erkennen, den Zugang abzusichern und Ihnen die Inhalte Ihres Projekts bereitzustellen. Rechtsgrundlage ist
+          die Durchführung des Vertrags bzw. vorvertraglicher Maßnahmen (Art. 6 Abs. 1 lit. b DSGVO) sowie unser
+          berechtigtes Interesse an einem sicheren Zugang (Art. 6 Abs. 1 lit. f DSGVO).
+        </p>
+        <p>
+          <strong>Speicherdauer.</strong> Wir speichern Ihre Zugangsdaten, solange Ihr Zugang besteht, also für die
+          Dauer der Zusammenarbeit. Danach sperren und löschen wir sie, soweit keine gesetzliche
+          Aufbewahrungspflicht entgegensteht. Auf Wunsch löschen wir Ihren Zugang früher: schreiben Sie an{" "}
+          <a href="mailto:contact@venturelabs.team" onClick={trackDatenschutzMail}>contact@venturelabs.team</a>.
+          Ihre Rechte finden Sie in Abschnitt VIII.
+        </p>
+      </div>
+
       <p className="text-white/40" style={{ fontSize: "var(--text-small)" }}>
         Stand: November 2026
       </p>
@@ -183,7 +213,7 @@ function DatenschutzDe() {
 function DatenschutzEn() {
   return (
     <>
-      <p>This policy covers the website venturelabs.team and contact via WhatsApp (section X).</p>
+      <p>This policy covers the website venturelabs.team contact via WhatsApp (section X) and the customer portal (section XI).</p>
 
       <div>
         <h2>I. Controller</h2>
@@ -329,6 +359,35 @@ function DatenschutzEn() {
           <strong>Retention.</strong> We delete voice recordings after conversion to text, at the latest after 14
           days. We keep texts and transcripts for the duration of the respective project and delete them
           afterwards. On request we delete everything immediately: send us "LÖSCHEN" on WhatsApp or an email to{" "}
+          <a href="mailto:contact@venturelabs.team" onClick={trackDatenschutzMail}>contact@venturelabs.team</a>. Your
+          rights are listed in section VIII.
+        </p>
+      </div>
+
+      <div id="kundenportal">
+        <h2>XI. Customer portal (hub.venturelabs.team): sign-in with Google or Apple</h2>
+        <p>
+          The customer portal at hub.venturelabs.team is only open to customers we have invited. There is no public
+          registration; without an invitation you get no access.
+        </p>
+        <p>
+          <strong>Data.</strong> If you sign in with Google (Google Ireland Limited, Gordon House, Barrow Street,
+          Dublin 4, Ireland) or Apple (Apple Distribution International Limited, Hollyhill Industrial Estate, Cork,
+          Ireland), the provider passes us your name, your email address (with Apple possibly a relay address) and
+          an identifier of your account (Google or Apple ID). We receive no passwords and no access to other
+          content of your account. During sign-in the respective provider also processes data under its own
+          privacy notice.
+        </p>
+        <p>
+          <strong>Purpose and legal basis.</strong> We use the data to recognise you as an invited person, to secure
+          access and to provide the content of your project. The legal basis is performance of the contract or
+          pre-contractual measures (Art. 6(1)(b) GDPR) and our legitimate interest in secure access (Art. 6(1)(f)
+          GDPR).
+        </p>
+        <p>
+          <strong>Retention.</strong> We keep your access data as long as your access exists, i.e. for the duration
+          of the collaboration. After that we block and delete it, unless a statutory retention duty applies. On
+          request we delete your access earlier: write to{" "}
           <a href="mailto:contact@venturelabs.team" onClick={trackDatenschutzMail}>contact@venturelabs.team</a>. Your
           rights are listed in section VIII.
         </p>
