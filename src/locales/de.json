@@ -168,6 +168,8 @@
     "heroSubheading": "Unsere Projekte ziehen sich durch alle Branchen. Zu unseren Kunden zählen Start-ups wie Großkonzerne.",
     "viewProject": "Zum Projekt",
     "caseStudyLabel": "Case Study ·",
+    "visitProduct": "Zum Produkt:",
+    "visitDealerArea": "Händlerbereich:",
     "requestNow": "Jetzt anfragen",
     "overviewHeading": "Übersicht",
     "whatWeDid": "Was wir gemacht haben",
@@ -265,7 +267,8 @@
     "directContact": "Direkter Kontakt",
     "team": {
       "christianRole": "Geschäftsführer",
-      "martinRole": "Head of Design"
+      "martinRole": "Head of Design",
+      "personalSite": "Persönliche Website:"
     },
     "formHeading": "Deine Nachricht an uns",
     "messagePlaceholder": "Nachricht*",

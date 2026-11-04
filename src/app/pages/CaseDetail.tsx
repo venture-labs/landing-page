@@ -57,6 +57,35 @@ function CaseHero({ detail }: { detail: any }) {
           >
             {detail.heroSubline}
           </p>
+          {detail.externalUrl && (
+            <p className="text-white/60 font-light" style={{ fontSize: "var(--text-body)" }}>
+              {t("cases.visitProduct")}{" "}
+              <a
+                href={detail.externalUrl}
+                target="_blank"
+                rel="noopener"
+                className="underline underline-offset-4 hover:text-white transition-colors"
+                style={{ color: accentColor }}
+              >
+                {new URL(detail.externalUrl).hostname.replace(/^www\./, "")}
+              </a>
+              {detail.dealerUrl && (
+                <>
+                  {" · "}
+                  {t("cases.visitDealerArea")}{" "}
+                  <a
+                    href={detail.dealerUrl}
+                    target="_blank"
+                    rel="noopener"
+                    className="underline underline-offset-4 hover:text-white transition-colors"
+                    style={{ color: accentColor }}
+                  >
+                    {detail.dealerLabel}
+                  </a>
+                </>
+              )}
+            </p>
+          )}
           <CtaButton
             href={localizedPath("/kontakt")}
             onClick={() => trackEvent(EVENTS.contactSent, PLACEMENTS.caseDetailCta, CTAS.contact)}

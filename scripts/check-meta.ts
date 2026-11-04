@@ -733,7 +733,7 @@ export function runChecks(distDir: string, env: NodeJS.ProcessEnv = process.env)
     }
   });
 
-  check("11 _redirects: the two /ai-pulse 301s and the /404.html catch-all", (fail) => {
+  check("11 _redirects: the two /ai-pulse 301s, the short legal 301s and the /404.html catch-all", (fail) => {
     if (!exists("_redirects")) return fail("/_redirects", "file", "missing in dist/");
     const rules = read("_redirects")
       .split(/\r?\n/)
@@ -749,7 +749,14 @@ export function runChecks(distDir: string, env: NodeJS.ProcessEnv = process.env)
     if (catchAll.length !== 1 || catchAll[0][1] !== "/404.html" || catchAll[0][2] !== "404") {
       fail("/_redirects", "/*", `expected exactly one catch-all "/* /404.html 404", got ${JSON.stringify(catchAll)}`);
     }
-    if (rules.length !== 3) fail("/_redirects", "rules", `expected 3 rules, got ${rules.length}`);
+    // Short legal paths without the locale prefix (the privacy URL given to Google and Meta).
+    const legal: Array<[string, string]> = [["/datenschutz", "/de/datenschutz"], ["/impressum", "/de/impressum"], ["/privacy", "/en/datenschutz"]];
+    for (const [from, to] of legal) {
+      const r = rules.find((x) => x[0] === from);
+      if (!r || r[1] !== to || r[2] !== "301") fail("/_redirects", from, `expected "${from} ${to} 301", got ${JSON.stringify(r)}`);
+      else if (!shellPaths.includes(to)) fail("/_redirects", from, `target ${to} is not a prerendered route`);
+    }
+    if (rules.length !== 3 + legal.length) fail("/_redirects", "rules", `expected ${3 + legal.length} rules, got ${rules.length}`);
   });
 
   // ---- (h) carried over from the retired check-seo.ts -------------------------

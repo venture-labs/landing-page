@@ -34,6 +34,7 @@ const teamContacts = [
     color: "#8129ff",
     email: "christian.wenzel@venturelabs.team",
     phone: "+49 156778 387064",
+    site: "https://wenzelchristian.de",
   },
   {
     name: "Martin Henrich",
@@ -142,6 +143,19 @@ function DirectContact() {
               >
                 {person.email}
               </a>
+              {person.site && (
+                <p className="text-white/50 font-light" style={{ fontSize: "var(--text-small)" }}>
+                  {t("kontakt.team.personalSite")}{" "}
+                  <a
+                    href={person.site}
+                    target="_blank"
+                    rel="noopener"
+                    className="text-[#a318f8] hover:text-white transition-colors"
+                  >
+                    {new URL(person.site).hostname}
+                  </a>
+                </p>
+              )}
               {person.phone && (
                 <a
                   href={`tel:${person.phone.replace(/\s+/g, "")}`}

@@ -31,4 +31,5 @@ detailStats:
 mockupImages:
   - "/uploads/cases/tap2link-mockup-1.png"
   - "/uploads/cases/tap2link-mockup-3.png"
+externalUrl: "https://t2l.ink"
 ---
