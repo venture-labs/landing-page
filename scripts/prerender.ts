@@ -332,6 +332,14 @@ function buildPagesForLocale(lang: Locale): PageMeta[] {
   });
 
   pages.push({
+    path: `/${lang}/playbook`,
+    lang,
+    title: authored(ui.seo?.playbook?.title, `Playbook${suffix}`),
+    description: authored(ui.seo?.playbook?.description, ui.playbook.heroSubtitle),
+    crumbs: [crumb(footer.playbookGuide, "/playbook")],
+  });
+
+  pages.push({
     path: `/${lang}/impressum`,
     lang,
     title: authored(ui.seo?.impressum?.title, `${lang === "de" ? "Impressum" : "Imprint"}${suffix}`),

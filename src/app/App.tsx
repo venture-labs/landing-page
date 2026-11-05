@@ -22,6 +22,7 @@ import { BlogDetail } from "./pages/BlogDetail";
 import { UeberUns } from "./pages/UeberUns";
 import { Impressum } from "./pages/Impressum";
 import { Datenschutz } from "./pages/Datenschutz";
+import { Playbook } from "./pages/Playbook";
 import { NotFound } from "./pages/NotFound";
 
 function HomePage() {
@@ -166,6 +167,14 @@ export function AppRoutes() {
           element={
             <LangGuard>
               <UeberUns />
+            </LangGuard>
+          }
+        />
+        <Route
+          path="/:lang/playbook"
+          element={
+            <LangGuard>
+              <Playbook />
             </LangGuard>
           }
         />
