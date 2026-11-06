@@ -65,6 +65,7 @@ const FOOTER_KEY_BY_SECTION: Record<string, string> = {
   kontakt: "contactTitle",
   impressum: "imprint",
   datenschutz: "privacy",
+  playbook: "playbookGuide",
 };
 
 /** Characters of a head string: code points of the trimmed text. */

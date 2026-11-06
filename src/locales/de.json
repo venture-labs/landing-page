@@ -65,7 +65,8 @@
       "ai-products": "AI Products",
       "ai-experience": "AI Experience",
       "venture-building": "Venture Building"
-    }
+    },
+    "playbookGuide": "Playbook-Leitfaden"
   },
   "leistungen": {
     "heroTitlePrefix": "Wir helfen dir",
@@ -311,11 +312,38 @@
     "datenschutz": {
       "title": "Datenschutzerklärung für venturelabs.team – Venture Labs",
       "description": "Diese Datenschutzerklärung gilt für die Website venturelabs.team. Verantwortlicher: Venture Labs GmbH, Breite Str. 27, 40213 Düsseldorf."
+    },
+    "playbook": {
+      "title": "Playbook, Rolle oder eigener Agent? Leitfaden – Venture Labs",
+      "description": "Kostenloser Leitfaden für den Einstieg in KI-Agenten: Wann reicht ein Playbook, wann braucht es einen eigenen Agenten? Mit Checkliste."
     }
   },
   "notFound": {
     "heading": "Seite nicht gefunden",
     "message": "Diese Seite gibt es nicht (mehr). Vielleicht hilft dir unsere Leistungsübersicht weiter.",
     "cta": "Zu den Leistungen"
+  },
+  "playbook": {
+    "eyebrow": "Kostenloser Leitfaden",
+    "heroTitle": "Playbook, Rolle oder eigener Agent?",
+    "heroSubtitle": "Der Leitfaden für alle, die gerade mit KI-Agenten anfangen: was du wann brauchst, wie viel Trennung sinnvoll ist und wie du ohne Umwege startest. 18 Seiten, ohne Vorwissen lesbar.",
+    "download": "Leitfaden herunterladen (PDF)",
+    "downloadMeta": "PDF, 18 Seiten, ca. 1 MB. Ohne Anmeldung, ohne E-Mail-Adresse.",
+    "coverAlt": "Titelbild des Leitfadens Playbook, Rolle oder eigener Agent",
+    "insideTitle": "Was drinsteht",
+    "inside": [
+      "Die drei Bausteine einfach erklärt: Playbook und Rolle, eigener Agent, Quellen und Wissen",
+      "Neun Schichten, was «getrennt» wirklich heißt: Ordner, Prozess, Container, Schlüssel, Netz, Modell, Budget, Wächter, Freigabe",
+      "Eine Entscheidungshilfe in sechs Fragen und ein Spickzettel auf einer Seite",
+      "Sechs Alltagsszenarien für kleine Unternehmen mit konkreter Empfehlung",
+      "Unsere eigenen Erfahrungen, Fallstricke und eine Start-Checkliste"
+    ],
+    "forWhoTitle": "Für wen ist das?",
+    "forWho": "Für alle, die mit KI-Agenten anfangen oder merken, dass ein einzelner Agent nicht mehr reicht. Du brauchst keine Vorkenntnisse. Jeder Fachbegriff wird in einem Satz erklärt.",
+    "ctaTitle": "Du willst es für dein Unternehmen sortieren?",
+    "ctaText": "Im ersten Gespräch klären wir gemeinsam, welche deiner Aufgaben ein Playbook brauchen, welche einen eigenen Agenten und welche noch keine KI.",
+    "ctaButton": "Gespräch anfragen",
+    "note": "Der Leitfaden ist eine Orientierung und keine Rechts- oder Sicherheitsberatung. Er ist auf Deutsch.",
+    "pdfLabel": "playbook-rolle-oder-eigener-agent.pdf"
   }
 }

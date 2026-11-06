@@ -199,3 +199,15 @@ In the Plausible dashboard, for the `venturelabs.team` site, under **Site Settin
    confirm each appears in Plausible's **Realtime** view (or via the Events API) with the expected
    `placement`/`page`/`lang`/`cta` values — this is the step that actually proves the long-standing
    zero count is fixed, and it needs the dashboard login this task does not have.
+
+## Playbook guide download (lead magnet, 2026-11-05)
+
+`/de/playbook` and `/en/playbook` offer the PDF guide «Playbook, Rolle oder eigener Agent?» as a direct download (`public/downloads/`, no form, no e-mail,
+so no personal data and no Datenschutz change). Instagram's «Kommentiere Playbook» DM links here. Events:
+
+| Event | `placement` | `cta` | Where |
+|---|---|---|---|
+| `Playbook Downloaded` (`EVENTS.playbookDownloaded`) | `playbook-download` | none | the download button, `src/app/pages/Playbook.tsx` |
+| `Contact Sent` (the existing contact-click convention) | `playbook-cta` | `contact` | the closing link to `/kontakt` |
+
+**Plausible goal to create (Christian, Site Settings → Goals, type "Custom event", exact name):** `Playbook Downloaded`. Until it exists the event is sent but not listed.
