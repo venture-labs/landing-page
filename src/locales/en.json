@@ -312,16 +312,16 @@
   "playbook": {
     "eyebrow": "Free guide",
     "heroTitle": "Playbook, role or your own agent?",
-    "heroSubtitle": "The guide for anyone starting with AI agents: what you need when, how much separation makes sense, and how to start without detours. 18 pages, no prior knowledge needed. The guide is written in German.",
+    "heroSubtitle": "The guide for anyone starting with AI agents: what you need when, what a base agent brings, why rights beat a new start text, and how to start without detours. 25 pages, no prior knowledge needed. The guide is written in German.",
     "download": "Download the guide (PDF, German)",
-    "downloadMeta": "PDF, 18 pages, about 1 MB. No sign-up, no e-mail address.",
+    "downloadMeta": "PDF, 25 pages, about 1.4 MB. No sign-up, no e-mail address.",
     "coverAlt": "Cover of the guide Playbook, Rolle oder eigener Agent",
     "insideTitle": "What is inside",
     "inside": [
-      "The three building blocks in plain words: playbook and role, own agent, sources and knowledge",
+      "The four building blocks in plain words: playbook and role, own agent, base agent (blueprint), sources and knowledge",
       "Nine layers of what separated really means: folders, process, container, keys, network, model, budget, guards, approval",
-      "A decision guide in six questions and a one-page cheat sheet",
-      "Six everyday scenarios for small businesses with a concrete recommendation",
+      "Rights instead of text: why starting with adjusted rights beats a new start text, with three cases from our own operation",
+      "A decision guide in six questions, a one-page cheat sheet and six everyday scenarios with a concrete recommendation",
       "Our own experience, pitfalls and a start checklist"
     ],
     "forWhoTitle": "Who is it for?",

@@ -326,16 +326,16 @@
   "playbook": {
     "eyebrow": "Kostenloser Leitfaden",
     "heroTitle": "Playbook, Rolle oder eigener Agent?",
-    "heroSubtitle": "Der Leitfaden für alle, die gerade mit KI-Agenten anfangen: was du wann brauchst, wie viel Trennung sinnvoll ist und wie du ohne Umwege startest. 18 Seiten, ohne Vorwissen lesbar.",
+    "heroSubtitle": "Der Leitfaden für alle, die gerade mit KI-Agenten anfangen: was du wann brauchst, was ein Basis-Agent mitbringt, warum Rechte mehr taugen als ein neuer Starttext und wie du ohne Umwege startest. 25 Seiten, ohne Vorwissen lesbar.",
     "download": "Leitfaden herunterladen (PDF)",
-    "downloadMeta": "PDF, 18 Seiten, ca. 1 MB. Ohne Anmeldung, ohne E-Mail-Adresse.",
+    "downloadMeta": "PDF, 25 Seiten, ca. 1,4 MB. Ohne Anmeldung, ohne E-Mail-Adresse.",
     "coverAlt": "Titelbild des Leitfadens Playbook, Rolle oder eigener Agent",
     "insideTitle": "Was drinsteht",
     "inside": [
-      "Die drei Bausteine einfach erklärt: Playbook und Rolle, eigener Agent, Quellen und Wissen",
+      "Die vier Bausteine einfach erklärt: Playbook und Rolle, eigener Agent, Basis-Agent (Blaupause), Quellen und Wissen",
       "Neun Schichten, was «getrennt» wirklich heißt: Ordner, Prozess, Container, Schlüssel, Netz, Modell, Budget, Wächter, Freigabe",
-      "Eine Entscheidungshilfe in sechs Fragen und ein Spickzettel auf einer Seite",
-      "Sechs Alltagsszenarien für kleine Unternehmen mit konkreter Empfehlung",
+      "Rechte statt Text: warum ein Start mit angepassten Rechten mehr taugt als ein neuer Starttext, mit drei Fällen aus dem Betrieb",
+      "Eine Entscheidungshilfe in sechs Fragen, ein Spickzettel und sechs Alltagsszenarien mit konkreter Empfehlung",
       "Unsere eigenen Erfahrungen, Fallstricke und eine Start-Checkliste"
     ],
     "forWhoTitle": "Für wen ist das?",
