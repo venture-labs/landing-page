@@ -380,8 +380,10 @@ export function getCaseDetail(slug: string): CaseDetail | undefined {
     resolve(outDir, "blog.ts"),
     `${banner()}
 export interface BlogContentBlock {
-  type: "heading" | "paragraph";
+  type: "heading" | "paragraph" | "link";
   text: string;
+  /** Only for type "link": a path inside the site, without the locale prefix (e.g. "/playbook"). */
+  href?: string;
 }
 
 export interface BlogPost {
@@ -415,6 +417,7 @@ export const blogPosts: BlogPost[] = ${JSON.stringify(
         content: (p.content ?? []).map((b: any) => ({
           type: b!.type,
           text: b!.text,
+          ...(b!.type === "link" ? { href: String(b!.href ?? "") } : {}),
         })),
       })),
       null,

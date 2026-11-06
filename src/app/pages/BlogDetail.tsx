@@ -192,6 +192,15 @@ export function BlogDetail() {
                     >
                       {block.text}
                     </h2>
+                  ) : block.type === "link" && block.href ? (
+                    <Link
+                      key={i}
+                      to={localizedPath(block.href)}
+                      className="inline-flex items-center gap-2 w-fit font-semibold underline underline-offset-4 transition-opacity hover:opacity-80"
+                      style={{ color: accent, fontSize: "var(--text-body)" }}
+                    >
+                      {block.text} <ArrowRight size={16} />
+                    </Link>
                   ) : (
                     <p
                       key={i}
