@@ -1,0 +1,47 @@
+---
+slug: "warum-ki-projekte-im-mittelstand-scheitern"
+language: "de"
+seoTitle: 'Warum KI-Projekte im Mittelstand scheitern – Venture Labs'
+seoDescription: 'Die meisten KI-Projekte scheitern nicht an der Technik, sondern an Auswahl, Daten und Übergabe. Fünf Gründe und wie ein Check das vorher sichtbar macht.'
+order: 1
+title: "Warum KI-Projekte im Mittelstand scheitern und wie ein Check das verhindert"
+excerpt: "Die meisten KI-Projekte scheitern nicht an der Technik, sondern an Auswahl, Daten und Übergabe. Fünf Gründe und wie ein Check das vorher sichtbar macht."
+topicSlug: "ai-automation"
+topic: "AI Automation"
+readTime: "6 Min. Lesezeit"
+featured: false
+publishedDate: "16. November 2026"  # prüfen: Veröffentlichungsdatum setzt Christian beim Go-live; so steht der Wochenplan des SEO-Plans
+author: "VentureLabs Team"
+content:
+  - type: "paragraph"
+    text: "Ein KI-Projekt im Mittelstand beginnt meistens mit Begeisterung und endet leise: Der Prototyp lief in der Demo, im Alltag nutzt ihn niemand, und irgendwann fragt keiner mehr danach. Das liegt selten an der Technik. In unserer Arbeit sehen wir immer wieder dieselben fünf Gründe."
+  - type: "heading"
+    text: "1. Es wurde mit dem Werkzeug angefangen, nicht mit dem Problem"
+  - type: "paragraph"
+    text: "«Wir brauchen etwas mit KI» ist ein Auftrag, aber kein Anwendungsfall. Wer mit dem Werkzeug startet, sucht danach ein Problem, das dazu passt. Besser ist die umgekehrte Reihenfolge: erst aufschreiben, welcher Arbeitsschritt heute Zeit frisst oder Fehler macht, und dann prüfen, ob KI dafür das richtige Mittel ist. Manchmal ist es das nicht, und auch das ist ein gutes Ergebnis."
+  - type: "heading"
+    text: "2. Der erste Anwendungsfall war zu groß"
+  - type: "paragraph"
+    text: "Ein Projekt, das gleich den ganzen Vertrieb oder die ganze Verwaltung verändern soll, braucht Monate, bevor jemand etwas sieht. Bleibt der sichtbare Nutzen aus, kippt die Stimmung. Ein gut abgegrenzter Prozess mit klaren Ein- und Ausgaben und überschaubarem Risiko liefert dagegen in Wochen ein Ergebnis und das Vertrauen für den nächsten Schritt."
+  - type: "heading"
+    text: "3. Die Datenbasis wurde nicht geprüft"
+  - type: "paragraph"
+    text: "Ein Agent, der aus verstreuten, veralteten oder gar nicht digitalen Unterlagen antworten soll, kann nur so gut sein wie diese Unterlagen. Wer das erst im Projekt merkt, hat Budget für etwas ausgegeben, das auf wackligem Grund steht. Deshalb gehört die Frage «Wo liegen die Daten, und in welchem Zustand?» an den Anfang."
+  - type: "heading"
+    text: "4. Niemand hat die Verantwortung für den Betrieb"
+  - type: "paragraph"
+    text: "Wir hatten ein gutes Konzept. Umgesetzt hat es dann niemand: Diesen Satz hören wir oft. Ein System, das lebt, muss gepflegt werden: Fehler erkennen, Regeln anpassen, Nutzung sichtbar machen. Wenn nicht klar ist, wer das tut, veraltet die Lösung still."
+  - type: "heading"
+    text: "5. Das Team wurde nicht mitgenommen"
+  - type: "paragraph"
+    text: "Eine Lösung, die im Alltag nicht benutzt wird, ist wertlos, egal wie gut sie gebaut ist. Wer den Ablauf kennt, den die Lösung verändert, sollte von Anfang an mitreden. Das kostet am Anfang etwas Zeit und spart am Ende die Einführung gegen Widerstand."
+  - type: "heading"
+    text: "Was ein Check vorher sichtbar macht"
+  - type: "paragraph"
+    text: "Genau an diesen fünf Stellen setzt der AI Pulse Check an. In 1 bis 2 Tagen schauen wir uns an, wie bei dir tatsächlich gearbeitet wird: Prozesse, Daten, Tools und Team. Am Ende steht keine Präsentation, sondern eine sortierte Liste mit den Anwendungsfällen, die sich zuerst lohnen, und eine ehrliche Empfehlung: umsetzen, warten oder lassen."
+  - type: "paragraph"
+    text: "So wird aus «Wir sollten mal was mit KI machen» eine Entscheidung, die du begründen kannst, bevor Geld fließt."
+  - type: "link"
+    text: "Mehr zur KI-Potenzialanalyse und zum Readiness-Check"
+    href: "/leistungen/ki-potenzialanalyse"
+---

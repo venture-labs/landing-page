@@ -285,6 +285,60 @@ function CaseSection({ detail, accent }: { detail: any; accent: string }) {
   );
 }
 
+/* ─── extra text block (optional, e.g. "Kontrolle und Kosten") ───────── */
+
+function ExtraSection({ detail, accent }: { detail: any; accent: string }) {
+  const { localizedPath } = useLocale();
+  const extra = detail.extra;
+  if (!extra) return null;
+  return (
+    <section className="bg-[#1c1a27] py-20">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+        <h2
+          className="font-semibold text-white leading-tight lg:col-span-5"
+          style={{ fontSize: "var(--text-section)" }}
+        >
+          {extra.heading}
+        </h2>
+        <div className="lg:col-span-7 flex flex-col gap-5 min-w-0">
+          {extra.paragraphs.map((p: string) => (
+            <p key={p} className="text-white/70 font-light leading-relaxed" style={{ fontSize: "var(--text-body)" }}>
+              {p}
+            </p>
+          ))}
+          {extra.bullets.length > 0 && (
+            <ul className="flex flex-col gap-3">
+              {extra.bullets.map((b: string) => (
+                <li
+                  key={b}
+                  className="flex gap-3 text-white/80 font-light leading-relaxed"
+                  style={{ fontSize: "var(--text-body)" }}
+                >
+                  <span
+                    className="mt-[0.6em] h-2 w-2 shrink-0 rounded-full"
+                    style={{ backgroundColor: accent }}
+                    aria-hidden
+                  />
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+          {extra.linkHref && (
+            <Link
+              to={localizedPath(extra.linkHref)}
+              className="inline-flex items-center gap-2 w-fit font-semibold underline underline-offset-4 transition-opacity hover:opacity-80"
+              style={{ color: accent, fontSize: "var(--text-body)" }}
+            >
+              {extra.linkLabel} <ArrowRight size={16} />
+            </Link>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ─── CTA banner ─────────────────────────────────────────────────────── */
 
 function CtaBanner({ detail, accent }: { detail: any; accent: string }) {
@@ -514,6 +568,7 @@ export function LeistungenDetail() {
       <Navbar />
       <DetailHero detail={detail as any} accent={accent} title={serviceTitle} />
       <ProcessSection detail={detail} accent={accent} />
+      <ExtraSection detail={detail} accent={accent} />
       <CaseSection detail={detail} accent={accent} />
       <CtaBanner detail={detail} accent={accent} />
       <OtherServices currentSlug={detail.slug} />

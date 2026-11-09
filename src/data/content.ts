@@ -21,6 +21,7 @@ import {
 import { caseDetailsMap as caseDetailsDe, type CaseDetail } from "./de/caseDetails";
 import { blogPosts as blogPostsDe, type BlogPost } from "./de/blog";
 import { toolProfiles as toolProfilesDe, type ToolProfile } from "./de/tools";
+import { landingPages as landingPagesDe, type LandingPage } from "./de/landing";
 
 import { siteData as siteEn } from "./en/site";
 import { aboutData as aboutEn } from "./en/about";
@@ -31,6 +32,7 @@ import { featuredCases as featuredCasesEn, gridCases as gridCasesEn } from "./en
 import { caseDetailsMap as caseDetailsEn } from "./en/caseDetails";
 import { blogPosts as blogPostsEn } from "./en/blog";
 import { toolProfiles as toolProfilesEn } from "./en/tools";
+import { landingPages as landingPagesEn } from "./en/landing";
 
 const site: Record<Locale, typeof siteDe> = { de: siteDe, en: siteEn };
 const about: Record<Locale, AboutData> = { de: aboutDe, en: aboutEn };
@@ -47,6 +49,7 @@ const caseDetails: Record<Locale, Record<string, CaseDetail>> = {
   en: caseDetailsEn,
 };
 const blogPosts: Record<Locale, BlogPost[]> = { de: blogPostsDe, en: blogPostsEn };
+const landingPages: Record<Locale, LandingPage[]> = { de: landingPagesDe, en: landingPagesEn };
 const toolProfiles: Record<Locale, ToolProfile[]> = { de: toolProfilesDe, en: toolProfilesEn };
 
 export function useSiteData(): typeof siteDe {
@@ -91,4 +94,9 @@ export function useBlogDetail(slug?: string): BlogPost | null {
 
 export function useToolProfilesData(): ToolProfile[] {
   return toolProfiles[useLocale().lang];
+}
+
+export function useLandingPage(slug?: string): LandingPage | null {
+  const { lang } = useLocale();
+  return landingPages[lang].find((p) => p.slug === slug) ?? null;
 }

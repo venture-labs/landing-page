@@ -51,6 +51,7 @@ import { leistungenData as leistungenDe } from "../src/data/de/leistungen";
 import { aboutData as aboutDe } from "../src/data/de/about";
 import { services as servicesDe } from "../src/data/de/services";
 import { caseDetailsMap as caseDetailsDe } from "../src/data/de/caseDetails";
+import { landingPages as landingPagesDe } from "../src/data/de/landing";
 import { blogPosts as blogPostsDe } from "../src/data/de/blog";
 
 import { siteData as siteEn } from "../src/data/en/site";
@@ -58,6 +59,7 @@ import { leistungenData as leistungenEn } from "../src/data/en/leistungen";
 import { aboutData as aboutEn } from "../src/data/en/about";
 import { services as servicesEn } from "../src/data/en/services";
 import { caseDetailsMap as caseDetailsEn } from "../src/data/en/caseDetails";
+import { landingPages as landingPagesEn } from "../src/data/en/landing";
 import { blogPosts as blogPostsEn } from "../src/data/en/blog";
 
 import deUi from "../src/locales/de.json";
@@ -137,6 +139,7 @@ const byLocale = {
     services: servicesDe,
     caseDetails: caseDetailsDe,
     blogPosts: blogPostsDe,
+    landingPages: landingPagesDe,
     ui: deUi as any,
   },
   en: {
@@ -146,6 +149,7 @@ const byLocale = {
     services: servicesEn,
     caseDetails: caseDetailsEn,
     blogPosts: blogPostsEn,
+    landingPages: landingPagesEn,
     ui: enUi as any,
   },
 };
@@ -197,6 +201,8 @@ export interface PageMeta {
   crumbs?: Crumb[];
   /** Present on /leistungen and the /leistungen/:slug pages: one schema.org Service. */
   service?: { name: string; description: string };
+  /** Present on the landing pages: the visible FAQ, emitted as one schema.org FAQPage. */
+  faq?: { question: string; answer: string }[];
   sourceFile?: string; // markdown file backing the page, for <lastmod>
 }
 
@@ -225,7 +231,7 @@ function authored(value: string | undefined, fallback: string): string {
 }
 
 function buildPagesForLocale(lang: Locale): PageMeta[] {
-  const { site, leistungen, about, services, caseDetails, blogPosts, ui } = byLocale[lang];
+  const { site, leistungen, about, services, caseDetails, blogPosts, landingPages, ui } = byLocale[lang];
   const suffix = " – Venture Labs";
   const pages: PageMeta[] = [];
   const footer = ui.footer;
@@ -272,6 +278,19 @@ function buildPagesForLocale(lang: Locale): PageMeta[] {
       crumbs: [crumb(footer.servicesTitle, "/leistungen"), crumb(s.title, `/leistungen/${s.slug}`)],
       service: { name: s.title, description: serviceDescription },
       sourceFile: contentFile(lang, `services/${s.slug}`),
+    });
+  }
+
+  for (const l of landingPages) {
+    pages.push({
+      path: `/${lang}/leistungen/${l.slug}`,
+      lang,
+      title: authored(l.seoTitle, `${l.eyebrow}${suffix}`),
+      description: authored(l.seoDescription, l.lead),
+      crumbs: [crumb(footer.servicesTitle, "/leistungen"), crumb(l.eyebrow, `/leistungen/${l.slug}`)],
+      service: { name: l.eyebrow, description: authored(l.seoDescription, l.lead) },
+      faq: l.faq.map((f) => ({ question: f.question, answer: f.answer })),
+      sourceFile: contentFile(lang, `landing/${l.slug}`),
     });
   }
 
@@ -468,6 +487,19 @@ function jsonLdFor(page: PageMeta): Record<string, unknown> {
         "@id": `${SITE_ORIGIN}/#organization`,
         name: ORGANIZATION_NAME,
       },
+    });
+  }
+
+  if (page.faq && page.faq.length > 0) {
+    graph.push({
+      "@type": "FAQPage",
+      url: canonical,
+      inLanguage: page.lang,
+      mainEntity: page.faq.map((f) => ({
+        "@type": "Question",
+        name: f.question,
+        acceptedAnswer: { "@type": "Answer", text: f.answer },
+      })),
     });
   }
 
