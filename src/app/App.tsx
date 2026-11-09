@@ -80,7 +80,12 @@ function LeistungenSlugPage() {
 
 function RoutedErrorBoundary({ children }: { children: ReactNode }) {
   const location = useLocation();
-  return <ErrorBoundary key={location.pathname}>{children}</ErrorBoundary>;
+  const lang = location.pathname.startsWith("/en") ? "en" : "de";
+  return (
+    <ErrorBoundary key={location.pathname} lang={lang}>
+      {children}
+    </ErrorBoundary>
+  );
 }
 
 /** Redirects a retired path (e.g. "/ai-pulse") to its replacement, keeping the current :lang. */
