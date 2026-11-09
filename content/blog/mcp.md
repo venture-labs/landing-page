@@ -38,11 +38,11 @@ content:
     href: "/leistungen/ki-agenten-unternehmen"
   - type: "link"
     text: "Alle Begriffe im Wissensbereich"
-    href: "/wissen"  # prüfen: Hub /wissen existiert erst nach dem Hub-Bau
+    href: "/wissen"
   - type: "link"
     text: "Was ist ein KI-Skill?"
-    href: "/blog/ki-skill"
+    href: "/wissen/ki-skill"
   - type: "link"
     text: "Human in the Loop bei KI"
-    href: "/blog/human-in-the-loop"
+    href: "/wissen/human-in-the-loop"
 ---

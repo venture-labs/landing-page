@@ -38,11 +38,11 @@ content:
     href: "/leistungen/ki-agenten-unternehmen"
   - type: "link"
     text: "All terms in the knowledge section"
-    href: "/wissen"  # prüfen: hub /wissen only exists once the hub is built
+    href: "/wissen"
   - type: "link"
     text: "What is an AI skill?"
-    href: "/blog/ki-skill"
+    href: "/wissen/ki-skill"
   - type: "link"
     text: "Human in the loop for AI"
-    href: "/blog/human-in-the-loop"
+    href: "/wissen/human-in-the-loop"
 ---

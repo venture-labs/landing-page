@@ -38,11 +38,11 @@ content:
     href: "/leistungen/ki-agenten-unternehmen"
   - type: "link"
     text: "All terms in the knowledge section"
-    href: "/wissen"  # prüfen: hub /wissen only exists once the hub is built
+    href: "/wissen"
   - type: "link"
     text: "What is an AI playbook?"
-    href: "/blog/ki-playbook"
+    href: "/wissen/ki-playbook"
   - type: "link"
     text: "Permissions instead of text for AI agents"
-    href: "/blog/rechte-statt-text"
+    href: "/wissen/rechte-statt-text"
 ---

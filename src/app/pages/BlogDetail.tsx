@@ -1,12 +1,12 @@
 import { useEffect, useRef } from "react";
-import { useParams, Link } from "react-router";
+import { useParams, Link, Navigate } from "react-router";
 import { motion } from "motion/react";
 import { ArrowLeft, ArrowRight, Code2, Building2, Palette, Bot } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
 import { useLocale } from "@/app/locale";
-import { useBlogDetail } from "@/data/content";
+import { useBlogDetail, isWissenPost } from "@/data/content";
 import { CTAS, EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
 
 const topicAccent: Record<string, string> = {
@@ -31,7 +31,8 @@ function slugify(text: string) {
     .replace(/(^-|-$)/g, "");
 }
 
-export function BlogDetail() {
+/** One article page for both sections: /blog/:slug (blog posts) and /wissen/:slug (hub articles). */
+export function BlogDetail({ section = "blog" }: { section?: "blog" | "wissen" }) {
   const { slug } = useParams<{ slug: string }>();
   const { t } = useTranslation();
   const { localizedPath, lang } = useLocale();
@@ -49,12 +50,17 @@ export function BlogDetail() {
     glowRef.current.style.opacity = "1";
   }
 
+  // An article opened under the other section (an old preview link) goes to its own place.
+  if (post && isWissenPost(post) !== (section === "wissen")) {
+    return <Navigate to={localizedPath(`/${isWissenPost(post) ? "wissen" : "blog"}/${post.slug}`)} replace />;
+  }
+
   if (!post) {
     return (
       <div className="min-h-screen bg-[#0e0d13] text-white flex items-center justify-center">
         <div className="text-center">
           <p className="text-white/50 mb-4">{t("blog.notFound")}</p>
-          <Link to={localizedPath("/blog")} className="text-[#8129ff] hover:underline">
+          <Link to={localizedPath(`/${section}`)} className="text-[#8129ff] hover:underline">
             {t("blog.backToOverview")}
           </Link>
         </div>
@@ -92,17 +98,17 @@ export function BlogDetail() {
               style={{ fontSize: "var(--text-small)" }}
             >
               {lang === "de"
-                ? "Entwurf, noch nicht veröffentlicht: nicht in der Blogübersicht, nicht in der Sitemap, für Suchmaschinen gesperrt."
-                : "Draft, not published yet: not in the blog list, not in the sitemap, blocked for search engines."}
+                ? `Entwurf, noch nicht veröffentlicht: nicht ${section === "wissen" ? "im Wissensbereich" : "in der Blogübersicht"}, nicht in der Sitemap, für Suchmaschinen gesperrt.`
+                : `Draft, not published yet: not in the ${section === "wissen" ? "knowledge hub" : "blog list"}, not in the sitemap, blocked for search engines.`}
             </p>
           )}
           <Link
-            to={localizedPath("/blog")}
+            to={localizedPath(`/${section}`)}
             className="inline-flex items-center gap-2 text-white/50 hover:text-white transition-colors mb-10"
             style={{ fontSize: "var(--text-small)" }}
           >
             <ArrowLeft size={14} />
-            {t("blog.backToOverview")}
+            {section === "wissen" ? t("wissen.backToHub") : t("blog.backToOverview")}
           </Link>
 
           <h1

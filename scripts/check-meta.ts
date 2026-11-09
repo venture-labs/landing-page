@@ -66,7 +66,7 @@ const DRAFT_SLUGS = new Set<string>(
 function isDraftRoute(path: string): boolean {
   const parts = path.split("/").filter(Boolean);
   if (parts[1] === "entwurf-review") return true;
-  return parts[1] === "blog" && parts.length === 3 && DRAFT_SLUGS.has(parts[2]);
+  return (parts[1] === "blog" || parts[1] === "wissen") && parts.length === 3 && DRAFT_SLUGS.has(parts[2]);
 }
 const THEME_COLOR = "#0e0d13";
 const FORBIDDEN_LD_KEYS = ["Offer", "offers", "price", "priceCurrency", "SearchAction", "potentialAction"];
@@ -74,6 +74,7 @@ const FOOTER_KEY_BY_SECTION: Record<string, string> = {
   leistungen: "servicesTitle",
   cases: "projectsTitle",
   blog: "blog",
+  wissen: "wissen",
   "entwurf-review": "blog",
   "ueber-uns": "aboutTitle",
   kontakt: "contactTitle",

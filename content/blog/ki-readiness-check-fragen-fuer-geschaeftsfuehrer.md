@@ -73,7 +73,7 @@ content:
     href: "/leistungen/ki-reifegrad-test"  # prüfen: Seite /leistungen/ki-reifegrad-test ist geplant und existiert noch nicht; Link erst nach Fertigstellung der Seite live schalten
   - type: "link"
     text: "Wissen: Begriffe rund um KI im Mittelstand"
-    href: "/wissen"  # prüfen: Hub /wissen existiert erst nach dem Hub-Bau
+    href: "/wissen"
   - type: "link"
     text: "Weiterlesen: Warum KI-Projekte im Mittelstand scheitern"
     href: "/blog/warum-ki-projekte-im-mittelstand-scheitern"

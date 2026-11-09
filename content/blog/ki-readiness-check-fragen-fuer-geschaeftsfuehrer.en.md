@@ -73,7 +73,7 @@ content:
     href: "/leistungen/ki-reifegrad-test"  # prüfen: page /leistungen/ki-reifegrad-test is planned and does not exist yet; switch the link on only once the page is finished
   - type: "link"
     text: "Knowledge hub: terms around AI in mid-sized companies"
-    href: "/wissen"  # prüfen: hub /wissen only exists after the hub is built
+    href: "/wissen"
   - type: "link"
     text: "Further reading: Why AI projects in mid-sized companies fail"
     href: "/blog/warum-ki-projekte-im-mittelstand-scheitern"

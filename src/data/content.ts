@@ -20,6 +20,9 @@ import {
 } from "./de/cases";
 import { caseDetailsMap as caseDetailsDe, type CaseDetail } from "./de/caseDetails";
 import { blogPosts as blogPostsDe, type BlogPost } from "./de/blog";
+import { isWissenPost } from "./postKind";
+
+export { isWissenPost, postPath } from "./postKind";
 import { toolProfiles as toolProfilesDe, type ToolProfile } from "./de/tools";
 import { landingPages as landingPagesDe, type LandingPage } from "./de/landing";
 
@@ -83,9 +86,19 @@ export function useCaseDetail(slug?: string): CaseDetail | null {
   return (slug ? caseDetails[lang][slug] : undefined) ?? null;
 }
 
-/** Published posts only: drafts stay out of the blog list until the owner approves them. */
+/** Published blog posts only: drafts stay out of the blog list until the owner approves them; hub articles are not blog posts. */
 export function useBlogData(): BlogPost[] {
-  return blogPosts[useLocale().lang].filter((p) => !p.draft);
+  return blogPosts[useLocale().lang].filter((p) => !p.draft && !isWissenPost(p));
+}
+
+/** Published knowledge-hub articles (glossary entries and deep articles). */
+export function useWissenData(): BlogPost[] {
+  return blogPosts[useLocale().lang].filter((p) => !p.draft && isWissenPost(p));
+}
+
+/** Hub articles that are still drafts: shown on the hub only with ?entwuerfe=1, never indexed. */
+export function useWissenDrafts(): BlogPost[] {
+  return blogPosts[useLocale().lang].filter((p) => p.draft && isWissenPost(p));
 }
 
 /** Drafts for the hidden review page (/:lang/entwurf-review, noindex). */

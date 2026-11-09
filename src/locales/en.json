@@ -56,6 +56,7 @@
     "team": "Team",
     "jobs": "Jobs",
     "blog": "Blog",
+    "wissen": "Knowledge",
     "bookCall": "Book a call",
     "copyright": "All rights reserved.",
     "imprint": "Imprint",
@@ -191,6 +192,19 @@
     "de": "DE",
     "en": "EN"
   },
+  "wissen": {
+    "heroTitle": "Knowledge: AI agents and terms explained",
+    "heroSubtitle": "Short explanations of AI terms and in-depth articles on how AI agents are used, secured and paid for in a company. From our own operation.",
+    "deepHeading": "In-depth articles",
+    "glossaryHeading": "Terms from A to Z",
+    "draftsHeading": "Drafts (visible only with ?entwuerfe=1)",
+    "draftsNote": "Not published yet, blocked for search engines.",
+    "readEntry": "Read",
+    "backToHub": "Back to the knowledge hub",
+    "moreHeading": "Keep reading",
+    "serviceLink": "AI agents for companies: use, control and cost",
+    "checkLink": "Pulse Check: find out where an AI agent pays off"
+  },
   "blog": {
     "heroTitle": "Blog",
     "heroSubtitle": "Thoughts, learnings, and insights from our work on digital products, teams, and AI.",
@@ -301,6 +315,10 @@
     "kontakt": {
       "title": "Contact – What's on your mind? Book a call – Venture Labs",
       "description": "Pick the topics you're interested in – it helps us get back to you faster. We'll get back to you within one to two business days."
+    },
+    "wissen": {
+      "title": "Knowledge: AI agents explained simply – Venture Labs",
+      "description": "AI agent terms explained briefly, plus in-depth articles on how companies use, secure and pay for them. From our own day-to-day operation."
     },
     "blog": {
       "title": "Blog – Thoughts, learnings and insights – Venture Labs",

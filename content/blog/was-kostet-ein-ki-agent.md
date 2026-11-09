@@ -62,7 +62,7 @@ content:
     href: "/leistungen/ki-agenten-unternehmen"
   - type: "link"
     text: "Wissen: Begriffe und Grundlagen zu KI im Mittelstand"
-    href: "/wissen"  # prüfen: Hub /wissen existiert erst nach dem Hub-Bau
+    href: "/wissen"
   - type: "link"
     text: "Weiterlesen: Warum KI-Projekte im Mittelstand scheitern"
     href: "/blog/warum-ki-projekte-im-mittelstand-scheitern"

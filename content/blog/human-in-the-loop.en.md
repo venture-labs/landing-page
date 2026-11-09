@@ -39,11 +39,11 @@ content:
     href: "/leistungen/ki-agenten-unternehmen"
   - type: "link"
     text: "All terms in the knowledge section"
-    href: "/wissen"  # prüfen: hub /wissen only exists once the hub is built
+    href: "/wissen"
   - type: "link"
     text: "Permissions instead of text for AI agents"
-    href: "/blog/rechte-statt-text"
+    href: "/wissen/rechte-statt-text"
   - type: "link"
     text: "AI guardrails: limits for agents"
-    href: "/blog/ki-guardrails"
+    href: "/wissen/ki-guardrails"
 ---

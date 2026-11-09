@@ -67,7 +67,7 @@ content:
     href: "/blog/wartungswissen-sichern"
   - type: "link"
     text: "Wissen: Begriffe rund um Maschinendokumentation und KI"
-    href: "/wissen"  # prüfen: Hub /wissen existiert erst nach dem Hub-Bau
+    href: "/wissen"
   - type: "heading"
     text: "Häufige Fragen"
   - type: "paragraph"

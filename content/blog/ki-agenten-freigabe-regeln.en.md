@@ -62,7 +62,7 @@ content:
     href: "/leistungen/ki-agenten-unternehmen"
   - type: "link"
     text: "Knowledge hub: terms around AI agents"
-    href: "/wissen"  # prüfen: hub /wissen only exists after the hub is built
+    href: "/wissen"
   - type: "link"
     text: "Further reading: What does an AI agent really cost?"
     href: "/blog/was-kostet-ein-ki-agent"

@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
 import { useLocale } from "@/app/locale";
-import { useDraftPosts } from "@/data/content";
+import { useDraftPosts, postPath } from "@/data/content";
 
 /**
  * Hidden review page: lists every article that is still a draft (frontmatter
@@ -42,7 +42,7 @@ export function EntwurfReview() {
               <ul className="flex flex-col gap-3">
                 {rows.map((p) => (
                   <li key={p.slug} className="rounded-lg border border-white/10 px-4 py-3">
-                    <Link to={localizedPath(`/blog/${p.slug}`)} className="font-semibold underline underline-offset-4">
+                    <Link to={localizedPath(postPath(p))} className="font-semibold underline underline-offset-4">
                       {p.title}
                     </Link>
                     <p className="text-white/50 font-light" style={{ fontSize: "var(--text-small)" }}>

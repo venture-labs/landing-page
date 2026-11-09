@@ -38,11 +38,11 @@ content:
     href: "/leistungen/ki-agenten-unternehmen"
   - type: "link"
     text: "Alle Begriffe im Wissensbereich"
-    href: "/wissen"  # prüfen: Hub /wissen existiert erst nach dem Hub-Bau
+    href: "/wissen"
   - type: "link"
     text: "Was ist ein KI-Playbook?"
-    href: "/blog/ki-playbook"
+    href: "/wissen/ki-playbook"
   - type: "link"
     text: "Rechte statt Text bei KI-Agenten"
-    href: "/blog/rechte-statt-text"
+    href: "/wissen/rechte-statt-text"
 ---
