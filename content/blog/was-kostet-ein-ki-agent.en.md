@@ -62,7 +62,7 @@ content:
     href: "/leistungen/ki-agenten-unternehmen"
   - type: "link"
     text: "Knowledge hub: terms and basics on AI in mid-sized companies"
-    href: "/wissen"  # prüfen: hub /wissen only exists after the hub is built
+    href: "/wissen"
   - type: "link"
     text: "Further reading: Why AI projects in mid-sized companies fail"
     href: "/blog/warum-ki-projekte-im-mittelstand-scheitern"

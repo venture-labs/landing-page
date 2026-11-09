@@ -69,7 +69,7 @@ content:
     text: "Wartungswissen sichern: Was passiert, wenn der erfahrene Instandhalter geht"
     href: "/blog/wartungswissen-sichern"
   - type: "link"
-    text: "Alle Begriffe und Grundlagen im Wissensbereich"  # prüfen: Hub /wissen existiert erst nach dem Hub-Bau
+    text: "Alle Begriffe und Grundlagen im Wissensbereich"
     href: "/wissen"
   - type: "heading"
     text: "Häufige Fragen"

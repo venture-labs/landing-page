@@ -39,12 +39,12 @@ content:
     text: "KI-Agenten im Unternehmen einsetzen"
     href: "/leistungen/ki-agenten-unternehmen"
   - type: "link"
-    text: "Alle Begriffe im Wissensbereich"  # prüfen: Hub /wissen existiert erst nach dem Hub-Bau
+    text: "Alle Begriffe im Wissensbereich"
     href: "/wissen"
   - type: "link"
     text: "Verwandt: Was ist Agentic AI?"
-    href: "/blog/agentic-ai"
+    href: "/wissen/agentic-ai"
   - type: "link"
     text: "Verwandt: Was ist ein KI-Agent?"
-    href: "/blog/ki-agent"
+    href: "/wissen/ki-agent"
 ---

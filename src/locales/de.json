@@ -56,6 +56,7 @@
     "team": "Team",
     "jobs": "Jobs",
     "blog": "Blog",
+    "wissen": "Wissen",
     "bookCall": "Gespräch buchen",
     "copyright": "Alle Rechte vorbehalten.",
     "imprint": "Impressum",
@@ -191,6 +192,19 @@
     "de": "DE",
     "en": "EN"
   },
+  "wissen": {
+    "heroTitle": "Wissen: KI-Agenten und Begriffe einfach erklärt",
+    "heroSubtitle": "Kurze Erklärungen zu KI-Begriffen und Fachartikel dazu, wie KI-Agenten im Unternehmen eingesetzt, abgesichert und bezahlt werden. Aus dem eigenen Betrieb.",
+    "deepHeading": "Fachartikel",
+    "glossaryHeading": "Begriffe von A bis Z",
+    "draftsHeading": "Entwürfe (nur mit ?entwuerfe=1 sichtbar)",
+    "draftsNote": "Noch nicht veröffentlicht, für Suchmaschinen gesperrt.",
+    "readEntry": "Lesen",
+    "backToHub": "Zurück zum Wissensbereich",
+    "moreHeading": "Weiterlesen",
+    "serviceLink": "KI-Agenten für Unternehmen: Einsatz, Kontrolle und Kosten",
+    "checkLink": "Pulse Check: herausfinden, wo ein KI-Agent sich lohnt"
+  },
   "blog": {
     "heroTitle": "Blog",
     "heroSubtitle": "Gedanken, Learnings und Einblicke aus unserer Arbeit mit digitalen Produkten, Teams und KI.",
@@ -301,6 +315,10 @@
     "kontakt": {
       "title": "Kontakt aufnehmen – Was ist dein Anliegen? – Venture Labs",
       "description": "Wähle die Themen aus, die dich interessieren – das hilft uns, dir schneller zu antworten. Wir melden uns innerhalb von ein bis zwei Werktagen bei dir."
+    },
+    "wissen": {
+      "title": "Wissen: KI-Agenten und Begriffe erklärt – Venture Labs",
+      "description": "Begriffe rund um KI-Agenten kurz erklärt und Fachartikel dazu, wie Unternehmen sie einsetzen, absichern und bezahlen. Aus dem eigenen Betrieb."
     },
     "blog": {
       "title": "Blog – Gedanken, Learnings und Einblicke – Venture Labs",

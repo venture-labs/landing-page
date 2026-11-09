@@ -32,9 +32,9 @@ content:
   - type: "paragraph"
     text: "Sind Dokumente und Logbuch erst an einer Stelle gesammelt, kann ein Assistent daraus Fragen beantworten, mit Quelle und mit dem ehrlichen Hinweis, wenn er etwas nicht findet. Er ersetzt keinen Techniker, er spart die Suche. Voraussetzung ist, dass das Wissen vorher aufgeschrieben wurde."  # prüfen: Assistenten-Aussage ist Plan für die Seite KI-Wartungsassistent und noch keine gebaute Landing Page; Produktstand vor dem Go-live gegen die Produktdokumentation prüfen
   - type: "heading"
-    text: "Womit du anfangen kannst"
+    text: "Womit sich anfangen lässt"
   - type: "paragraph"
-    text: "Nicht mit allen Maschinen auf einmal. Such dir eine Maschine, deren Wissen an wenigen Personen hängt, und sammle für sie Dokumente und die wichtigsten Erfahrungen an einem Ort. Was das für deine Maschinen bedeuten würde, besprechen wir gern."
+    text: "Nicht mit allen Maschinen auf einmal. Sinnvoll ist eine Maschine, deren Wissen an wenigen Personen hängt: Für sie werden Dokumente und die wichtigsten Erfahrungen an einem Ort gesammelt. Was das für die eigenen Maschinen bedeuten würde, besprechen wir gern."
   - type: "link"
     text: "So funktioniert die digitale Maschinenakte"
     href: "/leistungen/digitale-maschinenakte"

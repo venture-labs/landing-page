@@ -67,7 +67,7 @@ content:
     text: "Role or dedicated agent: when which makes sense"
     href: "/blog/playbook-rolle-oder-eigener-agent"
   - type: "link"
-    text: "All terms and basics in the knowledge hub"  # prüfen: Hub /wissen existiert erst nach dem Hub-Bau
+    text: "All terms and basics in the knowledge hub"
     href: "/wissen"
   - type: "heading"
     text: "Frequently asked questions"

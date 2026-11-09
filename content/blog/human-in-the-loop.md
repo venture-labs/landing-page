@@ -39,11 +39,11 @@ content:
     href: "/leistungen/ki-agenten-unternehmen"
   - type: "link"
     text: "Alle Begriffe im Wissensbereich"
-    href: "/wissen"  # prüfen: Hub /wissen existiert erst nach dem Hub-Bau
+    href: "/wissen"
   - type: "link"
     text: "Rechte statt Text bei KI-Agenten"
-    href: "/blog/rechte-statt-text"
+    href: "/wissen/rechte-statt-text"
   - type: "link"
     text: "KI-Guardrails: Grenzen für Agenten"
-    href: "/blog/ki-guardrails"
+    href: "/wissen/ki-guardrails"
 ---

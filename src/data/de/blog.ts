@@ -98,11 +98,11 @@ export const blogPosts: BlogPost[] = [
       },
       {
         "type": "paragraph",
-        "text": "Genau an diesen fünf Stellen setzt der AI Pulse Check an. In 1 bis 2 Tagen schauen wir uns an, wie bei dir tatsächlich gearbeitet wird: Prozesse, Daten, Tools und Team. Am Ende steht keine Präsentation, sondern eine sortierte Liste mit den Anwendungsfällen, die sich zuerst lohnen, und eine ehrliche Empfehlung: umsetzen, warten oder lassen."
+        "text": "Genau an diesen fünf Stellen setzt der AI Pulse Check an. In 1 bis 2 Tagen schauen wir uns an, wie im Betrieb tatsächlich gearbeitet wird: Prozesse, Daten, Tools und Team. Am Ende steht keine Präsentation, sondern eine sortierte Liste mit den Anwendungsfällen, die sich zuerst lohnen, und eine ehrliche Empfehlung: umsetzen, warten oder lassen."
       },
       {
         "type": "paragraph",
-        "text": "So wird aus «Wir sollten mal was mit KI machen» eine Entscheidung, die du begründen kannst, bevor Geld fließt."
+        "text": "So wird aus «Wir sollten mal was mit KI machen» eine Entscheidung, die sich begründen lässt, bevor Geld fließt."
       },
       {
         "type": "link",
@@ -289,11 +289,11 @@ export const blogPosts: BlogPost[] = [
       },
       {
         "type": "heading",
-        "text": "Womit du anfangen kannst"
+        "text": "Womit sich anfangen lässt"
       },
       {
         "type": "paragraph",
-        "text": "Nicht mit allen Maschinen auf einmal. Such dir eine Maschine, deren Wissen an wenigen Personen hängt, und sammle für sie Dokumente und die wichtigsten Erfahrungen an einem Ort. Was das für deine Maschinen bedeuten würde, besprechen wir gern."
+        "text": "Nicht mit allen Maschinen auf einmal. Sinnvoll ist eine Maschine, deren Wissen an wenigen Personen hängt: Für sie werden Dokumente und die wichtigsten Erfahrungen an einem Ort gesammelt. Was das für die eigenen Maschinen bedeuten würde, besprechen wir gern."
       },
       {
         "type": "link",
@@ -530,11 +530,11 @@ export const blogPosts: BlogPost[] = [
     "slug": "playbook-rolle-oder-eigener-agent",
     "title": "Playbook, Rolle oder eigener KI-Agent: Was lohnt wann?",
     "seoTitle": "Playbook oder KI-Agent: Was lohnt wann? – Venture Labs",
-    "seoDescription": "Playbook, Rolle, Basis-Agent oder eigener KI-Agent? Was die Begriffe bedeuten, warum Rechte mehr taugen als ein neuer Starttext und wie du entscheidest.",
-    "excerpt": "Playbook, Rolle, Basis-Agent, eigener Agent: Was die Begriffe bedeuten, warum Rechte mehr taugen als ein neuer Starttext und woran du erkennst, was du wirklich brauchst.",
+    "seoDescription": "Playbook, Rolle, Basis-Agent oder eigener KI-Agent? Was die Begriffe bedeuten, warum Rechte mehr taugen als ein neuer Starttext und wie die Entscheidung fällt.",
+    "excerpt": "Playbook, Rolle, Basis-Agent, eigener Agent: Was die Begriffe bedeuten, warum Rechte mehr taugen als ein neuer Starttext und woran sich zeigt, was wirklich nötig ist.",
     "topicSlug": "ai-automation",
     "topic": "AI Automation",
-    "readTime": "7 Min. Lesezeit",
+    "readTime": "9 Min. Lesezeit",
     "featured": false,
     "publishedDate": "6. November 2026",
     "author": "VentureLabs Team",
@@ -546,77 +546,408 @@ export const blogPosts: BlogPost[] = [
     "content": [
       {
         "type": "paragraph",
-        "text": "Die Kurzantwort: Ein Playbook reicht, solange dem Agenten nur Wissen oder ein Ablauf fehlt. Sobald er andere Rechte, einen anderen Ordner oder ein anderes Modell braucht oder ein Fehler nach außen gehen kann, braucht er mehr als Text. Dann lohnt sich ein eigener Agent, am besten auf einem gemeinsamen Basis-Agenten. Hier die Begründung, ohne Vorwissen."
+        "text": "Ein Playbook ist ein Text, der einem KI-Agenten sagt, wie er vorgehen soll. Eine Rolle ist die Startkonfiguration, mit der ein Agent loslegt; das Playbook bildet deren Kern. Ein eigener KI-Agent hat zusätzlich eigene Ordner, Werkzeuge, ein eigenes Modell und eigene Schlüssel, und das System erzwingt diese Grenzen. Die Faustregel dazu: Text bittet, Rechte erzwingen. Am Anfang genügt meist das Playbook; getrennt wird erst, wenn es wehtut."
       },
       {
         "type": "heading",
-        "text": "Die Begriffe in einem Absatz"
+        "text": "Warum diese Sortierung nötig ist"
       },
       {
         "type": "paragraph",
-        "text": "Ein Playbook ist eine Anleitung, die beschreibt, wie sich eine Rolle verhält: Ziel, Schritte, Grenzen, Format. Die Rolle ist die Startkonfiguration, in der ein Agent loslegt, also Playbook, Skills, Modell, Obergrenzen und gegebenenfalls Ordner und Werkzeuge. Ein Skill ist ein Wissenspaket, das der Agent bei Bedarf lädt. Ein Basis-Agent, auch Blaupause oder Vorlage genannt, ist der fertige Rohbau mit Code, Wächtern, Protokoll und Schlüsselverwaltung. Ein eigener Agent ist ein Agent in eigener Umgebung. Quellen schließlich sagen ihm, was gilt."
+        "text": "In Netzwerken kursieren zwei Parolen: keine vielen Agenten mehr bauen, nur noch Playbooks, und das Gegenteil davon. Beide klingen gut, beide sind Parolen und kein Fachwissen."
+      },
+      {
+        "type": "paragraph",
+        "text": "Venture Labs betreibt selbst einen Cluster aus KI-Agenten für das eigene Unternehmen und nutzt dort alle drei Varianten: Playbooks, Rollen und eigene Agenten. Die folgende Sortierung stammt aus diesem Betrieb, mit Beispielen daraus."
       },
       {
         "type": "heading",
-        "text": "Was ein Playbook kann und was nicht"
+        "text": "Die Begriffe in einer Minute"
       },
       {
         "type": "paragraph",
-        "text": "Ein Playbook ist ideal für Ablauf, Tonfall und Format. Es kostet Minuten, lässt sich jederzeit ändern und reicht, wenn der Agent schon alles hat, was er braucht. Seine Grenze: Ein Playbook ist eine Bitte, keine Sperre. Steht dort «schreibe nie in den Kundenordner», hält sich der Agent in den meisten Fällen daran. Ob er es kann, entscheiden aber die Rechte."
-      },
-      {
-        "type": "heading",
-        "text": "Basis-Agent: warum du nicht jeden Agenten neu schreibst"
+        "text": "Playbook: ein Text, der beschreibt, wie in einer Lage vorgegangen wird, mit Ziel, Schritten, Grenzen und dem gewünschten Ergebnis. Anleitung, Runbook oder Handbuch sind andere Namen für dasselbe. Technisch kommt das Playbook als System-Prompt beim Agenten an, also als der Text, der vor jeder Frage steht."
       },
       {
         "type": "paragraph",
-        "text": "Wer mehrere Agenten betreibt, braucht überall dasselbe: sauberes Protokoll, Wiederholungen bei kurzen Netzfehlern, Schlüssel, die nie im Text oder in Ausgaben landen, Wächter und einen Halt vor allem, was nach außen geht. Das gehört in eine gemeinsame Basis. Jeder weitere Agent setzt darauf auf und bringt nur mit, was ihn unterscheidet: Rolle, Skills, Ordner, Werkzeuge, Quellen. Der Vorteil: Eine Verbesserung an der Basis erreicht alle Agenten, die sie benutzen. Die Kehrseite: Ein Fehler in der Basis trifft auch alle. Deshalb ändert man sie mit Tests, und sie lohnt sich ab dem zweiten ähnlichen Agenten."
-      },
-      {
-        "type": "heading",
-        "text": "Rechte statt Text: der Unterschied, auf den es ankommt"
+        "text": "Rolle: die Konfiguration, in der ein Agent startet. Dazu gehören das Playbook, Skills, das Modell und eine Obergrenze für Arbeitsschritte oder Kosten. Wer «Rolle» sagt, meint oft nur einen Satz am Anfang des Prompts; eine ordentlich gebaute Rolle ist mehr. Die Persona, also Tonfall und Auftreten, ist ein Teil davon."
       },
       {
         "type": "paragraph",
-        "text": "Der bequeme Weg für eine neue Aufgabe ist ein neuer Starttext. Der Agent bekommt alles, was der vorige hatte, plus eine Bitte. Besser ist ein Start mit angepassten Rechten: nur die nötigen Ordner, nur die nötigen Werkzeuge, ein eigener Schlüssel mit Budget, passende Wächter und eine Freigabe vor allem, was nach außen geht. Ein Text bringt keine durchgesetzten Kriterien mit. Rechte, Werkzeuge, Wächter und Freigaben schon."
+        "text": "Eigener Agent: ein Agent in einer eigenen kleinen Welt, mit eigenem Ordner, eigenen Werkzeugen, eigenen Schlüsseln, eigenem Modell und einem Protokoll. Hier setzt das System die Grenzen durch, nicht der Text."
       },
       {
         "type": "paragraph",
-        "text": "Ein Beispiel aus unserem eigenen Betrieb: Wir haben einen Agenten, der Kundeninstallationen betreut und dafür eigene Werkzeuge hat. Er sollte eine neue Version freigeben und konnte es nicht, weil es für ihn kein Werkzeug «Version freigeben» gab. Ein Satz im Prompt wie «du darfst alles» hätte daran nichts geändert. Die Lösung war das fehlende Werkzeug, mit einer Protokollzeile bei jeder Freigabe. Rechte sind Werkzeuge und Freigaben im System, kein Satz im Prompt."
+        "text": "Dazu kommen Skills (Pakete mit Können, die ein Agent bei Bedarf lädt) und Quellen (Dokumente, Wissensdatenbank, Listen, die sagen, was gilt). Beide geben dem Agenten Wissen, aber keine Rechte."
       },
       {
         "type": "link",
-        "text": "Mehr dazu im kostenlosen Leitfaden «Playbook, Rolle oder eigener Agent?» (PDF, 25 Seiten)",
-        "href": "/playbook"
-      },
-      {
-        "type": "heading",
-        "text": "Wann sich ein eigener Agent lohnt"
-      },
-      {
-        "type": "paragraph",
-        "text": "Vier Fragen helfen. Braucht die Aufgabe andere Rechte, Werkzeuge oder einen anderen Ordner? Kann ein Fehler teuer werden oder nach außen gehen, etwa zum Kunden, zur Zahlung, ins Live-System? Brauchst du ein anderes Modell, weil es günstiger, stärker oder aus Datenschutzgründen lokal sein soll? Läuft die Arbeit lange oder täglich und braucht eigenes Gedächtnis? Sobald eine Antwort Ja lautet, ist ein eigener Agent die ehrlichere Lösung. Wechselt nur der Blickwinkel bei gleichen Rechten, genügt eine Rolle. Fehlt nur Wissen, genügen Playbook und Quelle."
-      },
-      {
-        "type": "heading",
-        "text": "Keine Parolen: das richtige Werkzeug pro Frage"
-      },
-      {
-        "type": "paragraph",
-        "text": "Gerade heißt es oft, man solle keine vielen Agenten mehr bauen, sondern Playbooks. Das ist eine eingängige Parole, kein Expertenwissen. Für Wissen und Abläufe reicht ein Playbook tatsächlich oft. Aber überall dort, wo Rechte, Ordner oder Außenwirkung verschieden sind, kann Text nichts erzwingen. Das Gegenteil, für alles einen eigenen Agenten zu bauen, kostet Betrieb und Pflege. Wer es kann, nutzt alle Varianten zur richtigen Zeit und nimmt für jede Frage die kleinste, die reicht."
-      },
-      {
-        "type": "heading",
-        "text": "So fängst du an"
-      },
-      {
-        "type": "paragraph",
-        "text": "Wähle eine Aufgabe, die du selbst oft gemacht hast und deren Ergebnis du in zwei Minuten prüfen kannst. Schreibe dafür ein Playbook auf einer Seite und gib dem Agenten nur Lesezugriff. Baue eine echte Sperre für das, was nie passieren darf. Lass zehn echte Fälle laufen und lies jedes Ergebnis selbst. Erst danach denkst du über Trennung, ein anderes Modell oder eine Blaupause nach."
+        "text": "Die Einzelbegriffe im Glossar: KI-Playbook",
+        "href": "/wissen/ki-playbook"
       },
       {
         "type": "link",
-        "text": "Mit dem Pulse Check herausfinden, welche deiner Aufgaben ein Playbook, einen eigenen Agenten oder noch keine KI brauchen",
-        "href": "/leistungen"
+        "text": "Rolle, Persona und System-Prompt",
+        "href": "/wissen/rolle-system-prompt"
+      },
+      {
+        "type": "link",
+        "text": "Was ist ein KI-Skill?",
+        "href": "/wissen/ki-skill"
+      },
+      {
+        "type": "heading",
+        "text": "Der Unterschied, der alles entscheidet"
+      },
+      {
+        "type": "paragraph",
+        "text": "Ein Playbook ist eine Bitte, keine Sperre. Steht darin «schreibe nie in den Kundenordner», hält sich ein Agent in den meisten Fällen daran. Ob er es kann, entscheiden die Rechte. Eine Rolle, die nur aus Text besteht, ändert die Anweisung und sonst nichts. Gehören zur Rolle auch Ordner, Werkzeuge, Schlüssel und Sperren, die das System durchsetzt, ist es ein eigener Agent."
+      },
+      {
+        "type": "paragraph",
+        "text": "Der Text sagt, was der Agent tun soll. Die Rechte bestimmen, was er tun kann."
+      },
+      {
+        "type": "heading",
+        "text": "Wann ein Playbook oder eine Rolle reicht"
+      },
+      {
+        "type": "paragraph",
+        "text": "Wenn der Agent alles hat, was er braucht, und nur Know-how fehlt: ein Ablauf, ein Tonfall, eine Checkliste, ein Format. Und wenn ein Fehler billig ist und sich leicht zurückdrehen lässt."
+      },
+      {
+        "type": "paragraph",
+        "text": "Ein Beispiel sind zwei Tester im selben Projekt. Der eine prüft Schnittstellen und Datenbank, der andere Klickwege und Barrierefreiheit. Beide brauchen dieselben Rechte: Ordner lesen, Tests starten, einen Bericht schreiben. Beide bekommen nur unterschiedliche Anleitungen und Skills. Ein eigener Container oder Prozess wäre hier nur Mehraufwand."
+      },
+      {
+        "type": "paragraph",
+        "text": "Ein Beispiel für ein gutes Playbook aus dem eigenen Betrieb: Am 6. November 2026 bekam die Rolle, die Entwicklungsaufgaben koordiniert, einen Ablauf namens «Teil streichen». Er beschreibt, wie ein abgelehnter Teil einer Aufgabe überall verschwindet, damit nichts mehr an ihm hängen bleibt. Anlass war, dass dieselben Bildschirme zweimal gebaut worden waren. Ein neuer Agent war dafür nicht nötig."
+      },
+      {
+        "type": "paragraph",
+        "text": "Ein gutes Playbook enthält das Ziel in einem Satz, die Schritte in der richtigen Reihenfolge mit Entscheidungen («wenn X, dann Y»), die Grenzen («was wird nie getan?») und das Format, am besten mit einem guten und einem schlechten Beispiel."
+      },
+      {
+        "type": "heading",
+        "text": "Wann ein eigener KI-Agent sinnvoll ist: vier Fragen"
+      },
+      {
+        "type": "paragraph",
+        "text": "Einmal «Ja», und die Trennung lohnt sich meistens. Viermal «Nein», dann genügt ein Playbook."
+      },
+      {
+        "type": "paragraph",
+        "text": "Erstens: Braucht die Aufgabe andere Rechte, andere Werkzeuge oder einen anderen Ordner, etwa Schreibzugriff, ein Konto oder einen Kundenordner? Zweitens: Kann ein Fehler teuer werden oder nach außen gehen, zum Kunden, zur Zahlung, in eine Veröffentlichung oder in ein Live-System? Dann braucht es eine Sperre und die Freigabe durch einen Menschen. Drittens: Braucht die Aufgabe ein anderes Modell, weil es günstiger, stärker oder lokal sein muss, damit Daten das Haus nicht verlassen? Viertens: Läuft die Arbeit täglich und braucht sie ein eigenes Gedächtnis?"
+      },
+      {
+        "type": "paragraph",
+        "text": "Wechselt nur der Blickwinkel bei gleichen Rechten, etwa Backend testen oder Frontend testen, Texter oder Lektor, reicht eine Rolle. Fehlt nur Wissen oder ein Ablauf, reicht ein Playbook, gegebenenfalls mit einer Quelle."
+      },
+      {
+        "type": "heading",
+        "text": "Warum Rechte mehr taugen als ein neuer Starttext"
+      },
+      {
+        "type": "paragraph",
+        "text": "Der bequeme Weg: neue Aufgabe, neuer Starttext, fertig. Dann hat der Agent alles, was der vorige auch hatte, plus eine Bitte. Der bessere Weg ist ein Start mit angepassten Rechten: nur der erlaubte Ordner ist sichtbar, nur die nötigen Werkzeuge sind da, es gibt einen eigenen Schlüssel mit eigenem Budget. Ein «Geht nicht» steht dann im Protokoll, und im Fehlerfall greift die Sperre, egal was der Agent verstanden hat."
+      },
+      {
+        "type": "paragraph",
+        "text": "Ein Fall aus dem eigenen Betrieb, vom 6. November 2026: Ein Agent, der Kundeninstallationen betreut, sollte eine neue Version der Software freigeben und konnte es nicht, weil es für ihn kein Werkzeug «Version freigeben» gab. Ein Satz im Prompt wie «alles ist erlaubt» hätte daran nichts geändert. Die Lösung war kein neuer Satz, sondern das fehlende Werkzeug, mit einer Protokollzeile bei jeder Freigabe."
+      },
+      {
+        "type": "link",
+        "text": "Vertiefung: Rechte statt Text als eigener Artikel",
+        "href": "/wissen/rechte-statt-text"
+      },
+      {
+        "type": "heading",
+        "text": "Was ein eigener Agent an Mehraufwand bedeutet"
+      },
+      {
+        "type": "paragraph",
+        "text": "Das soll nicht schöngeredet werden. Ein eigener Agent kostet Einrichtung (Rechte, Schlüssel, Überwachung), Übergaben (was der eine weiß, muss er dem anderen mitteilen), Betrieb (jeder Agent kann ausfallen, veralten oder Geld kosten) und Pflege (eine Regel muss in jeder Kopie ankommen). Im eigenen Betrieb hat eine lange Kette aus vielen einzelnen Rollen-Sitzungen mehr gekostet als ein einzelner Agent mit eigenem Ordner. Das ist eine Erfahrung, keine Messung gegen Playbooks als Ganzes."
+      },
+      {
+        "type": "paragraph",
+        "text": "Und ein Modellwechsel kann eine Anleitung zerlegen. Ein Prüf-Agent lief einmal kurz auf einem anderen Modell mit derselben Anleitung. Das neue Modell schrieb das Urteil mit Sternchen, der Parser erwartete es ohne. Aus einer Freigabe wurde «Mensch nötig», wegen eines Formatunterschieds von einer Zeile. Darum wird nach jedem Modellwechsel mit echten Testfällen geprüft."
+      },
+      {
+        "type": "heading",
+        "text": "Der Basis-Agent: nie bei null anfangen"
+      },
+      {
+        "type": "paragraph",
+        "text": "Wer mehrere ähnliche Agenten braucht, schreibt nicht jeden neu. Ein Basis-Agent, auch Blaupause oder Vorlage genannt, ist der fertige Rohbau: Grundcode, Sperren, Protokoll, Wiederholungen bei kurzen Netzfehlern, Schlüsselverwaltung, Modellwahl aus einem Katalog und ein Halt vor allem, was nach außen geht. Obendrauf kommt nur, was den Agenten besonders macht: Rolle, Skills, Ordner, Werkzeuge. Wird die Basis verbessert, profitieren alle. Der Preis: Ein Fehler in der Basis trifft ebenfalls alle, deshalb wird sie nur mit Tests geändert. Lohnend ist das ab dem zweiten ähnlichen Agenten."
+      },
+      {
+        "type": "link",
+        "text": "Mehr dazu: Multi-Agent-System und Basis-Agent",
+        "href": "/wissen/multi-agent-system"
+      },
+      {
+        "type": "heading",
+        "text": "Die Grundregel: erst fragen, was das Schlimmste wäre"
+      },
+      {
+        "type": "paragraph",
+        "text": "Vorab steht eine Frage: Was ist das Schlimmste, das passieren kann? Geht es nach außen oder wird es teuer, braucht es Sperre und Freigabe, also einen eigenen Agenten. Wechselt nur der Blickwinkel, genügt eine Rolle. Fehlt nur Wissen, genügt ein Playbook mit Quelle. Gibt es mehrere ähnliche Agenten, wird auf einer Blaupause gebaut statt kopiert. Und es wird klein angefangen: erst das Playbook, getrennt wird, wenn es wehtut. Kein Dogma, immer das kleinste Werkzeug, das reicht."
+      },
+      {
+        "type": "heading",
+        "text": "Häufige Fragen"
+      },
+      {
+        "type": "paragraph",
+        "text": "Ist ein Playbook dasselbe wie ein System-Prompt? Nicht ganz. Der System-Prompt ist der Weg, auf dem das Playbook beim Agenten ankommt, nämlich der Text, der beim Start vor jeder Frage steht. Das Playbook ist der Inhalt: Ziel, Schritte, Grenzen, Format."
+      },
+      {
+        "type": "paragraph",
+        "text": "Brauchen kleine Unternehmen überhaupt eigene KI-Agenten? Am Anfang meistens nicht. Ein gutes Playbook mit klaren Quellen reicht für viele Aufgaben. Sobald etwas nach außen geht, etwa eine Kundenmail, eine Zahlung oder eine Veröffentlichung, braucht es Freigaben, die kein Text ersetzt."
+      },
+      {
+        "type": "paragraph",
+        "text": "Wie lässt sich ohne eigene IT-Abteilung herausfinden, welche Abläufe sich für einen Agenten eignen? Dafür gibt es den Pulse Check: Gemeinsam wird angesehen, welche Abläufe sich überhaupt eignen und was dort jeweils das Schlimmste wäre, das passieren kann."
+      },
+      {
+        "type": "heading",
+        "text": "Weiterlesen"
+      },
+      {
+        "type": "link",
+        "text": "Wie der Unterschied zwischen KI-Agent und Chatbot aussieht",
+        "href": "/wissen/ki-agent-oder-chatbot"
+      },
+      {
+        "type": "link",
+        "text": "KI-Agenten für Unternehmen: Einsatz, Kontrolle und Kosten",
+        "href": "/leistungen/ki-agenten-unternehmen"
+      },
+      {
+        "type": "link",
+        "text": "Alle Begriffe im Wissensbereich",
+        "href": "/wissen"
+      },
+      {
+        "type": "link",
+        "text": "Mit dem Pulse Check klären, welche Abläufe ein Playbook und welche einen eigenen Agenten brauchen",
+        "href": "/leistungen/ki-potenzialanalyse"
+      }
+    ]
+  },
+  {
+    "slug": "ki-agent",
+    "title": "Was ist ein KI-Agent? Einfach erklärt",
+    "seoTitle": "Was ist ein KI-Agent? Einfach erklärt – Venture Labs",
+    "seoDescription": "Was ist ein KI-Agent? Ein Programm, das mit einem Sprachmodell Aufgaben in mehreren Schritten erledigt und Werkzeuge nutzt. Erklärt mit Beispielen.",
+    "excerpt": "Ein KI-Agent erledigt mit einem Sprachmodell Aufgaben in mehreren Schritten und nutzt dafür Werkzeuge. Wie er arbeitet, wo er sich vom Chatbot unterscheidet und was im Unternehmen zu beachten ist.",
+    "topicSlug": "ai-automation",
+    "topic": "AI Automation",
+    "readTime": "4 Min. Lesezeit",
+    "featured": false,
+    "publishedDate": "9. November 2026",
+    "author": "VentureLabs Team",
+    "draft": false,
+    "kind": "glossar",
+    "plannedUrl": "/de/wissen/ki-agent/",
+    "week": "",
+    "keyword": "was ist ein ki agent",
+    "content": [
+      {
+        "type": "paragraph",
+        "text": "Ein KI-Agent ist ein Programm, das mit einem Sprachmodell Aufgaben in mehreren Schritten erledigt und dabei Werkzeuge nutzt, etwa Mail, Dokumente oder eine Datenbank. Anders als ein Chatbot, der eine Frage beantwortet, übernimmt ein Agent einen Arbeitsschritt: Er liest etwas, entscheidet nach Regeln und bereitet das Ergebnis vor oder führt den Schritt aus."
+      },
+      {
+        "type": "heading",
+        "text": "Wie ein KI-Agent arbeitet"
+      },
+      {
+        "type": "paragraph",
+        "text": "Ein Agent bekommt ein Ziel und kein festes Drehbuch. Das Sprachmodell entscheidet, welcher Schritt als Nächstes kommt, ruft dafür ein Werkzeug auf, liest das Ergebnis und entscheidet erneut. Das wiederholt sich, bis das Ziel erreicht ist oder eine Grenze greift, etwa ein Kostendeckel oder eine Freigabe, die ein Mensch erteilen muss."
+      },
+      {
+        "type": "heading",
+        "text": "Was ein KI-Agent im Unternehmen übernimmt"
+      },
+      {
+        "type": "paragraph",
+        "text": "Typische Aufgaben sind Mails sortieren, Belege zuordnen, Angebote vorbereiten oder Anfragen im Service vorqualifizieren. Gemeinsam ist ihnen, dass der Weg von Fall zu Fall etwas anders aussieht, die Aufgabe aber klare Ein- und Ausgaben hat und ein Fehler sich korrigieren lässt."
+      },
+      {
+        "type": "heading",
+        "text": "KI-Agent, Chatbot und Workflow"
+      },
+      {
+        "type": "paragraph",
+        "text": "Ein Chatbot antwortet und handelt nicht selbst. Ein Workflow folgt einem festen, vorab programmierten Pfad, in dem das Modell einzelne Stationen ausfüllt. Ein Agent entscheidet selbst über den Weg und nutzt dafür Werkzeuge. Je mehr Freiheit das Modell hat, desto weniger vorhersagbar ist das Ergebnis; deshalb gilt der Grundsatz, die einfachste Lösung zu wählen, die reicht."
+      },
+      {
+        "type": "link",
+        "text": "KI-Agent oder Chatbot: der Unterschied im Unternehmensalltag",
+        "href": "/wissen/ki-agent-oder-chatbot"
+      },
+      {
+        "type": "heading",
+        "text": "Kontrolle und Kosten"
+      },
+      {
+        "type": "paragraph",
+        "text": "Ein Agent handelt, deshalb braucht er Grenzen, die das System durchsetzt und nicht nur ein Text, der darum bittet. In unserem eigenen Betrieb gilt: Lesen darf ein Agent viel, schreiben nur mit Freigabe. Was nach außen geht, entsteht als Entwurf, und ein Mensch gibt es frei. Jeder Agent hat außerdem einen Kostendeckel; ist er erreicht, hält der Agent an."
+      },
+      {
+        "type": "heading",
+        "text": "Häufige Fragen"
+      },
+      {
+        "type": "paragraph",
+        "text": "Ist ein KI-Agent dasselbe wie ein Sprachmodell? Nein. Das Sprachmodell ist der Baustein, der Texte versteht und erzeugt. Zum Agenten wird es erst durch die Schleife aus Entscheiden, Werkzeug nutzen und Ergebnis lesen, eingebettet in ein Programm mit Regeln und Grenzen."
+      },
+      {
+        "type": "paragraph",
+        "text": "Braucht jedes Unternehmen einen KI-Agenten? Nein. Für feste, wiederkehrende Abläufe genügt oft ein Workflow, und manchmal ist KI nicht das richtige Mittel. Ob und wo ein Agent sich lohnt, hängt vom einzelnen Prozess ab."
+      },
+      {
+        "type": "paragraph",
+        "text": "Wie lässt sich herausfinden, wo ein Agent sich lohnt? Der Pulse Check sieht sich Prozesse, Daten, Tools und Team an und sortiert die Anwendungsfälle nach Nutzen und Risiko."
+      },
+      {
+        "type": "link",
+        "text": "KI-Agenten für Unternehmen: Einsatz, Kontrolle und Kosten",
+        "href": "/leistungen/ki-agenten-unternehmen"
+      },
+      {
+        "type": "link",
+        "text": "KI-Agenten im Unternehmensalltag: fünf Anwendungsfälle",
+        "href": "/blog/ki-agenten-use-cases"
+      },
+      {
+        "type": "link",
+        "text": "Alle Begriffe im Wissensbereich",
+        "href": "/wissen"
+      }
+    ]
+  },
+  {
+    "slug": "ki-agent-oder-chatbot",
+    "title": "KI-Agent oder Chatbot? Der Unterschied im Unternehmensalltag",
+    "seoTitle": "KI-Agent oder Chatbot? Unterschied im Betrieb – Venture Labs",
+    "seoDescription": "KI-Agent oder Chatbot: Ein Chatbot antwortet, ein Agent erledigt Arbeitsschritte mit Werkzeugen. Vier Fragen zeigen, was ein Unternehmen braucht.",
+    "excerpt": "Ein Chatbot beantwortet Fragen, ein KI-Agent übernimmt Arbeitsschritte und nutzt dafür Werkzeuge. Was das für Aufwand, Risiko und Kontrolle heißt und welche vier Fragen die Wahl klären.",
+    "topicSlug": "ai-automation",
+    "topic": "AI Automation",
+    "readTime": "6 Min. Lesezeit",
+    "featured": false,
+    "publishedDate": "9. November 2026",
+    "author": "VentureLabs Team",
+    "draft": false,
+    "kind": "tiefenartikel",
+    "plannedUrl": "/de/wissen/ki-agent-oder-chatbot/",
+    "week": "",
+    "keyword": "ki agent vs chatbot",
+    "content": [
+      {
+        "type": "paragraph",
+        "text": "Die Kurzantwort: Ein Chatbot beantwortet eine Frage und handelt nicht selbst. Ein KI-Agent übernimmt einen Arbeitsschritt: Er nutzt Werkzeuge, liest Ergebnisse und entscheidet, was als Nächstes kommt. Wer nur Auskünfte aus bekannten Dokumenten braucht, kommt mit einem Chatbot aus. Soll etwas getan werden, braucht es einen Agenten, und dann auch Grenzen für das, was er tun darf."
+      },
+      {
+        "type": "heading",
+        "text": "Was ein Chatbot kann"
+      },
+      {
+        "type": "paragraph",
+        "text": "Ein Chatbot führt ein Gespräch. Er bekommt eine Frage und liefert eine Antwort, im besten Fall aus den Dokumenten eines Unternehmens. Was danach passiert, liegt bei der Person, die gefragt hat. Der Chatbot verändert nichts: Er schickt keine Mail, bucht nichts um und legt keine Datei ab. Das macht ihn einfach abzusichern und für Auskünfte, Suche und Erklärungen gut geeignet."
+      },
+      {
+        "type": "heading",
+        "text": "Was ein KI-Agent zusätzlich kann"
+      },
+      {
+        "type": "paragraph",
+        "text": "Ein KI-Agent erhält ein Ziel statt einer Frage. Er zerlegt es in Schritte, ruft Werkzeuge auf, etwa Mail, Dokumentenablage oder Datenbank, prüft das Ergebnis und macht weiter, bis die Aufgabe erledigt ist oder eine Grenze greift. Das Sprachmodell entscheidet dabei selbst über den Weg."
+      },
+      {
+        "type": "paragraph",
+        "text": "Damit ändert sich der Preis der Fehler. Eine falsche Antwort eines Chatbots kann ein Mensch erkennen, bevor etwas passiert. Ein falscher Schritt eines Agenten kann bereits geschehen sein: eine Mail verschickt, ein Beleg falsch zugeordnet, ein Eintrag überschrieben."
+      },
+      {
+        "type": "heading",
+        "text": "Der Unterschied in sechs Punkten"
+      },
+      {
+        "type": "paragraph",
+        "text": "Aufgabe: Der Chatbot beantwortet, der Agent erledigt. Werkzeuge: Der Chatbot braucht keine, der Agent nutzt mehrere. Wirkung: Der Chatbot erzeugt Text, der Agent verändert Daten oder Systeme. Risiko: beim Chatbot eine falsche Auskunft, beim Agenten eine falsche Handlung. Kontrolle: beim Chatbot reicht Gegenlesen, beim Agenten sind Rechte, Freigaben und Protokoll nötig. Aufwand: Ein Chatbot ist schneller aufgesetzt, ein Agent verlangt Einrichtung, Überwachung und Pflege."
+      },
+      {
+        "type": "heading",
+        "text": "Die dritte Möglichkeit: der Workflow"
+      },
+      {
+        "type": "paragraph",
+        "text": "Zwischen beiden steht der Workflow. Er folgt einem festen, vorab programmierten Pfad, in dem ein Modell einzelne Stationen ausfüllt: einlesen, Art erkennen, Entwurf schreiben, an eine Person zur Freigabe geben. Er ist vorhersagbar und gut prüfbar. Ein Agent lohnt sich erst, wenn sich der Weg nicht vorab beschreiben lässt, weil er von Fall zu Fall wechselt."
+      },
+      {
+        "type": "heading",
+        "text": "Vier Fragen, die die Wahl klären"
+      },
+      {
+        "type": "paragraph",
+        "text": "Erstens: Soll nur Wissen weitergegeben werden oder soll etwas geschehen? Bei Wissen genügt ein Chatbot. Zweitens: Ist der Ablauf immer gleich? Dann genügt ein Workflow. Drittens: Was wäre das Schlimmste, das der Schritt anrichten kann, und geht es nach außen, zu einem Kunden, in eine Zahlung oder in ein Live-System? Dann braucht es, gleich welche Variante gewählt wird, die Freigabe eines Menschen. Viertens: Wer überwacht das Ergebnis und die Kosten? Ohne Antwort darauf lohnt sich auch der beste Agent nicht."
+      },
+      {
+        "type": "heading",
+        "text": "Ein Beispiel aus dem eigenen Betrieb"
+      },
+      {
+        "type": "paragraph",
+        "text": "In unserem eigenen Betrieb übernehmen mehrere KI-Agenten Aufgaben aus ihrem jeweiligen Bereich, etwa Texte vorbereiten oder Daten prüfen. Was sie anfassen dürfen, ist technisch begrenzt, und was nach außen geht, entsteht als Entwurf und braucht die Freigabe eines Menschen. Eine reine Auskunft, etwa «Wo steht das?», erledigt dagegen kein Agent mit Rechten, sondern eine Suche in den Dokumenten. Stand: 09.11.2026."
+      },
+      {
+        "type": "heading",
+        "text": "Kosten und Aufwand"
+      },
+      {
+        "type": "paragraph",
+        "text": "Laufende Kosten entstehen bei beiden vor allem durch die genutzten Sprachmodelle. Ein Agent macht mehrere Modellaufrufe pro Aufgabe, deshalb bekommt er einen Kostendeckel, bei dessen Erreichen er anhält. Eine feste Zahl hängt vom Anwendungsfall ab und wird hier nicht genannt."
+      },
+      {
+        "type": "heading",
+        "text": "Häufige Fragen"
+      },
+      {
+        "type": "paragraph",
+        "text": "Wird aus einem Chatbot ein Agent, wenn er Werkzeuge bekommt? Im Kern ja: Sobald das Modell Werkzeuge aufrufen und über Schritte entscheiden darf, arbeitet es als Agent. Dann gelten auch die Anforderungen an Rechte und Freigabe."
+      },
+      {
+        "type": "paragraph",
+        "text": "Ist ein KI-Assistent ein Agent? Der Begriff wird uneinheitlich verwendet. Entscheidend ist nicht der Name, sondern ob das System nur antwortet oder auch handelt."
+      },
+      {
+        "type": "paragraph",
+        "text": "Womit sollte ein Unternehmen anfangen? Mit dem kleinsten Werkzeug, das reicht: erst eine Suche oder einen Chatbot über die eigenen Dokumente, dann einen Workflow für Wiederkehrendes, einen Agenten zuletzt und mit Freigabe vor jeder Außenwirkung."
+      },
+      {
+        "type": "heading",
+        "text": "Weiterlesen"
+      },
+      {
+        "type": "link",
+        "text": "Was ist ein KI-Agent? Einfach erklärt",
+        "href": "/wissen/ki-agent"
+      },
+      {
+        "type": "link",
+        "text": "Playbook, Rolle oder eigener KI-Agent: Was lohnt wann?",
+        "href": "/blog/playbook-rolle-oder-eigener-agent"
+      },
+      {
+        "type": "link",
+        "text": "KI-Agenten für Unternehmen: Einsatz, Kontrolle und Kosten",
+        "href": "/leistungen/ki-agenten-unternehmen"
+      },
+      {
+        "type": "link",
+        "text": "Mit dem Pulse Check klären, wo ein Agent und wo ein Chatbot reicht",
+        "href": "/leistungen/ki-potenzialanalyse"
       }
     ]
   },
@@ -1891,12 +2222,12 @@ export const blogPosts: BlogPost[] = [
       {
         "type": "link",
         "text": "Rolle, Persona und System-Prompt bei KI-Agenten",
-        "href": "/blog/rolle-system-prompt"
+        "href": "/wissen/rolle-system-prompt"
       },
       {
         "type": "link",
         "text": "Playbook, Agent und Rolle im Detail",
-        "href": "/blog/playbook-agent-rolle"
+        "href": "/blog/playbook-rolle-oder-eigener-agent"
       }
     ]
   },
@@ -1959,12 +2290,12 @@ export const blogPosts: BlogPost[] = [
       {
         "type": "link",
         "text": "Was ist ein KI-Playbook?",
-        "href": "/blog/ki-playbook"
+        "href": "/wissen/ki-playbook"
       },
       {
         "type": "link",
         "text": "Rechte statt Text bei KI-Agenten",
-        "href": "/blog/rechte-statt-text"
+        "href": "/wissen/rechte-statt-text"
       }
     ]
   },
@@ -2027,12 +2358,12 @@ export const blogPosts: BlogPost[] = [
       {
         "type": "link",
         "text": "Was ist ein KI-Playbook?",
-        "href": "/blog/ki-playbook"
+        "href": "/wissen/ki-playbook"
       },
       {
         "type": "link",
         "text": "Rolle, Persona und System-Prompt bei KI-Agenten",
-        "href": "/blog/rolle-system-prompt"
+        "href": "/wissen/rolle-system-prompt"
       }
     ]
   },
@@ -2095,12 +2426,12 @@ export const blogPosts: BlogPost[] = [
       {
         "type": "link",
         "text": "Rechte statt Text bei KI-Agenten",
-        "href": "/blog/rechte-statt-text"
+        "href": "/wissen/rechte-statt-text"
       },
       {
         "type": "link",
         "text": "KI-Guardrails: Grenzen für Agenten",
-        "href": "/blog/ki-guardrails"
+        "href": "/wissen/ki-guardrails"
       }
     ]
   },
@@ -2163,12 +2494,12 @@ export const blogPosts: BlogPost[] = [
       {
         "type": "link",
         "text": "Was ist ein KI-Skill?",
-        "href": "/blog/ki-skill"
+        "href": "/wissen/ki-skill"
       },
       {
         "type": "link",
         "text": "Human in the Loop bei KI",
-        "href": "/blog/human-in-the-loop"
+        "href": "/wissen/human-in-the-loop"
       }
     ]
   },
@@ -2235,17 +2566,17 @@ export const blogPosts: BlogPost[] = [
       {
         "type": "link",
         "text": "Verwandt: Was ist ein KI-Workflow?",
-        "href": "/blog/ki-workflow"
+        "href": "/wissen/ki-workflow"
       },
       {
         "type": "link",
         "text": "Verwandt: Was ist ein KI-Agent?",
-        "href": "/blog/ki-agent"
+        "href": "/wissen/ki-agent"
       },
       {
         "type": "link",
         "text": "Verwandt: Human in the Loop",
-        "href": "/blog/human-in-the-loop"
+        "href": "/wissen/human-in-the-loop"
       }
     ]
   },
@@ -2312,12 +2643,12 @@ export const blogPosts: BlogPost[] = [
       {
         "type": "link",
         "text": "Verwandt: Was ist Agentic AI?",
-        "href": "/blog/agentic-ai"
+        "href": "/wissen/agentic-ai"
       },
       {
         "type": "link",
         "text": "Verwandt: Was ist ein KI-Agent?",
-        "href": "/blog/ki-agent"
+        "href": "/wissen/ki-agent"
       }
     ]
   },
@@ -2380,17 +2711,17 @@ export const blogPosts: BlogPost[] = [
       {
         "type": "link",
         "text": "Verwandt: Rechte statt Text",
-        "href": "/blog/rechte-statt-text"
+        "href": "/wissen/rechte-statt-text"
       },
       {
         "type": "link",
         "text": "Verwandt: Human in the Loop",
-        "href": "/blog/human-in-the-loop"
+        "href": "/wissen/human-in-the-loop"
       },
       {
         "type": "link",
         "text": "Verwandt: Playbook, Rolle oder eigener Agent",
-        "href": "/blog/playbook-agent-rolle"
+        "href": "/blog/playbook-rolle-oder-eigener-agent"
       }
     ]
   },
@@ -2453,17 +2784,17 @@ export const blogPosts: BlogPost[] = [
       {
         "type": "link",
         "text": "Verwandt: Playbook, Rolle oder eigener Agent",
-        "href": "/blog/playbook-agent-rolle"
+        "href": "/blog/playbook-rolle-oder-eigener-agent"
       },
       {
         "type": "link",
         "text": "Verwandt: Was ist ein KI-Agent?",
-        "href": "/blog/ki-agent"
+        "href": "/wissen/ki-agent"
       },
       {
         "type": "link",
         "text": "Verwandt: KI-Guardrails",
-        "href": "/blog/ki-guardrails"
+        "href": "/wissen/ki-guardrails"
       }
     ]
   },
@@ -2534,231 +2865,17 @@ export const blogPosts: BlogPost[] = [
       {
         "type": "link",
         "text": "Verwandt: Was ist ein KI-Agent?",
-        "href": "/blog/ki-agent"
+        "href": "/wissen/ki-agent"
       },
       {
         "type": "link",
         "text": "Verwandt: Was ist ein KI-Playbook?",
-        "href": "/blog/ki-playbook"
+        "href": "/wissen/ki-playbook"
       },
       {
         "type": "link",
         "text": "Verwandt: Wartungswissen sichern",
         "href": "/blog/wartungswissen-sichern"
-      }
-    ]
-  },
-  {
-    "slug": "playbook-agent-rolle",
-    "title": "Playbook, Rolle oder KI-Agent: Was braucht ein Unternehmen wann?",
-    "seoTitle": "Playbook, Rolle oder KI-Agent: Was wann? – Venture Labs",
-    "seoDescription": "Playbook, Rolle oder eigener KI-Agent? Ein Text bittet, Rechte erzwingen. Vier Fragen zeigen, was ein Unternehmen wirklich braucht und was nicht.",
-    "excerpt": "Playbook, Rolle, Skill, eigener KI-Agent: Was die Begriffe bedeuten, warum Rechte mehr taugen als ein neuer Starttext und welche vier Fragen die Entscheidung klären.",
-    "topicSlug": "ai-automation",
-    "topic": "AI Automation",
-    "readTime": "7 Min. Lesezeit",
-    "featured": false,
-    "publishedDate": "7. Dezember 2026",
-    "author": "VentureLabs Team",
-    "draft": true,
-    "kind": "tiefenartikel",
-    "plannedUrl": "/de/wissen/playbook-agent-rolle/",
-    "week": "Woche 4 · 07.12.",
-    "keyword": "ki agent playbook rolle unterschied (Anker: ki agent, system prompt, skill)",
-    "content": [
-      {
-        "type": "paragraph",
-        "text": "Ein Playbook ist ein Text, der einem KI-Agenten sagt, wie er vorgehen soll. Eine Rolle ist die Startkonfiguration, mit der ein Agent loslegt; das Playbook bildet deren Kern. Ein eigener KI-Agent hat zusätzlich eigene Ordner, Werkzeuge, ein eigenes Modell und eigene Schlüssel, und das System erzwingt diese Grenzen. Die Faustregel dazu: Text bittet, Rechte erzwingen. Am Anfang genügt meist das Playbook; getrennt wird erst, wenn es wehtut."
-      },
-      {
-        "type": "heading",
-        "text": "Warum diese Sortierung nötig ist"
-      },
-      {
-        "type": "paragraph",
-        "text": "In Netzwerken kursieren zwei Parolen: keine vielen Agenten mehr bauen, nur noch Playbooks, und das Gegenteil davon. Beide klingen gut, beide sind Parolen und kein Fachwissen."
-      },
-      {
-        "type": "paragraph",
-        "text": "Venture Labs betreibt selbst einen Cluster aus KI-Agenten für das eigene Unternehmen und nutzt dort alle drei Varianten: Playbooks, Rollen und eigene Agenten. Die folgende Sortierung stammt aus diesem Betrieb, mit Beispielen daraus."
-      },
-      {
-        "type": "heading",
-        "text": "Die Begriffe in einer Minute"
-      },
-      {
-        "type": "paragraph",
-        "text": "Playbook: ein Text, der beschreibt, wie in einer Lage vorgegangen wird, mit Ziel, Schritten, Grenzen und dem gewünschten Ergebnis. Anleitung, Runbook oder Handbuch sind andere Namen für dasselbe. Technisch kommt das Playbook als System-Prompt beim Agenten an, also als der Text, der vor jeder Frage steht."
-      },
-      {
-        "type": "paragraph",
-        "text": "Rolle: die Konfiguration, in der ein Agent startet. Dazu gehören das Playbook, Skills, das Modell und eine Obergrenze für Arbeitsschritte oder Kosten. Wer «Rolle» sagt, meint oft nur einen Satz am Anfang des Prompts; eine ordentlich gebaute Rolle ist mehr. Die Persona, also Tonfall und Auftreten, ist ein Teil davon."
-      },
-      {
-        "type": "paragraph",
-        "text": "Eigener Agent: ein Agent in einer eigenen kleinen Welt, mit eigenem Ordner, eigenen Werkzeugen, eigenen Schlüsseln, eigenem Modell und einem Protokoll. Hier setzt das System die Grenzen durch, nicht der Text."
-      },
-      {
-        "type": "paragraph",
-        "text": "Dazu kommen Skills (Pakete mit Können, die ein Agent bei Bedarf lädt) und Quellen (Dokumente, Wissensdatenbank, Listen, die sagen, was gilt). Beide geben dem Agenten Wissen, aber keine Rechte."
-      },
-      {
-        "type": "link",
-        "text": "Die Einzelbegriffe im Glossar: KI-Playbook",
-        "href": "/blog/ki-playbook"
-      },
-      {
-        "type": "link",
-        "text": "Rolle, Persona und System-Prompt",
-        "href": "/blog/rolle-system-prompt"
-      },
-      {
-        "type": "link",
-        "text": "Was ist ein KI-Skill?",
-        "href": "/blog/ki-skill"
-      },
-      {
-        "type": "heading",
-        "text": "Der Unterschied, der alles entscheidet"
-      },
-      {
-        "type": "paragraph",
-        "text": "Ein Playbook ist eine Bitte, keine Sperre. Steht darin «schreibe nie in den Kundenordner», hält sich ein Agent in den meisten Fällen daran. Ob er es kann, entscheiden die Rechte. Eine Rolle, die nur aus Text besteht, ändert die Anweisung und sonst nichts. Gehören zur Rolle auch Ordner, Werkzeuge, Schlüssel und Sperren, die das System durchsetzt, ist es ein eigener Agent."
-      },
-      {
-        "type": "paragraph",
-        "text": "Der Text sagt, was der Agent tun soll. Die Rechte bestimmen, was er tun kann."
-      },
-      {
-        "type": "heading",
-        "text": "Wann ein Playbook oder eine Rolle reicht"
-      },
-      {
-        "type": "paragraph",
-        "text": "Wenn der Agent alles hat, was er braucht, und nur Know-how fehlt: ein Ablauf, ein Tonfall, eine Checkliste, ein Format. Und wenn ein Fehler billig ist und sich leicht zurückdrehen lässt."
-      },
-      {
-        "type": "paragraph",
-        "text": "Ein Beispiel sind zwei Tester im selben Projekt. Der eine prüft Schnittstellen und Datenbank, der andere Klickwege und Barrierefreiheit. Beide brauchen dieselben Rechte: Ordner lesen, Tests starten, einen Bericht schreiben. Beide bekommen nur unterschiedliche Anleitungen und Skills. Ein eigener Container oder Prozess wäre hier nur Mehraufwand."
-      },
-      {
-        "type": "paragraph",
-        "text": "Ein Beispiel für ein gutes Playbook aus dem eigenen Betrieb: Am 6. November 2026 bekam die Rolle, die Entwicklungsaufgaben koordiniert, einen Ablauf namens «Teil streichen». Er beschreibt, wie ein abgelehnter Teil einer Aufgabe überall verschwindet, damit nichts mehr an ihm hängen bleibt. Anlass war, dass dieselben Bildschirme zweimal gebaut worden waren. Ein neuer Agent war dafür nicht nötig."
-      },
-      {
-        "type": "paragraph",
-        "text": "Ein gutes Playbook enthält das Ziel in einem Satz, die Schritte in der richtigen Reihenfolge mit Entscheidungen («wenn X, dann Y»), die Grenzen («was wird nie getan?») und das Format, am besten mit einem guten und einem schlechten Beispiel."
-      },
-      {
-        "type": "heading",
-        "text": "Wann ein eigener KI-Agent sinnvoll ist: vier Fragen"
-      },
-      {
-        "type": "paragraph",
-        "text": "Einmal «Ja», und die Trennung lohnt sich meistens. Viermal «Nein», dann genügt ein Playbook."
-      },
-      {
-        "type": "paragraph",
-        "text": "Erstens: Braucht die Aufgabe andere Rechte, andere Werkzeuge oder einen anderen Ordner, etwa Schreibzugriff, ein Konto oder einen Kundenordner? Zweitens: Kann ein Fehler teuer werden oder nach außen gehen, zum Kunden, zur Zahlung, in eine Veröffentlichung oder in ein Live-System? Dann braucht es eine Sperre und die Freigabe durch einen Menschen. Drittens: Braucht die Aufgabe ein anderes Modell, weil es günstiger, stärker oder lokal sein muss, damit Daten das Haus nicht verlassen? Viertens: Läuft die Arbeit täglich und braucht sie ein eigenes Gedächtnis?"
-      },
-      {
-        "type": "paragraph",
-        "text": "Wechselt nur der Blickwinkel bei gleichen Rechten, etwa Backend testen oder Frontend testen, Texter oder Lektor, reicht eine Rolle. Fehlt nur Wissen oder ein Ablauf, reicht ein Playbook, gegebenenfalls mit einer Quelle."
-      },
-      {
-        "type": "heading",
-        "text": "Warum Rechte mehr taugen als ein neuer Starttext"
-      },
-      {
-        "type": "paragraph",
-        "text": "Der bequeme Weg: neue Aufgabe, neuer Starttext, fertig. Dann hat der Agent alles, was der vorige auch hatte, plus eine Bitte. Der bessere Weg ist ein Start mit angepassten Rechten: nur der erlaubte Ordner ist sichtbar, nur die nötigen Werkzeuge sind da, es gibt einen eigenen Schlüssel mit eigenem Budget. Ein «Geht nicht» steht dann im Protokoll, und im Fehlerfall greift die Sperre, egal was der Agent verstanden hat."
-      },
-      {
-        "type": "paragraph",
-        "text": "Ein Fall aus dem eigenen Betrieb, vom 6. November 2026: Ein Agent, der Kundeninstallationen betreut, sollte eine neue Version der Software freigeben und konnte es nicht, weil es für ihn kein Werkzeug «Version freigeben» gab. Ein Satz im Prompt wie «alles ist erlaubt» hätte daran nichts geändert. Die Lösung war kein neuer Satz, sondern das fehlende Werkzeug, mit einer Protokollzeile bei jeder Freigabe."
-      },
-      {
-        "type": "link",
-        "text": "Vertiefung: Rechte statt Text als eigener Artikel",
-        "href": "/blog/rechte-statt-text"
-      },
-      {
-        "type": "heading",
-        "text": "Was ein eigener Agent an Mehraufwand bedeutet"
-      },
-      {
-        "type": "paragraph",
-        "text": "Das soll nicht schöngeredet werden. Ein eigener Agent kostet Einrichtung (Rechte, Schlüssel, Überwachung), Übergaben (was der eine weiß, muss er dem anderen mitteilen), Betrieb (jeder Agent kann ausfallen, veralten oder Geld kosten) und Pflege (eine Regel muss in jeder Kopie ankommen). Im eigenen Betrieb hat eine lange Kette aus vielen einzelnen Rollen-Sitzungen mehr gekostet als ein einzelner Agent mit eigenem Ordner. Das ist eine Erfahrung, keine Messung gegen Playbooks als Ganzes."
-      },
-      {
-        "type": "paragraph",
-        "text": "Und ein Modellwechsel kann eine Anleitung zerlegen. Ein Prüf-Agent lief einmal kurz auf einem anderen Modell mit derselben Anleitung. Das neue Modell schrieb das Urteil mit Sternchen, der Parser erwartete es ohne. Aus einer Freigabe wurde «Mensch nötig», wegen eines Formatunterschieds von einer Zeile. Darum wird nach jedem Modellwechsel mit echten Testfällen geprüft."
-      },
-      {
-        "type": "heading",
-        "text": "Der Basis-Agent: nie bei null anfangen"
-      },
-      {
-        "type": "paragraph",
-        "text": "Wer mehrere ähnliche Agenten braucht, schreibt nicht jeden neu. Ein Basis-Agent, auch Blaupause oder Vorlage genannt, ist der fertige Rohbau: Grundcode, Sperren, Protokoll, Wiederholungen bei kurzen Netzfehlern, Schlüsselverwaltung, Modellwahl aus einem Katalog und ein Halt vor allem, was nach außen geht. Obendrauf kommt nur, was den Agenten besonders macht: Rolle, Skills, Ordner, Werkzeuge. Wird die Basis verbessert, profitieren alle. Der Preis: Ein Fehler in der Basis trifft ebenfalls alle, deshalb wird sie nur mit Tests geändert. Lohnend ist das ab dem zweiten ähnlichen Agenten."
-      },
-      {
-        "type": "link",
-        "text": "Mehr dazu: Multi-Agent-System und Basis-Agent",
-        "href": "/blog/multi-agent-system"
-      },
-      {
-        "type": "heading",
-        "text": "Die Grundregel: erst fragen, was das Schlimmste wäre"
-      },
-      {
-        "type": "paragraph",
-        "text": "Vorab steht eine Frage: Was ist das Schlimmste, das passieren kann? Geht es nach außen oder wird es teuer, braucht es Sperre und Freigabe, also einen eigenen Agenten. Wechselt nur der Blickwinkel, genügt eine Rolle. Fehlt nur Wissen, genügt ein Playbook mit Quelle. Gibt es mehrere ähnliche Agenten, wird auf einer Blaupause gebaut statt kopiert. Und es wird klein angefangen: erst das Playbook, getrennt wird, wenn es wehtut. Kein Dogma, immer das kleinste Werkzeug, das reicht."
-      },
-      {
-        "type": "heading",
-        "text": "Häufige Fragen"
-      },
-      {
-        "type": "paragraph",
-        "text": "Ist ein Playbook dasselbe wie ein System-Prompt? Nicht ganz. Der System-Prompt ist der Weg, auf dem das Playbook beim Agenten ankommt, nämlich der Text, der beim Start vor jeder Frage steht. Das Playbook ist der Inhalt: Ziel, Schritte, Grenzen, Format."
-      },
-      {
-        "type": "paragraph",
-        "text": "Brauchen kleine Unternehmen überhaupt eigene KI-Agenten? Am Anfang meistens nicht. Ein gutes Playbook mit klaren Quellen reicht für viele Aufgaben. Sobald etwas nach außen geht, etwa eine Kundenmail, eine Zahlung oder eine Veröffentlichung, braucht es Freigaben, die kein Text ersetzt."
-      },
-      {
-        "type": "paragraph",
-        "text": "Wie lässt sich ohne eigene IT-Abteilung herausfinden, welche Abläufe sich für einen Agenten eignen? Dafür gibt es den Pulse Check: Gemeinsam wird angesehen, welche Abläufe sich überhaupt eignen und was dort jeweils das Schlimmste wäre, das passieren kann."
-      },
-      {
-        "type": "heading",
-        "text": "Weiterlesen"
-      },
-      {
-        "type": "link",
-        "text": "Wie der Unterschied zwischen KI-Agent und Chatbot aussieht",
-        "href": "/blog/ki-agent-oder-chatbot"
-      },
-      {
-        "type": "link",
-        "text": "KI-Agenten für Unternehmen: Einsatz, Kontrolle und Kosten",
-        "href": "/leistungen/ki-agenten-unternehmen"
-      },
-      {
-        "type": "link",
-        "text": "Der bestehende Blogartikel zum Thema (Stand 06.11.)",
-        "href": "/blog/playbook-rolle-oder-eigener-agent"
-      },
-      {
-        "type": "link",
-        "text": "Alle Begriffe im Wissensbereich",
-        "href": "/wissen"
-      },
-      {
-        "type": "link",
-        "text": "Mit dem Pulse Check klären, welche Abläufe ein Playbook und welche einen eigenen Agenten brauchen",
-        "href": "/leistungen/ki-potenzialanalyse"
       }
     ]
   },
@@ -2799,7 +2916,7 @@ export const blogPosts: BlogPost[] = [
       {
         "type": "link",
         "text": "Die Begriffe dahinter im Glossar: KI-Guardrails",
-        "href": "/blog/ki-guardrails"
+        "href": "/wissen/ki-guardrails"
       },
       {
         "type": "heading",
@@ -2844,7 +2961,7 @@ export const blogPosts: BlogPost[] = [
       {
         "type": "link",
         "text": "Wann Playbook, Rolle oder eigener Agent: der Überblicksartikel",
-        "href": "/blog/playbook-agent-rolle"
+        "href": "/blog/playbook-rolle-oder-eigener-agent"
       },
       {
         "type": "heading",
@@ -2882,7 +2999,7 @@ export const blogPosts: BlogPost[] = [
       {
         "type": "link",
         "text": "Human in the Loop bei KI: Bedeutung und Beispiele",
-        "href": "/blog/human-in-the-loop"
+        "href": "/wissen/human-in-the-loop"
       },
       {
         "type": "link",

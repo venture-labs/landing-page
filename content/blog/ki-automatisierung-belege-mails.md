@@ -67,7 +67,7 @@ content:
     text: "KI-Prozessautomatisierung im Mittelstand"
     href: "/leistungen/ai-automation"
   - type: "link"
-    text: "Alle Begriffe und Grundlagen im Wissensbereich"  # prüfen: Hub /wissen existiert erst nach dem Hub-Bau
+    text: "Alle Begriffe und Grundlagen im Wissensbereich"
     href: "/wissen"
   - type: "heading"
     text: "Häufige Fragen"

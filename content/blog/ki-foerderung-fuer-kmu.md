@@ -62,7 +62,7 @@ content:
     href: "/leistungen/ki-potenzialanalyse"
   - type: "link"
     text: "Wissen: Begriffe rund um KI im Mittelstand"
-    href: "/wissen"  # prüfen: Hub /wissen existiert erst nach dem Hub-Bau
+    href: "/wissen"
   - type: "link"
     text: "Weiterlesen: Was kostet ein KI-Agent wirklich?"
     href: "/blog/was-kostet-ein-ki-agent"

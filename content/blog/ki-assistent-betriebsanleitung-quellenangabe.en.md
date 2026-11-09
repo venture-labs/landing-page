@@ -69,7 +69,7 @@ content:
     text: "Securing maintenance knowledge: what happens when the experienced technician leaves"
     href: "/blog/wartungswissen-sichern"
   - type: "link"
-    text: "All terms and basics in the knowledge hub"  # prüfen: Hub /wissen existiert erst nach dem Hub-Bau
+    text: "All terms and basics in the knowledge hub"
     href: "/wissen"
   - type: "heading"
     text: "Frequently asked questions"

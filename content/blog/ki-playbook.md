@@ -38,11 +38,11 @@ content:
     href: "/leistungen/ki-agenten-unternehmen"
   - type: "link"
     text: "Alle Begriffe im Wissensbereich"
-    href: "/wissen"  # prüfen: Hub /wissen existiert erst nach dem Hub-Bau
+    href: "/wissen"
   - type: "link"
     text: "Rolle, Persona und System-Prompt bei KI-Agenten"
-    href: "/blog/rolle-system-prompt"
+    href: "/wissen/rolle-system-prompt"
   - type: "link"
     text: "Playbook, Agent und Rolle im Detail"
-    href: "/blog/playbook-agent-rolle"
+    href: "/blog/playbook-rolle-oder-eigener-agent"
 ---

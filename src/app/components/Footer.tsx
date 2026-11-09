@@ -79,6 +79,7 @@ export function Footer() {
           cta: CTAS.mail,
         },
         { label: t("footer.blog"), href: localizedPath("/blog") },
+        { label: t("footer.wissen"), href: localizedPath("/wissen") },
       ],
     },
     {

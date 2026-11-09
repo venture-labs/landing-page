@@ -2,10 +2,10 @@
 slug: "wartungswissen-sichern"
 language: "en"
 seoTitle: 'Keep maintenance knowledge when experts leave – Venture Labs'
-seoDescription: 'What happens to experience when your most experienced technician leaves? Where knowledge gets lost and three ways to capture it before it is missing.'
+seoDescription: 'What happens to experience when the most experienced technician leaves? Where knowledge gets lost and three ways to capture it before it is missing.'
 order: 2
 title: "Securing maintenance knowledge: what happens when the experienced technician leaves?"
-excerpt: "What happens to experience when your most experienced maintenance technician leaves? Where knowledge gets lost and three ways to capture it before it is missing."
+excerpt: "What happens to experience when the most experienced maintenance technician leaves? Where knowledge gets lost and three ways to capture it before it is missing."
 topicSlug: "ai-automation"
 topic: "AI Automation"
 readTime: "5 min read"
@@ -14,7 +14,7 @@ publishedDate: "November 23, 2026"  # prüfen: publication date is set by Christ
 author: "VentureLabs Team"
 content:
   - type: "paragraph"
-    text: "Every company with machines has someone who knows everything: why this machine runs differently in the cold, which screw you never tighten by the manual, where the spare-part supplier actually is. As long as this person is there, it hardly shows. When they leave, a piece of the business is suddenly missing."
+    text: "Every company with machines has someone who knows everything: why this machine runs differently in the cold, which screw is never tightened by the manual, where the spare-part supplier actually is. As long as this person is there, it hardly shows. When they leave, a piece of the business is suddenly missing."
   - type: "heading"
     text: "Where knowledge gets lost in a company"
   - type: "paragraph"
@@ -32,9 +32,9 @@ content:
   - type: "paragraph"
     text: "Once documents and logbook are collected in one place, an assistant can answer questions from them, with a source and with an honest note when it can't find something. It doesn't replace a technician, it saves the search. The prerequisite is that the knowledge was written down beforehand."  # prüfen: the assistant statement is a plan for the AI maintenance assistant page, which is not built yet; check the product status against the product documentation before go-live
   - type: "heading"
-    text: "What you can start with"
+    text: "What to start with"
   - type: "paragraph"
-    text: "Not with all machines at once. Pick one machine whose knowledge depends on a few people and collect its documents and the most important experience in one place. What that would mean for your machines, we are happy to discuss."
+    text: "Not with all machines at once. A sensible start is one machine whose knowledge depends on a few people: its documents and the most important experience are collected in one place. What that would mean for a company's own machines, we are happy to discuss."
   - type: "link"
     text: "How the digital machine file works"
     href: "/leistungen/digitale-maschinenakte"

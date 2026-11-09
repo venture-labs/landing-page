@@ -39,12 +39,12 @@ content:
     text: "Using AI agents in a company"
     href: "/leistungen/ki-agenten-unternehmen"
   - type: "link"
-    text: "All terms in the knowledge hub"  # prüfen: Hub /wissen existiert erst nach dem Hub-Bau
+    text: "All terms in the knowledge hub"
     href: "/wissen"
   - type: "link"
     text: "Related: What is agentic AI?"
-    href: "/blog/agentic-ai"
+    href: "/wissen/agentic-ai"
   - type: "link"
     text: "Related: What is an AI agent?"
-    href: "/blog/ki-agent"
+    href: "/wissen/ki-agent"
 ---

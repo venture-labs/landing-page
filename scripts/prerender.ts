@@ -53,6 +53,7 @@ import { services as servicesDe } from "../src/data/de/services";
 import { caseDetailsMap as caseDetailsDe } from "../src/data/de/caseDetails";
 import { landingPages as landingPagesDe } from "../src/data/de/landing";
 import { blogPosts as blogPostsDe } from "../src/data/de/blog";
+import { isWissenPost } from "../src/data/postKind";
 
 import { siteData as siteEn } from "../src/data/en/site";
 import { leistungenData as leistungenEn } from "../src/data/en/leistungen";
@@ -332,13 +333,25 @@ function buildPagesForLocale(lang: Locale): PageMeta[] {
     crumbs: [crumb(footer.blog, "/blog")],
   });
 
+  // Knowledge hub: overview of the published glossary entries and deep articles.
+  pages.push({
+    path: `/${lang}/wissen`,
+    lang,
+    title: authored(ui.seo?.wissen?.title, `${ui.wissen.heroTitle}${suffix}`),
+    description: authored(ui.seo?.wissen?.description, ui.wissen.heroSubtitle),
+    crumbs: [crumb(footer.wissen, "/wissen")],
+  });
+
+  // Blog posts live under /blog/<slug>, glossary entries and deep articles under /wissen/<slug>.
   for (const p of blogPosts) {
+    const wissen = isWissenPost(p);
+    const section = wissen ? "wissen" : "blog";
     pages.push({
-      path: `/${lang}/blog/${p.slug}`,
+      path: `/${lang}/${section}/${p.slug}`,
       lang,
       title: authored(p.seoTitle, `${p.title}${suffix}`),
       description: authored(p.seoDescription, p.excerpt),
-      crumbs: [crumb(footer.blog, "/blog"), crumb(p.title, `/blog/${p.slug}`)],
+      crumbs: [crumb(wissen ? footer.wissen : footer.blog, `/${section}`), crumb(p.title, `/${section}/${p.slug}`)],
       sourceFile: contentFile(lang, `blog/${p.slug}`),
       ...(p.draft ? { noindex: true } : {}),
     });

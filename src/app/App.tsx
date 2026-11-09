@@ -22,6 +22,7 @@ import { Kontakt } from "./pages/Kontakt";
 import { Blog } from "./pages/Blog";
 import { BlogDetail } from "./pages/BlogDetail";
 import { EntwurfReview } from "./pages/EntwurfReview";
+import { Wissen } from "./pages/Wissen";
 import { UeberUns } from "./pages/UeberUns";
 import { Impressum } from "./pages/Impressum";
 import { Datenschutz } from "./pages/Datenschutz";
@@ -182,6 +183,22 @@ export function AppRoutes() {
           element={
             <LangGuard>
               <BlogDetail />
+            </LangGuard>
+          }
+        />
+        <Route
+          path="/:lang/wissen"
+          element={
+            <LangGuard>
+              <Wissen />
+            </LangGuard>
+          }
+        />
+        <Route
+          path="/:lang/wissen/:slug"
+          element={
+            <LangGuard>
+              <BlogDetail section="wissen" />
             </LangGuard>
           }
         />

@@ -38,11 +38,11 @@ content:
     href: "/leistungen/ki-agenten-unternehmen"
   - type: "link"
     text: "All terms in the knowledge section"
-    href: "/wissen"  # prüfen: hub /wissen only exists once the hub is built
+    href: "/wissen"
   - type: "link"
     text: "Role, persona and system prompt for AI agents"
-    href: "/blog/rolle-system-prompt"
+    href: "/wissen/rolle-system-prompt"
   - type: "link"
     text: "Playbook, agent and role in depth"
-    href: "/blog/playbook-agent-rolle"
+    href: "/blog/playbook-rolle-oder-eigener-agent"
 ---

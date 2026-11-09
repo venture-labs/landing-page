@@ -67,7 +67,7 @@ content:
     href: "/blog/wartungswissen-sichern"
   - type: "link"
     text: "Knowledge hub: terms around machine documentation and AI"
-    href: "/wissen"  # prüfen: hub /wissen only exists after the hub is built
+    href: "/wissen"
   - type: "heading"
     text: "Frequently asked questions"
   - type: "paragraph"
