@@ -34,7 +34,7 @@ function slugify(text: string) {
 export function BlogDetail() {
   const { slug } = useParams<{ slug: string }>();
   const { t } = useTranslation();
-  const { localizedPath } = useLocale();
+  const { localizedPath, lang } = useLocale();
   const glowRef = useRef<HTMLDivElement>(null);
   const post = useBlogDetail(slug);
 
@@ -86,6 +86,16 @@ export function BlogDetail() {
       <Navbar />
       <section className="pt-40 pb-24 px-6 lg:px-12 max-w-[1200px] mx-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+          {post.draft && (
+            <p
+              className="mb-6 max-w-4xl rounded-lg border border-[#fda700]/40 bg-[#fda700]/10 px-4 py-3 text-[#fda700]"
+              style={{ fontSize: "var(--text-small)" }}
+            >
+              {lang === "de"
+                ? "Entwurf, noch nicht veröffentlicht: nicht in der Blogübersicht, nicht in der Sitemap, für Suchmaschinen gesperrt."
+                : "Draft, not published yet: not in the blog list, not in the sitemap, blocked for search engines."}
+            </p>
+          )}
           <Link
             to={localizedPath("/blog")}
             className="inline-flex items-center gap-2 text-white/50 hover:text-white transition-colors mb-10"

@@ -55,12 +55,26 @@ const BRAND_INSIDE_TITLE = new Set(["/de/impressum", "/en/impressum", "/de/daten
 export const TITLE_LENGTH = { min: 50, max: 60 };
 export const DESCRIPTION_LENGTH = { min: 120, max: 160 };
 const ROBOTS = "index,follow,max-image-preview:large";
+/** Draft articles (frontmatter `draft: true`) and the hidden review page: noindex and no sitemap entry. */
+const ROBOTS_DRAFT = "noindex,nofollow";
+const DRAFT_SLUGS = new Set<string>(
+  readdirSync(join(process.cwd(), "content/blog"))
+    .filter((f) => f.endsWith(".md"))
+    .filter((f) => /^draft:\s*true\b/m.test(readFileSync(join(process.cwd(), "content/blog", f), "utf-8")))
+    .map((f) => f.replace(/(\.en)?\.md$/, "")),
+);
+function isDraftRoute(path: string): boolean {
+  const parts = path.split("/").filter(Boolean);
+  if (parts[1] === "entwurf-review") return true;
+  return parts[1] === "blog" && parts.length === 3 && DRAFT_SLUGS.has(parts[2]);
+}
 const THEME_COLOR = "#0e0d13";
 const FORBIDDEN_LD_KEYS = ["Offer", "offers", "price", "priceCurrency", "SearchAction", "potentialAction"];
 const FOOTER_KEY_BY_SECTION: Record<string, string> = {
   leistungen: "servicesTitle",
   cases: "projectsTitle",
   blog: "blog",
+  "entwurf-review": "blog",
   "ueber-uns": "aboutTitle",
   kontakt: "contactTitle",
   impressum: "imprint",
@@ -407,7 +421,7 @@ export function runChecks(distDir: string, env: NodeJS.ProcessEnv = process.env)
       eq("meta[property=og:locale:alternate]", one(h.props.get("og:locale:alternate")), lang === "de" ? "en_US" : "de_DE");
       eq("meta[property=og:type]", one(h.props.get("og:type")), "website");
       eq("meta[property=og:site_name]", one(h.props.get("og:site_name")), BRAND);
-      eq("meta[name=robots]", one(h.names.get("robots")), ROBOTS);
+      eq("meta[name=robots]", one(h.names.get("robots")), isDraftRoute(p) ? ROBOTS_DRAFT : ROBOTS);
       eq("meta[name=theme-color]", one(h.names.get("theme-color")), THEME_COLOR);
       eq("meta[name=twitter:card]", one(h.names.get("twitter:card")), "summary_large_image");
       eq("meta[property=og:title]", one(h.props.get("og:title")), h.title[0] ?? "");
@@ -793,7 +807,7 @@ export function runChecks(distDir: string, env: NodeJS.ProcessEnv = process.env)
     if (!root[1].includes('xmlns:xhtml="http://www.w3.org/1999/xhtml"')) fail("/sitemap.xml", "<urlset>", "no xhtml namespace");
     if (/&(?!amp;|lt;|gt;|quot;|apos;|#\d+;)/.test(sitemapXml)) fail("/sitemap.xml", "escaping", "a raw & in the sitemap");
 
-    const expected = shellPaths.map(canonicalOf).sort();
+    const expected = shellPaths.filter((p) => !isDraftRoute(p)).map(canonicalOf).sort();
     const actual = sitemap.map((u) => u.loc).sort();
     for (const u of expected) if (!actual.includes(u)) fail("/sitemap.xml", "<loc>", `no entry for the shell ${u}`);
     for (const u of actual) if (!expected.includes(u)) fail("/sitemap.xml", "<loc>", `${u} has no shell`);

@@ -419,6 +419,13 @@ export interface BlogPost {
   featured: boolean;
   publishedDate: string;
   author: string;
+  /** Draft: kept out of the blog list, the sitemap and search engines (noindex) until the owner approves it. */
+  draft: boolean;
+  /** Draft review metadata (shown only on the hidden review page): article kind, planned final URL, plan week, search keyword. */
+  kind: string;
+  plannedUrl: string;
+  week: string;
+  keyword: string;
   content: BlogContentBlock[];
 }
 
@@ -435,6 +442,11 @@ export const blogPosts: BlogPost[] = ${JSON.stringify(
         featured: !!p.featured,
         publishedDate: p.publishedDate,
         author: p.author,
+        draft: !!p.draft,
+        kind: p.kind ?? "",
+        plannedUrl: p.plannedUrl ?? "",
+        week: p.week ?? "",
+        keyword: p.keyword ?? "",
         content: (p.content ?? []).map((b: any) => ({
           type: b!.type,
           text: b!.text,
