@@ -14,6 +14,8 @@ import { FinalCTA } from "./components/FinalCTA";
 import { Footer } from "./components/Footer";
 import { Leistungen } from "./pages/Leistungen";
 import { LeistungenDetail } from "./pages/LeistungenDetail";
+import { SeoLanding } from "./pages/SeoLanding";
+import { useLandingPage } from "@/data/content";
 import CaseDetail from "./pages/CaseDetail";
 import { CasesOverview } from "./pages/CasesOverview";
 import { Kontakt } from "./pages/Kontakt";
@@ -69,6 +71,13 @@ function HomePage() {
   );
 }
 
+/** /leistungen/<slug>: an SEO landing page (content/landing/) when one exists for the slug, else the service detail. */
+function LeistungenSlugPage() {
+  const { slug } = useParams<{ slug: string }>();
+  const landing = useLandingPage(slug);
+  return landing ? <SeoLanding page={landing} /> : <LeistungenDetail />;
+}
+
 function RoutedErrorBoundary({ children }: { children: ReactNode }) {
   const location = useLocation();
   return <ErrorBoundary key={location.pathname}>{children}</ErrorBoundary>;
@@ -111,7 +120,7 @@ export function AppRoutes() {
           path="/:lang/leistungen/:slug"
           element={
             <LangGuard>
-              <LeistungenDetail />
+              <LeistungenSlugPage />
             </LangGuard>
           }
         />

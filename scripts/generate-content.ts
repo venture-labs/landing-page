@@ -76,6 +76,7 @@ async function generateLocale(locale: Locale) {
   const cases = readCollection("cases", locale);
   const blogPosts = readCollection("blog", locale);
   const tools = readCollection("tools", locale);
+  const landingPages = readCollection("landing", locale);
 
   /* ── site.ts ─────────────────────────────────────────────────────────── */
   writeFileSync(
@@ -226,6 +227,15 @@ export interface ServiceDetail {
   ctaHeadline: string;
   ctaBody: string;
   ctaButtonLabel: string;
+  /** Optional extra text block after the process (e.g. "Kontrolle und Kosten"). */
+  extra?: {
+    heading: string;
+    paragraphs: string[];
+    bullets: string[];
+    linkLabel: string;
+    /** A path inside the site, without the locale prefix. */
+    linkHref: string;
+  };
 }
 
 export const serviceDetails: ServiceDetail[] = ${JSON.stringify(
@@ -252,6 +262,17 @@ export const serviceDetails: ServiceDetail[] = ${JSON.stringify(
         ctaHeadline: s.ctaHeadline,
         ctaBody: s.ctaBody,
         ctaButtonLabel: s.ctaButtonLabel ?? "",
+        ...(s.extra
+          ? {
+              extra: {
+                heading: s.extra.heading,
+                paragraphs: s.extra.paragraphs ?? [],
+                bullets: s.extra.bullets ?? [],
+                linkLabel: s.extra.linkLabel ?? "",
+                linkHref: s.extra.linkHref ?? "",
+              },
+            }
+          : {}),
       })),
       null,
       2
@@ -595,8 +616,85 @@ export const toolProfiles: ToolProfile[] = ${JSON.stringify(
 `
   );
 
+
+  /* ── landing.ts ──────────────────────────────────────────────────────── */
+  // SEO landing pages under /leistungen/<slug> (content/landing/). A locale
+  // without a document simply has no such page: prerender and the router only
+  // know the slugs that exist here.
+  writeFileSync(
+    resolve(outDir, "landing.ts"),
+    `${banner()}
+export interface LandingLink {
+  label: string;
+  /** A path inside the site, without the locale prefix (e.g. "/leistungen/ai-automation"). */
+  href: string;
+}
+
+export interface LandingSection {
+  heading: string;
+  paragraphs: string[];
+  bullets: string[];
+  links: LandingLink[];
+}
+
+export interface LandingFaq {
+  question: string;
+  answer: string;
+}
+
+export interface LandingPage {
+  slug: string;
+  seoTitle: string;
+  seoDescription: string;
+  /** Short label above the H1 and in the breadcrumb. */
+  eyebrow: string;
+  title: string;
+  lead: string;
+  accent: string;
+  /** "quiz" opens the Pulse Score, "book" opens the booking page, "contact" goes to /kontakt. */
+  primaryCta: { kind: "quiz" | "book" | "contact"; label: string };
+  secondaryCta?: { kind: "quiz" | "book" | "contact"; label: string };
+  sections: LandingSection[];
+  faqHeading: string;
+  faq: LandingFaq[];
+  relatedHeading: string;
+  related: LandingLink[];
+  ctaHeadline: string;
+  ctaBody: string;
+}
+
+export const landingPages: LandingPage[] = ${JSON.stringify(
+      landingPages.map((p) => ({
+        slug: p.slug,
+        seoTitle: p.seoTitle ?? "",
+        seoDescription: p.seoDescription ?? "",
+        eyebrow: p.eyebrow,
+        title: p.title,
+        lead: p.lead,
+        accent: p.accent ?? "#8129ff",
+        primaryCta: p.primaryCta,
+        ...(p.secondaryCta ? { secondaryCta: p.secondaryCta } : {}),
+        sections: (p.sections ?? []).map((s: any) => ({
+          heading: s.heading,
+          paragraphs: s.paragraphs ?? [],
+          bullets: s.bullets ?? [],
+          links: s.links ?? [],
+        })),
+        faqHeading: p.faqHeading ?? "",
+        faq: (p.faq ?? []).map((f: any) => ({ question: f.question, answer: f.answer })),
+        relatedHeading: p.relatedHeading ?? "",
+        related: p.related ?? [],
+        ctaHeadline: p.ctaHeadline,
+        ctaBody: p.ctaBody,
+      })),
+      null,
+      2
+    )};
+`
+  );
+
   console.log(
-    `generate-content[${locale}]: wrote site.ts, about.ts, leistungen.ts, services.ts, serviceDetails.ts, cases.ts (${featured.length} featured / ${grid.length} grid), caseDetails.ts (${withDetail.length} with detail), blog.ts (${blogPosts.length} posts), tools.ts (${tools.length} profiles)`
+    `generate-content[${locale}]: wrote site.ts, about.ts, leistungen.ts, services.ts, serviceDetails.ts, cases.ts (${featured.length} featured / ${grid.length} grid), caseDetails.ts (${withDetail.length} with detail), blog.ts (${blogPosts.length} posts), tools.ts (${tools.length} profiles), landing.ts (${landingPages.length} pages)`
   );
 }
 

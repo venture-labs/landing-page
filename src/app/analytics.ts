@@ -73,6 +73,10 @@ export const PLACEMENTS = Object.freeze({
   videoEndQuiz: "video-end-quiz",
   playbookDownload: "playbook-download",
   playbookCta: "playbook-cta",
+  landingHeroCta: "landing-hero-cta",
+  landingHeroQuiz: "landing-hero-quiz",
+  landingBottomCta: "landing-bottom-cta",
+  landingBottomQuiz: "landing-bottom-quiz",
 } as const);
 
 /**

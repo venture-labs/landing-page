@@ -24,6 +24,82 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    "slug": "warum-ki-projekte-im-mittelstand-scheitern",
+    "title": "Warum KI-Projekte im Mittelstand scheitern und wie ein Check das verhindert",
+    "seoTitle": "Warum KI-Projekte im Mittelstand scheitern – Venture Labs",
+    "seoDescription": "Die meisten KI-Projekte scheitern nicht an der Technik, sondern an Auswahl, Daten und Übergabe. Fünf Gründe und wie ein Check das vorher sichtbar macht.",
+    "excerpt": "Die meisten KI-Projekte scheitern nicht an der Technik, sondern an Auswahl, Daten und Übergabe. Fünf Gründe und wie ein Check das vorher sichtbar macht.",
+    "topicSlug": "ai-automation",
+    "topic": "AI Automation",
+    "readTime": "6 Min. Lesezeit",
+    "featured": false,
+    "publishedDate": "16. November 2026",
+    "author": "VentureLabs Team",
+    "content": [
+      {
+        "type": "paragraph",
+        "text": "Ein KI-Projekt im Mittelstand beginnt meistens mit Begeisterung und endet leise: Der Prototyp lief in der Demo, im Alltag nutzt ihn niemand, und irgendwann fragt keiner mehr danach. Das liegt selten an der Technik. In unserer Arbeit sehen wir immer wieder dieselben fünf Gründe."
+      },
+      {
+        "type": "heading",
+        "text": "1. Es wurde mit dem Werkzeug angefangen, nicht mit dem Problem"
+      },
+      {
+        "type": "paragraph",
+        "text": "«Wir brauchen etwas mit KI» ist ein Auftrag, aber kein Anwendungsfall. Wer mit dem Werkzeug startet, sucht danach ein Problem, das dazu passt. Besser ist die umgekehrte Reihenfolge: erst aufschreiben, welcher Arbeitsschritt heute Zeit frisst oder Fehler macht, und dann prüfen, ob KI dafür das richtige Mittel ist. Manchmal ist es das nicht, und auch das ist ein gutes Ergebnis."
+      },
+      {
+        "type": "heading",
+        "text": "2. Der erste Anwendungsfall war zu groß"
+      },
+      {
+        "type": "paragraph",
+        "text": "Ein Projekt, das gleich den ganzen Vertrieb oder die ganze Verwaltung verändern soll, braucht Monate, bevor jemand etwas sieht. Bleibt der sichtbare Nutzen aus, kippt die Stimmung. Ein gut abgegrenzter Prozess mit klaren Ein- und Ausgaben und überschaubarem Risiko liefert dagegen in Wochen ein Ergebnis und das Vertrauen für den nächsten Schritt."
+      },
+      {
+        "type": "heading",
+        "text": "3. Die Datenbasis wurde nicht geprüft"
+      },
+      {
+        "type": "paragraph",
+        "text": "Ein Agent, der aus verstreuten, veralteten oder gar nicht digitalen Unterlagen antworten soll, kann nur so gut sein wie diese Unterlagen. Wer das erst im Projekt merkt, hat Budget für etwas ausgegeben, das auf wackligem Grund steht. Deshalb gehört die Frage «Wo liegen die Daten, und in welchem Zustand?» an den Anfang."
+      },
+      {
+        "type": "heading",
+        "text": "4. Niemand hat die Verantwortung für den Betrieb"
+      },
+      {
+        "type": "paragraph",
+        "text": "Wir hatten ein gutes Konzept. Umgesetzt hat es dann niemand: Diesen Satz hören wir oft. Ein System, das lebt, muss gepflegt werden: Fehler erkennen, Regeln anpassen, Nutzung sichtbar machen. Wenn nicht klar ist, wer das tut, veraltet die Lösung still."
+      },
+      {
+        "type": "heading",
+        "text": "5. Das Team wurde nicht mitgenommen"
+      },
+      {
+        "type": "paragraph",
+        "text": "Eine Lösung, die im Alltag nicht benutzt wird, ist wertlos, egal wie gut sie gebaut ist. Wer den Ablauf kennt, den die Lösung verändert, sollte von Anfang an mitreden. Das kostet am Anfang etwas Zeit und spart am Ende die Einführung gegen Widerstand."
+      },
+      {
+        "type": "heading",
+        "text": "Was ein Check vorher sichtbar macht"
+      },
+      {
+        "type": "paragraph",
+        "text": "Genau an diesen fünf Stellen setzt der AI Pulse Check an. In 1 bis 2 Tagen schauen wir uns an, wie bei dir tatsächlich gearbeitet wird: Prozesse, Daten, Tools und Team. Am Ende steht keine Präsentation, sondern eine sortierte Liste mit den Anwendungsfällen, die sich zuerst lohnen, und eine ehrliche Empfehlung: umsetzen, warten oder lassen."
+      },
+      {
+        "type": "paragraph",
+        "text": "So wird aus «Wir sollten mal was mit KI machen» eine Entscheidung, die du begründen kannst, bevor Geld fließt."
+      },
+      {
+        "type": "link",
+        "text": "Mehr zur KI-Potenzialanalyse und zum Readiness-Check",
+        "href": "/leistungen/ki-potenzialanalyse"
+      }
+    ]
+  },
+  {
     "slug": "warum-mvps-floppen",
     "title": "Warum die meisten MVPs floppen – und wie du es besser machst",
     "seoTitle": "Warum MVPs floppen – wie du es besser machst – Venture Labs",
@@ -122,6 +198,80 @@ export const blogPosts: BlogPost[] = [
       {
         "type": "paragraph",
         "text": "Nicht mit dem größten Problem, sondern mit dem am besten abgrenzbaren. Ein Prozess mit klaren Ein- und Ausgaben, wiederkehrendem Muster und überschaubarem Risiko liefert in Wochen ein Ergebnis – und das Vertrauen, den nächsten Schritt zu gehen."
+      },
+      {
+        "type": "link",
+        "text": "KI-Agenten für Unternehmen: Einsatz, Kontrolle und Kosten",
+        "href": "/leistungen/ki-agenten-unternehmen"
+      },
+      {
+        "type": "link",
+        "text": "AI Pulse Check: KI-Potenzialanalyse und Readiness-Check",
+        "href": "/leistungen/ki-potenzialanalyse"
+      }
+    ]
+  },
+  {
+    "slug": "wartungswissen-sichern",
+    "title": "Wartungswissen sichern: Was passiert, wenn der erfahrene Instandhalter geht?",
+    "seoTitle": "Wartungswissen sichern: Wenn der Experte geht – Venture Labs",
+    "seoDescription": "Was passiert mit dem Erfahrungswissen, wenn der erfahrene Instandhalter geht? Wo Wissen verloren geht und drei Wege, es festzuhalten, bevor es fehlt.",
+    "excerpt": "Was passiert mit dem Erfahrungswissen, wenn der erfahrene Instandhalter geht? Wo Wissen verloren geht und drei Wege, es festzuhalten, bevor es fehlt.",
+    "topicSlug": "ai-automation",
+    "topic": "AI Automation",
+    "readTime": "5 Min. Lesezeit",
+    "featured": false,
+    "publishedDate": "23. November 2026",
+    "author": "VentureLabs Team",
+    "content": [
+      {
+        "type": "paragraph",
+        "text": "In jedem Betrieb mit Maschinen gibt es jemanden, der alles weiß: warum diese Anlage bei Kälte anders läuft, welche Schraube man nie nach Handbuch anzieht, wo der Ersatzteil-Lieferant eigentlich sitzt. Solange diese Person da ist, fällt das kaum auf. Wenn sie geht, fehlt auf einmal ein Stück Betrieb."
+      },
+      {
+        "type": "heading",
+        "text": "Wo Wissen in einem Betrieb verloren geht"
+      },
+      {
+        "type": "paragraph",
+        "text": "Es sind meist drei Orte. Erstens in Köpfen: Erfahrung, die nie aufgeschrieben wurde. Zweitens in Ordnern: Handbücher und Serviceberichte, die irgendwo liegen, aber nicht dort, wo der Techniker gerade steht. Drittens in Mails und Zetteln: Hinweise zu einer einzelnen Maschine, die niemand wiederfindet."
+      },
+      {
+        "type": "heading",
+        "text": "Weg 1: Ein Logbuch pro Maschine"
+      },
+      {
+        "type": "paragraph",
+        "text": "Wer eine Störung behebt oder etwas Auffälliges bemerkt, hält es kurz fest, am besten direkt an der Maschine und ohne Formularaufwand: ein Satz, ein Foto oder ein Diktat. Der Wert entsteht, weil es an dieser einen Maschine hängt und nicht in einem allgemeinen Dokument."
+      },
+      {
+        "type": "heading",
+        "text": "Weg 2: Dokumente an die Maschine binden"
+      },
+      {
+        "type": "paragraph",
+        "text": "Handbuch, Schaltplan und Serviceberichte nützen nur, wenn sie dort auffindbar sind, wo man sie braucht. Ein QR- oder NFC-Etikett an der Maschine, das auf deren eigene Seite führt, löst genau das: Der Techniker scannt und hat alles zu dieser Maschine."
+      },
+      {
+        "type": "heading",
+        "text": "Weg 3: Ein Assistent, der aus diesen Dokumenten antwortet"
+      },
+      {
+        "type": "paragraph",
+        "text": "Sind Dokumente und Logbuch erst an einer Stelle gesammelt, kann ein Assistent daraus Fragen beantworten, mit Quelle und mit dem ehrlichen Hinweis, wenn er etwas nicht findet. Er ersetzt keinen Techniker, er spart die Suche. Voraussetzung ist, dass das Wissen vorher aufgeschrieben wurde."
+      },
+      {
+        "type": "heading",
+        "text": "Womit du anfangen kannst"
+      },
+      {
+        "type": "paragraph",
+        "text": "Nicht mit allen Maschinen auf einmal. Such dir eine Maschine, deren Wissen an wenigen Personen hängt, und sammle für sie Dokumente und die wichtigsten Erfahrungen an einem Ort. Was das für deine Maschinen bedeuten würde, besprechen wir gern."
+      },
+      {
+        "type": "link",
+        "text": "So funktioniert die digitale Maschinenakte",
+        "href": "/leistungen/digitale-maschinenakte"
       }
     ]
   },

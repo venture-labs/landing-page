@@ -24,6 +24,82 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    "slug": "warum-ki-projekte-im-mittelstand-scheitern",
+    "title": "Why AI projects in mid-sized companies fail, and how a check prevents it",
+    "seoTitle": "Why AI projects in mid-sized companies fail – Venture Labs",
+    "seoDescription": "Most AI projects fail not because of technology but because of selection, data and handover. Five reasons and how a check makes them visible beforehand.",
+    "excerpt": "Most AI projects fail not because of technology but because of selection, data and handover. Five reasons and how a check makes them visible beforehand.",
+    "topicSlug": "ai-automation",
+    "topic": "AI Automation",
+    "readTime": "6 min read",
+    "featured": false,
+    "publishedDate": "November 16, 2026",
+    "author": "VentureLabs Team",
+    "content": [
+      {
+        "type": "paragraph",
+        "text": "An AI project in a mid-sized company usually starts with enthusiasm and ends quietly: the prototype worked in the demo, nobody uses it in daily work, and at some point nobody asks about it any more. This rarely comes down to technology. In our work we keep seeing the same five reasons."
+      },
+      {
+        "type": "heading",
+        "text": "1. They started with the tool, not the problem"
+      },
+      {
+        "type": "paragraph",
+        "text": "«We need something with AI» is an assignment, but not a use case. Whoever starts with the tool looks for a problem that fits it afterwards. The reverse order works better: first write down which work step eats time or causes errors today, then check whether AI is the right means. Sometimes it isn't, and that is a good result too."
+      },
+      {
+        "type": "heading",
+        "text": "2. The first use case was too big"
+      },
+      {
+        "type": "paragraph",
+        "text": "A project that is meant to change the whole sales or administration department right away takes months before anyone sees anything. If visible benefit stays away, the mood tips. A well-defined process with clear inputs and outputs and manageable risk delivers a result within weeks, and the trust for the next step."
+      },
+      {
+        "type": "heading",
+        "text": "3. The data foundation wasn't checked"
+      },
+      {
+        "type": "paragraph",
+        "text": "An agent that is supposed to answer from scattered, outdated or non-digital documents can only be as good as those documents. Whoever notices this only during the project has spent budget on something that stands on shaky ground. That is why the question «Where is the data, and in what state?» belongs at the very beginning."
+      },
+      {
+        "type": "heading",
+        "text": "4. Nobody is responsible for operations"
+      },
+      {
+        "type": "paragraph",
+        "text": "We had a good concept. Nobody implemented it: we hear this sentence often. A living system has to be maintained: spot errors, adjust rules, make usage visible. If it isn't clear who does that, the solution quietly goes stale."
+      },
+      {
+        "type": "heading",
+        "text": "5. The team wasn't brought along"
+      },
+      {
+        "type": "paragraph",
+        "text": "A solution that isn't used in daily work is worthless, however well it is built. Whoever knows the workflow the solution changes should have a say from the start. That costs a little time at the beginning and saves introducing it against resistance at the end."
+      },
+      {
+        "type": "heading",
+        "text": "What a check makes visible beforehand"
+      },
+      {
+        "type": "paragraph",
+        "text": "This is exactly where the AI Pulse Check comes in. In 1 to 2 days we look at how work really gets done at your place: processes, data, tools and team. At the end there is no presentation but a sorted list of the use cases that pay off first, and an honest recommendation: implement, wait or leave it."
+      },
+      {
+        "type": "paragraph",
+        "text": "That turns «We should do something with AI» into a decision you can justify before money flows."
+      },
+      {
+        "type": "link",
+        "text": "More on AI potential analysis and the readiness check",
+        "href": "/leistungen/ki-potenzialanalyse"
+      }
+    ]
+  },
+  {
     "slug": "warum-mvps-floppen",
     "title": "Why most MVPs fail – and how to do better",
     "seoTitle": "Why most MVPs fail – and how to do better – Venture Labs",
@@ -122,6 +198,70 @@ export const blogPosts: BlogPost[] = [
       {
         "type": "paragraph",
         "text": "Not with the biggest problem, but with the most clearly bounded one. A process with clear inputs and outputs, a repeating pattern, and manageable risk delivers a result in weeks — and the confidence to take the next step."
+      }
+    ]
+  },
+  {
+    "slug": "wartungswissen-sichern",
+    "title": "Securing maintenance knowledge: what happens when the experienced technician leaves?",
+    "seoTitle": "Keep maintenance knowledge when experts leave – Venture Labs",
+    "seoDescription": "What happens to experience when your most experienced technician leaves? Where knowledge gets lost and three ways to capture it before it is missing.",
+    "excerpt": "What happens to experience when your most experienced maintenance technician leaves? Where knowledge gets lost and three ways to capture it before it is missing.",
+    "topicSlug": "ai-automation",
+    "topic": "AI Automation",
+    "readTime": "5 min read",
+    "featured": false,
+    "publishedDate": "November 23, 2026",
+    "author": "VentureLabs Team",
+    "content": [
+      {
+        "type": "paragraph",
+        "text": "Every company with machines has someone who knows everything: why this machine runs differently in the cold, which screw you never tighten by the manual, where the spare-part supplier actually is. As long as this person is there, it hardly shows. When they leave, a piece of the business is suddenly missing."
+      },
+      {
+        "type": "heading",
+        "text": "Where knowledge gets lost in a company"
+      },
+      {
+        "type": "paragraph",
+        "text": "It is usually three places. First, in heads: experience that was never written down. Second, in folders: manuals and service reports that lie somewhere, but not where the technician is standing. Third, in emails and notes: hints about a single machine that nobody finds again."
+      },
+      {
+        "type": "heading",
+        "text": "Way 1: a logbook per machine"
+      },
+      {
+        "type": "paragraph",
+        "text": "Whoever fixes a fault or notices something unusual records it briefly, ideally right at the machine and without form-filling: a sentence, a photo or a dictation. The value comes from the fact that it is attached to this one machine and not to a general document."
+      },
+      {
+        "type": "heading",
+        "text": "Way 2: bind documents to the machine"
+      },
+      {
+        "type": "paragraph",
+        "text": "Manual, circuit diagram and service reports are only useful if they can be found where they are needed. A QR or NFC label on the machine that leads to its own page solves exactly that: the technician scans and has everything about this machine."
+      },
+      {
+        "type": "heading",
+        "text": "Way 3: an assistant that answers from these documents"
+      },
+      {
+        "type": "paragraph",
+        "text": "Once documents and logbook are collected in one place, an assistant can answer questions from them, with a source and with an honest note when it can't find something. It doesn't replace a technician, it saves the search. The prerequisite is that the knowledge was written down beforehand."
+      },
+      {
+        "type": "heading",
+        "text": "What you can start with"
+      },
+      {
+        "type": "paragraph",
+        "text": "Not with all machines at once. Pick one machine whose knowledge depends on a few people and collect its documents and the most important experience in one place. What that would mean for your machines, we are happy to discuss."
+      },
+      {
+        "type": "link",
+        "text": "How the digital machine file works",
+        "href": "/leistungen/digitale-maschinenakte"
       }
     ]
   },

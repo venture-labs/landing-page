@@ -1,7 +1,7 @@
 ---
 language: "de"
-seoTitle: 'AI Automation – Prozesse mit KI verbessern – Venture Labs'
-seoDescription: 'Wir verwandeln manuelle Geschäftsprozesse in intelligente, integrierte Workflows – dort, wo KI messbar Zeit, Kosten und Fehler reduziert.'
+seoTitle: 'AI Automation: KI-Prozesse im Mittelstand – Venture Labs'
+seoDescription: 'KI-Prozessautomatisierung im Mittelstand: Wir verwandeln manuelle Geschäftsprozesse in integrierte Workflows, wo KI Zeit, Kosten und Fehler reduziert.'
 slug: ai-automation
 order: 1
 title: "AI Automation"
@@ -11,7 +11,7 @@ icon: bot
 usedIn: [check, build, care]
 proof: "Angebote, die früher drei Tage brauchten, gehen jetzt in Minuten raus."
 heroHeadline: "Das Geschäft verbessern."
-heroSubline: "Wir automatisieren Prozesse dort, wo KI messbar Zeit, Kosten und Fehler reduziert."
+heroSubline: "KI-Prozessautomatisierung im Mittelstand: Wir automatisieren Prozesse dort, wo KI messbar Zeit, Kosten und Fehler reduziert."
 heroImage: "/uploads/services/ai-automation-hero.png"
 tags:
   - "AI Agents & intelligente Workflows"
@@ -45,6 +45,14 @@ caseStats:
   - value: "5/5"
     label: "Kundenbewertungen"
 caseDescription: "Ein KI-gestütztes Vertriebstool für Händler und Außendienst – vom MVP in nur 12 Wochen."
+extra:
+  heading: "Kontrolle und Kosten"
+  paragraphs:
+    - "Ein Agent, der Arbeit übernimmt, braucht Regeln. Bei uns heißt das: Entwürfe statt Versand, ein Mensch gibt frei, und jeder Agent hat einen Kostendeckel, damit es keine Überraschung auf der Rechnung gibt."  # prüfen: Aussage zu Freigabe und Kostendeckel gegen den laufenden Cluster abgleichen, bevor sie live geht
+    - "Wie das im Einzelnen aussieht, wie wir mit Datenschutz umgehen und wie der Einstieg über den Pulse Check läuft, steht auf der Seite zu KI-Agenten für Unternehmen."
+  bullets: []
+  linkLabel: "KI-Agenten für Unternehmen: Einsatz, Kontrolle und Kosten"
+  linkHref: "/leistungen/ki-agenten-unternehmen"
 ctaHeadline: "KI, die wirklich automatisiert – nicht nur ein Chatbot."
 ctaBody: "Im kostenlosen Erstgespräch mit unserem Team sprechen wir ehrlich darüber, wo KI-Agenten in deinem Business heute schon den Unterschied machen."
 ctaButtonLabel: "Dein Automatisierungspotenzial finden"

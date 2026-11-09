@@ -1,8 +1,8 @@
 ---
 slug: ai-automation
 language: "en"
-seoTitle: 'AI Automation – Improve processes with AI – Venture Labs'
-seoDescription: 'We turn manual business processes into intelligent, integrated workflows – automating where AI measurably saves time, cuts costs, and reduces errors.'
+seoTitle: 'AI Automation: AI for mid-sized processes – Venture Labs'
+seoDescription: 'AI process automation for mid-sized companies: we turn manual business processes into integrated workflows where AI measurably saves time and reduces errors.'
 order: 1
 title: "AI Automation"
 description: "Rethinking existing processes: we turn manual business processes into intelligent, integrated workflows."
@@ -11,7 +11,7 @@ icon: bot
 usedIn: [check, build, care]
 proof: "Quotes that used to take three days now go out in minutes."
 heroHeadline: "Improve the business."
-heroSubline: "We automate processes where AI measurably saves time, cuts costs, and reduces errors."
+heroSubline: "AI process automation for mid-sized companies: we automate processes where AI measurably saves time, cuts costs, and reduces errors."
 heroImage: "/uploads/services/ai-automation-hero.png"
 tags:
   - "AI agents & intelligent workflows"
@@ -45,6 +45,14 @@ caseStats:
   - value: "5/5"
     label: "Customer ratings"
 caseDescription: "An AI-powered sales tool for dealers and field reps — from MVP in just 12 weeks."
+extra:
+  heading: "Control and costs"
+  paragraphs:
+    - "An agent that takes over work needs rules. With us that means: drafts instead of sending, a person approves, and every agent has a cost cap so there are no surprises on the bill."  # prüfen: statement on approval and cost cap against the running cluster before go-live
+    - "How this looks in detail, how we handle data protection and how the start through the Pulse Check works is described on the page about AI agents for companies."
+  bullets: []
+  linkLabel: "AI agents for companies: use, control and costs"
+  linkHref: "/leistungen/ki-agenten-unternehmen"
 ctaHeadline: "AI that actually automates — not just a chatbot."
 ctaBody: "In a free intro call with our team, we'll talk honestly about where AI agents can already make a difference in your business today."
 ctaButtonLabel: "Find your automation opportunity"

@@ -93,6 +93,8 @@ link or the contact form itself):
 | `caseDetailBottomCta` | `case-detail-bottom-cta` | `CaseDetail`'s closing contact CTA | `src/app/pages/CaseDetail.tsx:285` |
 | `blogDetailCta` | `blog-detail-cta` | `BlogDetail`'s end-of-post CTA | `src/app/pages/BlogDetail.tsx:216` |
 | `ueberUnsCta` | `ueber-uns-cta` | `UeberUns`'s closing CTA | `src/app/pages/UeberUns.tsx:277` |
+| `landingHeroCta` | `landing-hero-cta` | `SeoLanding` hero (SEO landing page under `/leistungen/<slug>`; fires `Call Link Clicked` / `book-call` when the page's CTA is a booking link, `Contact Sent` / `contact` when it goes to `/kontakt`) | `src/app/pages/SeoLanding.tsx` |
+| `landingBottomCta` | `landing-bottom-cta` | `SeoLanding` closing CTA block (same two kinds as the hero) | `src/app/pages/SeoLanding.tsx` |
 
 The last five rows (`leistungenHeroContact` through `ueberUnsCta`) were not in the spec's own
 inventory — found by grepping every `/kontakt` destination in `src/app/` once the guard's rule for
@@ -110,6 +112,8 @@ for why they were tracked the same way rather than left out.
 | `videoEndQuiz` | `video-end-quiz` | `ExplainerVideo` end card's Pulse Score button | `src/app/components/ExplainerVideo.tsx` |
 | `leistungenPulseCallout` | `leistungen-pulse-callout` | `Leistungen`'s closing `PulseCallout` Pulse button | `src/app/pages/Leistungen.tsx:262` |
 | `leistungenDetailQuiz` | `leistungen-detail-quiz` | `LeistungenDetail`'s one Pulse button | `src/app/pages/LeistungenDetail.tsx:335` |
+| `landingHeroQuiz` | `landing-hero-quiz` | `SeoLanding` hero's Pulse Score button | `src/app/pages/SeoLanding.tsx` |
+| `landingBottomQuiz` | `landing-bottom-quiz` | `SeoLanding` closing block's Pulse Score button | `src/app/pages/SeoLanding.tsx` |
 
 `Leistungen.tsx` has two distinct openers feeding one `<PulseCheckModal>` instance; the clicked
 opener's placement travels with the component's own open state (`quizPlacement: string | null`, see
