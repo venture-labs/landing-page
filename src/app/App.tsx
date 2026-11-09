@@ -21,6 +21,7 @@ import { CasesOverview } from "./pages/CasesOverview";
 import { Kontakt } from "./pages/Kontakt";
 import { Blog } from "./pages/Blog";
 import { BlogDetail } from "./pages/BlogDetail";
+import { EntwurfReview } from "./pages/EntwurfReview";
 import { UeberUns } from "./pages/UeberUns";
 import { Impressum } from "./pages/Impressum";
 import { Datenschutz } from "./pages/Datenschutz";
@@ -165,6 +166,14 @@ export function AppRoutes() {
           element={
             <LangGuard>
               <Blog />
+            </LangGuard>
+          }
+        />
+        <Route
+          path="/:lang/entwurf-review"
+          element={
+            <LangGuard>
+              <EntwurfReview />
             </LangGuard>
           }
         />

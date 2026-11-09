@@ -204,6 +204,8 @@ export interface PageMeta {
   /** Present on the landing pages: the visible FAQ, emitted as one schema.org FAQPage. */
   faq?: { question: string; answer: string }[];
   sourceFile?: string; // markdown file backing the page, for <lastmod>
+  /** Draft or review page: robots noindex,nofollow and left out of the sitemap. */
+  noindex?: boolean;
 }
 
 export interface Alternate {
@@ -338,8 +340,25 @@ function buildPagesForLocale(lang: Locale): PageMeta[] {
       description: authored(p.seoDescription, p.excerpt),
       crumbs: [crumb(footer.blog, "/blog"), crumb(p.title, `/blog/${p.slug}`)],
       sourceFile: contentFile(lang, `blog/${p.slug}`),
+      ...(p.draft ? { noindex: true } : {}),
     });
   }
+
+  // Hidden review page for the drafts (not in the nav, not in the sitemap, noindex).
+  pages.push({
+    path: `/${lang}/entwurf-review`,
+    lang,
+    title:
+      lang === "de"
+        ? "Artikel-Entwürfe zum Gegenlesen und Freigeben – Venture Labs"
+        : "Draft articles to read through and approve – Venture Labs",
+    description:
+      lang === "de"
+        ? "Interne Übersicht der Artikel-Entwürfe von Venture Labs, die noch nicht veröffentlicht sind: nicht in der Sitemap, für Suchmaschinen gesperrt."
+        : "Internal overview of Venture Labs draft articles that are not published yet: not in the sitemap and blocked for search engines.",
+    crumbs: [crumb(footer.blog, "/entwurf-review")],
+    noindex: true,
+  });
 
   pages.push({
     path: `/${lang}/ueber-uns`,
@@ -527,7 +546,11 @@ export function renderHeadMeta(page: PageMeta, alternates: Alternate[], env: Nod
   return [
     `    <title>${title}</title>`,
     meta("name", "description", description),
-    meta("name", "robots", "index,follow,max-image-preview:large"),
+    meta(
+      "name",
+      "robots",
+      page.noindex ? "noindex,nofollow" : "index,follow,max-image-preview:large"
+    ),
     `    <link rel="canonical" href="${canonical}" />`,
     ...alternates.map(
       (a) => `    <link rel="alternate" hreflang="${escapeAttr(a.hreflang)}" href="${escapeAttr(a.href)}" />`
@@ -637,7 +660,7 @@ export function render404Html(shell: string): string {
 }
 
 function renderSitemap(pages: PageMeta[], alternatesByPath: Map<string, Alternate[]>): string {
-  const entries = pages.map((page) => {
+  const entries = pages.filter((page) => !page.noindex).map((page) => {
     const links = (alternatesByPath.get(page.path) ?? [])
       .map(
         (a) =>

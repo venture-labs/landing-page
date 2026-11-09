@@ -83,8 +83,14 @@ export function useCaseDetail(slug?: string): CaseDetail | null {
   return (slug ? caseDetails[lang][slug] : undefined) ?? null;
 }
 
+/** Published posts only: drafts stay out of the blog list until the owner approves them. */
 export function useBlogData(): BlogPost[] {
-  return blogPosts[useLocale().lang];
+  return blogPosts[useLocale().lang].filter((p) => !p.draft);
+}
+
+/** Drafts for the hidden review page (/:lang/entwurf-review, noindex). */
+export function useDraftPosts(): BlogPost[] {
+  return blogPosts[useLocale().lang].filter((p) => p.draft);
 }
 
 export function useBlogDetail(slug?: string): BlogPost | null {
