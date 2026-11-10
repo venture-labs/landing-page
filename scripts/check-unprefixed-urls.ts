@@ -9,11 +9,11 @@ const base = (process.argv[2] ?? "https://venturelabs.team").replace(/\/+$/, "")
 async function main() {
   const xml = await (await fetch(`${base}/sitemap.xml`)).text();
   const paths = [...xml.matchAll(/<loc>https?:\/\/[^/]+(\/[^<]*)<\/loc>/g)].map((m) => m[1]);
-  const slugs = [...new Set(paths.map((p) => p.match(/^\/(?:de|en)(\/.+)$/)?.[1]).filter(Boolean) as string[])];
+  const slugs = [...new Set(paths.map((p) => p.match(/^\/(?:de|en)(\/.+?)\/?$/)?.[1]).filter(Boolean) as string[])];
   const cases: [string | null, string][] = [["de", "de"], ["en-US,en;q=0.9", "en"], [null, "de"]];
   let bad = 0;
   for (const slug of slugs) {
-    const available = new Set(paths.filter((p) => p.endsWith(slug) || p.endsWith(`${slug}/`)).map((p) => p.slice(1, 3)));
+    const available = new Set(paths.filter((p) => p.replace(/\/$/, "").endsWith(slug)).map((p) => p.slice(1, 3)));
     for (const [header, want] of cases) {
       const lang = available.has(want) ? want : [...available][0];
       const res = await fetch(`${base}${slug}?utm_source=t`, {
