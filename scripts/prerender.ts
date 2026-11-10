@@ -54,6 +54,7 @@ import { caseDetailsMap as caseDetailsDe } from "../src/data/de/caseDetails";
 import { landingPages as landingPagesDe } from "../src/data/de/landing";
 import { blogPosts as blogPostsDe } from "../src/data/de/blog";
 import { isWissenPost } from "../src/data/postKind";
+import { SHOW_DRAFTS } from "../src/data/showDrafts";
 
 import { siteData as siteEn } from "../src/data/en/site";
 import { leistungenData as leistungenEn } from "../src/data/en/leistungen";
@@ -239,6 +240,8 @@ export interface PageMeta {
   sourceFile?: string; // markdown file backing the page, for <lastmod>
   /** Draft or review page: robots noindex,nofollow and left out of the sitemap. */
   noindex?: boolean;
+  /** A draft article page: left out of the sitemap, except on preview builds (SHOW_DRAFTS). */
+  draft?: boolean;
 }
 
 export interface Alternate {
@@ -385,7 +388,7 @@ function buildPagesForLocale(lang: Locale): PageMeta[] {
       description: authored(p.seoDescription, p.excerpt),
       crumbs: [crumb(wissen ? footer.wissen : footer.blog, `/${section}`), crumb(p.title, `/${section}/${p.slug}`)],
       sourceFile: contentFile(lang, `blog/${p.slug}`),
-      ...(p.draft ? { noindex: true } : {}),
+      ...(p.draft ? { noindex: true, draft: true } : {}),
     });
   }
 
@@ -705,7 +708,7 @@ export function render404Html(shell: string): string {
 }
 
 function renderSitemap(pages: PageMeta[], alternatesByPath: Map<string, Alternate[]>): string {
-  const entries = pages.filter((page) => !page.noindex).map((page) => {
+  const entries = pages.filter((page) => !page.noindex || (SHOW_DRAFTS && page.draft)).map((page) => {
     const links = (alternatesByPath.get(page.path) ?? [])
       .map(
         (a) =>

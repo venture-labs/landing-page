@@ -68,6 +68,9 @@ function isDraftRoute(path: string): boolean {
   if (parts[1] === "entwurf-review") return true;
   return (parts[1] === "blog" || parts[1] === "wissen") && parts.length === 3 && DRAFT_SLUGS.has(parts[2]);
 }
+/** Preview builds (Netlify branch deploy / deploy preview, or SHOW_DRAFTS=1) list the draft articles in the sitemap; production never does. */
+const PREVIEW_DRAFTS =
+  process.env.SHOW_DRAFTS === "1" || process.env.CONTEXT === "branch-deploy" || process.env.CONTEXT === "deploy-preview";
 const THEME_COLOR = "#0e0d13";
 const FORBIDDEN_LD_KEYS = ["Offer", "offers", "price", "priceCurrency", "SearchAction", "potentialAction"];
 const FOOTER_KEY_BY_SECTION: Record<string, string> = {
@@ -816,7 +819,7 @@ export function runChecks(distDir: string, env: NodeJS.ProcessEnv = process.env)
     if (!root[1].includes('xmlns:xhtml="http://www.w3.org/1999/xhtml"')) fail("/sitemap.xml", "<urlset>", "no xhtml namespace");
     if (/&(?!amp;|lt;|gt;|quot;|apos;|#\d+;)/.test(sitemapXml)) fail("/sitemap.xml", "escaping", "a raw & in the sitemap");
 
-    const expected = shellPaths.filter((p) => !isDraftRoute(p)).map(canonicalOf).sort();
+    const expected = shellPaths.filter((p) => !isDraftRoute(p) || (PREVIEW_DRAFTS && !p.includes("/entwurf-review"))).map(canonicalOf).sort();
     const actual = sitemap.map((u) => u.loc).sort();
     for (const u of expected) if (!actual.includes(u)) fail("/sitemap.xml", "<loc>", `no entry for the shell ${u}`);
     for (const u of actual) if (!expected.includes(u)) fail("/sitemap.xml", "<loc>", `${u} has no shell`);

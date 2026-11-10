@@ -1,3 +1,4 @@
+import { SHOW_DRAFTS } from "@/data/showDrafts";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { ArrowRight } from "lucide-react";
@@ -68,7 +69,7 @@ export function Wissen() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    setShowDrafts(new URLSearchParams(window.location.search).has("entwuerfe"));
+    setShowDrafts(SHOW_DRAFTS || new URLSearchParams(window.location.search).has("entwuerfe"));
   }, []);
 
   const deep = published.filter((p) => p.kind === "tiefenartikel");
