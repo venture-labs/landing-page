@@ -95,6 +95,38 @@ function absoluteUrl(path: string): string {
   return `${SITE_ORIGIN}${clean}${TRAILING_SLASH ? "/" : ""}`;
 }
 
+/**
+ * Netlify rules for every route that exists only under /de/... or /en/...: the
+ * unprefixed path answers 302 (not 301, the choice follows the browser) to the
+ * locale of the Accept-Language header, German otherwise (bots, no header).
+ * Returns the rule lines; exported for the check script.
+ */
+export function unprefixedRedirectRules(paths: string[]): string[] {
+  const bySlug = new Map<string, Set<string>>();
+  for (const p of paths) {
+    const m = p.match(/^\/(de|en)(\/.+)$/);
+    if (!m) continue;
+    if (!bySlug.has(m[2])) bySlug.set(m[2], new Set());
+    bySlug.get(m[2])!.add(m[1]);
+  }
+  const lines: string[] = [];
+  for (const [slug, langs] of [...bySlug].sort()) {
+    const en = langs.has("en") ? "en" : "de";
+    const de = langs.has("de") ? "de" : "en";
+    lines.push(`${slug}  /${en}${slug}  302  Language=en`);
+    lines.push(`${slug}  /${de}${slug}  302`);
+  }
+  return lines;
+}
+
+function writeUnprefixedRedirects(paths: string[]): void {
+  const file = resolve(distDir, "_redirects");
+  const src = readFileSync(file, "utf8");
+  const marker = "# @@UNPREFIXED_REDIRECTS@@";
+  if (!src.includes(marker)) throw new Error("prerender: _redirects marker missing");
+  writeFileSync(file, src.replace(marker, unprefixedRedirectRules(paths).join("\n")));
+}
+
 /** Build date, used as the <lastmod> fallback. */
 const BUILD_DATE = new Date().toISOString().slice(0, 10);
 
@@ -828,6 +860,8 @@ async function main() {
     resolve(distDir, "index.html"),
     renderHtml(shell, dePage, alternatesByPath.get(dePage.path)!, "")
   );
+
+  writeUnprefixedRedirects(allPages.map((p) => p.path));
 
   // The unmatched-path shell public/_redirects serves with status 404.
   writeFileSync(resolve(distDir, "404.html"), render404Html(shell));

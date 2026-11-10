@@ -10,6 +10,7 @@
     "check:area-pages": "tsx scripts/check-area-pages.ts",
     "check:meta": "tsx scripts/check-meta.ts",
     "check:i18n": "tsx scripts/check-i18n-parity.ts",
+    "check:unprefixed": "tsx scripts/check-unprefixed-urls.ts",
     "check:naming": "tsx scripts/check-pulse-naming.ts"
   },
   "dependencies": {
