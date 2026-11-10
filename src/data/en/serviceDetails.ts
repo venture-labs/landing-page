@@ -27,13 +27,22 @@ export interface ServiceDetail {
   ctaHeadline: string;
   ctaBody: string;
   ctaButtonLabel: string;
+  /** Optional extra text block after the process (e.g. "Kontrolle und Kosten"). */
+  extra?: {
+    heading: string;
+    paragraphs: string[];
+    bullets: string[];
+    linkLabel: string;
+    /** A path inside the site, without the locale prefix. */
+    linkHref: string;
+  };
 }
 
 export const serviceDetails: ServiceDetail[] = [
   {
     "slug": "ai-automation",
     "heroHeadline": "Improve the business.",
-    "heroSubline": "We automate processes where AI measurably saves time, cuts costs, and reduces errors.",
+    "heroSubline": "AI process automation for mid-sized companies: we automate processes where AI measurably saves time, cuts costs, and reduces errors.",
     "heroImage": "/uploads/services/ai-automation-hero.png",
     "tags": [
       "AI agents & intelligent workflows",
@@ -86,7 +95,17 @@ export const serviceDetails: ServiceDetail[] = [
     "caseDescription": "An AI-powered sales tool for dealers and field reps — from MVP in just 12 weeks.",
     "ctaHeadline": "AI that actually automates — not just a chatbot.",
     "ctaBody": "In a free intro call with our team, we'll talk honestly about where AI agents can already make a difference in your business today.",
-    "ctaButtonLabel": "Find your automation opportunity"
+    "ctaButtonLabel": "Find your automation opportunity",
+    "extra": {
+      "heading": "Control and costs",
+      "paragraphs": [
+        "An agent that takes over work needs rules. With us that means: drafts instead of sending, a person approves, and every agent has a cost cap so there are no surprises on the bill.",
+        "How this looks in detail, how we handle data protection and how the start through the Pulse Check works is described on the page about AI agents for companies."
+      ],
+      "bullets": [],
+      "linkLabel": "AI agents for companies: use, control and costs",
+      "linkHref": "/leistungen/ki-agenten-unternehmen"
+    }
   },
   {
     "slug": "ai-products",

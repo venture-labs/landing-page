@@ -24,6 +24,7 @@ export const EVENTS = Object.freeze({
   videoPlayed: "Video Played",
   video50: "Video 50",
   videoCompleted: "Video Completed",
+  playbookDownloaded: "Playbook Downloaded",
 } as const);
 
 /**
@@ -70,6 +71,12 @@ export const PLACEMENTS = Object.freeze({
   ueberUnsCta: "ueber-uns-cta",
   videoEnd: "video-end",
   videoEndQuiz: "video-end-quiz",
+  playbookDownload: "playbook-download",
+  playbookCta: "playbook-cta",
+  landingHeroCta: "landing-hero-cta",
+  landingHeroQuiz: "landing-hero-quiz",
+  landingBottomCta: "landing-bottom-cta",
+  landingBottomQuiz: "landing-bottom-quiz",
 } as const);
 
 /**

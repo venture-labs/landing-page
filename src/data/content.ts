@@ -20,7 +20,12 @@ import {
 } from "./de/cases";
 import { caseDetailsMap as caseDetailsDe, type CaseDetail } from "./de/caseDetails";
 import { blogPosts as blogPostsDe, type BlogPost } from "./de/blog";
+import { isWissenPost } from "./postKind";
+import { SHOW_DRAFTS } from "./showDrafts";
+
+export { isWissenPost, postPath } from "./postKind";
 import { toolProfiles as toolProfilesDe, type ToolProfile } from "./de/tools";
+import { landingPages as landingPagesDe, type LandingPage } from "./de/landing";
 
 import { siteData as siteEn } from "./en/site";
 import { aboutData as aboutEn } from "./en/about";
@@ -31,6 +36,7 @@ import { featuredCases as featuredCasesEn, gridCases as gridCasesEn } from "./en
 import { caseDetailsMap as caseDetailsEn } from "./en/caseDetails";
 import { blogPosts as blogPostsEn } from "./en/blog";
 import { toolProfiles as toolProfilesEn } from "./en/tools";
+import { landingPages as landingPagesEn } from "./en/landing";
 
 const site: Record<Locale, typeof siteDe> = { de: siteDe, en: siteEn };
 const about: Record<Locale, AboutData> = { de: aboutDe, en: aboutEn };
@@ -47,6 +53,7 @@ const caseDetails: Record<Locale, Record<string, CaseDetail>> = {
   en: caseDetailsEn,
 };
 const blogPosts: Record<Locale, BlogPost[]> = { de: blogPostsDe, en: blogPostsEn };
+const landingPages: Record<Locale, LandingPage[]> = { de: landingPagesDe, en: landingPagesEn };
 const toolProfiles: Record<Locale, ToolProfile[]> = { de: toolProfilesDe, en: toolProfilesEn };
 
 export function useSiteData(): typeof siteDe {
@@ -80,8 +87,33 @@ export function useCaseDetail(slug?: string): CaseDetail | null {
   return (slug ? caseDetails[lang][slug] : undefined) ?? null;
 }
 
+/** Published blog posts only: drafts stay out of the blog list until the owner approves them; hub articles are not blog posts. */
 export function useBlogData(): BlogPost[] {
-  return blogPosts[useLocale().lang];
+  return blogPosts[useLocale().lang].filter((p) => !p.draft && !isWissenPost(p));
+}
+
+/** Published knowledge-hub articles (glossary entries and deep articles). */
+export function useWissenData(): BlogPost[] {
+  return blogPosts[useLocale().lang].filter((p) => !p.draft && isWissenPost(p));
+}
+
+/**
+ * Preview builds only (SHOW_DRAFTS): every article the blog list leaves out, i.e. drafts and
+ * published hub articles, so the dev site reaches all of them from the blog overview.
+ */
+export function useBlogPreviewExtras(): BlogPost[] {
+  const all = blogPosts[useLocale().lang];
+  return SHOW_DRAFTS ? all.filter((p) => p.draft || isWissenPost(p)) : [];
+}
+
+/** Hub articles that are still drafts: shown on the hub only with ?entwuerfe=1, never indexed. */
+export function useWissenDrafts(): BlogPost[] {
+  return blogPosts[useLocale().lang].filter((p) => p.draft && isWissenPost(p));
+}
+
+/** Drafts for the hidden review page (/:lang/entwurf-review, noindex). */
+export function useDraftPosts(): BlogPost[] {
+  return blogPosts[useLocale().lang].filter((p) => p.draft);
 }
 
 export function useBlogDetail(slug?: string): BlogPost | null {
@@ -91,4 +123,9 @@ export function useBlogDetail(slug?: string): BlogPost | null {
 
 export function useToolProfilesData(): ToolProfile[] {
   return toolProfiles[useLocale().lang];
+}
+
+export function useLandingPage(slug?: string): LandingPage | null {
+  const { lang } = useLocale();
+  return landingPages[lang].find((p) => p.slug === slug) ?? null;
 }

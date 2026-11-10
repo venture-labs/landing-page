@@ -55,16 +55,35 @@ const BRAND_INSIDE_TITLE = new Set(["/de/impressum", "/en/impressum", "/de/daten
 export const TITLE_LENGTH = { min: 50, max: 60 };
 export const DESCRIPTION_LENGTH = { min: 120, max: 160 };
 const ROBOTS = "index,follow,max-image-preview:large";
+/** Draft articles (frontmatter `draft: true`) and the hidden review page: noindex and no sitemap entry. */
+const ROBOTS_DRAFT = "noindex,nofollow";
+const DRAFT_SLUGS = new Set<string>(
+  readdirSync(join(process.cwd(), "content/blog"))
+    .filter((f) => f.endsWith(".md"))
+    .filter((f) => /^draft:\s*true\b/m.test(readFileSync(join(process.cwd(), "content/blog", f), "utf-8")))
+    .map((f) => f.replace(/(\.en)?\.md$/, "")),
+);
+function isDraftRoute(path: string): boolean {
+  const parts = path.split("/").filter(Boolean);
+  if (parts[1] === "entwurf-review") return true;
+  return (parts[1] === "blog" || parts[1] === "wissen") && parts.length === 3 && DRAFT_SLUGS.has(parts[2]);
+}
+/** Preview builds (Netlify branch deploy / deploy preview, or SHOW_DRAFTS=1) list the draft articles in the sitemap; production never does. */
+const PREVIEW_DRAFTS =
+  process.env.SHOW_DRAFTS === "1" || process.env.CONTEXT === "branch-deploy" || process.env.CONTEXT === "deploy-preview";
 const THEME_COLOR = "#0e0d13";
 const FORBIDDEN_LD_KEYS = ["Offer", "offers", "price", "priceCurrency", "SearchAction", "potentialAction"];
 const FOOTER_KEY_BY_SECTION: Record<string, string> = {
   leistungen: "servicesTitle",
   cases: "projectsTitle",
   blog: "blog",
+  wissen: "wissen",
+  "entwurf-review": "blog",
   "ueber-uns": "aboutTitle",
   kontakt: "contactTitle",
   impressum: "imprint",
   datenschutz: "privacy",
+  playbook: "playbookGuide",
 };
 
 /** Characters of a head string: code points of the trimmed text. */
@@ -406,7 +425,7 @@ export function runChecks(distDir: string, env: NodeJS.ProcessEnv = process.env)
       eq("meta[property=og:locale:alternate]", one(h.props.get("og:locale:alternate")), lang === "de" ? "en_US" : "de_DE");
       eq("meta[property=og:type]", one(h.props.get("og:type")), "website");
       eq("meta[property=og:site_name]", one(h.props.get("og:site_name")), BRAND);
-      eq("meta[name=robots]", one(h.names.get("robots")), ROBOTS);
+      eq("meta[name=robots]", one(h.names.get("robots")), isDraftRoute(p) ? ROBOTS_DRAFT : ROBOTS);
       eq("meta[name=theme-color]", one(h.names.get("theme-color")), THEME_COLOR);
       eq("meta[name=twitter:card]", one(h.names.get("twitter:card")), "summary_large_image");
       eq("meta[property=og:title]", one(h.props.get("og:title")), h.title[0] ?? "");
@@ -733,7 +752,7 @@ export function runChecks(distDir: string, env: NodeJS.ProcessEnv = process.env)
     }
   });
 
-  check("11 _redirects: the two /ai-pulse 301s, the short legal 301s and the /404.html catch-all", (fail) => {
+  check("11 _redirects: the two /ai-pulse 301s, /privacy, the 302 unprefixed-path rules and the /404.html catch-all", (fail) => {
     if (!exists("_redirects")) return fail("/_redirects", "file", "missing in dist/");
     const rules = read("_redirects")
       .split(/\r?\n/)
@@ -749,14 +768,22 @@ export function runChecks(distDir: string, env: NodeJS.ProcessEnv = process.env)
     if (catchAll.length !== 1 || catchAll[0][1] !== "/404.html" || catchAll[0][2] !== "404") {
       fail("/_redirects", "/*", `expected exactly one catch-all "/* /404.html 404", got ${JSON.stringify(catchAll)}`);
     }
-    // Short legal paths without the locale prefix (the privacy URL given to Google and Meta).
-    const legal: Array<[string, string]> = [["/datenschutz", "/de/datenschutz"], ["/impressum", "/de/impressum"], ["/privacy", "/en/datenschutz"]];
-    for (const [from, to] of legal) {
-      const r = rules.find((x) => x[0] === from);
-      if (!r || r[1] !== to || r[2] !== "301") fail("/_redirects", from, `expected "${from} ${to} 301", got ${JSON.stringify(r)}`);
-      else if (!shellPaths.includes(to)) fail("/_redirects", from, `target ${to} is not a prerendered route`);
+    // /privacy: fixed legacy path (the privacy URL given to Google and Meta).
+    const priv = rules.find((x) => x[0] === "/privacy");
+    if (!priv || priv[1] !== "/en/datenschutz" || priv[2] !== "301") fail("/_redirects", "/privacy", `expected "/privacy /en/datenschutz 301", got ${JSON.stringify(priv)}`);
+    // Every route without its locale prefix: 302 to the Accept-Language locale, German fallback.
+    const slugs = new Set<string>();
+    for (const sp of shellPaths) { const m = sp.match(/^\/(?:de|en)(\/.+)$/); if (m) slugs.add(m[1]); }
+    for (const slug of slugs) {
+      const mine = rules.filter((x) => x[0] === slug);
+      const en = mine.find((x) => x[3] === "Language=en");
+      const de = mine.find((x) => x.length === 3);
+      const wantEn = shellPaths.includes(`/en${slug}`) ? `/en${slug}` : `/de${slug}`;
+      const wantDe = shellPaths.includes(`/de${slug}`) ? `/de${slug}` : `/en${slug}`;
+      if (mine.length !== 2 || !en || en[1] !== wantEn || en[2] !== "302") fail("/_redirects", slug, `expected "${slug} ${wantEn} 302 Language=en", got ${JSON.stringify(en)}`);
+      if (!de || de[1] !== wantDe || de[2] !== "302" || rules.indexOf(de) < rules.indexOf(en ?? de)) fail("/_redirects", slug, `expected the fallback "${slug} ${wantDe} 302" after the Language=en rule, got ${JSON.stringify(de)}`);
     }
-    if (rules.length !== 3 + legal.length) fail("/_redirects", "rules", `expected ${3 + legal.length} rules, got ${rules.length}`);
+    if (rules.length !== 4 + 2 * slugs.size) fail("/_redirects", "rules", `expected ${4 + 2 * slugs.size} rules, got ${rules.length}`);
   });
 
   // ---- (h) carried over from the retired check-seo.ts -------------------------
@@ -792,7 +819,7 @@ export function runChecks(distDir: string, env: NodeJS.ProcessEnv = process.env)
     if (!root[1].includes('xmlns:xhtml="http://www.w3.org/1999/xhtml"')) fail("/sitemap.xml", "<urlset>", "no xhtml namespace");
     if (/&(?!amp;|lt;|gt;|quot;|apos;|#\d+;)/.test(sitemapXml)) fail("/sitemap.xml", "escaping", "a raw & in the sitemap");
 
-    const expected = shellPaths.map(canonicalOf).sort();
+    const expected = shellPaths.filter((p) => !isDraftRoute(p) || (PREVIEW_DRAFTS && !p.includes("/entwurf-review"))).map(canonicalOf).sort();
     const actual = sitemap.map((u) => u.loc).sort();
     for (const u of expected) if (!actual.includes(u)) fail("/sitemap.xml", "<loc>", `no entry for the shell ${u}`);
     for (const u of actual) if (!expected.includes(u)) fail("/sitemap.xml", "<loc>", `${u} has no shell`);

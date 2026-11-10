@@ -56,6 +56,7 @@
     "team": "Team",
     "jobs": "Jobs",
     "blog": "Blog",
+    "wissen": "Wissen",
     "bookCall": "Gespräch buchen",
     "copyright": "Alle Rechte vorbehalten.",
     "imprint": "Impressum",
@@ -65,7 +66,8 @@
       "ai-products": "AI Products",
       "ai-experience": "AI Experience",
       "venture-building": "Venture Building"
-    }
+    },
+    "playbookGuide": "Playbook-Leitfaden"
   },
   "leistungen": {
     "heroTitlePrefix": "Wir helfen dir",
@@ -95,6 +97,7 @@
       "withSound": "mit Ton",
       "captions": "Untertitel",
       "trackLabel": "Deutsch",
+      "trackLabelOther": "English",
       "endTitle": "Das war der Weg. Jetzt deiner.",
       "endBody": "Erzähl uns in 30 Minuten, wo bei dir die meiste Zeit hängen bleibt.",
       "endBook": "Gespräch buchen",
@@ -188,6 +191,19 @@
   "languageSwitcher": {
     "de": "DE",
     "en": "EN"
+  },
+  "wissen": {
+    "heroTitle": "Wissen: KI-Agenten und Begriffe einfach erklärt",
+    "heroSubtitle": "Kurze Erklärungen zu KI-Begriffen und Fachartikel dazu, wie KI-Agenten im Unternehmen eingesetzt, abgesichert und bezahlt werden. Aus dem eigenen Betrieb.",
+    "deepHeading": "Fachartikel",
+    "glossaryHeading": "Begriffe von A bis Z",
+    "draftsHeading": "Entwürfe (nur mit ?entwuerfe=1 sichtbar)",
+    "draftsNote": "Noch nicht veröffentlicht, für Suchmaschinen gesperrt.",
+    "readEntry": "Lesen",
+    "backToHub": "Zurück zum Wissensbereich",
+    "moreHeading": "Weiterlesen",
+    "serviceLink": "KI-Agenten für Unternehmen: Einsatz, Kontrolle und Kosten",
+    "checkLink": "Pulse Check: herausfinden, wo ein KI-Agent sich lohnt"
   },
   "blog": {
     "heroTitle": "Blog",
@@ -300,6 +316,10 @@
       "title": "Kontakt aufnehmen – Was ist dein Anliegen? – Venture Labs",
       "description": "Wähle die Themen aus, die dich interessieren – das hilft uns, dir schneller zu antworten. Wir melden uns innerhalb von ein bis zwei Werktagen bei dir."
     },
+    "wissen": {
+      "title": "Wissen: KI-Agenten und Begriffe erklärt – Venture Labs",
+      "description": "Begriffe rund um KI-Agenten kurz erklärt und Fachartikel dazu, wie Unternehmen sie einsetzen, absichern und bezahlen. Aus dem eigenen Betrieb."
+    },
     "blog": {
       "title": "Blog – Gedanken, Learnings und Einblicke – Venture Labs",
       "description": "Gedanken, Learnings und Einblicke aus unserer Arbeit mit digitalen Produkten, Teams und KI – von KI-Agenten und MVPs bis zu Design Systems."
@@ -311,11 +331,38 @@
     "datenschutz": {
       "title": "Datenschutzerklärung für venturelabs.team – Venture Labs",
       "description": "Diese Datenschutzerklärung gilt für die Website venturelabs.team. Verantwortlicher: Venture Labs GmbH, Breite Str. 27, 40213 Düsseldorf."
+    },
+    "playbook": {
+      "title": "Playbook, Rolle oder eigener Agent? Leitfaden – Venture Labs",
+      "description": "Kostenloser Leitfaden für den Einstieg in KI-Agenten: Wann reicht ein Playbook, wann braucht es einen eigenen Agenten? Mit Checkliste."
     }
   },
   "notFound": {
     "heading": "Seite nicht gefunden",
     "message": "Diese Seite gibt es nicht (mehr). Vielleicht hilft dir unsere Leistungsübersicht weiter.",
     "cta": "Zu den Leistungen"
+  },
+  "playbook": {
+    "eyebrow": "Kostenloser Leitfaden",
+    "heroTitle": "Playbook, Rolle oder eigener Agent?",
+    "heroSubtitle": "Der Leitfaden für alle, die gerade mit KI-Agenten anfangen: was du wann brauchst, was ein Basis-Agent mitbringt, warum Rechte mehr taugen als ein neuer Starttext und wie du ohne Umwege startest. 25 Seiten, ohne Vorwissen lesbar.",
+    "download": "Leitfaden herunterladen (PDF)",
+    "downloadMeta": "PDF, 25 Seiten, ca. 1,4 MB. Ohne Anmeldung, ohne E-Mail-Adresse.",
+    "coverAlt": "Titelbild des Leitfadens Playbook, Rolle oder eigener Agent",
+    "insideTitle": "Was drinsteht",
+    "inside": [
+      "Die vier Bausteine einfach erklärt: Playbook und Rolle, eigener Agent, Basis-Agent (Blaupause), Quellen und Wissen",
+      "Neun Schichten, was «getrennt» wirklich heißt: Ordner, Prozess, Container, Schlüssel, Netz, Modell, Budget, Wächter, Freigabe",
+      "Rechte statt Text: warum ein Start mit angepassten Rechten mehr taugt als ein neuer Starttext, mit drei Fällen aus dem Betrieb",
+      "Eine Entscheidungshilfe in sechs Fragen, ein Spickzettel und sechs Alltagsszenarien mit konkreter Empfehlung",
+      "Unsere eigenen Erfahrungen, Fallstricke und eine Start-Checkliste"
+    ],
+    "forWhoTitle": "Für wen ist das?",
+    "forWho": "Für alle, die mit KI-Agenten anfangen oder merken, dass ein einzelner Agent nicht mehr reicht. Du brauchst keine Vorkenntnisse. Jeder Fachbegriff wird in einem Satz erklärt.",
+    "ctaTitle": "Du willst es für dein Unternehmen sortieren?",
+    "ctaText": "Im ersten Gespräch klären wir gemeinsam, welche deiner Aufgaben ein Playbook brauchen, welche einen eigenen Agenten und welche noch keine KI.",
+    "ctaButton": "Gespräch anfragen",
+    "note": "Der Leitfaden ist eine Orientierung und keine Rechts- oder Sicherheitsberatung. Er ist auf Deutsch.",
+    "pdfLabel": "playbook-rolle-oder-eigener-agent.pdf"
   }
 }

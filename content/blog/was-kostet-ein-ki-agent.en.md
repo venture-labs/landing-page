@@ -1,0 +1,77 @@
+---
+slug: "was-kostet-ein-ki-agent"
+language: "en"
+seoTitle: "What does an AI agent cost? Cost caps – Venture Labs"
+seoDescription: "What does an AI agent really cost? What drives the cost, why a cost cap per agent and task makes the bill predictable, and what to ask a provider."
+order: 30
+title: "What does an AI agent really cost? Cost caps instead of surprises"
+excerpt: "What does an AI agent really cost? Four cost drivers, why a cost cap per agent and task makes the bill predictable, and which questions to put to providers."
+topicSlug: "ai-automation"
+topic: "AI Automation"
+readTime: "6 min read"
+featured: false
+publishedDate: "November 30, 2026"  # prüfen: publication date is set by Christian at go-live; follows the SEO plan's weekly schedule
+author: "VentureLabs Team"
+draft: true
+kind: "blog"
+plannedUrl: "/en/blog/was-kostet-ein-ki-agent/"
+week: "Woche 3 · 30.11."
+keyword: "was kostet ein ki agent"
+# video: the plan names no video for this article; the Loop Studio idea "What does an AI agent really cost you?" (08.11., #11) is planned as a carousel and not produced yet
+content:
+  - type: "paragraph"
+    text: "What an AI agent costs cannot be answered seriously without the concrete use case. What is certain is what the cost is made of: use of language models, operation, maintenance and supervision. For predictability, the decisive question is less the size of the number than whether there is an upper limit. A cost cap per agent and task makes sure the bill at the end of the month holds no surprises."
+  - type: "heading"
+    text: "Why there is no flat price"
+  - type: "paragraph"
+    text: "An AI agent is not an off-the-shelf product but a program that uses a language model to complete multi-step tasks and works with tools along the way. An agent that sorts twenty incoming mails a day causes different costs than one that prepares quotes and reads long documents to do so. Volume, length of texts, number of work steps and the choice of model change the running costs considerably. Anyone who names a fixed price for «the AI agent» without knowing the case is guessing."
+  - type: "heading"
+    text: "The four cost drivers"
+  - type: "paragraph"
+    text: "First, model use. Language models are billed by consumption, that is by the amount of text read and written. According to our page on AI agents for companies, this is where the running costs mainly arise."  # prüfen: matches the vetted text of the landing page ki-agenten-unternehmen ("running costs arise mainly from the language models used"); compare
+  - type: "paragraph"
+    text: "Second, operation. An agent runs somewhere, needs access to a mailbox, storage or a business system, and has to be able to restart when something hangs. That goes unnoticed as long as it works, and it is still work. Third, maintenance: rules change, templates are adjusted, a model is replaced. An agent nobody maintains delivers noticeably worse results after a few months. Fourth, supervision. As long as a person checks and approves drafts, this takes working time. It belongs in the calculation because it co-determines the benefit."
+  - type: "heading"
+    text: "Cost cap: why an upper limit makes the bill predictable"
+  - type: "paragraph"
+    text: "Without an upper limit, an agent is an open-ended standing order. An error in a loop, an unexpectedly large file or a mailbox with unusual traffic can drive usage up without anyone noticing. A cost cap decides in advance what a task is worth. When it is reached, the agent stops instead of running on."  # prüfen: "cost cap per agent; the agent stops when reached" appears on the landing page ki-agenten-unternehmen (itself marked prüfen, true for our own cluster); define for customer solutions in the offer before this goes live
+  - type: "paragraph"
+    text: "In our own operation, every task runs with such a cap. Warnings arrive before the limit is reached, not after."  # prüfen: story from our own operation, source is the Loop Studio idea "What does an AI agent really cost you?" (08.11., #11). Clarify status 09.11.2026 with Christian: is the cap really per task, and do warnings come before the limit? Christian approves the story
+  - type: "paragraph"
+    text: "The cap has a downside that should be named openly: when an agent stops, work stays undone. So the cap needs a rule for what happens then, for example a message to a responsible person and a decision whether to raise the limit or cut the task differently. A cap does not replace planning, it makes planning binding."
+  - type: "heading"
+    text: "Model choice as a cost lever"
+  - type: "paragraph"
+    text: "Not every task needs the strongest and most expensive model. Bulk work such as sorting mails or reading receipts can often be done by smaller models, partly also locally on own hardware, which can additionally ease data protection questions. Large cloud models pay off where quality counts: in texts that go out, or in tricky decisions."  # prüfen: split of local for bulk and data, cloud models for quality is on the landing page ki-agenten-unternehmen (also marked prüfen) and comes from our own cluster; clarify before go-live whether and how it applies to customer solutions. Local models cause hardware and operating costs, so the word "cheaper" is deliberately not used
+  - type: "heading"
+    text: "What to ask providers"
+  - type: "paragraph"
+    text: "Is there an upper limit for the running costs per agent or task, and what happens when it is reached? An answer like «that depends on consumption» without a cap means the risk sits with the company."
+  - type: "paragraph"
+    text: "Which costs are included in the invoice and which come separately, such as model use, hosting, maintenance and further development? How does it become visible what an agent consumed for what? Without a breakdown, no agent can be compared with the benefit it brings."
+  - type: "paragraph"
+    text: "Who checks the results, and how much time is planned for it? What happens when a model is switched, and who handles it? And: can the agent be ended without data or processes staying stuck at the provider?"
+  - type: "heading"
+    text: "The way to a reliable number"
+  - type: "paragraph"
+    text: "A reliable cost estimate comes in three steps. First the use case is outlined narrowly: which task, in what volume, with which data. Then the agent runs in a trial with a cap, so that actual consumption is measured instead of estimated. Finally maintenance and supervision are added. Only these three parts together produce a number that holds up in budget planning."
+  - type: "paragraph"
+    text: "The Pulse Check clarifies in one to two days which use case pays off first in the business and what it would take. What a step costs is calculated in an initial conversation for the concrete scope and stated without obligation."  # prüfen: duration "1 to 2 days" and the statement on cost clarification in the initial conversation per landing page ki-potenzialanalyse
+  - type: "link"
+    text: "AI agents for companies: control, costs, data protection"
+    href: "/leistungen/ki-agenten-unternehmen"
+  - type: "link"
+    text: "Knowledge hub: terms and basics on AI in mid-sized companies"
+    href: "/wissen"
+  - type: "link"
+    text: "Further reading: Why AI projects in mid-sized companies fail"
+    href: "/blog/warum-ki-projekte-im-mittelstand-scheitern"
+  - type: "heading"
+    text: "Frequently asked questions"
+  - type: "paragraph"
+    text: "What does an AI agent cost per month? That depends on volume, text length, model choice and operation, and can only be stated reliably after a trial run. Serious offers therefore name an upper limit alongside a number."
+  - type: "paragraph"
+    text: "Is the cost a one-off at build time? No. Besides the build, there are running costs for model use, operation, maintenance and supervision. Looking only at the build underestimates the total cost."
+  - type: "paragraph"
+    text: "What does a cost cap mean for an AI agent? A fixed upper limit for usage per agent or task. When it is reached, the agent stops, and a responsible person decides how to go on."  # prüfen: definition matches the landing page text; details (per task or per agent, message to whom) to agree with Christian
+---

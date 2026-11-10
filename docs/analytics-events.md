@@ -93,6 +93,8 @@ link or the contact form itself):
 | `caseDetailBottomCta` | `case-detail-bottom-cta` | `CaseDetail`'s closing contact CTA | `src/app/pages/CaseDetail.tsx:285` |
 | `blogDetailCta` | `blog-detail-cta` | `BlogDetail`'s end-of-post CTA | `src/app/pages/BlogDetail.tsx:216` |
 | `ueberUnsCta` | `ueber-uns-cta` | `UeberUns`'s closing CTA | `src/app/pages/UeberUns.tsx:277` |
+| `landingHeroCta` | `landing-hero-cta` | `SeoLanding` hero (SEO landing page under `/leistungen/<slug>`; fires `Call Link Clicked` / `book-call` when the page's CTA is a booking link, `Contact Sent` / `contact` when it goes to `/kontakt`) | `src/app/pages/SeoLanding.tsx` |
+| `landingBottomCta` | `landing-bottom-cta` | `SeoLanding` closing CTA block (same two kinds as the hero) | `src/app/pages/SeoLanding.tsx` |
 
 The last five rows (`leistungenHeroContact` through `ueberUnsCta`) were not in the spec's own
 inventory — found by grepping every `/kontakt` destination in `src/app/` once the guard's rule for
@@ -110,6 +112,8 @@ for why they were tracked the same way rather than left out.
 | `videoEndQuiz` | `video-end-quiz` | `ExplainerVideo` end card's Pulse Score button | `src/app/components/ExplainerVideo.tsx` |
 | `leistungenPulseCallout` | `leistungen-pulse-callout` | `Leistungen`'s closing `PulseCallout` Pulse button | `src/app/pages/Leistungen.tsx:262` |
 | `leistungenDetailQuiz` | `leistungen-detail-quiz` | `LeistungenDetail`'s one Pulse button | `src/app/pages/LeistungenDetail.tsx:335` |
+| `landingHeroQuiz` | `landing-hero-quiz` | `SeoLanding` hero's Pulse Score button | `src/app/pages/SeoLanding.tsx` |
+| `landingBottomQuiz` | `landing-bottom-quiz` | `SeoLanding` closing block's Pulse Score button | `src/app/pages/SeoLanding.tsx` |
 
 `Leistungen.tsx` has two distinct openers feeding one `<PulseCheckModal>` instance; the clicked
 opener's placement travels with the component's own open state (`quizPlacement: string | null`, see
@@ -199,3 +203,15 @@ In the Plausible dashboard, for the `venturelabs.team` site, under **Site Settin
    confirm each appears in Plausible's **Realtime** view (or via the Events API) with the expected
    `placement`/`page`/`lang`/`cta` values — this is the step that actually proves the long-standing
    zero count is fixed, and it needs the dashboard login this task does not have.
+
+## Playbook guide download (lead magnet, 2026-11-05)
+
+`/de/playbook` and `/en/playbook` offer the PDF guide «Playbook, Rolle oder eigener Agent?» as a direct download (`public/downloads/`, no form, no e-mail,
+so no personal data and no Datenschutz change). Instagram's «Kommentiere Playbook» DM links here. Events:
+
+| Event | `placement` | `cta` | Where |
+|---|---|---|---|
+| `Playbook Downloaded` (`EVENTS.playbookDownloaded`) | `playbook-download` | none | the download button, `src/app/pages/Playbook.tsx` |
+| `Contact Sent` (the existing contact-click convention) | `playbook-cta` | `contact` | the closing link to `/kontakt` |
+
+**Plausible goal to create (Christian, Site Settings → Goals, type "Custom event", exact name):** `Playbook Downloaded`. Until it exists the event is sent but not listed.

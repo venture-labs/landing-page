@@ -19,8 +19,8 @@ export const services: Service[] = [
   {
     "slug": "ai-automation",
     "title": "AI Automation",
-    "seoTitle": "AI Automation – Improve processes with AI – Venture Labs",
-    "seoDescription": "We turn manual business processes into intelligent, integrated workflows – automating where AI measurably saves time, cuts costs, and reduces errors.",
+    "seoTitle": "AI Automation: AI for mid-sized processes – Venture Labs",
+    "seoDescription": "AI process automation for mid-sized companies: we turn manual business processes into integrated workflows where AI measurably saves time and reduces errors.",
     "description": "Rethinking existing processes: we turn manual business processes into intelligent, integrated workflows.",
     "gradient": "linear-gradient(-56.458deg, rgba(253, 167, 0, 0.8) 0%, rgba(253, 167, 0, 0) 100%)",
     "icon": "bot",

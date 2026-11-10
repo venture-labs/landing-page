@@ -3,12 +3,13 @@ import { ArrowRight, Clock, Captions, Play, Volume2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { BOOKING_URL } from "@/app/links";
 import { CTAS, EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
+import { useLocale, type Locale } from "@/app/locale";
 
 /**
  * The explainer video at the top of /de/leistungen, as a facade: only the
  * poster (WebP, fixed 16:9 box, so CLS 0) is on the page at load; the <video>
- * is created on the click, with preload="metadata" and the German captions
- * on by default. No autoplay: the video lives on the voice. Self-hosted
+ * is created on the click, with preload="metadata" and the captions of the
+ * page language on by default (German and English tracks, the audio is German). No autoplay: the video lives on the voice. Self-hosted
  * (public/video/), so no third-party request and no consent banner.
  *
  * Fast start: once the page is loaded and the browser idle, the <video> is
@@ -22,9 +23,20 @@ import { CTAS, EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
  * label and aria label (locales: leistungen.video.*) follow the file.
  */
 const SRC = "/video/erklaervideo-v5-720.mp4";
-const VTT = "/video/erklaervideo-v5.de.vtt";
-const POSTER = "/video/erklaervideo-poster-v5.webp";
-const POSTER_SMALL = "/video/erklaervideo-poster-v5-640.webp";
+/** One caption file per locale (scripts/check-i18n-parity.ts fails a video without both). */
+const VTT: Record<Locale, string> = {
+  de: "/video/erklaervideo-v5.de.vtt",
+  en: "/video/erklaervideo-v5.en.vtt",
+};
+/** The poster carries burned-in title text, so each locale has its own. */
+const POSTER: Record<Locale, string> = {
+  de: "/video/erklaervideo-poster-v5.webp",
+  en: "/video/erklaervideo-poster-v5.en.webp",
+};
+const POSTER_SMALL: Record<Locale, string> = {
+  de: "/video/erklaervideo-poster-v5-640.webp",
+  en: "/video/erklaervideo-poster-v5-640.en.webp",
+};
 
 type Phase = "poster" | "playing" | "ended";
 
@@ -59,6 +71,8 @@ function whenIdle(cb: () => void): () => void {
 
 export function ExplainerVideo({ onQuizOpen }: { onQuizOpen: () => void }) {
   const { t } = useTranslation();
+  const { lang } = useLocale();
+  const other: Locale = lang === "de" ? "en" : "de";
   const [phase, setPhase] = useState<Phase>("poster");
   const [mounted, setMounted] = useState(false);
   const [warm, setWarm] = useState(false);
@@ -76,6 +90,7 @@ export function ExplainerVideo({ onQuizOpen }: { onQuizOpen: () => void }) {
     if (!mounted) return;
     const v = videoRef.current;
     if (!v) return;
+    // The page-language track is rendered first and shown; the other stays selectable.
     if (v.textTracks[0]) v.textTracks[0].mode = "showing";
     v.focus();
     v.play().catch(() => {});
@@ -119,8 +134,8 @@ export function ExplainerVideo({ onQuizOpen }: { onQuizOpen: () => void }) {
       {!mounted && (
         <>
           <img
-            src={POSTER}
-            srcSet={`${POSTER_SMALL} 640w, ${POSTER} 1280w`}
+            src={POSTER[lang]}
+            srcSet={`${POSTER_SMALL[lang]} 640w, ${POSTER[lang]} 1280w`}
             sizes="(min-width: 1024px) 560px, calc(100vw - 48px)"
             width={1280}
             height={720}
@@ -179,7 +194,8 @@ export function ExplainerVideo({ onQuizOpen }: { onQuizOpen: () => void }) {
           onEnded={handleEnded}
           className={`absolute inset-0 h-full w-full bg-black object-cover ${mounted ? "" : "invisible"}`}
         >
-          <track kind="captions" srcLang="de" label={t("leistungen.video.trackLabel")} src={VTT} default />
+          <track kind="captions" srcLang={lang} label={t("leistungen.video.trackLabel")} src={VTT[lang]} default />
+          <track kind="captions" srcLang={other} label={t("leistungen.video.trackLabelOther")} src={VTT[other]} />
         </video>
       )}
 

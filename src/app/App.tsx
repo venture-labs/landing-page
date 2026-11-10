@@ -14,14 +14,19 @@ import { FinalCTA } from "./components/FinalCTA";
 import { Footer } from "./components/Footer";
 import { Leistungen } from "./pages/Leistungen";
 import { LeistungenDetail } from "./pages/LeistungenDetail";
+import { SeoLanding } from "./pages/SeoLanding";
+import { useLandingPage } from "@/data/content";
 import CaseDetail from "./pages/CaseDetail";
 import { CasesOverview } from "./pages/CasesOverview";
 import { Kontakt } from "./pages/Kontakt";
 import { Blog } from "./pages/Blog";
 import { BlogDetail } from "./pages/BlogDetail";
+import { EntwurfReview } from "./pages/EntwurfReview";
+import { Wissen } from "./pages/Wissen";
 import { UeberUns } from "./pages/UeberUns";
 import { Impressum } from "./pages/Impressum";
 import { Datenschutz } from "./pages/Datenschutz";
+import { Playbook } from "./pages/Playbook";
 import { NotFound } from "./pages/NotFound";
 
 function HomePage() {
@@ -68,9 +73,21 @@ function HomePage() {
   );
 }
 
+/** /leistungen/<slug>: an SEO landing page (content/landing/) when one exists for the slug, else the service detail. */
+function LeistungenSlugPage() {
+  const { slug } = useParams<{ slug: string }>();
+  const landing = useLandingPage(slug);
+  return landing ? <SeoLanding page={landing} /> : <LeistungenDetail />;
+}
+
 function RoutedErrorBoundary({ children }: { children: ReactNode }) {
   const location = useLocation();
-  return <ErrorBoundary key={location.pathname}>{children}</ErrorBoundary>;
+  const lang = location.pathname.startsWith("/en") ? "en" : "de";
+  return (
+    <ErrorBoundary key={location.pathname} lang={lang}>
+      {children}
+    </ErrorBoundary>
+  );
 }
 
 /** Redirects a retired path (e.g. "/ai-pulse") to its replacement, keeping the current :lang. */
@@ -110,7 +127,7 @@ export function AppRoutes() {
           path="/:lang/leistungen/:slug"
           element={
             <LangGuard>
-              <LeistungenDetail />
+              <LeistungenSlugPage />
             </LangGuard>
           }
         />
@@ -154,6 +171,14 @@ export function AppRoutes() {
           }
         />
         <Route
+          path="/:lang/entwurf-review"
+          element={
+            <LangGuard>
+              <EntwurfReview />
+            </LangGuard>
+          }
+        />
+        <Route
           path="/:lang/blog/:slug"
           element={
             <LangGuard>
@@ -162,10 +187,34 @@ export function AppRoutes() {
           }
         />
         <Route
+          path="/:lang/wissen"
+          element={
+            <LangGuard>
+              <Wissen />
+            </LangGuard>
+          }
+        />
+        <Route
+          path="/:lang/wissen/:slug"
+          element={
+            <LangGuard>
+              <BlogDetail section="wissen" />
+            </LangGuard>
+          }
+        />
+        <Route
           path="/:lang/ueber-uns"
           element={
             <LangGuard>
               <UeberUns />
+            </LangGuard>
+          }
+        />
+        <Route
+          path="/:lang/playbook"
+          element={
+            <LangGuard>
+              <Playbook />
             </LangGuard>
           }
         />

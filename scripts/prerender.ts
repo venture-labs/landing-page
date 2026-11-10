@@ -51,13 +51,17 @@ import { leistungenData as leistungenDe } from "../src/data/de/leistungen";
 import { aboutData as aboutDe } from "../src/data/de/about";
 import { services as servicesDe } from "../src/data/de/services";
 import { caseDetailsMap as caseDetailsDe } from "../src/data/de/caseDetails";
+import { landingPages as landingPagesDe } from "../src/data/de/landing";
 import { blogPosts as blogPostsDe } from "../src/data/de/blog";
+import { isWissenPost } from "../src/data/postKind";
+import { SHOW_DRAFTS } from "../src/data/showDrafts";
 
 import { siteData as siteEn } from "../src/data/en/site";
 import { leistungenData as leistungenEn } from "../src/data/en/leistungen";
 import { aboutData as aboutEn } from "../src/data/en/about";
 import { services as servicesEn } from "../src/data/en/services";
 import { caseDetailsMap as caseDetailsEn } from "../src/data/en/caseDetails";
+import { landingPages as landingPagesEn } from "../src/data/en/landing";
 import { blogPosts as blogPostsEn } from "../src/data/en/blog";
 
 import deUi from "../src/locales/de.json";
@@ -90,6 +94,38 @@ const TRAILING_SLASH = true;
 function absoluteUrl(path: string): string {
   const clean = `/${path.replace(/^\/+/, "").replace(/\/+$/, "")}`;
   return `${SITE_ORIGIN}${clean}${TRAILING_SLASH ? "/" : ""}`;
+}
+
+/**
+ * Netlify rules for every route that exists only under /de/... or /en/...: the
+ * unprefixed path answers 302 (not 301, the choice follows the browser) to the
+ * locale of the Accept-Language header, German otherwise (bots, no header).
+ * Returns the rule lines; exported for the check script.
+ */
+export function unprefixedRedirectRules(paths: string[]): string[] {
+  const bySlug = new Map<string, Set<string>>();
+  for (const p of paths) {
+    const m = p.match(/^\/(de|en)(\/.+)$/);
+    if (!m) continue;
+    if (!bySlug.has(m[2])) bySlug.set(m[2], new Set());
+    bySlug.get(m[2])!.add(m[1]);
+  }
+  const lines: string[] = [];
+  for (const [slug, langs] of [...bySlug].sort()) {
+    const en = langs.has("en") ? "en" : "de";
+    const de = langs.has("de") ? "de" : "en";
+    lines.push(`${slug}  /${en}${slug}  302  Language=en`);
+    lines.push(`${slug}  /${de}${slug}  302`);
+  }
+  return lines;
+}
+
+function writeUnprefixedRedirects(paths: string[]): void {
+  const file = resolve(distDir, "_redirects");
+  const src = readFileSync(file, "utf8");
+  const marker = "# @@UNPREFIXED_REDIRECTS@@";
+  if (!src.includes(marker)) throw new Error("prerender: _redirects marker missing");
+  writeFileSync(file, src.replace(marker, unprefixedRedirectRules(paths).join("\n")));
 }
 
 /** Build date, used as the <lastmod> fallback. */
@@ -137,6 +173,7 @@ const byLocale = {
     services: servicesDe,
     caseDetails: caseDetailsDe,
     blogPosts: blogPostsDe,
+    landingPages: landingPagesDe,
     ui: deUi as any,
   },
   en: {
@@ -146,6 +183,7 @@ const byLocale = {
     services: servicesEn,
     caseDetails: caseDetailsEn,
     blogPosts: blogPostsEn,
+    landingPages: landingPagesEn,
     ui: enUi as any,
   },
 };
@@ -197,7 +235,13 @@ export interface PageMeta {
   crumbs?: Crumb[];
   /** Present on /leistungen and the /leistungen/:slug pages: one schema.org Service. */
   service?: { name: string; description: string };
+  /** Present on the landing pages: the visible FAQ, emitted as one schema.org FAQPage. */
+  faq?: { question: string; answer: string }[];
   sourceFile?: string; // markdown file backing the page, for <lastmod>
+  /** Draft or review page: robots noindex,nofollow and left out of the sitemap. */
+  noindex?: boolean;
+  /** A draft article page: left out of the sitemap, except on preview builds (SHOW_DRAFTS). */
+  draft?: boolean;
 }
 
 export interface Alternate {
@@ -225,7 +269,7 @@ function authored(value: string | undefined, fallback: string): string {
 }
 
 function buildPagesForLocale(lang: Locale): PageMeta[] {
-  const { site, leistungen, about, services, caseDetails, blogPosts, ui } = byLocale[lang];
+  const { site, leistungen, about, services, caseDetails, blogPosts, landingPages, ui } = byLocale[lang];
   const suffix = " – Venture Labs";
   const pages: PageMeta[] = [];
   const footer = ui.footer;
@@ -275,6 +319,19 @@ function buildPagesForLocale(lang: Locale): PageMeta[] {
     });
   }
 
+  for (const l of landingPages) {
+    pages.push({
+      path: `/${lang}/leistungen/${l.slug}`,
+      lang,
+      title: authored(l.seoTitle, `${l.eyebrow}${suffix}`),
+      description: authored(l.seoDescription, l.lead),
+      crumbs: [crumb(footer.servicesTitle, "/leistungen"), crumb(l.eyebrow, `/leistungen/${l.slug}`)],
+      service: { name: l.eyebrow, description: authored(l.seoDescription, l.lead) },
+      faq: l.faq.map((f) => ({ question: f.question, answer: f.answer })),
+      sourceFile: contentFile(lang, `landing/${l.slug}`),
+    });
+  }
+
   pages.push({
     path: `/${lang}/cases`,
     lang,
@@ -311,16 +368,45 @@ function buildPagesForLocale(lang: Locale): PageMeta[] {
     crumbs: [crumb(footer.blog, "/blog")],
   });
 
+  // Knowledge hub: overview of the published glossary entries and deep articles.
+  pages.push({
+    path: `/${lang}/wissen`,
+    lang,
+    title: authored(ui.seo?.wissen?.title, `${ui.wissen.heroTitle}${suffix}`),
+    description: authored(ui.seo?.wissen?.description, ui.wissen.heroSubtitle),
+    crumbs: [crumb(footer.wissen, "/wissen")],
+  });
+
+  // Blog posts live under /blog/<slug>, glossary entries and deep articles under /wissen/<slug>.
   for (const p of blogPosts) {
+    const wissen = isWissenPost(p);
+    const section = wissen ? "wissen" : "blog";
     pages.push({
-      path: `/${lang}/blog/${p.slug}`,
+      path: `/${lang}/${section}/${p.slug}`,
       lang,
       title: authored(p.seoTitle, `${p.title}${suffix}`),
       description: authored(p.seoDescription, p.excerpt),
-      crumbs: [crumb(footer.blog, "/blog"), crumb(p.title, `/blog/${p.slug}`)],
+      crumbs: [crumb(wissen ? footer.wissen : footer.blog, `/${section}`), crumb(p.title, `/${section}/${p.slug}`)],
       sourceFile: contentFile(lang, `blog/${p.slug}`),
+      ...(p.draft ? { noindex: true, draft: true } : {}),
     });
   }
+
+  // Hidden review page for the drafts (not in the nav, not in the sitemap, noindex).
+  pages.push({
+    path: `/${lang}/entwurf-review`,
+    lang,
+    title:
+      lang === "de"
+        ? "Artikel-Entwürfe zum Gegenlesen und Freigeben – Venture Labs"
+        : "Draft articles to read through and approve – Venture Labs",
+    description:
+      lang === "de"
+        ? "Interne Übersicht der Artikel-Entwürfe von Venture Labs, die noch nicht veröffentlicht sind: nicht in der Sitemap, für Suchmaschinen gesperrt."
+        : "Internal overview of Venture Labs draft articles that are not published yet: not in the sitemap and blocked for search engines.",
+    crumbs: [crumb(footer.blog, "/entwurf-review")],
+    noindex: true,
+  });
 
   pages.push({
     path: `/${lang}/ueber-uns`,
@@ -329,6 +415,14 @@ function buildPagesForLocale(lang: Locale): PageMeta[] {
     description: authored(about.seoDescription, about.heroSubheading),
     crumbs: [crumb(footer.aboutTitle, "/ueber-uns")],
     sourceFile: contentFile(lang, "about/about"),
+  });
+
+  pages.push({
+    path: `/${lang}/playbook`,
+    lang,
+    title: authored(ui.seo?.playbook?.title, `Playbook${suffix}`),
+    description: authored(ui.seo?.playbook?.description, ui.playbook.heroSubtitle),
+    crumbs: [crumb(footer.playbookGuide, "/playbook")],
   });
 
   pages.push({
@@ -463,6 +557,19 @@ function jsonLdFor(page: PageMeta): Record<string, unknown> {
     });
   }
 
+  if (page.faq && page.faq.length > 0) {
+    graph.push({
+      "@type": "FAQPage",
+      url: canonical,
+      inLanguage: page.lang,
+      mainEntity: page.faq.map((f) => ({
+        "@type": "Question",
+        name: f.question,
+        acceptedAnswer: { "@type": "Answer", text: f.answer },
+      })),
+    });
+  }
+
   return { "@context": "https://schema.org", "@graph": graph };
 }
 
@@ -487,7 +594,11 @@ export function renderHeadMeta(page: PageMeta, alternates: Alternate[], env: Nod
   return [
     `    <title>${title}</title>`,
     meta("name", "description", description),
-    meta("name", "robots", "index,follow,max-image-preview:large"),
+    meta(
+      "name",
+      "robots",
+      page.noindex ? "noindex,nofollow" : "index,follow,max-image-preview:large"
+    ),
     `    <link rel="canonical" href="${canonical}" />`,
     ...alternates.map(
       (a) => `    <link rel="alternate" hreflang="${escapeAttr(a.hreflang)}" href="${escapeAttr(a.href)}" />`
@@ -597,7 +708,7 @@ export function render404Html(shell: string): string {
 }
 
 function renderSitemap(pages: PageMeta[], alternatesByPath: Map<string, Alternate[]>): string {
-  const entries = pages.map((page) => {
+  const entries = pages.filter((page) => !page.noindex || (SHOW_DRAFTS && page.draft)).map((page) => {
     const links = (alternatesByPath.get(page.path) ?? [])
       .map(
         (a) =>
@@ -752,6 +863,8 @@ async function main() {
     resolve(distDir, "index.html"),
     renderHtml(shell, dePage, alternatesByPath.get(dePage.path)!, "")
   );
+
+  writeUnprefixedRedirects(allPages.map((p) => p.path));
 
   // The unmatched-path shell public/_redirects serves with status 404.
   writeFileSync(resolve(distDir, "404.html"), render404Html(shell));
