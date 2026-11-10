@@ -21,6 +21,7 @@ import {
 import { caseDetailsMap as caseDetailsDe, type CaseDetail } from "./de/caseDetails";
 import { blogPosts as blogPostsDe, type BlogPost } from "./de/blog";
 import { isWissenPost } from "./postKind";
+import { SHOW_DRAFTS } from "./showDrafts";
 
 export { isWissenPost, postPath } from "./postKind";
 import { toolProfiles as toolProfilesDe, type ToolProfile } from "./de/tools";
@@ -94,6 +95,15 @@ export function useBlogData(): BlogPost[] {
 /** Published knowledge-hub articles (glossary entries and deep articles). */
 export function useWissenData(): BlogPost[] {
   return blogPosts[useLocale().lang].filter((p) => !p.draft && isWissenPost(p));
+}
+
+/**
+ * Preview builds only (SHOW_DRAFTS): every article the blog list leaves out, i.e. drafts and
+ * published hub articles, so the dev site reaches all of them from the blog overview.
+ */
+export function useBlogPreviewExtras(): BlogPost[] {
+  const all = blogPosts[useLocale().lang];
+  return SHOW_DRAFTS ? all.filter((p) => p.draft || isWissenPost(p)) : [];
 }
 
 /** Hub articles that are still drafts: shown on the hub only with ?entwuerfe=1, never indexed. */
