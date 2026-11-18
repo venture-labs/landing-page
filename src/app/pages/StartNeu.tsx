@@ -376,7 +376,8 @@ function ToolNode({ p, name, Icon, accent, angle, i }: { p: MotionValue<number>;
       <motion.div style={{ left: `${x}%`, top: `${y}%`, opacity, scale, x: "-50%", y: "-50%" }} className="absolute">
         <div
           className="flex flex-col items-center gap-1.5 whitespace-nowrap rounded-2xl px-3 py-2 text-[0.7rem] font-bold text-white md:flex-row md:gap-2.5 md:px-5 md:py-3 md:text-[length:var(--text-body)]"
-          style={{ backgroundColor: `${accent}26`, boxShadow: `inset 0 0 0 1.5px ${accent}, 0 0 40px ${accent}55` }}
+          // Opaque base under the tint: the connector line ends at the box edge instead of showing through.
+          style={{ background: `linear-gradient(${accent}26, ${accent}26), #0e0d13`, boxShadow: `inset 0 0 0 1.5px ${accent}, 0 0 40px ${accent}55` }}
         >
           <Icon className="h-4 w-4 md:h-5 md:w-5" style={{ color: accent }} strokeWidth={2.5} />
           {name}
