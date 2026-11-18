@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { Link } from "react-router";
 import {
+  AnimatePresence,
   motion,
   useInView,
   useReducedMotion,
@@ -15,7 +16,6 @@ import {
   BookOpen,
   CalendarCheck,
   CalendarClock,
-  Check,
   ChevronDown,
   Clock,
   FileCheck,
@@ -33,7 +33,7 @@ import { Footer } from "@/app/components/Footer";
 import { PulseJourney } from "@/app/components/PulseJourney";
 import { PulseCheckModal } from "@/app/components/PulseCheckModal";
 import { CtaButton } from "@/app/components/ui/CtaButton";
-import { useCasesData, useLeistungenData, useSiteData } from "@/data/content";
+import { useCasesData, useSiteData } from "@/data/content";
 import { useLocale } from "@/app/locale";
 import { BOOKING_URL } from "@/app/links";
 import { CTAS, EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
@@ -42,7 +42,7 @@ import { CTAS, EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
  * /:lang/start-neu — alternative homepage draft (branch feature/startseite-ki-nutzen).
  *
  * Focus: the mittelstand and what custom AI tools do for it — benefit first, not "we are great". Order:
- *   1. ScrollIntro  — pinned, scroll-driven intro (~5 s of normal scrolling): routine → agents → cluster → tools
+ *   1. ScrollIntro  — pinned, scroll-driven intro (~5 s of scrolling): routine → your tools → benefit → "We build what's next."
  *   2. ToolWall     — "Wir bauen deine Tools": a marquee of tool names and twelve tool tiles, each with its benefit
  *   3. Benefits     — what the customer gets out of it, four hover cards
  *   4. PulseJourney — Check · Build · Care (shared component)
@@ -52,8 +52,8 @@ import { CTAS, EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
  *
  * The tool list follows the entry use cases commonly named for the German mittelstand in 2026 (incoming
  * invoices and receipts, inbox triage, first-contact customer service, quotes and lead qualification, HR
- * requests, internal knowledge) plus time tracking and leave requests. Agent names in the
- * intro come from content/site/leistungen.md (`situations`), cases from content/cases; the page's own copy
+ * requests, internal knowledge) plus time tracking and leave requests. Cases come from
+ * content/cases; the page's own copy
  * lives in COPY_DE / COPY_EN. Noindex, not in the nav or sitemap.
  *
  * SSR-safe: the server and the first client render show the intro's opening frame; scroll progress and
@@ -73,14 +73,15 @@ const SIZE_HERO = "clamp(3rem, 7vw, 7.5rem)";
 const SIZE_SECTION = "clamp(2.5rem, 5.5vw, 5.5rem)";
 const SIZE_OUTRO = "clamp(3.5rem, 12vw, 13rem)";
 
-/** The five agents the intro draws around "Dein Unternehmen"; ids from leistungen.md `situations`. */
-const FEATURED_AGENTS = [
-  { id: "receipts", accent: BLUE },
-  { id: "invoice-coverage", accent: VIOLET },
-  { id: "tool-fatigue", accent: AMBER },
-  { id: "prioritization", accent: PURPLE },
-  { id: "neglected-tool", accent: BLUE },
-] as const;
+/** The six tools the intro draws around "Dein Unternehmen", in COPY.intro.tools order. */
+const INTRO_TOOLS: { icon: LucideIcon; accent: string }[] = [
+  { icon: Clock, accent: BLUE },
+  { icon: ScanLine, accent: VIOLET },
+  { icon: CalendarCheck, accent: AMBER },
+  { icon: MessagesSquare, accent: PURPLE },
+  { icon: FileText, accent: BLUE },
+  { icon: BellRing, accent: AMBER },
+];
 
 /** Icons of the tool tiles, in COPY.tools.items order. */
 const TOOL_ICONS: LucideIcon[] = [
@@ -103,8 +104,10 @@ const CASE_SLUGS = ["tap2link", "brylliant", "moerschen"] as const;
 
 const COPY_DE = {
   intro: {
-    routineHeadline: "Belege abtippen. Stunden nachtragen. Urlaub per Mail.",
-    routineSub: "So sieht Routine in vielen Unternehmen aus. Jede Woche, in jedem Team.",
+    headlineLead: "Wir bauen KI für",
+    headlineEnds: ["deine Belege.", "deine Zeiterfassung.", "deine Urlaubsanträge.", "deine Kundenanfragen.", "dein Unternehmen."],
+    headlineFull: "Wir bauen KI für dein Unternehmen.",
+    headlineSub: "Individuelle KI-Tools, die dir die Routine abnehmen. Scroll weiter und sieh, wie.",
     routines: [
       "Beleg fehlt",
       "Rechnung prüfen",
@@ -115,13 +118,12 @@ const COPY_DE = {
       "Mahnung",
       "Excel abgleichen",
     ],
-    agentsCaption: "Jede Routine bekommt einen KI-Agenten.",
-    clusterCaption: "Zusammen ein Cluster, der mit dir wächst.",
     center: "Dein Unternehmen",
+    tools: ["Zeiterfassung", "Belege", "Urlaubsanträge", "Kundenkommunikation", "Angebote", "Mahnwesen"],
     toolsHeading: "Wir bauen deine Tools.",
-    toolsPoints: ["Individuell für deine Abläufe.", "In den Tools, die ihr schon nutzt.", "Live in Wochen, nicht in Quartalen."],
-    finalHeadline: "KI, die im Mittelstand wirklich mitarbeitet.",
-    finalHighlight: "wirklich",
+    toolsSub: "Individuell für deine Abläufe. Da, wo dein Team ohnehin arbeitet.",
+    benefitLines: ["Weniger Routine.", "Mehr Zeit fürs Geschäft."],
+    finalSub: "Individuelle KI-Tools für den Mittelstand. Live in Wochen, nicht in Quartalen.",
     ctaQuiz: "Kostenlosen Pulse Score starten",
     ctaMore: "Welche Tools?",
     scrollHint: "Scrollen",
@@ -176,8 +178,10 @@ type Copy = typeof COPY_DE;
 
 const COPY_EN: Copy = {
   intro: {
-    routineHeadline: "Typing up receipts. Back-filling hours. Leave requests by email.",
-    routineSub: "That is what routine looks like in many companies. Every week, in every team.",
+    headlineLead: "We build AI for",
+    headlineEnds: ["your receipts.", "your time tracking.", "your leave requests.", "your customer emails.", "your company."],
+    headlineFull: "We build AI for your company.",
+    headlineSub: "Custom AI tools that take the routine off your plate. Keep scrolling to see how.",
     routines: [
       "Receipt missing",
       "Check the invoice",
@@ -188,13 +192,12 @@ const COPY_EN: Copy = {
       "Payment reminder",
       "Reconcile the spreadsheet",
     ],
-    agentsCaption: "Every routine gets its own AI agent.",
-    clusterCaption: "Together, a cluster that grows with you.",
     center: "Your company",
+    tools: ["Time tracking", "Receipts", "Leave requests", "Customer communication", "Quotes", "Payment reminders"],
     toolsHeading: "We build your tools.",
-    toolsPoints: ["Made for the way you work.", "Inside the tools you already use.", "Live in weeks, not quarters."],
-    finalHeadline: "AI that really works for mid-sized companies.",
-    finalHighlight: "really",
+    toolsSub: "Made for the way you work. Right where your team already works.",
+    benefitLines: ["Less routine.", "More time for the business."],
+    finalSub: "Custom AI tools for mid-sized companies. Live in weeks, not quarters.",
     ctaQuiz: "Start the free Pulse Score",
     ctaMore: "Which tools?",
     scrollHint: "Scroll",
@@ -309,50 +312,39 @@ function SectionHead({ eyebrow, heading, intro }: { eyebrow: string; heading: st
   );
 }
 
-/** Text with one word underlined by the brand gradient. */
-function Highlighted({ text, word }: { text: string; word: string }) {
-  const [before, after] = text.split(word);
-  return (
-    <>
-      {before}
-      <span className="relative inline-block">
-        <span className="relative z-10">{word}</span>
-        <span
-          className="absolute bottom-[0.06em] left-0 h-[0.08em] w-full rounded-full"
-          style={{ background: `linear-gradient(90deg, ${BLUE}, ${VIOLET}, ${AMBER})` }}
-        />
-      </span>
-      {after}
-    </>
-  );
-}
-
 /* ------------------------------------------------------------------ */
 /* 1. Scroll intro                                                     */
 /* ------------------------------------------------------------------ */
+/*
+ * Four frames over ~500vh of scrolling (long enough that a Magic Mouse flick does not skip a frame):
+ *   1. 0.00–0.18  Routine: "Belege. Stunden. Urlaubsanträge. Kundenanfragen." line by line, routine chips around
+ *   2. 0.22–0.52  Tools: "Wir bauen deine Tools." — six tools fly in around "Dein Unternehmen", a ring closes
+ *   3. 0.56–0.76  Benefit: "Weniger Routine. Mehr Zeit fürs Geschäft." over the dimmed cluster
+ *   4. 0.80–1.00  Finale: "We build what's next." + CTAs
+ */
 
 /** Positions of the eight routine chips in the opening frame, in % of the stage. */
 const ROUTINE_POS = [
-  { x: 14, y: 22 },
-  { x: 72, y: 16 },
-  { x: 86, y: 46 },
-  { x: 8, y: 56 },
-  { x: 26, y: 82 },
-  { x: 72, y: 80 },
-  { x: 44, y: 10 },
-  { x: 52, y: 90 },
+  { x: 12, y: 20 },
+  { x: 80, y: 16 },
+  { x: 88, y: 48 },
+  { x: 8, y: 58 },
+  { x: 22, y: 84 },
+  { x: 78, y: 82 },
+  { x: 46, y: 9 },
+  { x: 52, y: 92 },
 ];
 
 function RoutineChip({ p, label, x, y, i }: { p: MotionValue<number>; label: string; x: number; y: number; i: number }) {
-  // Chips drift towards the centre and vanish as the agents take over.
+  // Chips drift towards the centre and vanish as the tools take over.
   const left = useTransform(p, [0, 0.22], [`${x}%`, "50%"]);
   const top = useTransform(p, [0, 0.22], [`${y}%`, "50%"]);
-  const opacity = useMap(p, [0, 0.14, 0.22], [1, 0.8, 0]);
+  const opacity = useMap(p, [0, 0.12, 0.22], [1, 0.8, 0]);
   const scale = useMap(p, [0, 0.22], [1, 0.4]);
   return (
     <motion.span
       style={{ left, top, opacity, scale, x: "-50%", y: "-50%" }}
-      className="absolute whitespace-nowrap rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 font-medium text-white/75 backdrop-blur-sm"
+      className="absolute whitespace-nowrap rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 font-medium text-white/60 backdrop-blur-sm"
     >
       <motion.span
         className="inline-block"
@@ -366,27 +358,27 @@ function RoutineChip({ p, label, x, y, i }: { p: MotionValue<number>; label: str
   );
 }
 
-/** One agent node on the ring, plus its connector line to the centre. */
-function AgentNode({ p, name, accent, angle, i }: { p: MotionValue<number>; name: string; accent: string; angle: number; i: number }) {
-  const start = 0.2 + i * 0.035;
-  const opacity = useMap(p, [start, start + 0.06], [0, 1]);
-  const scale = useMap(p, [start, start + 0.06, 0.45, 0.55], [0.6, 1, 1, 1.06]);
-  const pathLength = useMap(p, [start, start + 0.08], [0, 1]);
+/** One tool on the ring, plus its connector line to the centre. */
+function ToolNode({ p, name, Icon, accent, angle, i }: { p: MotionValue<number>; name: string; Icon: LucideIcon; accent: string; angle: number; i: number }) {
+  const start = 0.22 + i * 0.03;
+  const opacity = useMap(p, [start, start + 0.05], [0, 1]);
+  const scale = useMap(p, [start, start + 0.05, 0.44, 0.52], [0.3, 1, 1, 1.08]);
+  const pathLength = useMap(p, [start, start + 0.07], [0, 1]);
   const rad = (angle * Math.PI) / 180;
-  const r = 36; // % of the stage
+  const r = 37; // % of the stage
   const x = 50 + r * Math.cos(rad);
   const y = 50 + r * Math.sin(rad);
   return (
     <>
       <svg className="absolute inset-0 h-full w-full overflow-visible" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden>
-        <motion.line x1="50" y1="50" x2={x} y2={y} stroke={accent} strokeOpacity={0.55} strokeWidth={0.35} style={{ pathLength }} />
+        <motion.line x1="50" y1="50" x2={x} y2={y} stroke={accent} strokeOpacity={0.6} strokeWidth={0.4} style={{ pathLength }} />
       </svg>
       <motion.div style={{ left: `${x}%`, top: `${y}%`, opacity, scale, x: "-50%", y: "-50%" }} className="absolute">
         <div
-          className="flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-[0.75rem] font-bold text-white md:gap-2 md:px-4 md:py-2 md:text-[length:var(--text-small)]"
-          style={{ backgroundColor: `${accent}26`, boxShadow: `inset 0 0 0 1px ${accent}80, 0 0 32px ${accent}40` }}
+          className="flex flex-col items-center gap-1.5 whitespace-nowrap rounded-2xl px-3 py-2 text-[0.7rem] font-bold text-white md:flex-row md:gap-2.5 md:px-5 md:py-3 md:text-[length:var(--text-body)]"
+          style={{ backgroundColor: `${accent}26`, boxShadow: `inset 0 0 0 1.5px ${accent}, 0 0 40px ${accent}55` }}
         >
-          <span className="h-2 w-2 rounded-full" style={{ backgroundColor: accent }} />
+          <Icon className="h-4 w-4 md:h-5 md:w-5" style={{ color: accent }} strokeWidth={2.5} />
           {name}
         </div>
       </motion.div>
@@ -394,34 +386,34 @@ function AgentNode({ p, name, accent, angle, i }: { p: MotionValue<number>; name
   );
 }
 
-function ClusterStage({ p, agentNames }: { p: MotionValue<number>; agentNames: string[] }) {
+function ClusterStage({ p }: { p: MotionValue<number> }) {
   const COPY = useCopy();
   const centerOpacity = useMap(p, [0.16, 0.24], [0, 1]);
-  const centerScale = useMap(p, [0.16, 0.24, 0.45, 0.55], [0.5, 1, 1, 1.1]);
-  const ringOpacity = useMap(p, [0.42, 0.52, 0.66, 0.74], [0, 1, 1, 0.5]);
-  const ringRotate = useMap(p, [0.42, 1], [0, 40]);
-  // In the "tools" and final frames the stage steps back behind the text.
-  const stageOpacity = useMap(p, [0, 0.64, 0.74], [1, 1, 0.15]);
-  const stageScale = useMap(p, [0.6, 0.76], [1, 1.3]);
+  const centerScale = useMap(p, [0.16, 0.24, 0.44, 0.52], [0.4, 1, 1, 1.12]);
+  const ringOpacity = useMap(p, [0.4, 0.48, 0.58, 0.66], [0, 1, 1, 0.4]);
+  const ringRotate = useMap(p, [0.4, 1], [0, 50]);
+  // From the benefit frame on, the stage steps back behind the text and keeps growing.
+  const stageOpacity = useMap(p, [0, 0.52, 0.6, 0.8, 0.88], [1, 1, 0.14, 0.14, 0.05]);
+  const stageScale = useMap(p, [0.5, 1], [1, 1.5]);
 
   return (
     <motion.div
       style={{ opacity: stageOpacity, scale: stageScale }}
-      className="absolute left-1/2 top-1/2 aspect-square w-[min(84vw,78vh)] -translate-x-1/2 -translate-y-1/2"
+      className="absolute left-1/2 top-[54%] aspect-square w-[min(84vw,66vh)] -translate-x-1/2 -translate-y-1/2"
     >
-      <motion.div style={{ opacity: ringOpacity, rotate: ringRotate }} className="absolute inset-[2%] rounded-full border border-dashed border-white/20" aria-hidden />
-      <motion.div style={{ opacity: ringOpacity }} className="absolute inset-[18%] rounded-full" aria-hidden>
-        <div className="h-full w-full rounded-full blur-3xl" style={{ background: `radial-gradient(circle, ${PURPLE}33 0%, transparent 70%)` }} />
+      <motion.div style={{ opacity: ringOpacity, rotate: ringRotate }} className="absolute inset-[4%] rounded-full border-2 border-dashed border-white/20" aria-hidden />
+      <motion.div style={{ opacity: ringOpacity }} className="absolute inset-[16%] rounded-full" aria-hidden>
+        <div className="h-full w-full rounded-full blur-3xl" style={{ background: `radial-gradient(circle, ${PURPLE}44 0%, transparent 70%)` }} />
       </motion.div>
-      {FEATURED_AGENTS.map((a, i) => (
-        <AgentNode key={a.id} p={p} name={agentNames[i]} accent={a.accent} angle={-90 + i * 72} i={i} />
+      {INTRO_TOOLS.map((t, i) => (
+        <ToolNode key={i} p={p} name={COPY.intro.tools[i]} Icon={t.icon} accent={t.accent} angle={-90 + i * 60} i={i} />
       ))}
       <motion.div style={{ opacity: centerOpacity, scale: centerScale, x: "-50%", y: "-50%" }} className="absolute left-1/2 top-1/2">
         <div
-          className="flex h-28 w-28 items-center justify-center rounded-full text-center font-bold leading-tight text-white md:h-36 md:w-36"
-          style={{ background: `radial-gradient(circle at 30% 30%, ${VIOLET}, ${PURPLE})`, boxShadow: `0 0 80px ${PURPLE}80`, fontSize: "var(--text-small)" }}
+          className="flex h-24 w-24 items-center justify-center rounded-full text-center font-bold leading-tight text-white md:h-36 md:w-36"
+          style={{ background: `radial-gradient(circle at 30% 30%, ${VIOLET}, ${PURPLE})`, boxShadow: `0 0 100px ${PURPLE}99`, fontSize: "var(--text-small)" }}
         >
-          <motion.span animate={{ scale: [1, 1.04, 1] }} transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }} className="px-4">
+          <motion.span animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }} className="px-3">
             {COPY.intro.center}
           </motion.span>
         </div>
@@ -430,23 +422,14 @@ function ClusterStage({ p, agentNames }: { p: MotionValue<number>; agentNames: s
   );
 }
 
-function Caption({ opacity, children }: { opacity: MotionValue<number>; children: ReactNode }) {
-  const y = useTransform(opacity, [0, 1], [16, 0]);
-  return (
-    <motion.p style={{ opacity, y }} className={`absolute inset-x-0 bottom-[11vh] mx-auto max-w-4xl px-6 text-center ${DISPLAY}`}>
-      <span style={{ fontSize: "clamp(1.75rem, 3.5vw, 3.25rem)" }}>{children}</span>
-    </motion.p>
-  );
-}
-
 function Dot({ p, at, prev }: { p: MotionValue<number>; at: number; prev: number }) {
-  const width = useMap(p, [prev, at], [8, 24]);
+  const width = useMap(p, [prev, at], [8, 28]);
   const opacity = useMap(p, [prev, at], [0.3, 1]);
   return <motion.span style={{ width, opacity }} className="h-2 rounded-full bg-white" />;
 }
 
 function ProgressDots({ p }: { p: MotionValue<number> }) {
-  const stops = [0.1, 0.33, 0.58, 0.8, 0.95];
+  const stops = [0.08, 0.4, 0.66, 0.9];
   return (
     <div className="absolute bottom-6 left-1/2 flex -translate-x-1/2 gap-2" aria-hidden>
       {stops.map((s, i) => (
@@ -456,43 +439,110 @@ function ProgressDots({ p }: { p: MotionValue<number> }) {
   );
 }
 
-function ToolsPoint({ p, at, text }: { p: MotionValue<number>; at: number; text: string }) {
-  const opacity = useMap(p, [at, at + 0.03], [0, 1]);
-  const x = useMap(p, [at, at + 0.03], [-24, 0]);
+/** One line of a stacked display headline, sliding in on scroll. */
+function ScrollLine({ p, from, children, className, style }: { p: MotionValue<number>; from: number; children: ReactNode; className?: string; style?: CSSProperties }) {
+  const opacity = useMap(p, [from, from + 0.04], [0, 1]);
+  const y = useMap(p, [from, from + 0.04], [60, 0]);
   return (
-    <motion.li style={{ opacity, x }} className="flex items-center gap-3 text-white">
-      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#8129ff]">
-        <Check size={16} strokeWidth={3} />
-      </span>
-      <span className="font-semibold leading-snug" style={{ fontSize: "var(--text-h3)" }}>
-        {text}
-      </span>
-    </motion.li>
+    <motion.span style={{ opacity, y, ...style }} className={`block ${className ?? ""}`}>
+      {children}
+    </motion.span>
   );
 }
 
-function ScrollIntro({ agentNames, onQuiz }: { agentNames: string[]; onQuiz: () => void }) {
+/**
+ * The intro's core statement: a fixed lead ("Wir bauen KI für") and an ending that rotates on a timer, each in
+ * its own accent with an underline that redraws. Runs from the first paint, before anyone scrolls. The server
+ * and the first client render show the first ending; screen readers get the full sentence once.
+ */
+function RotatingHeadline({ lead, ends, full }: { lead: string; ends: string[]; full: string }) {
+  const [index, setIndex] = useState(0);
+  useEffect(() => {
+    const last = index === ends.length - 1;
+    const id = window.setTimeout(() => setIndex((i) => (i + 1) % ends.length), last ? 3200 : 1700);
+    return () => window.clearTimeout(id);
+  }, [index, ends.length]);
+  const accent = ACCENTS[index % ACCENTS.length];
+
+  return (
+    <h1 className={`w-full ${DISPLAY}`} style={{ fontSize: "clamp(1.75rem, 7.5vw, 8rem)" }}>
+      <span className="sr-only">{full}</span>
+      <motion.span
+        aria-hidden
+        className="block"
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      >
+        {lead}
+      </motion.span>
+      <span aria-hidden className="relative block h-[1.1em] overflow-hidden">
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.span
+            key={ends[index]}
+            className="absolute inset-x-0 top-0 whitespace-nowrap"
+            initial={{ y: "100%", opacity: 0, filter: "blur(8px)" }}
+            animate={{ y: "0%", opacity: 1, filter: "blur(0px)" }}
+            exit={{ y: "-100%", opacity: 0, filter: "blur(8px)" }}
+            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            style={{ color: index === ends.length - 1 ? "white" : accent }}
+          >
+            <span className="relative inline-block">
+              {ends[index]}
+              <motion.span
+                className="absolute bottom-[0.04em] left-0 h-[0.07em] w-full origin-left rounded-full"
+                style={{ background: index === ends.length - 1 ? `linear-gradient(90deg, ${BLUE}, ${VIOLET}, ${AMBER})` : accent }}
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 0.6, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              />
+            </span>
+          </motion.span>
+        </AnimatePresence>
+      </span>
+    </h1>
+  );
+}
+
+function ScrollIntro({ onQuiz }: { onQuiz: () => void }) {
   const COPY = useCopy();
+  const { heroHeadline } = useSiteData();
+  const { t } = useTranslation();
+  const highlight = t("hero.headlineHighlight");
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress: p } = useScroll({ target: ref, offset: ["start start", "end end"] });
 
   const routineOpacity = useMap(p, [0, 0.1, 0.18], [1, 1, 0]);
-  const routineY = useMap(p, [0, 0.18], [0, -40]);
-  const agentsOpacity = useWindow(p, 0.24, 0.3, 0.4, 0.46);
-  const clusterOpacity = useWindow(p, 0.48, 0.53, 0.62, 0.67);
-  const toolsOpacity = useWindow(p, 0.7, 0.74, 0.84, 0.88);
-  const toolsScale = useMap(p, [0.7, 0.78], [0.92, 1]);
-  const finalOpacity = useMap(p, [0.89, 0.95], [0, 1]);
-  const finalY = useMap(p, [0.89, 0.95], [24, 0]);
-  const hintOpacity = useMap(p, [0, 0.05], [1, 0]);
-  const finalPointer = useTransform(p, (v) => (v > 0.9 ? "auto" : "none"));
+  const routineScale = useMap(p, [0, 0.18], [1, 0.85]);
+  const toolsOpacity = useWindow(p, 0.22, 0.27, 0.48, 0.54);
+  const toolsY = useMap(p, [0.22, 0.27], [-30, 0]);
+  const benefitOpacity = useWindow(p, 0.55, 0.58, 0.74, 0.78);
+  const finalOpacity = useMap(p, [0.8, 0.86], [0, 1]);
+  const finalScale = useMap(p, [0.8, 0.92], [0.85, 1]);
+  const underline = useMap(p, [0.86, 0.96], [0, 1]);
+  const hintOpacity = useMap(p, [0, 0.04], [1, 0]);
+  const finalPointer = useTransform(p, (v) => (v > 0.82 ? "auto" : "none"));
+  const [before, after] = heroHeadline.split(highlight);
 
   return (
-    <section ref={ref} className="relative h-[420vh] bg-[#0e0d13]" aria-label="Intro">
+    <section ref={ref} className="relative h-[600vh] bg-[#0e0d13]" aria-label="Intro">
       <div className="sticky top-0 h-screen overflow-hidden">
         <div className="pointer-events-none absolute inset-0" aria-hidden>
-          <div className="absolute left-[-300px] top-[-200px] h-[800px] w-[800px] rounded-full bg-[#8129ff]/10 blur-[120px]" />
-          <div className="absolute bottom-[-200px] right-[-200px] h-[600px] w-[600px] rounded-full bg-[#a318f8]/8 blur-[100px]" />
+          <motion.div
+            className="absolute left-[-300px] top-[-200px] h-[800px] w-[800px] rounded-full bg-[#8129ff]/15 blur-[120px]"
+            animate={{ x: [0, 220, 80, 0], y: [0, 120, 260, 0] }}
+            transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute bottom-[-200px] right-[-200px] h-[600px] w-[600px] rounded-full bg-[#a318f8]/12 blur-[100px]"
+            animate={{ x: [0, -260, -100, 0], y: [0, -160, -40, 0] }}
+            transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#2b95f6]/10 blur-[110px]"
+            animate={{ scale: [1, 1.35, 1], opacity: [0.6, 1, 0.6] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          />
           <div
             className="absolute inset-0 opacity-10"
             style={{
@@ -509,41 +559,63 @@ function ScrollIntro({ agentNames, onQuiz }: { agentNames: string[]; onQuiz: () 
           ))}
         </div>
 
-        <ClusterStage p={p} agentNames={agentNames} />
+        <ClusterStage p={p} />
 
-        {/* Frame 1: routine */}
-        <motion.div style={{ opacity: routineOpacity, y: routineY }} className="absolute inset-0 flex flex-col items-center justify-center gap-6 px-6 text-center">
-          <h1 className={`max-w-6xl ${DISPLAY}`} style={{ fontSize: SIZE_HERO }}>
-            {COPY.intro.routineHeadline}
-          </h1>
-          <p className="max-w-2xl font-light text-white/60" style={{ fontSize: "var(--text-body)" }}>
-            {COPY.intro.routineSub}
-          </p>
+        {/* Frame 1: the core statement, its ending rotating on its own before anyone scrolls */}
+        <motion.div style={{ opacity: routineOpacity, scale: routineScale }} className="absolute inset-0 flex flex-col items-center justify-center gap-8 px-6 text-center">
+          <RotatingHeadline lead={COPY.intro.headlineLead} ends={COPY.intro.headlineEnds} full={COPY.intro.headlineFull} />
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.5 }}
+            className="max-w-xl font-medium text-white/60"
+            style={{ fontSize: "var(--text-body)" }}
+          >
+            {COPY.intro.headlineSub}
+          </motion.p>
         </motion.div>
 
-        {/* Frames 2 + 3: captions under the cluster */}
-        <Caption opacity={agentsOpacity}>{COPY.intro.agentsCaption}</Caption>
-        <Caption opacity={clusterOpacity}>{COPY.intro.clusterCaption}</Caption>
-
-        {/* Frame 4: we build your tools */}
-        <motion.div style={{ opacity: toolsOpacity, scale: toolsScale }} className="absolute inset-0 flex flex-col items-center justify-center gap-10 px-6">
-          <p className={`text-center ${DISPLAY}`} style={{ fontSize: SIZE_HERO }}>
+        {/* Frame 2: we build your tools (heading above the cluster) */}
+        <motion.div style={{ opacity: toolsOpacity, y: toolsY }} className="absolute inset-x-0 top-[11vh] flex flex-col items-center gap-3 px-6 text-center">
+          <p className={DISPLAY} style={{ fontSize: "clamp(2.25rem, 5vw, 5rem)" }}>
             {COPY.intro.toolsHeading}
           </p>
-          <ul className="flex flex-col gap-4">
-            {COPY.intro.toolsPoints.map((point, i) => (
-              <ToolsPoint key={point} p={p} at={0.72 + i * 0.03} text={point} />
-            ))}
-          </ul>
+          <p className="max-w-xl font-medium text-white/60" style={{ fontSize: "var(--text-body)" }}>
+            {COPY.intro.toolsSub}
+          </p>
         </motion.div>
 
-        {/* Frame 5: final statement + CTAs */}
+        {/* Frame 3: benefit */}
+        <motion.div style={{ opacity: benefitOpacity }} className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+          <p className={DISPLAY} style={{ fontSize: "clamp(2.25rem, 6.5vw, 7rem)" }}>
+            {COPY.intro.benefitLines.map((line, i) => (
+              <ScrollLine key={line} p={p} from={0.55 + i * 0.04} style={i === 1 ? { color: AMBER } : undefined}>
+                {line}
+              </ScrollLine>
+            ))}
+          </p>
+        </motion.div>
+
+        {/* Frame 4: finale — the brand line */}
         <motion.div
-          style={{ opacity: finalOpacity, y: finalY, pointerEvents: finalPointer }}
+          style={{ opacity: finalOpacity, pointerEvents: finalPointer }}
           className="absolute inset-0 flex flex-col items-center justify-center gap-10 px-6 text-center"
         >
-          <p className={`max-w-6xl ${DISPLAY}`} style={{ fontSize: SIZE_HERO }}>
-            <Highlighted text={COPY.intro.finalHeadline} word={COPY.intro.finalHighlight} />
+          <motion.p style={{ scale: finalScale }} className={DISPLAY}>
+            <span style={{ fontSize: "clamp(3.5rem, 11vw, 12rem)" }}>
+              {before}
+              <span className="relative inline-block">
+                <span className="relative z-10">{highlight}</span>
+                <motion.span
+                  style={{ scaleX: underline, background: `linear-gradient(90deg, ${BLUE}, ${VIOLET}, ${AMBER})` }}
+                  className="absolute bottom-[0.08em] left-0 h-[0.07em] w-full origin-left rounded-full"
+                />
+              </span>
+              {after}
+            </span>
+          </motion.p>
+          <p className="max-w-2xl font-medium text-white/70" style={{ fontSize: "var(--text-body)" }}>
+            {COPY.intro.finalSub}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <button
@@ -580,25 +652,27 @@ function ScrollIntro({ agentNames, onQuiz }: { agentNames: string[]; onQuiz: () 
 }
 
 /** Reduced motion: the intro's message as one plain section, no pinning, no scroll scrubbing. */
-function StaticIntro({ agentNames, onQuiz }: { agentNames: string[]; onQuiz: () => void }) {
+function StaticIntro({ onQuiz }: { onQuiz: () => void }) {
   const COPY = useCopy();
+  const { heroHeadline } = useSiteData();
   return (
     <section className="relative bg-[#0e0d13] px-6 pb-24 pt-40 lg:px-12" aria-label="Intro">
       <div className="mx-auto flex max-w-[1400px] flex-col gap-8">
         <h1 className={`max-w-6xl ${DISPLAY}`} style={{ fontSize: SIZE_HERO }}>
-          {COPY.intro.finalHeadline}
+          {heroHeadline}
         </h1>
-        <p className="max-w-2xl font-light leading-relaxed text-white/60" style={{ fontSize: "var(--text-body)" }}>
-          {COPY.intro.routineHeadline} {COPY.intro.toolsHeading}
+        <p className="max-w-2xl font-medium leading-relaxed text-white/70" style={{ fontSize: "var(--text-h3)" }}>
+          {COPY.intro.toolsHeading} {COPY.intro.benefitLines.join(" ")}
         </p>
         <div className="flex flex-wrap gap-3">
-          {agentNames.map((name, i) => (
+          {INTRO_TOOLS.map((tool, i) => (
             <span
-              key={name}
-              className="rounded-full px-4 py-2 font-bold text-white"
-              style={{ backgroundColor: `${FEATURED_AGENTS[i].accent}26`, boxShadow: `inset 0 0 0 1px ${FEATURED_AGENTS[i].accent}80` }}
+              key={i}
+              className="inline-flex items-center gap-2 rounded-2xl px-4 py-2 font-bold text-white"
+              style={{ backgroundColor: `${tool.accent}26`, boxShadow: `inset 0 0 0 1.5px ${tool.accent}` }}
             >
-              {name}
+              <tool.icon size={18} style={{ color: tool.accent }} />
+              {COPY.intro.tools[i]}
             </span>
           ))}
         </div>
@@ -924,8 +998,6 @@ function Outro() {
 /* ------------------------------------------------------------------ */
 
 export function StartNeu() {
-  const { situations } = useLeistungenData();
-  const agentNames = FEATURED_AGENTS.map((a) => situations.find((s) => s.id === a.id)?.agentName ?? a.id);
 
   // Read on the client only, so the server render and the first client render agree.
   const prefersReduced = useReducedMotion();
@@ -940,7 +1012,7 @@ export function StartNeu() {
   return (
     <div className="relative min-h-screen bg-[#0e0d13] text-white">
       <Navbar />
-      {reduced ? <StaticIntro agentNames={agentNames} onQuiz={openIntroQuiz} /> : <ScrollIntro agentNames={agentNames} onQuiz={openIntroQuiz} />}
+      {reduced ? <StaticIntro onQuiz={openIntroQuiz} /> : <ScrollIntro onQuiz={openIntroQuiz} />}
       <ToolWall reduced={reduced} />
       <Benefits />
       <PulseJourney compact />
