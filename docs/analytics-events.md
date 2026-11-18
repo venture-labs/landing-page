@@ -95,6 +95,7 @@ link or the contact form itself):
 | `ueberUnsCta` | `ueber-uns-cta` | `UeberUns`'s closing CTA | `src/app/pages/UeberUns.tsx:277` |
 | `landingHeroCta` | `landing-hero-cta` | `SeoLanding` hero (SEO landing page under `/leistungen/<slug>`; fires `Call Link Clicked` / `book-call` when the page's CTA is a booking link, `Contact Sent` / `contact` when it goes to `/kontakt`) | `src/app/pages/SeoLanding.tsx` |
 | `landingBottomCta` | `landing-bottom-cta` | `SeoLanding` closing CTA block (same two kinds as the hero) | `src/app/pages/SeoLanding.tsx` |
+| `startNeuFinalBooking` | `start-neu-final-booking` | Alternative homepage draft `/start-neu`, closing Pulse block: "Erstgespräch buchen" | `src/app/pages/StartNeu.tsx` |
 
 The last five rows (`leistungenHeroContact` through `ueberUnsCta`) were not in the spec's own
 inventory — found by grepping every `/kontakt` destination in `src/app/` once the guard's rule for
@@ -114,6 +115,8 @@ for why they were tracked the same way rather than left out.
 | `leistungenDetailQuiz` | `leistungen-detail-quiz` | `LeistungenDetail`'s one Pulse button | `src/app/pages/LeistungenDetail.tsx:335` |
 | `landingHeroQuiz` | `landing-hero-quiz` | `SeoLanding` hero's Pulse Score button | `src/app/pages/SeoLanding.tsx` |
 | `landingBottomQuiz` | `landing-bottom-quiz` | `SeoLanding` closing block's Pulse Score button | `src/app/pages/SeoLanding.tsx` |
+| `startNeuIntroQuiz` | `start-neu-intro-quiz` | Alternative homepage draft `/start-neu`, scroll intro's Pulse Score button | `src/app/pages/StartNeu.tsx` |
+| `startNeuFinalQuiz` | `start-neu-final-quiz` | Alternative homepage draft `/start-neu`, closing Pulse block's Pulse Score button | `src/app/pages/StartNeu.tsx` |
 
 `Leistungen.tsx` has two distinct openers feeding one `<PulseCheckModal>` instance; the clicked
 opener's placement travels with the component's own open state (`quizPlacement: string | null`, see

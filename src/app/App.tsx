@@ -27,6 +27,7 @@ import { UeberUns } from "./pages/UeberUns";
 import { Impressum } from "./pages/Impressum";
 import { Datenschutz } from "./pages/Datenschutz";
 import { Playbook } from "./pages/Playbook";
+import { StartNeu } from "./pages/StartNeu";
 import { NotFound } from "./pages/NotFound";
 
 function HomePage() {
@@ -112,6 +113,14 @@ export function AppRoutes() {
           element={
             <LangGuard>
               <HomePage />
+            </LangGuard>
+          }
+        />
+        <Route
+          path="/:lang/start-neu"
+          element={
+            <LangGuard>
+              <StartNeu />
             </LangGuard>
           }
         />

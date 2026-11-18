@@ -77,6 +77,9 @@ export const PLACEMENTS = Object.freeze({
   landingHeroQuiz: "landing-hero-quiz",
   landingBottomCta: "landing-bottom-cta",
   landingBottomQuiz: "landing-bottom-quiz",
+  startNeuIntroQuiz: "start-neu-intro-quiz",
+  startNeuFinalQuiz: "start-neu-final-quiz",
+  startNeuFinalBooking: "start-neu-final-booking",
 } as const);
 
 /**
