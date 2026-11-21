@@ -55,7 +55,7 @@ const BRAND_INSIDE_TITLE = new Set(["/de/impressum", "/en/impressum", "/de/daten
 export const TITLE_LENGTH = { min: 50, max: 60 };
 export const DESCRIPTION_LENGTH = { min: 120, max: 160 };
 const ROBOTS = "index,follow,max-image-preview:large";
-/** Draft articles (frontmatter `draft: true`) and the hidden review page: noindex and no sitemap entry. */
+/** Draft articles (frontmatter `draft: true`), the hidden review page and the /start-neu homepage draft: noindex and no sitemap entry. */
 const ROBOTS_DRAFT = "noindex,nofollow";
 const DRAFT_SLUGS = new Set<string>(
   readdirSync(join(process.cwd(), "content/blog"))
@@ -65,7 +65,7 @@ const DRAFT_SLUGS = new Set<string>(
 );
 function isDraftRoute(path: string): boolean {
   const parts = path.split("/").filter(Boolean);
-  if (parts[1] === "entwurf-review") return true;
+  if (parts[1] === "entwurf-review" || parts[1] === "start-neu") return true;
   return (parts[1] === "blog" || parts[1] === "wissen") && parts.length === 3 && DRAFT_SLUGS.has(parts[2]);
 }
 /** Preview builds (Netlify branch deploy / deploy preview, or SHOW_DRAFTS=1) list the draft articles in the sitemap; production never does. */
@@ -79,6 +79,7 @@ const FOOTER_KEY_BY_SECTION: Record<string, string> = {
   blog: "blog",
   wissen: "wissen",
   "entwurf-review": "blog",
+  "start-neu": "servicesTitle",
   "ueber-uns": "aboutTitle",
   kontakt: "contactTitle",
   impressum: "imprint",
@@ -819,7 +820,7 @@ export function runChecks(distDir: string, env: NodeJS.ProcessEnv = process.env)
     if (!root[1].includes('xmlns:xhtml="http://www.w3.org/1999/xhtml"')) fail("/sitemap.xml", "<urlset>", "no xhtml namespace");
     if (/&(?!amp;|lt;|gt;|quot;|apos;|#\d+;)/.test(sitemapXml)) fail("/sitemap.xml", "escaping", "a raw & in the sitemap");
 
-    const expected = shellPaths.filter((p) => !isDraftRoute(p) || (PREVIEW_DRAFTS && !p.includes("/entwurf-review"))).map(canonicalOf).sort();
+    const expected = shellPaths.filter((p) => !isDraftRoute(p) || (PREVIEW_DRAFTS && !p.includes("/entwurf-review") && !p.includes("/start-neu"))).map(canonicalOf).sort();
     const actual = sitemap.map((u) => u.loc).sort();
     for (const u of expected) if (!actual.includes(u)) fail("/sitemap.xml", "<loc>", `no entry for the shell ${u}`);
     for (const u of actual) if (!expected.includes(u)) fail("/sitemap.xml", "<loc>", `${u} has no shell`);
