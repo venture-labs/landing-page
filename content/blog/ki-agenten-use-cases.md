@@ -31,4 +31,10 @@ content:
     text: "Womit Teams anfangen sollten"
   - type: "paragraph"
     text: "Nicht mit dem größten Problem, sondern mit dem am besten abgrenzbaren. Ein Prozess mit klaren Ein- und Ausgaben, wiederkehrendem Muster und überschaubarem Risiko liefert in Wochen ein Ergebnis – und das Vertrauen, den nächsten Schritt zu gehen."
+  - type: "link"
+    text: "KI-Agenten für Unternehmen: Einsatz, Kontrolle und Kosten"
+    href: "/leistungen/ki-agenten-unternehmen"
+  - type: "link"
+    text: "AI Pulse Check: KI-Potenzialanalyse und Readiness-Check"
+    href: "/leistungen/ki-potenzialanalyse"
 ---

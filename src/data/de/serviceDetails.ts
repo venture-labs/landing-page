@@ -27,13 +27,22 @@ export interface ServiceDetail {
   ctaHeadline: string;
   ctaBody: string;
   ctaButtonLabel: string;
+  /** Optional extra text block after the process (e.g. "Kontrolle und Kosten"). */
+  extra?: {
+    heading: string;
+    paragraphs: string[];
+    bullets: string[];
+    linkLabel: string;
+    /** A path inside the site, without the locale prefix. */
+    linkHref: string;
+  };
 }
 
 export const serviceDetails: ServiceDetail[] = [
   {
     "slug": "ai-automation",
     "heroHeadline": "Das Geschäft verbessern.",
-    "heroSubline": "Wir automatisieren Prozesse dort, wo KI messbar Zeit, Kosten und Fehler reduziert.",
+    "heroSubline": "KI-Prozessautomatisierung im Mittelstand: Wir automatisieren Prozesse dort, wo KI messbar Zeit, Kosten und Fehler reduziert.",
     "heroImage": "/uploads/services/ai-automation-hero.png",
     "tags": [
       "AI Agents & intelligente Workflows",
@@ -86,7 +95,17 @@ export const serviceDetails: ServiceDetail[] = [
     "caseDescription": "Ein KI-gestütztes Vertriebstool für Händler und Außendienst – vom MVP in nur 12 Wochen.",
     "ctaHeadline": "KI, die wirklich automatisiert – nicht nur ein Chatbot.",
     "ctaBody": "Im kostenlosen Erstgespräch mit unserem Team sprechen wir ehrlich darüber, wo KI-Agenten in deinem Business heute schon den Unterschied machen.",
-    "ctaButtonLabel": "Dein Automatisierungspotenzial finden"
+    "ctaButtonLabel": "Dein Automatisierungspotenzial finden",
+    "extra": {
+      "heading": "Kontrolle und Kosten",
+      "paragraphs": [
+        "Ein Agent, der Arbeit übernimmt, braucht Regeln. Bei uns heißt das: Entwürfe statt Versand, ein Mensch gibt frei, und jeder Agent hat einen Kostendeckel, damit es keine Überraschung auf der Rechnung gibt.",
+        "Wie das im Einzelnen aussieht, wie wir mit Datenschutz umgehen und wie der Einstieg über den Pulse Check läuft, steht auf der Seite zu KI-Agenten für Unternehmen."
+      ],
+      "bullets": [],
+      "linkLabel": "KI-Agenten für Unternehmen: Einsatz, Kontrolle und Kosten",
+      "linkHref": "/leistungen/ki-agenten-unternehmen"
+    }
   },
   {
     "slug": "ai-products",

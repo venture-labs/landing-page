@@ -6,7 +6,8 @@ import { useTranslation } from "react-i18next";
 import { Navbar } from "@/app/components/Navbar";
 import { Footer } from "@/app/components/Footer";
 import { useLocale } from "@/app/locale";
-import { useBlogData } from "@/data/content";
+import { useBlogData, useBlogPreviewExtras } from "@/data/content";
+import { postPath } from "@/data/postKind";
 import { type BlogPost } from "@/data/de/blog";
 
 const topicAccent: Record<string, string> = {
@@ -85,7 +86,7 @@ function FeaturedPostCard({ post, index }: { post: BlogPost; index: number }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const { t } = useTranslation();
-  const { localizedPath } = useLocale();
+  const { localizedPath, lang } = useLocale();
   const accent = topicAccent[post.topicSlug] ?? "#8129ff";
 
   return (
@@ -96,7 +97,7 @@ function FeaturedPostCard({ post, index }: { post: BlogPost; index: number }) {
       transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
       className="md:col-span-2"
     >
-      <Link to={localizedPath(`/blog/${post.slug}`)} className="group flex flex-col overflow-hidden">
+      <Link to={localizedPath(postPath(post))} className="group flex flex-col overflow-hidden">
         <PostTile post={post} tall />
         <div className="bg-[#1c1a27] p-8 flex flex-col gap-4">
           <div className="flex items-center gap-3">
@@ -106,6 +107,14 @@ function FeaturedPostCard({ post, index }: { post: BlogPost; index: number }) {
             >
               {post.topic}
             </span>
+            {post.draft && (
+              <span
+                className="font-semibold px-3 py-1 rounded-full text-[#fda700] bg-[#fda700]/10"
+                style={{ fontSize: "var(--text-small)" }}
+              >
+                {lang === "de" ? "Entwurf" : "Draft"}
+              </span>
+            )}
             <span
               className="text-white/40 font-light"
               style={{ fontSize: "var(--text-small)" }}
@@ -141,7 +150,7 @@ function NormalPostCard({ post, index }: { post: BlogPost; index: number }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const { t } = useTranslation();
-  const { localizedPath } = useLocale();
+  const { localizedPath, lang } = useLocale();
   const accent = topicAccent[post.topicSlug] ?? "#8129ff";
 
   return (
@@ -151,7 +160,7 @@ function NormalPostCard({ post, index }: { post: BlogPost; index: number }) {
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: (index % 6) * 0.06, ease: [0.16, 1, 0.3, 1] }}
     >
-      <Link to={localizedPath(`/blog/${post.slug}`)} className="group flex flex-col overflow-hidden h-full">
+      <Link to={localizedPath(postPath(post))} className="group flex flex-col overflow-hidden h-full">
         <PostTile post={post} tall={false} />
         <div className="bg-[#1c1a27] p-6 flex flex-col gap-3 flex-1">
           <div className="flex items-center gap-3">
@@ -161,6 +170,14 @@ function NormalPostCard({ post, index }: { post: BlogPost; index: number }) {
             >
               {post.topic}
             </span>
+            {post.draft && (
+              <span
+                className="font-semibold px-3 py-1 rounded-full text-[#fda700] bg-[#fda700]/10"
+                style={{ fontSize: "var(--text-small)" }}
+              >
+                {lang === "de" ? "Entwurf" : "Draft"}
+              </span>
+            )}
             <span
               className="text-white/40 font-light"
               style={{ fontSize: "var(--text-small)" }}
@@ -196,9 +213,11 @@ function NormalPostCard({ post, index }: { post: BlogPost; index: number }) {
 
 export function Blog() {
   const glowRef = useRef<HTMLDivElement>(null);
+  const { lang } = useLocale();
   const posts = useBlogData();
   const featured = posts.filter((p) => p.featured);
   const normal = posts.filter((p) => !p.featured);
+  const extras = useBlogPreviewExtras();
 
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     if (!glowRef.current) return;
@@ -235,6 +254,20 @@ export function Blog() {
               <NormalPostCard key={post.slug} post={post} index={i} />
             ))}
           </div>
+          {extras.length > 0 && (
+            <div className="mt-16 flex flex-col gap-6" data-testid="blog-preview-extras">
+              <h2 className="font-semibold" style={{ fontSize: "var(--text-h2)" }}>
+                {lang === "de"
+                  ? `Weitere Artikel und Entwürfe (nur Vorschau, ${extras.length})`
+                  : `More articles and drafts (preview only, ${extras.length})`}
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {extras.map((post, i) => (
+                  <NormalPostCard key={post.slug} post={post} index={i} />
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
       <Footer />

@@ -28,10 +28,10 @@ function LeistungenHero({
   onVideoQuizOpen: () => void;
 }) {
   const { t } = useTranslation();
-  const { localizedPath, lang } = useLocale();
-  // The explainer is German only (voice, captions, end card): the English page
-  // keeps the plain hero until an English cut exists.
-  const hasVideo = lang === "de";
+  const { localizedPath } = useLocale();
+  // The explainer is spoken German; the English page shows the same video with
+  // English captions on by default (and an English poster) until an English cut exists.
+  const hasVideo = true;
   const data = useLeistungenData();
 
   return (

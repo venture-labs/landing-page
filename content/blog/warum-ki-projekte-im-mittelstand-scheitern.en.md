@@ -1,0 +1,47 @@
+---
+slug: "warum-ki-projekte-im-mittelstand-scheitern"
+language: "en"
+seoTitle: 'Why AI projects in mid-sized companies fail – Venture Labs'
+seoDescription: 'Most AI projects fail not because of technology but because of selection, data and handover. Five reasons and how a check makes them visible beforehand.'
+order: 1
+title: "Why AI projects in mid-sized companies fail, and how a check prevents it"
+excerpt: "Most AI projects fail not because of technology but because of selection, data and handover. Five reasons and how a check makes them visible beforehand."
+topicSlug: "ai-automation"
+topic: "AI Automation"
+readTime: "6 min read"
+featured: false
+publishedDate: "November 16, 2026"  # prüfen: publication date is set by Christian at go-live; this follows the SEO plan's weekly schedule
+author: "VentureLabs Team"
+content:
+  - type: "paragraph"
+    text: "An AI project in a mid-sized company usually starts with enthusiasm and ends quietly: the prototype worked in the demo, nobody uses it in daily work, and at some point nobody asks about it any more. This rarely comes down to technology. In our work we keep seeing the same five reasons."
+  - type: "heading"
+    text: "1. They started with the tool, not the problem"
+  - type: "paragraph"
+    text: "«We need something with AI» is an assignment, but not a use case. Whoever starts with the tool looks for a problem that fits it afterwards. The reverse order works better: first write down which work step eats time or causes errors today, then check whether AI is the right means. Sometimes it isn't, and that is a good result too."
+  - type: "heading"
+    text: "2. The first use case was too big"
+  - type: "paragraph"
+    text: "A project that is meant to change the whole sales or administration department right away takes months before anyone sees anything. If visible benefit stays away, the mood tips. A well-defined process with clear inputs and outputs and manageable risk delivers a result within weeks, and the trust for the next step."
+  - type: "heading"
+    text: "3. The data foundation wasn't checked"
+  - type: "paragraph"
+    text: "An agent that is supposed to answer from scattered, outdated or non-digital documents can only be as good as those documents. Whoever notices this only during the project has spent budget on something that stands on shaky ground. That is why the question «Where is the data, and in what state?» belongs at the very beginning."
+  - type: "heading"
+    text: "4. Nobody is responsible for operations"
+  - type: "paragraph"
+    text: "We had a good concept. Nobody implemented it: we hear this sentence often. A living system has to be maintained: spot errors, adjust rules, make usage visible. If it isn't clear who does that, the solution quietly goes stale."
+  - type: "heading"
+    text: "5. The team wasn't brought along"
+  - type: "paragraph"
+    text: "A solution that isn't used in daily work is worthless, however well it is built. Whoever knows the workflow the solution changes should have a say from the start. That costs a little time at the beginning and saves introducing it against resistance at the end."
+  - type: "heading"
+    text: "What a check makes visible beforehand"
+  - type: "paragraph"
+    text: "This is exactly where the AI Pulse Check comes in. In 1 to 2 days we look at how work really gets done in the company: processes, data, tools and team. At the end there is no presentation but a sorted list of the use cases that pay off first, and an honest recommendation: implement, wait or leave it."
+  - type: "paragraph"
+    text: "That turns «We should do something with AI» into a decision that can be justified before money flows."
+  - type: "link"
+    text: "More on AI potential analysis and the readiness check"
+    href: "/leistungen/ki-potenzialanalyse"
+---

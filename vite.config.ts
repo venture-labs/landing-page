@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import path from 'path'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
+import { previewDraftsEnabled } from './src/data/showDrafts'
 
 
 const PLAUSIBLE_SRC = 'https://plausible.io/js/script.file-downloads.outbound-links.js'
@@ -62,6 +63,9 @@ export default defineConfig({
     // Bind both IPv4 and IPv6 loopback — on some systems "localhost" only
     // resolves to one of them, which otherwise causes ERR_CONNECTION_REFUSED.
     host: '0.0.0.0',
+  },
+  define: {
+    __SHOW_DRAFTS__: JSON.stringify(previewDraftsEnabled(process.env)),
   },
   plugins: [
     figmaAssetResolver(),

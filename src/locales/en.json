@@ -56,6 +56,7 @@
     "team": "Team",
     "jobs": "Jobs",
     "blog": "Blog",
+    "wissen": "Knowledge",
     "bookCall": "Book a call",
     "copyright": "All rights reserved.",
     "imprint": "Imprint",
@@ -65,7 +66,8 @@
       "ai-products": "AI Products",
       "ai-experience": "AI Experience",
       "venture-building": "Venture Building"
-    }
+    },
+    "playbookGuide": "Playbook guide"
   },
   "leistungen": {
     "heroTitlePrefix": "We help you",
@@ -86,6 +88,21 @@
     "notFound": "Service not found.",
     "backToOverview": "Back to overview",
     "pulseCta": "Start your free Pulse Score",
+    "video": {
+      "posterAlt": "Christian Wenzel explains in a video how Venture Labs takes companies to their own AI cluster",
+      "playLabel": "Play explainer video, 2 minutes 8 seconds, German audio with English subtitles",
+      "videoLabel": "Explainer video: How we work with AI clusters",
+      "play": "Watch video",
+      "duration": "2:08",
+      "withSound": "German audio",
+      "captions": "English subtitles",
+      "trackLabel": "English",
+      "trackLabelOther": "Deutsch",
+      "endTitle": "That was the way. Now yours.",
+      "endBody": "Tell us in 30 minutes where most of your time gets stuck.",
+      "endBook": "Book a call",
+      "endReplay": "Watch again"
+    },
     "allSteps": "All steps",
     "allServices": "All services in detail",
     "toolInputLabel": "Comes in",
@@ -174,6 +191,19 @@
   "languageSwitcher": {
     "de": "DE",
     "en": "EN"
+  },
+  "wissen": {
+    "heroTitle": "Knowledge: AI agents and terms explained",
+    "heroSubtitle": "Short explanations of AI terms and in-depth articles on how AI agents are used, secured and paid for in a company. From our own operation.",
+    "deepHeading": "In-depth articles",
+    "glossaryHeading": "Terms from A to Z",
+    "draftsHeading": "Drafts (visible only with ?entwuerfe=1)",
+    "draftsNote": "Not published yet, blocked for search engines.",
+    "readEntry": "Read",
+    "backToHub": "Back to the knowledge hub",
+    "moreHeading": "Keep reading",
+    "serviceLink": "AI agents for companies: use, control and cost",
+    "checkLink": "Pulse Check: find out where an AI agent pays off"
   },
   "blog": {
     "heroTitle": "Blog",
@@ -286,6 +316,10 @@
       "title": "Contact – What's on your mind? Book a call – Venture Labs",
       "description": "Pick the topics you're interested in – it helps us get back to you faster. We'll get back to you within one to two business days."
     },
+    "wissen": {
+      "title": "Knowledge: AI agents explained simply – Venture Labs",
+      "description": "AI agent terms explained briefly, plus in-depth articles on how companies use, secure and pay for them. From our own day-to-day operation."
+    },
     "blog": {
       "title": "Blog – Thoughts, learnings and insights – Venture Labs",
       "description": "Thoughts, learnings, and insights from our work on digital products, teams, and AI – from AI agents and MVPs to design systems."
@@ -297,11 +331,38 @@
     "datenschutz": {
       "title": "Privacy policy of Venture Labs GmbH for venturelabs.team",
       "description": "This privacy policy covers the website venturelabs.team. Controller: Venture Labs GmbH, Breite Str. 27, 40213 Düsseldorf, Germany."
+    },
+    "playbook": {
+      "title": "Playbook, role or own agent? Free guide – Venture Labs",
+      "description": "Free guide to getting started with AI agents (in German): when a playbook is enough, when you need your own agent. With checklist."
     }
   },
   "notFound": {
     "heading": "Page not found",
     "message": "This page doesn't exist (anymore). Our services overview might be what you're looking for.",
     "cta": "Go to Services"
+  },
+  "playbook": {
+    "eyebrow": "Free guide",
+    "heroTitle": "Playbook, role or your own agent?",
+    "heroSubtitle": "The guide for anyone starting with AI agents: what you need when, what a base agent brings, why rights beat a new start text, and how to start without detours. 25 pages, no prior knowledge needed. The guide is written in German.",
+    "download": "Download the guide (PDF, German)",
+    "downloadMeta": "PDF, 25 pages, about 1.4 MB. No sign-up, no e-mail address.",
+    "coverAlt": "Cover of the guide Playbook, Rolle oder eigener Agent",
+    "insideTitle": "What is inside",
+    "inside": [
+      "The four building blocks in plain words: playbook and role, own agent, base agent (blueprint), sources and knowledge",
+      "Nine layers of what separated really means: folders, process, container, keys, network, model, budget, guards, approval",
+      "Rights instead of text: why starting with adjusted rights beats a new start text, with three cases from our own operation",
+      "A decision guide in six questions, a one-page cheat sheet and six everyday scenarios with a concrete recommendation",
+      "Our own experience, pitfalls and a start checklist"
+    ],
+    "forWhoTitle": "Who is it for?",
+    "forWho": "For anyone starting with AI agents, or noticing that one agent is no longer enough. No prior knowledge needed. Every technical term is explained in one sentence.",
+    "ctaTitle": "Want to sort this out for your company?",
+    "ctaText": "In a first conversation we work out together which of your tasks need a playbook, which need an agent of their own and which do not need AI yet.",
+    "ctaButton": "Request a conversation",
+    "note": "The guide is orientation, not legal or security advice. It is written in German.",
+    "pdfLabel": "playbook-rolle-oder-eigener-agent.pdf"
   }
 }
