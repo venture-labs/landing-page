@@ -234,7 +234,23 @@ export interface PageMeta {
   /** Breadcrumb items after the home item, last = the page itself; absent on home. */
   crumbs?: Crumb[];
   /** Present on /leistungen and the /leistungen/:slug pages: one schema.org Service. */
-  service?: { name: string; description: string };
+  service?: {
+    name: string;
+    description: string;
+    /** /leistungen only: what the offer is called in search terms, where and for whom. */
+    serviceType?: string[];
+    areaServed?: Record<string, unknown>[];
+    audience?: string;
+  };
+  /** /leistungen only: the explainer video in the hero, as a schema.org VideoObject. */
+  video?: {
+    name: string;
+    description: string;
+    thumbnailPath: string;
+    contentPath: string;
+    uploadDate: string;
+    duration: string;
+  };
   /** Present on the landing pages: the visible FAQ, emitted as one schema.org FAQPage. */
   faq?: { question: string; answer: string }[];
   sourceFile?: string; // markdown file backing the page, for <lastmod>
@@ -301,8 +317,34 @@ function buildPagesForLocale(lang: Locale): PageMeta[] {
     description: leistungenDescription,
     crumbs: [crumb(footer.servicesTitle, "/leistungen")],
     // "AI Pulse" is the glossary's name for the productised offer; the hero
-    // ("Drei Schritte. Ein Puls.") is a claim, not a name.
-    service: { name: "AI Pulse", description: leistungenDescription },
+    // line ("KI, die dir Arbeit abnimmt.") is a claim, not a name. serviceType carries
+    // the search terms the page is built for (SEO rework 2026-11-24).
+    service: {
+      name: "AI Pulse",
+      description: leistungenDescription,
+      serviceType:
+        lang === "de"
+          ? ["KI-Beratung", "KI-Automatisierung", "KI-Potenzialanalyse"]
+          : ["AI consulting", "AI automation", "AI potential analysis"],
+      areaServed: [
+        { "@type": "City", name: "Düsseldorf" },
+        { "@type": "State", name: "Nordrhein-Westfalen" },
+        { "@type": "Country", name: "DE" },
+      ],
+      audience: lang === "de" ? "Mittelständische Unternehmen" : "Mid-sized companies",
+    },
+    faq: leistungen.faq.map((f) => ({ question: f.question, answer: f.answer })),
+    // The self-hosted explainer (src/app/components/ExplainerVideo.tsx): file
+    // names and duration follow that component; uploadDate is the day the v5
+    // cut was added to public/video/.
+    video: {
+      name: ui.leistungen.video.videoLabel,
+      description: leistungenDescription,
+      thumbnailPath: lang === "de" ? "/video/erklaervideo-poster-v5.webp" : "/video/erklaervideo-poster-v5.en.webp",
+      contentPath: "/video/erklaervideo-v5-720.mp4",
+      uploadDate: "2026-10-26",
+      duration: "PT2M8S",
+    },
     sourceFile: contentFile(lang, "site/leistungen"),
   });
 
@@ -554,6 +596,25 @@ function jsonLdFor(page: PageMeta): Record<string, unknown> {
         "@id": `${SITE_ORIGIN}/#organization`,
         name: ORGANIZATION_NAME,
       },
+      ...(page.service.serviceType ? { serviceType: page.service.serviceType } : {}),
+      ...(page.service.areaServed ? { areaServed: page.service.areaServed } : {}),
+      ...(page.service.audience
+        ? { audience: { "@type": "BusinessAudience", audienceType: page.service.audience } }
+        : {}),
+    });
+  }
+
+  if (page.video) {
+    graph.push({
+      "@type": "VideoObject",
+      name: page.video.name,
+      description: page.video.description,
+      // Files, not routes: no trailing slash (absoluteUrl() adds one).
+      thumbnailUrl: `${SITE_ORIGIN}${page.video.thumbnailPath}`,
+      contentUrl: `${SITE_ORIGIN}${page.video.contentPath}`,
+      uploadDate: page.video.uploadDate,
+      duration: page.video.duration,
+      inLanguage: "de",
     });
   }
 

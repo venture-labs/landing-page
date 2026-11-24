@@ -1,11 +1,32 @@
 ---
 language: de
-seoTitle: 'Drei Schritte, ein Puls: Check, Build, Care – Venture Labs'
-seoDescription: 'Erst schauen, was wirklich los ist. Dann bauen, was den größten Unterschied macht. Und dann dranbleiben. Alles andere sind Details.'
+seoTitle: 'KI-Agentur Düsseldorf für KI-Automatisierung – Venture Labs'
+seoDescription: 'KI-Beratung für den Mittelstand: KI-Potenzialanalyse in 1–2 Tagen, dann KI-Automatisierung, die im Alltag läuft. Aus Düsseldorf, remote in ganz Deutschland.'
 heroEyebrow: 'Leistungen'
-heroTitlePrefix: 'Drei Schritte.'
-heroTitleHighlight: 'Ein Puls.'
-heroSubheading: 'Erst schauen, was wirklich los ist. Dann bauen, was den größten Unterschied macht. Und dann dranbleiben. Alles andere sind Details.'
+# Sits inside the <h1>, above the claim: the keyword half of the heading.
+heroKeyline: 'KI-Beratung & KI-Automatisierung aus Düsseldorf'
+heroTitlePrefix: 'KI, die dir'
+heroTitleHighlight: 'Arbeit abnimmt.'
+heroSubheading: 'In 1–2 Tagen finden wir heraus, welche Aufgaben sich bei dir automatisieren lassen. Dann bauen wir die KI-Agenten dafür und betreuen sie im Alltag – dein Team gibt frei, jeder Agent hat einen Kostendeckel.'
+proofHeading: 'Was dabei herauskommt'
+proofStats:
+  - value: '1–2 Tage'
+    label: 'bis zur priorisierten KI-Roadmap'
+    source: 'Pulse Check'
+    href: '/leistungen/ki-potenzialanalyse'
+  - value: '+10 %'
+    label: 'Verkaufssteigerung mit KI im Vertrieb'
+    source: 'MachineMaster'
+    href: '/cases/machinemaster'
+  - value: '−20 %'
+    label: 'Support-Aufwand im Serviceportal'
+    source: 'Tap2Link'
+    href: '/cases/tap2link'
+  - value: '95 %'
+    label: 'weniger Rückfragen bei Briefings'
+    source: 'Brylliant'
+    href: '/cases/brylliant'
+coreEyebrow: 'Drei Schritte. Ein Puls.'
 coreHeading: 'Check. Build. Care.'
 coreIntro: 'Jeder Schritt baut auf dem vorherigen auf. Nach jedem entscheidest du, ob es weitergeht – ohne Verpflichtung zum nächsten. Was ein Schritt bei dir kostet, besprechen wir im Erstgespräch: konkret auf deinen Umfang gerechnet, unverbindlich.'
 coreServices:
@@ -13,53 +34,54 @@ coreServices:
     step: '01'
     label: 'Verstehen'
     title: 'Pulse Check'
-    tagline: 'Wo liegt der größte Hebel?'
+    tagline: 'KI-Potenzialanalyse: Wo liegt dein größter Hebel?'
     meta: '1–2 Tage'
-    description: 'Wir schauen uns an, wie in deinem Unternehmen tatsächlich gearbeitet wird: Prozesse, Daten, Tools, Team. Am Ende steht keine Präsentation, sondern eine sortierte Liste.'
-    input: 'Deine Prozesse, Daten und Tools – so, wie sie heute wirklich sind.'
-    output: 'Eine priorisierte Roadmap mit den Anwendungsfällen, die sich zuerst lohnen.'
-    bullets:
-      - 'AI Opportunity Map statt Buzzword-Bingo'
-      - '3–5 Use Cases, sortiert nach Wirkung'
-      - 'Kein 40-Seiten-Report, den niemand liest'
+    description: 'Wir schauen uns an, wie bei dir gearbeitet wird: Prozesse, Daten, Tools, Team. Heraus kommt keine Präsentation, sondern eine sortierte Liste der Anwendungsfälle, die sich zuerst lohnen.'
     ctaLabel: 'Über den Pulse Check sprechen'
+    linkLabel: 'Mehr zur KI-Potenzialanalyse'
+    linkHref: '/leistungen/ki-potenzialanalyse'
   - key: build
     step: '02'
     label: 'Bauen'
     title: 'Pulse Build'
-    tagline: 'Vom Plan zur laufenden Lösung.'
+    tagline: 'KI-Automatisierung, die im Alltag läuft.'
     meta: 'ab 4 Wochen'
-    description: 'Wir setzen die wichtigsten Anwendungsfälle um – in Wochen, nicht in Quartalen. Fester Umfang, feste Leute, echtes Produktivsystem statt Prototyp für die Schublade.'
-    input: 'Der priorisierte Anwendungsfall aus deinem Pulse Check.'
-    output: 'Eine Lösung, die im Alltag deines Teams läuft.'
-    bullets:
-      - 'Fester Umfang, feste Ansprechperson'
-      - 'Live im Produktivbetrieb, nicht im Demo-Modus'
-      - 'Übergabe inklusive – dein Team kann damit arbeiten'
+    description: 'Wir setzen den wichtigsten Anwendungsfall um – in Wochen, nicht in Quartalen. Ein echtes Produktivsystem statt eines Prototyps für die Schublade.'
     ctaLabel: 'Über einen Build sprechen'
   - key: care
     step: '03'
     label: 'Dranbleiben'
     title: 'Pulse Care'
-    tagline: 'Ein System, das mitwächst.'
+    tagline: 'Betrieb und Weiterentwicklung: ein System, das mitwächst.'
     meta: 'laufend'
-    description: 'Software, die lebt, muss gepflegt werden – bei KI umso mehr. Wir bleiben an Bord: feste Termine, laufendes Monitoring, regelmäßige Weiterentwicklung.'
-    input: 'Die Lösung, die läuft.'
-    output: 'Ein System, das mit deinem Geschäft mitwächst, statt zu veralten.'
-    bullets:
-      - 'Feste Termine jeden Monat'
-      - 'Monitoring und Dashboard'
-      - 'Jährlicher Pulse-Check-Refresh'
+    description: 'Wir bleiben an Bord: feste Termine, laufendes Monitoring und regelmäßige Weiterentwicklung, damit das System mit deinem Geschäft mitwächst.'
     ctaLabel: 'Betreuung besprechen'
-skillsHeading: 'Vier Skills. Je nachdem, was dein Fall braucht.'
-skillsIntro: 'Die drei Schritte sind das Wie. Das hier ist das Womit – vier Disziplinen, die wir in jedem Schritt unterschiedlich stark einsetzen.'
+skillsHeading: 'Vier Disziplinen. Je nachdem, was dein Fall braucht.'
+skillsIntro: 'Die drei Schritte sind das Wie. Das hier ist das Womit – von KI-Automatisierung bis Venture Building, in jedem Schritt unterschiedlich stark eingesetzt.'
+integrationsHeading: 'Funktioniert mit den Tools, die ihr schon habt'
+integrationsIntro: 'KI-Automatisierung heißt bei uns nicht: noch ein Tool mehr. Wir docken an die Systeme an, in denen dein Team heute schon arbeitet.'
+# prüfen: Integrationen von Martin am 2026-11-24 bestätigt (Kategorien); einzelne Produktnamen nur nach Abgleich ergänzen
+integrations:
+  - id: microsoft
+    label: 'Microsoft 365 & Outlook'
+    body: 'Mails, Kalender und Dokumente, dort, wo sie heute liegen.'
+  - id: chat
+    label: 'Slack & WhatsApp'
+    body: 'Aufgaben anstoßen und Freigaben erteilen, ohne die App zu wechseln.'
+  - id: accounting
+    label: 'DATEV & Buchhaltung'
+    body: 'Belege, Rechnungen und Bankdaten für die Buchhaltung vorbereitet.'
+  - id: erp
+    label: 'SAP, ERP & CRM'
+    body: 'Stammdaten, Bestellungen und Kundenkontakte, angebunden statt abgetippt.'
+integrationsNote: 'Ein anderes System? Ob und wie es sich anbinden lässt, klären wir im Pulse Check.'
 skillStepLabels:
   check: 'Check'
   build: 'Build'
   care: 'Care'
 ctaHeading: 'Noch unklar, wo du stehst?'
 ctaBody: 'Der AI Pulse Score dauert fünf Minuten und kostet nichts: 10 Fragen, sofort ein Ergebnis über fünf Bereiche. Willst du danach genau wissen, wo dein größter Hebel liegt, ist der Pulse Check der nächste Schritt – was er bei dir umfasst, besprechen wir im Erstgespräch.'
-contactCallout: 'Du suchst ehrliche Beratung statt Buzzwords? Ruf uns an oder schreib uns – wir hören zu, bevor wir bauen.'
+contactCallout: 'Venture Labs ist eine KI-Agentur aus Düsseldorf. Wir arbeiten remote mit Unternehmen in ganz Deutschland – und kommen in NRW gern auch vorbei. Schreib uns, wir hören zu, bevor wir bauen.'
 strengthHeadline: "Unsere Stärke:\nDigitale Produktentwicklung"
 strengthDescription: 'Wir begleiten dich von der ersten Vision bis zur Umsetzung – mit einem interdisziplinären Team aus Strategie, Design und Technologie. Unser Ziel: Produkte, die technisch robust, ästhetisch überzeugend und für Nutzer:innen relevant sind. Dabei arbeiten wir agil, nutzerzentriert und nutzen modernste Tools – von No-Code bis KI – um schneller zu Ergebnissen zu kommen.'
 strengthFeatures:
@@ -75,11 +97,23 @@ strengthFeatures:
   - icon: handshake
     title: 'Enge Zusammenarbeit & Transparenz'
     subtitle: 'Du bist Teil des Entwicklungsprozesses'
-useCasesHeading: 'Mögliche Use Cases'
+useCasesHeading: 'Was KI-Automatisierung bei dir übernehmen kann'
 useCasesLeadLine: 'Beleg-Inbox läuft heute schon produktiv bei uns – alle anderen Karten sind Beispiele dafür, was mit demselben Ansatz möglich ist.'
 useCasesCtaLabel: 'Kostenloses Erstgespräch buchen'
+useCaseAreas:
+  - id: finance
+    label: 'Finanzen & Einkauf'
+  - id: sales
+    label: 'Vertrieb & Marketing'
+  - id: service
+    label: 'Kundenservice'
+  - id: organisation
+    label: 'Organisation & Wissen'
+  - id: management
+    label: 'Steuerung & Management'
 situations:
   - id: receipts
+    area: finance
     text: 'Zu jeder Abbuchung fehlt mir der Beleg.'
     agentName: 'Beleg-Inbox'
     capabilities:
@@ -87,41 +121,15 @@ situations:
       - 'Belegprüfungen'
       - 'Belegabgleich mit Bankauszug'
   - id: invoice-coverage
+    area: finance
     text: 'Ich weiß nicht, ob alle Rechnungen eines Projekts erfasst sind.'
     agentName: 'Rechnungs-Radar'
     capabilities:
       - 'Rechnungen automatisch dem passenden Projekt zuordnen'
       - 'Fehlende Rechnungen markieren'
       - 'Monatsabgleich pro Projekt zusammenfassen'
-  - id: tool-fatigue
-    text: 'Wir hatten ein gutes Konzept. Umgesetzt hat es dann niemand.'
-    agentName: 'Rollout-Lotse'
-    capabilities:
-      - 'Einführung Schritt für Schritt pro Team begleiten'
-      - 'Blockaden im Alltag früh erkennen'
-      - 'Nutzung laufend sichtbar machen'
-  - id: prioritization
-    text: 'Ich weiß nicht, wo wir mit KI anfangen sollen – überall wird es empfohlen, aber keiner sagt, was zuerst dran ist.'
-    agentName: 'Fokus-Kompass'
-    capabilities:
-      - 'Anwendungsfälle nach Aufwand und Wirkung sortieren'
-      - 'Einen konkreten ersten Schritt vorschlagen'
-      - 'Fortschritt über die Zeit sichtbar machen'
-  - id: neglected-tool
-    text: 'Wir haben mal ein Tool eingeführt – seitdem kümmert sich niemand mehr darum.'
-    agentName: 'Tool-Wächter'
-    capabilities:
-      - 'Nutzung und Fehler laufend überwachen'
-      - 'Verantwortliche automatisch erinnern'
-      - 'Monatlichen Gesundheitscheck liefern'
-  - id: quote-drafts
-    text: 'Aus jeder Anfrage ein Angebot zu bauen, kostet uns jedes Mal Zeit.'
-    agentName: 'Angebots-Entwurf'
-    capabilities:
-      - 'Produkt und Menge aus Anfragen herauslesen'
-      - 'Angebotsentwurf im CRM anlegen'
-      - 'Vor dem Versand von einem Menschen freigeben lassen'
   - id: order-matching
+    area: finance
     text: 'Bei Eingangsrechnungen weiß ich nie, ob sie zur Bestellung passen.'
     agentName: 'Bestell-Abgleich'
     capabilities:
@@ -129,89 +137,55 @@ situations:
       - 'Abweichungen markieren'
       - 'Nichts stillschweigend durchwinken'
   - id: payment-reminders
+    area: finance
     text: 'Überfällige Rechnungen fallen uns erst auf, wenn es schon lange her ist.'
     agentName: 'Mahn-Assistent'
     capabilities:
       - 'Überfällige Rechnungen erkennen'
       - 'Eine Erinnerung vorbereiten'
       - 'Dein Team bestätigt nur noch'
-  - id: appointments
-    text: 'Terminwünsche stehen in Mails, und ich tippe sie von Hand in den Kalender.'
-    agentName: 'Termin-Sekretär'
+  - id: contract-deadlines
+    area: finance
+    text: 'Vertragsfristen und Kündigungstermine merken wir uns erst, wenn sie verstrichen sind.'
+    agentName: 'Fristen-Wächter'
     capabilities:
-      - 'Terminwünsche aus Mails herauslesen'
-      - 'Freie Slots im Kalender vorschlagen'
-      - 'Eintragen erst nach deiner Bestätigung'
-  - id: onboarding-questions
-    text: 'Neue Nutzer stellen immer dieselben Fragen, und wir beantworten sie jedes Mal neu.'
-    agentName: 'Onboarding-Helfer'
+      - 'Verträge nach Fristen durchsuchen'
+      - 'Rechtzeitig an Kündigungstermine erinnern'
+      - 'Alle Fristen übersichtlich sammeln'
+  - id: supplier-prices
+    area: finance
+    text: 'Lieferantenpreise vergleichen wir nur, wenn es wirklich weh tut.'
+    agentName: 'Preis-Vergleicher'
     capabilities:
-      - 'Wiederkehrende Fragen aus eurer Dokumentation beantworten'
-      - 'Den Rest direkt an euer Team weitergeben'
-  - id: ticket-triage
-    text: 'Wenn ein Ticket reinkommt, weiß keiner sofort, wie dringend es ist.'
-    agentName: 'Ticket-Sortierer'
+      - 'Angebote verschiedener Lieferanten gegenüberstellen'
+      - 'Preisänderungen markieren'
+      - 'Die Entscheidung bleibt bei dir'
+  - id: quote-drafts
+    area: sales
+    text: 'Aus jeder Anfrage ein Angebot zu bauen, kostet uns jedes Mal Zeit.'
+    agentName: 'Angebots-Entwurf'
     capabilities:
-      - 'Tickets nach Dringlichkeit einordnen'
-      - 'Nach Thema zuordnen'
-      - 'Vorsortiert ans Team übergeben'
-  - id: feature-requests
-    text: 'Feature-Wünsche kommen aus allen Kanälen, und keiner überblickt sie.'
-    agentName: 'Wunsch-Sammler'
+      - 'Produkt und Menge aus Anfragen herauslesen'
+      - 'Angebotsentwurf im CRM anlegen'
+      - 'Vor dem Versand von einem Menschen freigeben lassen'
+  - id: follow-ups
+    area: sales
+    text: 'Angebote gehen raus, und danach fragt keiner mehr nach.'
+    agentName: 'Nachfass-Assistent'
     capabilities:
-      - 'Feedback aus mehreren Kanälen zusammenführen'
-      - 'Nach Aufwand und Nutzen ordnen'
-      - 'Für die nächste Priorisierung aufbereiten'
-  - id: usage-reports
-    text: 'Unsere Nutzungsdaten liegen irgendwo, aber niemand liest sie.'
-    agentName: 'Daten-Dolmetscher'
-    capabilities:
-      - 'Rohe Produktanalytik in verständliche Sprache übersetzen'
-      - 'Wöchentlichen Bericht fürs Team erstellen'
-      - 'Ohne manuelles Zusammensuchen'
-  - id: conversation-insights
-    text: 'Was Kunden in Gesprächen sagen, versickert in Einzelnotizen.'
-    agentName: 'Gesprächs-Analyst'
-    capabilities:
-      - 'Calls und Chats nach Thema auswerten'
-      - 'Die Stimmung erkennen'
-      - 'Wiederkehrende Muster sichtbar machen'
-  - id: reply-suggestions
-    text: 'Auf Standardfragen schreiben wir jedes Mal fast dieselbe Antwort.'
-    agentName: 'Antwort-Vorschlag'
-    capabilities:
-      - 'Passende Antwortbausteine vorschlagen'
-      - 'An die jeweilige Frage anpassen'
-      - 'Abgeschickt wird weiterhin von einem Menschen'
-  - id: knowledge-base
-    text: 'Unser Wissen steckt in Chats und Dokumenten, und niemand pflegt es nach.'
-    agentName: 'Wissens-Gärtner'
-    capabilities:
-      - 'Chats und Dokumente auswerten'
-      - 'Die interne Wissensdatenbank aktuell halten'
-      - 'Ohne dass jemand von Hand nachträgt'
-  - id: meeting-tasks
-    text: 'Nach dem Meeting weiß jeder etwas anderes davon, was zu tun ist.'
-    agentName: 'Aufgaben-Schreiber'
-    capabilities:
-      - 'Mitschriften in Aufgaben verwandeln'
-      - 'Aufgaben je Teilnehmer zuordnen'
-      - 'Nach Priorität ordnen'
+      - 'Offene Angebote im Blick behalten'
+      - 'Eine Nachfass-Mail vorbereiten'
+      - 'Dein Team gibt sie vor dem Versand frei'
   - id: competitor-watch
+    area: sales
     text: 'Was die Konkurrenz gerade anbietet, erfahren wir meist zufällig.'
     agentName: 'Konkurrenz-Beobachter'
     capabilities:
       - 'Preise und Angebote regelmäßig prüfen'
       - 'Änderungen markieren'
       - 'Kurz zusammenfassen, was sich getan hat'
-  - id: investor-updates
-    text: 'Das Investoren-Update schreiben wir immer auf den letzten Drücker.'
-    agentName: 'Update-Vorbereiter'
-    capabilities:
-      - 'Kennzahlen aus euren bestehenden Tools ziehen'
-      - 'Einen Entwurf für das nächste Update vorbereiten'
-      - 'Du prüfst und gibst frei'
   - id: market-trends
+    area: sales
     text: 'Den Markt im Blick zu behalten, schaffen wir neben dem Tagesgeschäft nicht.'
     agentName: 'Markt-Radar'
     capabilities:
@@ -219,40 +193,123 @@ situations:
       - 'Eine wöchentliche Markteinschätzung erstellen'
       - 'Das Wichtigste kurz zusammenfassen'
   - id: social-drafts
+    area: sales
     text: 'Unsere Blogartikel erscheinen, aber für Social Media fehlt uns die Zeit.'
     agentName: 'Social-Entwurf'
     capabilities:
       - 'Aus Blogartikeln Beitragsentwürfe ableiten'
       - 'Für Social Media zuschneiden'
       - 'Veröffentlicht wird weiterhin manuell'
-  - id: contract-deadlines
-    text: 'Vertragsfristen und Kündigungstermine merken wir uns erst, wenn sie verstrichen sind.'
-    agentName: 'Fristen-Wächter'
+  - id: onboarding-questions
+    area: service
+    text: 'Neue Nutzer stellen immer dieselben Fragen, und wir beantworten sie jedes Mal neu.'
+    agentName: 'Onboarding-Helfer'
     capabilities:
-      - 'Verträge nach Fristen durchsuchen'
-      - 'Rechtzeitig an Kündigungstermine erinnern'
-      - 'Alle Fristen übersichtlich sammeln'
-  - id: follow-ups
-    text: 'Angebote gehen raus, und danach fragt keiner mehr nach.'
-    agentName: 'Nachfass-Assistent'
+      - 'Wiederkehrende Fragen aus eurer Dokumentation beantworten'
+      - 'Den Rest direkt an euer Team weitergeben'
+  - id: ticket-triage
+    area: service
+    text: 'Wenn ein Ticket reinkommt, weiß keiner sofort, wie dringend es ist.'
+    agentName: 'Ticket-Sortierer'
     capabilities:
-      - 'Offene Angebote im Blick behalten'
-      - 'Eine Nachfass-Mail vorbereiten'
-      - 'Dein Team gibt sie vor dem Versand frei'
-  - id: supplier-prices
-    text: 'Lieferantenpreise vergleichen wir nur, wenn es wirklich weh tut.'
-    agentName: 'Preis-Vergleicher'
+      - 'Tickets nach Dringlichkeit einordnen'
+      - 'Nach Thema zuordnen'
+      - 'Vorsortiert ans Team übergeben'
+  - id: reply-suggestions
+    area: service
+    text: 'Auf Standardfragen schreiben wir jedes Mal fast dieselbe Antwort.'
+    agentName: 'Antwort-Vorschlag'
     capabilities:
-      - 'Angebote verschiedener Lieferanten gegenüberstellen'
-      - 'Preisänderungen markieren'
-      - 'Die Entscheidung bleibt bei dir'
+      - 'Passende Antwortbausteine vorschlagen'
+      - 'An die jeweilige Frage anpassen'
+      - 'Abgeschickt wird weiterhin von einem Menschen'
+  - id: conversation-insights
+    area: service
+    text: 'Was Kunden in Gesprächen sagen, versickert in Einzelnotizen.'
+    agentName: 'Gesprächs-Analyst'
+    capabilities:
+      - 'Calls und Chats nach Thema auswerten'
+      - 'Die Stimmung erkennen'
+      - 'Wiederkehrende Muster sichtbar machen'
+  - id: feature-requests
+    area: service
+    text: 'Feature-Wünsche kommen aus allen Kanälen, und keiner überblickt sie.'
+    agentName: 'Wunsch-Sammler'
+    capabilities:
+      - 'Feedback aus mehreren Kanälen zusammenführen'
+      - 'Nach Aufwand und Nutzen ordnen'
+      - 'Für die nächste Priorisierung aufbereiten'
+  - id: knowledge-base
+    area: organisation
+    text: 'Unser Wissen steckt in Chats und Dokumenten, und niemand pflegt es nach.'
+    agentName: 'Wissens-Gärtner'
+    capabilities:
+      - 'Chats und Dokumente auswerten'
+      - 'Die interne Wissensdatenbank aktuell halten'
+      - 'Ohne dass jemand von Hand nachträgt'
+  - id: meeting-tasks
+    area: organisation
+    text: 'Nach dem Meeting weiß jeder etwas anderes davon, was zu tun ist.'
+    agentName: 'Aufgaben-Schreiber'
+    capabilities:
+      - 'Mitschriften in Aufgaben verwandeln'
+      - 'Aufgaben je Teilnehmer zuordnen'
+      - 'Nach Priorität ordnen'
+  - id: appointments
+    area: organisation
+    text: 'Terminwünsche stehen in Mails, und ich tippe sie von Hand in den Kalender.'
+    agentName: 'Termin-Sekretär'
+    capabilities:
+      - 'Terminwünsche aus Mails herauslesen'
+      - 'Freie Slots im Kalender vorschlagen'
+      - 'Eintragen erst nach deiner Bestätigung'
+  - id: prioritization
+    area: management
+    text: 'Ich weiß nicht, wo wir mit KI anfangen sollen – überall wird es empfohlen, aber keiner sagt, was zuerst dran ist.'
+    agentName: 'Fokus-Kompass'
+    capabilities:
+      - 'Anwendungsfälle nach Aufwand und Wirkung sortieren'
+      - 'Einen konkreten ersten Schritt vorschlagen'
+      - 'Fortschritt über die Zeit sichtbar machen'
+  - id: tool-fatigue
+    area: management
+    text: 'Wir hatten ein gutes Konzept. Umgesetzt hat es dann niemand.'
+    agentName: 'Rollout-Lotse'
+    capabilities:
+      - 'Einführung Schritt für Schritt pro Team begleiten'
+      - 'Blockaden im Alltag früh erkennen'
+      - 'Nutzung laufend sichtbar machen'
+  - id: neglected-tool
+    area: management
+    text: 'Wir haben mal ein Tool eingeführt – seitdem kümmert sich niemand mehr darum.'
+    agentName: 'Tool-Wächter'
+    capabilities:
+      - 'Nutzung und Fehler laufend überwachen'
+      - 'Verantwortliche automatisch erinnern'
+      - 'Monatlichen Gesundheitscheck liefern'
+  - id: investor-updates
+    area: management
+    text: 'Das Investoren-Update schreiben wir immer auf den letzten Drücker.'
+    agentName: 'Update-Vorbereiter'
+    capabilities:
+      - 'Kennzahlen aus euren bestehenden Tools ziehen'
+      - 'Einen Entwurf für das nächste Update vorbereiten'
+      - 'Du prüfst und gibst frei'
+  - id: usage-reports
+    area: management
+    text: 'Unsere Nutzungsdaten liegen irgendwo, aber niemand liest sie.'
+    agentName: 'Daten-Dolmetscher'
+    capabilities:
+      - 'Rohe Produktanalytik in verständliche Sprache übersetzen'
+      - 'Wöchentlichen Bericht fürs Team erstellen'
+      - 'Ohne manuelles Zusammensuchen'
 clusterStory:
-  heading: 'Wie dein Cluster bei uns entsteht'
-  intro: 'Von deinem ersten Input bis zu einem Cluster, der dich zu 100 % abdeckt – eine Geschichte in neun Schritten, die sich beim Scrollen selbst aufbaut.'
+  heading: 'So entstehen deine KI-Agenten – und das passiert mit deinen Daten'
+  intro: 'Von deinem ersten Input bis zu einem Verbund aus KI-Agenten – wir nennen ihn Cluster –, der dein Unternehmen Bereich für Bereich abdeckt. Neun Schritte, die sich beim Scrollen aufbauen.'
   steps:
     - id: input
       navLabel: 'Input'
-      heading: 'Dein Problem'
+      heading: 'Du erzählst uns dein Problem – da, wo du arbeitest'
       body: 'Du hast eine Aufgabe, die zu viel Zeit frisst. Erzähl sie uns da, wo du ohnehin arbeitest. Das geht im persönlichen Videocall, über Slack, per E-Mail und über WhatsApp. Niemand bei uns funkt dazwischen – dein Input geht direkt in unseren Cluster.'
       channels:
         - label: 'Videocall'
@@ -265,27 +322,27 @@ clusterStory:
           status: live
     - id: concepts
       navLabel: 'Konzepte'
-      heading: 'Konzepte'
+      heading: 'Wir schlagen ein Konzept vor, du entscheidest'
       body: 'Aus deinem Input stößt unser Cluster sofort ein Konzept an. Das Konzept kommt zu dir zurück, und du entscheidest, ob und wie es weitergeht. Gebaut wird nur, was du freigegeben hast.'
     - id: handover
       navLabel: 'Übergabe'
-      heading: 'Übergabe an unsere Agenten'
+      heading: 'Die Umsetzung übernehmen unsere Agenten'
       body: 'Hast du dich entschieden, geht das Konzept an unsere eigenen Agenten. Sie übernehmen die Umsetzung – du musst nichts weiter anstoßen und nichts selbst zusammenbauen.'
     - id: build
       navLabel: 'Aufbau'
-      heading: 'Agenten bauen deine Agenten'
+      heading: 'Deine KI-Agenten, gebaut für deine Prozesse'
       body: 'Unsere Agenten bauen deinen eigenen Agenten-Cluster, zugeschnitten auf deine Prozesse und nicht auf eine Vorlage. Wir fangen meist klein an, mit einer überschaubaren Aufgabe wie der Buchhaltung. Der Cluster läuft bei dir, wir lernen daraus – und du sammelst Erfahrung damit, wo er funktioniert und wo nicht.'
     - id: telemetry
       navLabel: 'Datenfluss'
-      heading: 'Wir sehen, ob es läuft. Nicht, was drin ist.'
+      heading: 'Datenschutz: Wir sehen, ob es läuft – nicht, was drin ist'
       body: 'Zu uns kommen nur Laufzeit, Fehler und Kosten. Daraus bauen wir Updates für deinen Cluster. Sensible Daten bleiben bei dir; nach außen geht nur, was du freigibst, und Lerndaten erst nach deiner manuellen Freigabe. Lokale KI-Modelle setzen wir ein, wo immer es möglich ist, und jeder Agent hat ein eigenes Budget mit sichtbaren Kosten.'
     - id: loop
       navLabel: 'Kreislauf'
-      heading: 'Der Kreis schließt sich'
+      heading: 'Monatlicher Call: Was läuft, was wir nachschärfen'
       body: 'Einmal im Monat gehen wir mit dir in einen Call: Was hat funktioniert, was nicht? Welche Regeln schärfen wir nach, welche Modelle aktualisieren wir, welches Projekt setzen wir als Nächstes um? Neuer Input führt zu neuen Konzepten – der Kreis schließt sich.'
     - id: growth
       navLabel: 'Wachstum'
-      heading: 'Der Cluster wächst Ring für Ring'
+      heading: 'Bereich für Bereich mehr automatisieren'
       body: 'Mit der Zeit stellt sich der Cluster genau auf dein Unternehmen ein: Die Fehler werden weniger, die Ergebnisse präziser, und er übernimmt mehr Aufgaben. So wächst er Bereich für Bereich, etwa mit Buchhaltung und Bankdaten, einem eigenen CRM, eigenen Frontends oder Apps und lokalen Modellen, bis er dein Unternehmen abdeckt.'
       areas:
         - label: 'Buchhaltung & Bankdaten'
@@ -294,11 +351,52 @@ clusterStory:
         - label: 'Lokale Modelle'
     - id: service
       navLabel: 'Angebot'
-      heading: 'Dein Cluster deckt dich zu 100 % ab'
+      heading: 'Aufbau als Projekt, Betrieb als monatliche Betreuung'
       body: 'Der Aufbau ist ein Projekt, der laufende Betrieb danach eine monatliche Betreuung. Fertig wird ein Cluster nie, er wächst mit deinem Unternehmen. Wir bauen weiter, Schritt für Schritt und nachvollziehbar. Im kostenlosen Erstgespräch klären wir, womit dein Cluster beginnt.'
       billingNote: 'Aufbau = ein Projekt · Betrieb = monatliche Betreuung'
     - id: outlook
       navLabel: 'Handy'
-      heading: 'Weniger Bildschirm, mehr Handy'
+      heading: 'Ausblick: weniger Bildschirm, mehr Handy'
       body: 'Der Anruf mit deinem Agenten statt des Klicks am Bildschirm – das ist heute schon über die Claude App möglich.'
+faqHeading: 'Häufige Fragen zu KI-Beratung und KI-Automatisierung'
+faq:
+  - question: 'Was macht eine KI-Agentur wie Venture Labs?'
+    answer: 'Wir finden heraus, wo KI in deinem Unternehmen wirklich Arbeit abnimmt, bauen die Lösung und betreiben sie mit dir weiter. KI-Beratung und Umsetzung kommen aus einer Hand: Was wir empfehlen, bauen wir auch – und wir bleiben dran, wenn es läuft.'
+  - question: 'Was ist eine KI-Potenzialanalyse?'
+    answer: 'Bei uns heißt sie Pulse Check. Wir schauen uns an, wie bei dir gearbeitet wird – Prozesse, Daten, Tools, Team – und sortieren die Anwendungsfälle nach Wirkung. Heraus kommt eine priorisierte Roadmap mit 3–5 Use Cases, kein 40-Seiten-Report.'
+  - question: 'Was kostet KI-Beratung und KI-Automatisierung?'
+    answer: 'Das hängt vom Umfang ab, deshalb nennen wir hier keine pauschale Zahl. Was ein Schritt bei dir kostet, rechnen wir im Erstgespräch auf deinen Umfang. Laufende Kosten entstehen vor allem durch die genutzten Sprachmodelle; jeder Agent bekommt einen Kostendeckel, damit es keine Überraschung gibt. Einen ersten Eindruck, wo du stehst, gibt dir vorab der kostenlose Pulse Score.'  # prüfen: Kostendeckel je Agent wie auf /leistungen/ki-agenten-unternehmen
+  - question: 'Wie lange dauert es bis zur ersten Automatisierung?'
+    answer: 'Der Pulse Check dauert 1–2 Tage. Danach setzen wir den wichtigsten Anwendungsfall im Pulse Build um, ab 4 Wochen bis zum Produktivbetrieb. Wir fangen bewusst klein an, mit einer überschaubaren Aufgabe, und bauen von dort aus weiter.'
+  - question: 'Brauchen wir dafür eine eigene IT-Abteilung?'
+    answer: 'Nein. Wichtig ist eine Person bei dir, die den Prozess kennt und entscheiden darf. Den technischen Teil übernehmen wir – vom Anbinden deiner Systeme bis zum laufenden Betrieb.'  # prüfen: Aussage zur fehlenden IT-Abteilung mit Christian abstimmen
+  - question: 'Mit welchen Systemen funktioniert das?'
+    answer: 'Wir docken an die Tools an, mit denen dein Team schon arbeitet, zum Beispiel Microsoft 365 und Outlook, Slack und WhatsApp, DATEV und Buchhaltung sowie SAP, ERP- und CRM-Systeme. Ob sich ein anderes System anbinden lässt, klären wir im Pulse Check.'
+  - question: 'Ist KI-Automatisierung DSGVO-konform?'
+    answer: 'Das klären wir pro Anwendungsfall vor dem Bau: welche Daten ein Agent sieht, wo sie liegen und welche Modelle laufen. Sensible Daten bleiben bei dir, lokale Modelle setzen wir ein, wo immer es möglich ist. Eine pauschale Zusage geben wir nicht, solange dein konkreter Fall nicht geprüft ist.'
+  - question: 'Gibt es Förderung für KI-Projekte im Mittelstand?'
+    answer: 'Für kleine und mittlere Unternehmen gibt es Förderprogramme von Bund und Ländern. Welches passt, hängt von deinem Unternehmen, deinem Bundesland und dem Vorhaben ab – das sprechen wir im Erstgespräch mit dir durch.'  # prüfen: Link auf den Blogartikel ki-foerderung-fuer-kmu ergänzen, sobald er veröffentlicht ist
+  - question: 'Arbeitet ihr nur mit Unternehmen aus Düsseldorf?'
+    answer: 'Nein. Unser Sitz ist in Düsseldorf, gearbeitet wird remote – mit Unternehmen in ganz Deutschland. In Düsseldorf und NRW kommen wir für Workshops oder den Pulse Check auf Wunsch auch zu dir.'
+resourcesHeading: 'Weiterlesen'
+resourcesIntro: 'Bevor du mit uns sprichst, kannst du dich hier tiefer einlesen.'
+resources:
+  - label: 'KI-Potenzialanalyse und Readiness-Check'
+    description: 'Was der Pulse Check prüft und was du danach in der Hand hast.'
+    href: '/leistungen/ki-potenzialanalyse'
+  - label: 'KI-Agenten für Unternehmen'
+    description: 'Wie Freigaben, Kostendeckel und Datenschutz bei Agenten aussehen.'
+    href: '/leistungen/ki-agenten-unternehmen'
+  - label: 'KI-Agenten im Unternehmensalltag: 5 Use Cases'
+    description: 'Fünf Aufgaben, die Agenten heute schon zuverlässig übernehmen.'
+    href: '/blog/ki-agenten-use-cases'
+  - label: 'Warum KI-Projekte im Mittelstand scheitern'
+    description: 'Die typischen Fehler – und wie ein Check sie verhindert.'
+    href: '/blog/warum-ki-projekte-im-mittelstand-scheitern'
+  - label: 'KI-Agent oder Chatbot?'
+    description: 'Der Unterschied im Unternehmensalltag, einfach erklärt.'
+    href: '/blog/ki-agent-oder-chatbot'
+  - label: 'Playbook, Rolle oder eigener KI-Agent?'
+    description: 'Wann sich welcher Einstieg lohnt.'
+    href: '/blog/playbook-rolle-oder-eigener-agent'
 ---

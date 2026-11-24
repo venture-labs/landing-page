@@ -160,6 +160,9 @@
       "outlookEyebrow": "Ausblick"
     },
     "useCases": {
+      "problemLabel": "Das Problem",
+      "solutionLabel": "Lösungsvorschlag",
+      "areasLabel": "Use Cases nach Bereich",
       "stepOf": "Karte {{current}} von {{total}}",
       "prevLabel": "Vorherige Karte",
       "nextLabel": "Nächste Karte",

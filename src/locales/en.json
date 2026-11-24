@@ -160,6 +160,9 @@
       "outlookEyebrow": "Outlook"
     },
     "useCases": {
+      "problemLabel": "The problem",
+      "solutionLabel": "Proposed solution",
+      "areasLabel": "Use cases by area",
       "stepOf": "Card {{current}} of {{total}}",
       "prevLabel": "Previous card",
       "nextLabel": "Next card",

@@ -26,7 +26,7 @@ process:
     description: "Wir analysieren Daten, Prozesse, Team und Tools in 1–2 Tagen und zeigen, wo KI den größten Hebel bietet."
   - number: "02"
     title: "Empfehlung"
-    description: "Sie erhalten eine priorisierte Roadmap statt einer generischen Strategiepräsentation."
+    description: "Du erhältst eine priorisierte Roadmap statt einer generischen Strategiepräsentation."
   - number: "03"
     title: "Umsetzung"
     description: "Wir bauen die 1–3 wichtigsten Anwendungsfälle in einem 4-wöchigen Sprint."
