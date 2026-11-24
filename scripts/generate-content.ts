@@ -477,11 +477,11 @@ export interface CoreService {
   tagline: string;
   meta: string;
   description: string;
-  input: string;
-  output: string;
-  bullets: string[];
   ctaLabel: string;
-  /** Optional deep link under the step's CTA, a path without the locale prefix. */
+  /**
+   * Optional deep link next to the CTA, a path without the locale prefix. The
+   * #ablauf module shows the check step's CTA and link under every step.
+   */
   linkLabel?: string;
   linkHref?: string;
 }

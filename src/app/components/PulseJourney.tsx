@@ -1,6 +1,13 @@
-import { useRef, useState, type CSSProperties } from "react";
-import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
-import { ArrowRight, Check } from "lucide-react";
+import { useId, useRef, useState } from "react";
+import {
+  AnimatePresence,
+  motion,
+  useInView,
+  useMotionValueEvent,
+  useReducedMotion,
+  useScroll,
+} from "motion/react";
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
 import { useLeistungenData } from "@/data/content";
@@ -8,411 +15,347 @@ import { useLocale } from "@/app/locale";
 import { CTAS, EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
 import type { CoreService } from "@/data/de/leistungen";
 
+/**
+ * Check · Build · Care (`#ablauf`), on /leistungen and the homepage.
+ *
+ * Rebuilt 2026-11-25 as a calm, scroll-driven module: a tall track with one
+ * sticky panel. Scrolling through the track steps through the three phases;
+ * the icon on the left builds itself up for each phase (? turns into !, three
+ * blocks stack, two arrows close into a circle), the right column shows only
+ * the phase's name, duration, keyword heading and one or two sentences. The
+ * CTA under the text is the same for every phase: talk about the Pulse Check,
+ * plus the deep link (or, on the homepage, the link to all services).
+ *
+ * All three phases' texts are always in the markup (inactive ones faded out,
+ * not unmounted), so the prerendered HTML carries every step for search
+ * engines. The step buttons scroll to their phase instead of switching state,
+ * so scroll position and active phase never disagree.
+ */
+
 export const STEP_ACCENTS: Record<CoreService["key"], string> = {
   check: "#2b95f6",
   build: "#a318f8",
   care: "#fda700",
 };
 
-/* ─── the pulse curve ────────────────────────────────────────────────────
-   All three waveforms are sampled at the same x positions, so the path
-   strings share a structure and motion can interpolate between them. */
+const EASE = [0.16, 1, 0.3, 1] as const;
 
-const SAMPLES = 97;
-const VIEW_W = 1200;
-const BASELINE = 70;
+/* ─── the three icons ─────────────────────────────────────────────────── */
 
-/** `amplitude` is sampled on a fixed 0–48 scale, independent of SAMPLES. */
-function buildPath(amplitude: (u: number) => number) {
-  const points = Array.from({ length: SAMPLES }, (_, i) => {
-    const progress = i / (SAMPLES - 1);
-    const y = BASELINE - amplitude(progress * 48);
-    return `${(progress * VIEW_W).toFixed(1)} ${y.toFixed(1)}`;
-  });
-  return `M ${points[0]} ${points.slice(1).map((p) => `L ${p}`).join(" ")}`;
+/** A circle with the icon's full footprint: SVG groups rotate around their
+    bounding box, so this keeps the pivot at the centre of the 200×200 box. */
+const Pivot = () => <circle cx="100" cy="100" r="58" fill="none" stroke="none" />;
+
+function UnderstandIcon({ accent, still }: { accent: string; still: boolean }) {
+  const glyph = { fontSize: 136, fontWeight: 600, fill: accent } as const;
+  return (
+    <>
+      {!still && (
+        <motion.text
+          x="100"
+          y="148"
+          textAnchor="middle"
+          style={glyph}
+          initial={{ opacity: 1, scale: 1 }}
+          animate={{ opacity: 0, scale: 0.6 }}
+          transition={{ delay: 0.55, duration: 0.3, ease: EASE }}
+        >
+          ?
+        </motion.text>
+      )}
+      <motion.text
+        x="100"
+        y="148"
+        textAnchor="middle"
+        style={glyph}
+        initial={still ? false : { opacity: 0, scale: 1.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.8, type: "spring", stiffness: 260, damping: 14 }}
+      >
+        !
+      </motion.text>
+    </>
+  );
 }
 
-/** Faint, irregular signal — something is happening, but nothing is legible yet. */
-const CHECK_PATH = buildPath((u) => 5 * Math.sin(u * 1.7) + 3 * Math.sin(u * 0.55) + 2 * Math.sin(u * 3.1));
+const BLOCKS = [
+  { x: 38, y: 124 },
+  { x: 106, y: 124 },
+  { x: 72, y: 70 },
+];
 
-/** One decisive spike — the moment the lever gets pulled. */
-const BUILD_PATH = buildPath((u) => {
-  const spike = 58 * Math.exp(-((u - 26) ** 2) / 0.7);
-  const dip = -20 * Math.exp(-((u - 24.2) ** 2) / 0.5);
-  const undershoot = -14 * Math.exp(-((u - 27.8) ** 2) / 0.6);
-  return spike + dip + undershoot + 2.5 * Math.sin(u * 0.9);
-});
-
-/** A steady, repeating rhythm — the system is alive and stays alive. */
-const CARE_PATH = buildPath((u) => {
-  const phase = u % 12;
-  const beat = 30 * Math.exp(-((phase - 5) ** 2) / 0.5);
-  const echo = -10 * Math.exp(-((phase - 3.4) ** 2) / 0.35);
-  return beat + echo + 2 * Math.sin(u * 0.8);
-});
-
-const PATHS: Record<CoreService["key"], string> = {
-  check: CHECK_PATH,
-  build: BUILD_PATH,
-  care: CARE_PATH,
-};
-
-function PulseCurve({ activeKey, accent }: { activeKey: CoreService["key"]; accent: string }) {
-  const reduceMotion = useReducedMotion();
-
+function BuildIcon({ accent, still }: { accent: string; still: boolean }) {
   return (
-    <svg
-      viewBox={`0 0 ${VIEW_W} 140`}
-      preserveAspectRatio="none"
-      className="w-full h-[110px] md:h-[140px] overflow-visible"
-      aria-hidden
-    >
+    <>
+      {BLOCKS.map((b, i) => (
+        <motion.rect
+          key={i}
+          x={b.x}
+          y={b.y}
+          width="56"
+          height="42"
+          rx="8"
+          fill={`${accent}26`}
+          stroke={accent}
+          strokeWidth="6"
+          initial={still ? false : { y: -90, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.15 + i * 0.3, type: "spring", stiffness: 320, damping: 18 }}
+        />
+      ))}
+    </>
+  );
+}
+
+function CareIcon({ accent, still }: { accent: string; still: boolean }) {
+  const marker = useId().replace(/:/g, "");
+  const arc = {
+    fill: "none",
+    stroke: accent,
+    strokeWidth: 7,
+    strokeLinecap: "round" as const,
+    markerEnd: `url(#${marker})`,
+  };
+  return (
+    <>
       <defs>
-        <linearGradient id="pulse-fade" x1="0" x2="1" y1="0" y2="0">
-          <stop offset="0" stopColor={accent} stopOpacity="0" />
-          <stop offset="0.15" stopColor={accent} stopOpacity="0.7" />
-          <stop offset="0.85" stopColor={accent} stopOpacity="0.7" />
-          <stop offset="1" stopColor={accent} stopOpacity="0" />
-        </linearGradient>
-      </defs>
-
-      <line x1="0" y1={BASELINE} x2={VIEW_W} y2={BASELINE} stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-
-      {/* every waveform is drawn; only the active one is faded in. The travelling
-          beat rides along on a native SVG `pathLength` normalization (not
-          motion's pathLength/pathOffset, which never animated reliably here) so
-          the dash math stays a fixed 0 → -1000 regardless of path geometry. */}
-      {(Object.keys(PATHS) as CoreService["key"][]).map((key) => (
-        <motion.g
-          key={key}
-          animate={{ opacity: key === activeKey ? 1 : 0 }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        <marker
+          id={marker}
+          viewBox="0 0 10 10"
+          refX="5"
+          refY="5"
+          markerWidth="4"
+          markerHeight="4"
+          orient="auto"
+          markerUnits="strokeWidth"
         >
           <path
-            d={PATHS[key]}
+            d="M1.5 1.5 L7.5 5 L1.5 8.5"
             fill="none"
-            stroke={STEP_ACCENTS[key]}
-            strokeWidth="2"
+            stroke={accent}
+            strokeWidth="1.8"
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeOpacity={0.3}
-            vectorEffect="non-scaling-stroke"
           />
-          {!reduceMotion && (
-            <path
-              d={PATHS[key]}
-              pathLength={1000}
-              fill="none"
-              stroke="url(#pulse-fade)"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeDasharray="180 820"
-              vectorEffect="non-scaling-stroke"
-              className="pulse-curve-travel"
-            />
-          )}
-        </motion.g>
-      ))}
-    </svg>
+        </marker>
+      </defs>
+      {/* Two arcs, each ending in an arrow that points at the other arc's
+          start: they swing in from opposite sides and close into a circle. */}
+      <motion.g
+        initial={still ? false : { rotate: -110, opacity: 0 }}
+        animate={{ rotate: 0, opacity: 1 }}
+        transition={{ delay: 0.15, duration: 0.9, ease: EASE }}
+      >
+        <Pivot />
+        <path d="M44.8 90.3 A56 56 0 0 1 152.6 80.8" {...arc} />
+      </motion.g>
+      <motion.g
+        initial={still ? false : { rotate: 110, opacity: 0 }}
+        animate={{ rotate: 0, opacity: 1 }}
+        transition={{ delay: 0.35, duration: 0.9, ease: EASE }}
+      >
+        <Pivot />
+        <path d="M155.2 109.7 A56 56 0 0 1 47.4 119.2" {...arc} />
+      </motion.g>
+    </>
   );
 }
 
-/* ─── step rail ──────────────────────────────────────────────────────────── */
-
-function StepRail({
-  steps,
-  activeKey,
-  onSelect,
-}: {
-  steps: CoreService[];
-  activeKey: CoreService["key"];
-  onSelect: (key: CoreService["key"]) => void;
-}) {
+function StepIcon({ stepKey, accent, still }: { stepKey: CoreService["key"]; accent: string; still: boolean }) {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 lg:gap-4">
-      {steps.map((step) => {
-        const accent = STEP_ACCENTS[step.key];
-        const active = step.key === activeKey;
-        return (
-          <button
-            key={step.key}
-            type="button"
-            onClick={() => onSelect(step.key)}
-            aria-pressed={active}
-            data-cue={active ? "off" : "on"}
-            className="pulse-tab group relative flex flex-col items-start gap-1 rounded-xl px-4 pt-4 pb-[1.15rem] lg:px-5 lg:pb-[1.2rem] text-left transition-colors"
-            style={
-              {
-                "--ac": accent,
-                // Care starts its heartbeat 0.5 s after the other two (handoff leistungen-tabs-v2.html).
-                "--stag": step.key === "care" ? "0.5s" : "0s",
-                ...(active
-                  ? { backgroundColor: `${accent}1f`, boxShadow: `inset 0 0 0 1px ${accent}59` }
-                  : {}),
-              } as CSSProperties
-            }
-          >
-            {/* The label is the largest text of the tab (L7). "01 ·" and the word sit in one
-                line with a plain space between, so the accessible name keeps "01 · Verstehen". */}
-            <span className="block leading-[1.1]">
-              <span
-                className="font-semibold uppercase tracking-[0.14em] transition-colors mr-[0.1em]"
-                style={{
-                  fontSize: "var(--text-small)",
-                  color: active ? accent : "rgba(255,255,255,0.4)",
-                }}
-              >
-                {step.step} ·
-              </span>{" "}
-              <span
-                className="font-semibold tracking-[-0.01em] transition-colors"
-                style={{
-                  fontSize: "var(--text-h2)",
-                  color: active ? "#ffffff" : "rgba(255,255,255,0.88)",
-                }}
-              >
-                {step.label}
-              </span>
-            </span>
-            <span
-              className="font-medium leading-[1.3]"
-              style={{
-                fontSize: "var(--text-body)",
-                color: active ? "rgba(255,255,255,0.82)" : "rgba(255,255,255,0.6)",
-              }}
-            >
-              {step.title}
-            </span>
-            {active ? (
-              <motion.span
-                layoutId="pulse-step-underline"
-                className="absolute left-4 right-4 lg:left-5 lg:right-5 bottom-2 h-[2px] rounded-full"
-                style={{ backgroundColor: accent }}
-              />
-            ) : (
-              <>
-                {/* L6 "Puls + Unterlinie": one heartbeat of a waveform (top right) and an
-                    underline stub (bottom), CSS only, see .pulse-cue-* in theme.css. */}
-                <svg
-                  className="pulse-cue-wave"
-                  aria-hidden="true"
-                  focusable="false"
-                  viewBox="0 0 46 18"
-                  fill="none"
-                >
-                  <path
-                    d="M1 9H12L16 3L21 15L26 6L29 9H45"
-                    stroke="currentColor"
-                    strokeWidth="1.75"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    vectorEffect="non-scaling-stroke"
-                  />
-                </svg>
-                <span className="pulse-cue-stub" aria-hidden="true" />
-              </>
-            )}
-          </button>
-        );
-      })}
-    </div>
-  );
-}
-
-/* ─── detail panel ───────────────────────────────────────────────────────── */
-
-function StepDetail({
-  step,
-  accent,
-  compact,
-}: {
-  step: CoreService;
-  accent: string;
-  compact: boolean;
-}) {
-  const { localizedPath } = useLocale();
-
-  return (
-    <motion.div
-      key={step.key}
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -12 }}
-      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-      className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16"
+    <motion.svg
+      key={stepKey}
+      viewBox="0 0 200 200"
+      className="w-[62%] h-[62%] overflow-visible"
+      aria-hidden
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0, scale: 0.9 }}
+      transition={{ duration: 0.25 }}
     >
-      <div className="flex flex-col gap-5">
-        <div className="flex items-center gap-3">
-          <span
-            className="px-3 py-1 rounded-full font-semibold uppercase tracking-[0.12em]"
-            style={{ fontSize: "var(--text-small)", color: accent, backgroundColor: `${accent}1f` }}
-          >
-            {step.meta}
-          </span>
-        </div>
-        <h3
-          className="font-semibold text-white leading-tight"
-          style={{ fontSize: "var(--text-section)" }}
-        >
-          {step.tagline}
-        </h3>
-        <p
-          className="text-white/60 font-light leading-relaxed max-w-xl"
-          style={{ fontSize: "var(--text-body)" }}
-        >
-          {step.description}
-        </p>
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-          <Link
-            to={`${localizedPath("/kontakt")}?topic=${step.key}`}
-            onClick={() => trackEvent(EVENTS.contactSent, PLACEMENTS.pulseJourney, CTAS.contact)}
-            className="inline-flex items-center gap-2 font-semibold text-white rounded-lg px-6 py-3 transition-transform hover:scale-[1.02]"
-            style={{ fontSize: "var(--text-btn)", backgroundColor: accent }}
-          >
-            {step.ctaLabel}
-            <ArrowRight size={16} />
-          </Link>
-          {!compact && step.linkLabel && step.linkHref && (
-            <Link
-              to={localizedPath(step.linkHref)}
-              className="inline-flex items-center gap-1.5 text-white/70 hover:text-white underline underline-offset-4 decoration-white/25 hover:decoration-white/60 transition-colors"
-              style={{ fontSize: "var(--text-body)" }}
-            >
-              {step.linkLabel}
-              <ArrowRight size={15} />
-            </Link>
-          )}
-        </div>
-      </div>
-
-      {!compact && (
-        <div className="flex flex-col gap-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {[
-              { label: "Input", value: step.input },
-              { label: "Output", value: step.output },
-            ].map((row) => (
-              <div
-                key={row.label}
-                className="flex flex-col gap-2 rounded-xl p-5 bg-white/[0.02]"
-                style={{ boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.07)" }}
-              >
-                <span
-                  className="font-semibold uppercase tracking-[0.14em] text-white/35"
-                  style={{ fontSize: "var(--text-small)" }}
-                >
-                  {row.label}
-                </span>
-                <span
-                  className="text-white/75 font-light leading-snug"
-                  style={{ fontSize: "var(--text-body)" }}
-                >
-                  {row.value}
-                </span>
-              </div>
-            ))}
-          </div>
-          <ul className="flex flex-col gap-3">
-            {step.bullets.map((bullet) => (
-              <li key={bullet} className="flex items-start gap-3">
-                <Check size={15} strokeWidth={3} style={{ color: accent }} className="mt-1 shrink-0" />
-                <span
-                  className="text-white/70 font-light leading-snug"
-                  style={{ fontSize: "var(--text-body)" }}
-                >
-                  {bullet}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </motion.div>
+      {stepKey === "check" && <UnderstandIcon accent={accent} still={still} />}
+      {stepKey === "build" && <BuildIcon accent={accent} still={still} />}
+      {stepKey === "care" && <CareIcon accent={accent} still={still} />}
+    </motion.svg>
   );
 }
 
-/* ─── section ────────────────────────────────────────────────────────────── */
+/* ─── section ────────────────────────────────────────────────────────── */
 
 export function PulseJourney({ compact = false }: { compact?: boolean }) {
   const { coreEyebrow, coreHeading, coreIntro, coreServices } = useLeistungenData();
   const { localizedPath } = useLocale();
   const { t } = useTranslation();
-  const [activeKey, setActiveKey] = useState<CoreService["key"]>("check");
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const reduceMotion = Boolean(useReducedMotion());
 
-  const active = coreServices.find((s) => s.key === activeKey) ?? coreServices[0];
-  const accent = STEP_ACCENTS[activeKey];
+  const headRef = useRef(null);
+  const headInView = useInView(headRef, { once: true, margin: "-80px" });
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [index, setIndex] = useState(0);
+
+  // 0 → 1 while the track scrolls past: its top at the viewport top until its
+  // bottom at the viewport bottom. Each phase owns a third of that distance.
+  const { scrollYProgress } = useScroll({ target: trackRef, offset: ["start start", "end end"] });
+  useMotionValueEvent(scrollYProgress, "change", (p) => {
+    const next = Math.min(coreServices.length - 1, Math.max(0, Math.floor(p * coreServices.length)));
+    setIndex((current) => (current === next ? current : next));
+  });
+
+  function goTo(i: number) {
+    const track = trackRef.current;
+    if (!track) return;
+    const top = window.scrollY + track.getBoundingClientRect().top;
+    const distance = track.offsetHeight - window.innerHeight;
+    window.scrollTo({
+      top: top + (distance * (i + 0.5)) / coreServices.length,
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
+  }
+
+  const active = coreServices[index] ?? coreServices[0];
+  const accent = STEP_ACCENTS[active.key];
+  const check = coreServices.find((s) => s.key === "check") ?? coreServices[0];
+  const secondary = compact
+    ? { label: t("leistungen.allServices"), href: "/leistungen" }
+    : check.linkLabel && check.linkHref
+      ? { label: check.linkLabel, href: check.linkHref }
+      : null;
 
   return (
-    <section className="bg-[#181620] py-24 overflow-hidden" ref={ref} id="ablauf">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 flex flex-col gap-12">
+    <section className="bg-[#181620] pt-24" id="ablauf">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         <motion.div
+          ref={headRef}
           initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          animate={headInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 lg:gap-12"
+          className="flex flex-col gap-4 max-w-5xl"
         >
-          <div className="flex flex-col gap-3">
-            {!compact && coreEyebrow && (
-              <span
-                className="font-semibold uppercase tracking-[0.16em]"
-                style={{ fontSize: "var(--text-small)", color: accent }}
-              >
-                {coreEyebrow}
-              </span>
-            )}
-            <h2
-              className="font-semibold text-white leading-tight"
-              style={{ fontSize: "var(--text-hero)" }}
+          {coreEyebrow && (
+            <span
+              className="font-semibold uppercase tracking-[0.16em] text-[#8129ff]"
+              style={{ fontSize: "var(--text-small)" }}
             >
-              {coreHeading}
-            </h2>
-          </div>
-          <p
-            className="text-white/60 font-light leading-relaxed max-w-md lg:text-right"
-            style={{ fontSize: "var(--text-body)" }}
-          >
+              {coreEyebrow}
+            </span>
+          )}
+          <h2 className="font-semibold text-white leading-tight" style={{ fontSize: "var(--text-hero)" }}>
+            {coreHeading}
+          </h2>
+          <p className="text-white/60 font-light leading-relaxed max-w-2xl" style={{ fontSize: "var(--text-body)" }}>
             {coreIntro}
           </p>
         </motion.div>
+      </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.15 }}
-        >
-          <PulseCurve activeKey={activeKey} accent={accent} />
-        </motion.div>
+      {/* The track: tall enough that each phase gets about half a screen of scrolling. */}
+      <div ref={trackRef} className="relative" style={{ height: "250vh" }}>
+        <div className="sticky top-20 lg:top-24 min-h-[calc(100vh-5rem)] lg:min-h-[calc(100vh-6rem)] flex items-center py-8">
+          <div className="w-full max-w-[1400px] mx-auto px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-8 lg:gap-20 items-center">
+            {/* left: the icon and the phase rail */}
+            <div className="flex flex-col gap-5 items-center lg:items-stretch">
+              <div
+                className="relative aspect-square w-40 sm:w-52 lg:w-full lg:max-w-[440px] rounded-[2rem] flex items-center justify-center transition-colors duration-500"
+                style={{ backgroundColor: `${accent}14`, boxShadow: `inset 0 0 0 1px ${accent}40` }}
+              >
+                <AnimatePresence mode="wait" initial={false}>
+                  <StepIcon key={active.key} stepKey={active.key} accent={accent} still={reduceMotion} />
+                </AnimatePresence>
+              </div>
 
-        <StepRail steps={coreServices} activeKey={activeKey} onSelect={setActiveKey} />
-
-        <AnimatePresence mode="wait">
-          <StepDetail key={active.key} step={active} accent={accent} compact={compact} />
-        </AnimatePresence>
-
-        {/* The two inactive steps stay in the markup, hidden: the prerendered
-            HTML then carries all three steps' text (search engines read it),
-            not only the Check tab the page opens on. */}
-        {coreServices
-          .filter((s) => s.key !== active.key)
-          .map((s) => (
-            <div key={s.key} hidden>
-              <StepDetail step={s} accent={STEP_ACCENTS[s.key]} compact={compact} />
+              <ol className="grid grid-cols-3 gap-2 w-full lg:max-w-[440px]">
+                {coreServices.map((step, i) => {
+                  const on = i === index;
+                  const stepAccent = STEP_ACCENTS[step.key];
+                  return (
+                    <li key={step.key}>
+                      <button
+                        type="button"
+                        onClick={() => goTo(i)}
+                        aria-current={on ? "step" : undefined}
+                        className="w-full text-left pt-3 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white rounded-sm"
+                        style={{ borderTop: `2px solid ${on ? stepAccent : "rgba(255,255,255,0.12)"}` }}
+                      >
+                        <span
+                          className="block font-semibold uppercase tracking-[0.12em]"
+                          style={{ fontSize: "var(--text-small)", color: on ? stepAccent : "rgba(255,255,255,0.35)" }}
+                        >
+                          {step.step}
+                        </span>
+                        <span
+                          className="block font-semibold transition-colors"
+                          style={{ fontSize: "var(--text-body)", color: on ? "#ffffff" : "rgba(255,255,255,0.5)" }}
+                        >
+                          {step.label}
+                        </span>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ol>
             </div>
-          ))}
 
-        {compact && (
-          <Link
-            to={localizedPath("/leistungen")}
-            className="self-start inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors"
-            style={{ fontSize: "var(--text-body)" }}
-          >
-            {t("leistungen.allServices")}
-            <ArrowRight size={15} />
-          </Link>
-        )}
+            {/* right: the phase's short text (all three in the DOM, stacked), then the fixed CTA */}
+            <div className="flex flex-col gap-8">
+              <div className="grid">
+                {coreServices.map((step, i) => {
+                  const on = i === index;
+                  const stepAccent = STEP_ACCENTS[step.key];
+                  return (
+                    <div
+                      key={step.key}
+                      aria-hidden={!on}
+                      className={`[grid-area:1/1] flex flex-col gap-4 transition-all duration-500 ${
+                        on ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3 pointer-events-none"
+                      }`}
+                    >
+                      <span
+                        className="font-semibold uppercase tracking-[0.12em]"
+                        style={{ fontSize: "var(--text-small)", color: stepAccent }}
+                      >
+                        {step.title} · {step.meta}
+                      </span>
+                      <h3
+                        className="font-semibold text-white leading-tight"
+                        style={{ fontSize: "var(--text-section)" }}
+                      >
+                        {step.tagline}
+                      </h3>
+                      <p
+                        className="text-white/60 font-light leading-relaxed max-w-xl"
+                        style={{ fontSize: "var(--text-body)" }}
+                      >
+                        {step.description}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+                <Link
+                  to={`${localizedPath("/kontakt")}?topic=check`}
+                  onClick={() => trackEvent(EVENTS.contactSent, PLACEMENTS.pulseJourney, CTAS.contact)}
+                  className="inline-flex items-center gap-2 font-semibold text-white rounded-lg px-6 py-3 transition-transform hover:scale-[1.02]"
+                  style={{ fontSize: "var(--text-btn)", backgroundColor: STEP_ACCENTS.check }}
+                >
+                  {check.ctaLabel}
+                  <ArrowRight size={16} />
+                </Link>
+                {secondary && (
+                  <Link
+                    to={localizedPath(secondary.href)}
+                    className="inline-flex items-center gap-1.5 text-white/70 hover:text-white underline underline-offset-4 decoration-white/25 hover:decoration-white/60 transition-colors"
+                    style={{ fontSize: "var(--text-body)" }}
+                  >
+                    {secondary.label}
+                    <ArrowRight size={15} />
+                  </Link>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

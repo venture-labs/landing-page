@@ -14,11 +14,11 @@ export interface CoreService {
   tagline: string;
   meta: string;
   description: string;
-  input: string;
-  output: string;
-  bullets: string[];
   ctaLabel: string;
-  /** Optional deep link under the step's CTA, a path without the locale prefix. */
+  /**
+   * Optional deep link next to the CTA, a path without the locale prefix. The
+   * #ablauf module shows the check step's CTA and link under every step.
+   */
   linkLabel?: string;
   linkHref?: string;
 }
@@ -183,14 +183,7 @@ export const leistungenData: LeistungenData = {
     "title": "Pulse Check",
     "tagline": "AI potential analysis: where is your biggest lever?",
     "meta": "1–2 days",
-    "description": "We look at how your company actually works: processes, data, tools, team. What you get at the end is not a presentation but a sorted list.",
-    "input": "Your processes, data and tools — the way they really are today.",
-    "output": "A prioritised roadmap with the use cases worth doing first.",
-    "bullets": [
-      "An AI opportunity map instead of buzzword bingo",
-      "3–5 use cases, ranked by impact",
-      "No 40-page report nobody reads"
-    ],
+    "description": "We look at how your company actually works: processes, data, tools, team. What you get is not a presentation but a ranked list of the use cases worth doing first.",
     "ctaLabel": "Talk about a Pulse Check",
     "linkLabel": "More on the AI potential analysis",
     "linkHref": "/leistungen/ki-potenzialanalyse"
@@ -202,17 +195,8 @@ export const leistungenData: LeistungenData = {
     "title": "Pulse Build",
     "tagline": "AI automation that runs in daily work.",
     "meta": "from 4 weeks",
-    "description": "We implement the use cases that matter most — in weeks, not quarters. Fixed scope, dedicated people, a real production system instead of a prototype for the drawer.",
-    "input": "The prioritised use case from your Pulse Check.",
-    "output": "A solution that runs in your team’s daily work.",
-    "bullets": [
-      "Fixed scope, one dedicated contact",
-      "Live in production, not in demo mode",
-      "Handover included — your team can work with it"
-    ],
-    "ctaLabel": "Talk about a build",
-    "linkLabel": "AI agents: control and cost",
-    "linkHref": "/leistungen/ki-agenten-unternehmen"
+    "description": "We implement the most important use case – in weeks, not quarters. A real production system instead of a prototype for the drawer.",
+    "ctaLabel": "Talk about a build"
   },
   {
     "key": "care",
@@ -221,14 +205,7 @@ export const leistungenData: LeistungenData = {
     "title": "Pulse Care",
     "tagline": "Operation and development: a system that keeps growing.",
     "meta": "ongoing",
-    "description": "Living software needs care — with AI even more so. We stay on board: fixed sessions, continuous monitoring, regular evolution.",
-    "input": "The solution that is running.",
-    "output": "A system that grows with your business instead of ageing out.",
-    "bullets": [
-      "Fixed sessions every month",
-      "Monitoring and dashboard",
-      "Annual Pulse Check refresh"
-    ],
+    "description": "We stay on board: fixed meetings, ongoing monitoring and regular development, so the system grows with your business.",
     "ctaLabel": "Discuss ongoing care"
   }
 ],

@@ -14,11 +14,11 @@ export interface CoreService {
   tagline: string;
   meta: string;
   description: string;
-  input: string;
-  output: string;
-  bullets: string[];
   ctaLabel: string;
-  /** Optional deep link under the step's CTA, a path without the locale prefix. */
+  /**
+   * Optional deep link next to the CTA, a path without the locale prefix. The
+   * #ablauf module shows the check step's CTA and link under every step.
+   */
   linkLabel?: string;
   linkHref?: string;
 }
@@ -183,14 +183,7 @@ export const leistungenData: LeistungenData = {
     "title": "Pulse Check",
     "tagline": "KI-Potenzialanalyse: Wo liegt dein größter Hebel?",
     "meta": "1–2 Tage",
-    "description": "Wir schauen uns an, wie in deinem Unternehmen tatsächlich gearbeitet wird: Prozesse, Daten, Tools, Team. Am Ende steht keine Präsentation, sondern eine sortierte Liste.",
-    "input": "Deine Prozesse, Daten und Tools – so, wie sie heute wirklich sind.",
-    "output": "Eine priorisierte Roadmap mit den Anwendungsfällen, die sich zuerst lohnen.",
-    "bullets": [
-      "AI Opportunity Map statt Buzzword-Bingo",
-      "3–5 Use Cases, sortiert nach Wirkung",
-      "Kein 40-Seiten-Report, den niemand liest"
-    ],
+    "description": "Wir schauen uns an, wie bei dir gearbeitet wird: Prozesse, Daten, Tools, Team. Heraus kommt keine Präsentation, sondern eine sortierte Liste der Anwendungsfälle, die sich zuerst lohnen.",
     "ctaLabel": "Über den Pulse Check sprechen",
     "linkLabel": "Mehr zur KI-Potenzialanalyse",
     "linkHref": "/leistungen/ki-potenzialanalyse"
@@ -202,17 +195,8 @@ export const leistungenData: LeistungenData = {
     "title": "Pulse Build",
     "tagline": "KI-Automatisierung, die im Alltag läuft.",
     "meta": "ab 4 Wochen",
-    "description": "Wir setzen die wichtigsten Anwendungsfälle um – in Wochen, nicht in Quartalen. Fester Umfang, feste Leute, echtes Produktivsystem statt Prototyp für die Schublade.",
-    "input": "Der priorisierte Anwendungsfall aus deinem Pulse Check.",
-    "output": "Eine Lösung, die im Alltag deines Teams läuft.",
-    "bullets": [
-      "Fester Umfang, feste Ansprechperson",
-      "Live im Produktivbetrieb, nicht im Demo-Modus",
-      "Übergabe inklusive – dein Team kann damit arbeiten"
-    ],
-    "ctaLabel": "Über einen Build sprechen",
-    "linkLabel": "KI-Agenten: Kontrolle und Kosten",
-    "linkHref": "/leistungen/ki-agenten-unternehmen"
+    "description": "Wir setzen den wichtigsten Anwendungsfall um – in Wochen, nicht in Quartalen. Ein echtes Produktivsystem statt eines Prototyps für die Schublade.",
+    "ctaLabel": "Über einen Build sprechen"
   },
   {
     "key": "care",
@@ -221,14 +205,7 @@ export const leistungenData: LeistungenData = {
     "title": "Pulse Care",
     "tagline": "Betrieb und Weiterentwicklung: ein System, das mitwächst.",
     "meta": "laufend",
-    "description": "Software, die lebt, muss gepflegt werden – bei KI umso mehr. Wir bleiben an Bord: feste Termine, laufendes Monitoring, regelmäßige Weiterentwicklung.",
-    "input": "Die Lösung, die läuft.",
-    "output": "Ein System, das mit deinem Geschäft mitwächst, statt zu veralten.",
-    "bullets": [
-      "Feste Termine jeden Monat",
-      "Monitoring und Dashboard",
-      "Jährlicher Pulse-Check-Refresh"
-    ],
+    "description": "Wir bleiben an Bord: feste Termine, laufendes Monitoring und regelmäßige Weiterentwicklung, damit das System mit deinem Geschäft mitwächst.",
     "ctaLabel": "Betreuung besprechen"
   }
 ],
