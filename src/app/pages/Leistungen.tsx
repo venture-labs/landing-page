@@ -295,7 +295,7 @@ export function Leistungen() {
       />
       <ProofStrip />
       <UseCasesSection />
-      <PulseJourney />
+      <PulseJourney mode="auto" />
       <IntegrationsSection />
       <SkillMatrix />
       <ClusterStorySection />

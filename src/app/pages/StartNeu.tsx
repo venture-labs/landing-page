@@ -1412,7 +1412,7 @@ export function StartNeu() {
       {reduced ? <StaticIntro onQuiz={openIntroQuiz} /> : <ScrollIntro onQuiz={openIntroQuiz} />}
       <ToolWall reduced={reduced} />
       <Benefits />
-      <PulseJourney compact />
+      <PulseJourney compact mode="auto" />
       <CaseStrip />
       <PulseFinal onQuiz={openFinalQuiz} />
       <Outro />
