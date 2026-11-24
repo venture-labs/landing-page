@@ -408,22 +408,6 @@ function buildPagesForLocale(lang: Locale): PageMeta[] {
     noindex: true,
   });
 
-  // Alternative homepage draft (branch feature/startseite-ki-nutzen): not in the nav, not in the sitemap, noindex.
-  pages.push({
-    path: `/${lang}/start-neu`,
-    lang,
-    title:
-      lang === "de"
-        ? "KI, die im Mittelstand wirklich mitarbeitet – Venture Labs"
-        : "AI that works for mid-sized companies – Venture Labs",
-    description:
-      lang === "de"
-        ? "Entwurf einer neuen Startseite: Venture Labs baut Cluster aus KI-Agenten, die im Mittelstand Routine übernehmen – von der Beleg-Inbox bis zum Tool-Wächter."
-        : "Draft of a new homepage: Venture Labs builds clusters of AI agents that take routine work off mid-sized companies' plates.",
-    crumbs: [crumb(footer.servicesTitle, "/start-neu")],
-    noindex: true,
-  });
-
   pages.push({
     path: `/${lang}/ueber-uns`,
     lang,

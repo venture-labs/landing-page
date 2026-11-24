@@ -51,7 +51,7 @@ VentureLabs-Website is a React + Vite single-page application showcasing service
 
 ### Routing Structure
 All routes are locale-prefixed (`/:lang`, `de` or `en`); `/` redirects to the default locale.
-- `/:lang` — Homepage (hero, profile, services, featured projects)
+- `/:lang` — Homepage (`src/app/pages/StartNeu.tsx`: scroll intro, tool wall, benefits, Check/Build/Care, cases, Pulse Score); `/:lang/start-neu` redirects here
 - `/:lang/leistungen`, `/:lang/leistungen/:slug` — Services listing and detail
 - `/:lang/cases`, `/:lang/cases/:slug` — Case studies listing and detail
 - `/:lang/blog`, `/:lang/blog/:slug` — Blog listing and post

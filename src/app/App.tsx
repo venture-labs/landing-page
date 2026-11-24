@@ -1,17 +1,7 @@
-import { useRef, useCallback, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { BrowserRouter, Routes, Route, Navigate, useLocation, useParams } from "react-router";
 import { LangGuard, DEFAULT_LOCALE } from "./locale";
 import { ErrorBoundary } from "./components/ErrorBoundary";
-import { Navbar } from "./components/Navbar";
-import { Hero } from "./components/Hero";
-import { AIPulseTeaser } from "./components/AIPulseTeaser";
-import { Services } from "./components/Services";
-import { PulseJourney } from "./components/PulseJourney";
-import { ProjectsFeatured } from "./components/ProjectsFeatured";
-import { ProjectsMore } from "./components/ProjectsMore";
-import { AboutTeaser } from "./components/AboutTeaser";
-import { FinalCTA } from "./components/FinalCTA";
-import { Footer } from "./components/Footer";
 import { Leistungen } from "./pages/Leistungen";
 import { LeistungenDetail } from "./pages/LeistungenDetail";
 import { SeoLanding } from "./pages/SeoLanding";
@@ -29,50 +19,6 @@ import { Datenschutz } from "./pages/Datenschutz";
 import { Playbook } from "./pages/Playbook";
 import { StartNeu } from "./pages/StartNeu";
 import { NotFound } from "./pages/NotFound";
-
-function HomePage() {
-  const glowRef = useRef<HTMLDivElement>(null);
-
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (!glowRef.current) return;
-    glowRef.current.style.setProperty("--gx", `${e.clientX}px`);
-    glowRef.current.style.setProperty("--gy", `${e.clientY}px`);
-    glowRef.current.style.opacity = "1";
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    if (glowRef.current) glowRef.current.style.opacity = "0";
-  }, []);
-
-  return (
-    <div
-      className="min-h-screen bg-[#0e0d13] text-white relative"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-    >
-      <div
-        ref={glowRef}
-        className="pointer-events-none fixed inset-0 z-[9999] transition-opacity duration-300"
-        style={{
-          opacity: 0,
-          background:
-            "radial-gradient(600px circle at var(--gx, 50%) var(--gy, 50%), rgba(129, 41, 255, 0.08) 0%, rgba(163, 24, 248, 0.04) 40%, transparent 70%)",
-        }}
-        aria-hidden
-      />
-      <Navbar />
-      <Hero />
-      <AIPulseTeaser />
-      <PulseJourney compact />
-      <Services />
-      <ProjectsFeatured />
-      <ProjectsMore />
-      <AboutTeaser />
-      <FinalCTA />
-      <Footer />
-    </div>
-  );
-}
 
 /** /leistungen/<slug>: an SEO landing page (content/landing/) when one exists for the slug, else the service detail. */
 function LeistungenSlugPage() {
@@ -112,18 +58,12 @@ export function AppRoutes() {
           path="/:lang"
           element={
             <LangGuard>
-              <HomePage />
-            </LangGuard>
-          }
-        />
-        <Route
-          path="/:lang/start-neu"
-          element={
-            <LangGuard>
               <StartNeu />
             </LangGuard>
           }
         />
+        {/* The homepage draft lived here until it replaced the old homepage. */}
+        <Route path="/:lang/start-neu" element={<LegacyRedirect to="" />} />
         <Route
           path="/:lang/leistungen"
           element={

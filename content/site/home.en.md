@@ -1,7 +1,7 @@
 ---
 language: "en"
-seoTitle: 'Venture Labs – Digital products that actually work, with AI'
-seoDescription: 'We help businesses find, build and scale what AI makes possible – business understanding, product thinking, UX, engineering and AI in one team.'
+seoTitle: 'Custom AI tools for mid-sized companies – Venture Labs'
+seoDescription: 'We build AI for your company: receipts, time tracking, leave requests, customer emails. Custom-built, live in weeks. Free Pulse Score.'
 heroHeadline: "We build what's next."
 heroSubline: "We help businesses find, build and scale what AI makes possible."
 heroCta: "Start your free Pulse Score"
