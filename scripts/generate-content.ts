@@ -481,10 +481,46 @@ export interface CoreService {
   output: string;
   bullets: string[];
   ctaLabel: string;
+  /** Optional deep link under the step's CTA, a path without the locale prefix. */
+  linkLabel?: string;
+  linkHref?: string;
+}
+
+export interface ProofStat {
+  value: string;
+  label: string;
+  source: string;
+  /** A path inside the site, without the locale prefix. */
+  href: string;
+}
+
+export interface UseCaseArea {
+  id: string;
+  label: string;
+}
+
+export interface Integration {
+  id: string;
+  label: string;
+  body: string;
+}
+
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+export interface ResourceLink {
+  label: string;
+  description: string;
+  /** A path inside the site, without the locale prefix. */
+  href: string;
 }
 
 export interface Situation {
   id: string;
+  /** A UseCaseArea id; the cards are grouped and filtered by it. */
+  area: string;
   text: string;
   agentName: string;
   capabilities: string[];
@@ -528,15 +564,23 @@ export interface LeistungenData {
   seoTitle: string;
   seoDescription: string;
   heroEyebrow: string;
+  heroKeyline: string;
   heroTitlePrefix: string;
   heroTitleHighlight: string;
   heroSubheading: string;
+  proofHeading: string;
+  proofStats: ProofStat[];
+  coreEyebrow: string;
   coreHeading: string;
   coreIntro: string;
   coreServices: CoreService[];
   skillsHeading: string;
   skillsIntro: string;
   skillStepLabels: Record<"check" | "build" | "care", string>;
+  integrationsHeading: string;
+  integrationsIntro: string;
+  integrations: Integration[];
+  integrationsNote: string;
   ctaHeading: string;
   ctaBody: string;
   contactCallout: string;
@@ -546,23 +590,37 @@ export interface LeistungenData {
   useCasesHeading: string;
   useCasesLeadLine: string;
   useCasesCtaLabel: string;
+  useCaseAreas: UseCaseArea[];
   situations: Situation[];
   clusterStory: ClusterStoryData;
+  faqHeading: string;
+  faq: FaqItem[];
+  resourcesHeading: string;
+  resourcesIntro: string;
+  resources: ResourceLink[];
 }
 
 export const leistungenData: LeistungenData = {
   seoTitle: ${strLit(leistungen.seoTitle)},
   seoDescription: ${strLit(leistungen.seoDescription)},
   heroEyebrow: ${strLit(leistungen.heroEyebrow)},
+  heroKeyline: ${strLit(leistungen.heroKeyline)},
   heroTitlePrefix: ${strLit(leistungen.heroTitlePrefix)},
   heroTitleHighlight: ${strLit(leistungen.heroTitleHighlight)},
   heroSubheading: ${strLit(leistungen.heroSubheading)},
+  proofHeading: ${strLit(leistungen.proofHeading)},
+  proofStats: ${JSON.stringify(leistungen.proofStats ?? [], null, 2)},
+  coreEyebrow: ${strLit(leistungen.coreEyebrow)},
   coreHeading: ${strLit(leistungen.coreHeading)},
   coreIntro: ${strLit(leistungen.coreIntro)},
   coreServices: ${JSON.stringify(leistungen.coreServices ?? [], null, 2)},
   skillsHeading: ${strLit(leistungen.skillsHeading)},
   skillsIntro: ${strLit(leistungen.skillsIntro)},
   skillStepLabels: ${JSON.stringify(leistungen.skillStepLabels ?? {}, null, 2)},
+  integrationsHeading: ${strLit(leistungen.integrationsHeading)},
+  integrationsIntro: ${strLit(leistungen.integrationsIntro)},
+  integrations: ${JSON.stringify(leistungen.integrations ?? [], null, 2)},
+  integrationsNote: ${strLit(leistungen.integrationsNote)},
   ctaHeading: ${strLit(leistungen.ctaHeading)},
   ctaBody: ${strLit(leistungen.ctaBody)},
   contactCallout: ${strLit(leistungen.contactCallout)},
@@ -580,12 +638,18 @@ export const leistungenData: LeistungenData = {
   useCasesHeading: ${strLit(leistungen.useCasesHeading)},
   useCasesLeadLine: ${strLit(leistungen.useCasesLeadLine)},
   useCasesCtaLabel: ${strLit(leistungen.useCasesCtaLabel)},
+  useCaseAreas: ${JSON.stringify(leistungen.useCaseAreas ?? [], null, 2)},
   situations: ${JSON.stringify(leistungen.situations ?? [], null, 2)},
   clusterStory: ${JSON.stringify(
     leistungen.clusterStory ?? { heading: "", intro: "", steps: [] },
     null,
     2
   )},
+  faqHeading: ${strLit(leistungen.faqHeading)},
+  faq: ${JSON.stringify(leistungen.faq ?? [], null, 2)},
+  resourcesHeading: ${strLit(leistungen.resourcesHeading)},
+  resourcesIntro: ${strLit(leistungen.resourcesIntro)},
+  resources: ${JSON.stringify(leistungen.resources ?? [], null, 2)},
 };
 `
   );

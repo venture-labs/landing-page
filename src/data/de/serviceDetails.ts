@@ -61,7 +61,7 @@ export const serviceDetails: ServiceDetail[] = [
       {
         "number": "02",
         "title": "Empfehlung",
-        "description": "Sie erhalten eine priorisierte Roadmap statt einer generischen Strategiepräsentation."
+        "description": "Du erhältst eine priorisierte Roadmap statt einer generischen Strategiepräsentation."
       },
       {
         "number": "03",

@@ -11,6 +11,12 @@ import { UseCasesSection } from "@/app/components/UseCasesSection";
 import { SkillMatrix } from "@/app/components/SkillMatrix";
 import { ExplainerVideo } from "@/app/components/ExplainerVideo";
 import { PulseCheckModal } from "@/app/components/PulseCheckModal";
+import {
+  FaqSection,
+  IntegrationsSection,
+  ProofStrip,
+  ResourcesSection,
+} from "@/app/components/LeistungenBlocks";
 import { PulseLines } from "@/app/components/ui/PulseLines";
 import { useLeistungenData } from "@/data/content";
 import { useLocale } from "@/app/locale";
@@ -62,17 +68,19 @@ function LeistungenHero({
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-col gap-8 max-w-3xl"
         >
-          <span
-            className="font-semibold uppercase tracking-[0.16em]"
-            style={{ fontSize: "var(--text-small)", color: ACCENT }}
-          >
-            {data.heroEyebrow}
-          </span>
-
+          {/* The keyline is the h1's first line, styled as the eyebrow: the search
+              terms sit in the heading, the claim below stays the big line. */}
           <h1
             className="font-semibold text-white leading-[1.05]"
             style={{ fontSize: hasVideo ? "clamp(2.6rem, 4.6vw, 4.6rem)" : "var(--text-hero)" }}
           >
+            <span
+              className="block mb-6 font-semibold uppercase tracking-[0.16em] leading-snug"
+              style={{ fontSize: "var(--text-small)", color: ACCENT }}
+            >
+              {data.heroKeyline}
+              <span className="sr-only">: </span>
+            </span>
             {data.heroTitlePrefix}{" "}
             <span className="relative inline-block">
               <span className="relative z-10">{data.heroTitleHighlight}</span>
@@ -276,10 +284,14 @@ export function Leistungen() {
         onQuizOpen={() => setQuizPlacement(PLACEMENTS.leistungenHero)}
         onVideoQuizOpen={() => setQuizPlacement(PLACEMENTS.videoEndQuiz)}
       />
-      <PulseJourney />
+      <ProofStrip />
       <UseCasesSection />
+      <PulseJourney />
+      <IntegrationsSection />
       <SkillMatrix />
       <ClusterStorySection />
+      <FaqSection />
+      <ResourcesSection />
       <PulseCallout onQuizOpen={() => setQuizPlacement(PLACEMENTS.leistungenPulseCallout)} />
       <ContactStrip />
       <Footer />

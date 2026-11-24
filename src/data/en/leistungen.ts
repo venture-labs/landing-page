@@ -18,10 +18,46 @@ export interface CoreService {
   output: string;
   bullets: string[];
   ctaLabel: string;
+  /** Optional deep link under the step's CTA, a path without the locale prefix. */
+  linkLabel?: string;
+  linkHref?: string;
+}
+
+export interface ProofStat {
+  value: string;
+  label: string;
+  source: string;
+  /** A path inside the site, without the locale prefix. */
+  href: string;
+}
+
+export interface UseCaseArea {
+  id: string;
+  label: string;
+}
+
+export interface Integration {
+  id: string;
+  label: string;
+  body: string;
+}
+
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+export interface ResourceLink {
+  label: string;
+  description: string;
+  /** A path inside the site, without the locale prefix. */
+  href: string;
 }
 
 export interface Situation {
   id: string;
+  /** A UseCaseArea id; the cards are grouped and filtered by it. */
+  area: string;
   text: string;
   agentName: string;
   capabilities: string[];
@@ -65,15 +101,23 @@ export interface LeistungenData {
   seoTitle: string;
   seoDescription: string;
   heroEyebrow: string;
+  heroKeyline: string;
   heroTitlePrefix: string;
   heroTitleHighlight: string;
   heroSubheading: string;
+  proofHeading: string;
+  proofStats: ProofStat[];
+  coreEyebrow: string;
   coreHeading: string;
   coreIntro: string;
   coreServices: CoreService[];
   skillsHeading: string;
   skillsIntro: string;
   skillStepLabels: Record<"check" | "build" | "care", string>;
+  integrationsHeading: string;
+  integrationsIntro: string;
+  integrations: Integration[];
+  integrationsNote: string;
   ctaHeading: string;
   ctaBody: string;
   contactCallout: string;
@@ -83,17 +127,52 @@ export interface LeistungenData {
   useCasesHeading: string;
   useCasesLeadLine: string;
   useCasesCtaLabel: string;
+  useCaseAreas: UseCaseArea[];
   situations: Situation[];
   clusterStory: ClusterStoryData;
+  faqHeading: string;
+  faq: FaqItem[];
+  resourcesHeading: string;
+  resourcesIntro: string;
+  resources: ResourceLink[];
 }
 
 export const leistungenData: LeistungenData = {
-  seoTitle: "Three steps, one pulse: Check, Build, Care – Venture Labs",
-  seoDescription: "First find out what is really going on. Then build what makes the biggest difference. Then stay with it. Everything else is detail.",
+  seoTitle: "AI Agency Düsseldorf for AI Automation – Venture Labs",
+  seoDescription: "AI consulting for mid-sized companies: an AI potential analysis in 1–2 days, then AI automation that runs in daily work. From Düsseldorf, remote across Germany.",
   heroEyebrow: "Services",
+  heroKeyline: "AI consulting & AI automation from Düsseldorf",
   heroTitlePrefix: "Three steps.",
   heroTitleHighlight: "One pulse.",
-  heroSubheading: "First find out what is really going on. Then build what makes the biggest difference. Then stay with it. Everything else is detail.",
+  heroSubheading: "We are an AI agency for mid-sized companies. First, an AI potential analysis shows where AI really takes work off your plate. Then we build the automation – and stay with it.",
+  proofHeading: "What comes out of it",
+  proofStats: [
+  {
+    "value": "1–2 days",
+    "label": "to a prioritised AI roadmap",
+    "source": "Pulse Check",
+    "href": "/leistungen/ki-potenzialanalyse"
+  },
+  {
+    "value": "+10 %",
+    "label": "more sales with AI in the sales team",
+    "source": "MachineMaster",
+    "href": "/cases/machinemaster"
+  },
+  {
+    "value": "−20 %",
+    "label": "support effort in the service portal",
+    "source": "Tap2Link",
+    "href": "/cases/tap2link"
+  },
+  {
+    "value": "95 %",
+    "label": "fewer follow-up questions on briefings",
+    "source": "Brylliant",
+    "href": "/cases/brylliant"
+  }
+],
+  coreEyebrow: "How our AI consulting works",
   coreHeading: "Check. Build. Care.",
   coreIntro: "Each step builds on the one before. After each, you decide whether to continue — no obligation to take the next one. What a step costs in your case is something we work out in a first call: based on your actual scope, with no obligation.",
   coreServices: [
@@ -102,7 +181,7 @@ export const leistungenData: LeistungenData = {
     "step": "01",
     "label": "Understand",
     "title": "Pulse Check",
-    "tagline": "Where is the biggest lever?",
+    "tagline": "AI potential analysis: where is your biggest lever?",
     "meta": "1–2 days",
     "description": "We look at how your company actually works: processes, data, tools, team. What you get at the end is not a presentation but a sorted list.",
     "input": "Your processes, data and tools — the way they really are today.",
@@ -112,14 +191,16 @@ export const leistungenData: LeistungenData = {
       "3–5 use cases, ranked by impact",
       "No 40-page report nobody reads"
     ],
-    "ctaLabel": "Talk about a Pulse Check"
+    "ctaLabel": "Talk about a Pulse Check",
+    "linkLabel": "More on the AI potential analysis",
+    "linkHref": "/leistungen/ki-potenzialanalyse"
   },
   {
     "key": "build",
     "step": "02",
     "label": "Build",
     "title": "Pulse Build",
-    "tagline": "From plan to running solution.",
+    "tagline": "AI automation that runs in daily work.",
     "meta": "from 4 weeks",
     "description": "We implement the use cases that matter most — in weeks, not quarters. Fixed scope, dedicated people, a real production system instead of a prototype for the drawer.",
     "input": "The prioritised use case from your Pulse Check.",
@@ -129,14 +210,16 @@ export const leistungenData: LeistungenData = {
       "Live in production, not in demo mode",
       "Handover included — your team can work with it"
     ],
-    "ctaLabel": "Talk about a build"
+    "ctaLabel": "Talk about a build",
+    "linkLabel": "AI agents: control and cost",
+    "linkHref": "/leistungen/ki-agenten-unternehmen"
   },
   {
     "key": "care",
     "step": "03",
     "label": "Keep going",
     "title": "Pulse Care",
-    "tagline": "A system that keeps growing.",
+    "tagline": "Operation and development: a system that keeps growing.",
     "meta": "ongoing",
     "description": "Living software needs care — with AI even more so. We stay on board: fixed sessions, continuous monitoring, regular evolution.",
     "input": "The solution that is running.",
@@ -149,16 +232,41 @@ export const leistungenData: LeistungenData = {
     "ctaLabel": "Discuss ongoing care"
   }
 ],
-  skillsHeading: "Four skills. Depending on what your case needs.",
-  skillsIntro: "The three steps are the how. This is the with-what — four disciplines we bring to bear differently in every step.",
+  skillsHeading: "Four disciplines. Depending on what your case needs.",
+  skillsIntro: "The three steps are the how. This is the with-what — from AI automation to venture building, brought to bear differently in every step.",
   skillStepLabels: {
   "check": "Check",
   "build": "Build",
   "care": "Care"
 },
+  integrationsHeading: "Works with the tools you already have",
+  integrationsIntro: "For us, AI automation does not mean one more tool. We connect to the systems your team already works in today.",
+  integrations: [
+  {
+    "id": "microsoft",
+    "label": "Microsoft 365 & Outlook",
+    "body": "Emails, calendars and documents, right where they live today."
+  },
+  {
+    "id": "chat",
+    "label": "Slack & WhatsApp",
+    "body": "Start tasks and give approvals without switching apps."
+  },
+  {
+    "id": "accounting",
+    "label": "DATEV & accounting",
+    "body": "Receipts, invoices and bank data prepared for your bookkeeping."
+  },
+  {
+    "id": "erp",
+    "label": "SAP, ERP & CRM",
+    "body": "Master data, orders and customer contacts, connected instead of retyped."
+  }
+],
+  integrationsNote: "A different system? Whether and how it can be connected is something we work out in the Pulse Check.",
   ctaHeading: "Not sure where you stand?",
   ctaBody: "The AI Pulse Score takes five minutes and costs nothing: 10 questions, an instant result across five areas. If you then want to know exactly where your biggest lever is, the Pulse Check is the next step — what it covers in your case is something we work out in a first call.",
-  contactCallout: "Looking for honest advice instead of buzzwords? Call or email us — we listen before we build.",
+  contactCallout: "Venture Labs is an AI agency from Düsseldorf. We work remotely with companies across Germany – and are happy to come by in NRW. Write to us, we listen before we build.",
   strengthHeadline: "Our strength:\nDigital product development",
   strengthDescription: "We support you from first vision to execution — with an interdisciplinary team of strategy, design, and technology experts. Our goal: products that are technically robust, aesthetically compelling, and relevant to users. We work agile and user-centered, using the most modern tools — from no-code to AI — to reach results faster.",
   strengthFeatures: [
@@ -183,12 +291,35 @@ export const leistungenData: LeistungenData = {
     "subtitle": "You're part of the development process"
   }
 ],
-  useCasesHeading: "Possible use cases",
+  useCasesHeading: "Where AI automation takes work off your plate",
   useCasesLeadLine: "Beleg-Inbox is already running in production at our company today — every other card is an example of what is possible with the same approach.",
   useCasesCtaLabel: "Book a free intro call",
+  useCaseAreas: [
+  {
+    "id": "finance",
+    "label": "Finance & purchasing"
+  },
+  {
+    "id": "sales",
+    "label": "Sales & marketing"
+  },
+  {
+    "id": "service",
+    "label": "Customer service"
+  },
+  {
+    "id": "organisation",
+    "label": "Organisation & knowledge"
+  },
+  {
+    "id": "management",
+    "label": "Steering & management"
+  }
+],
   situations: [
   {
     "id": "receipts",
+    "area": "finance",
     "text": "Every time money leaves the account, the receipt for it is missing.",
     "agentName": "Beleg-Inbox",
     "capabilities": [
@@ -199,6 +330,7 @@ export const leistungenData: LeistungenData = {
   },
   {
     "id": "invoice-coverage",
+    "area": "finance",
     "text": "I don't know if every invoice for a project has actually been captured.",
     "agentName": "Invoice Radar",
     "capabilities": [
@@ -208,47 +340,8 @@ export const leistungenData: LeistungenData = {
     ]
   },
   {
-    "id": "tool-fatigue",
-    "text": "We had a good concept. Nobody ever implemented it.",
-    "agentName": "Rollout Guide",
-    "capabilities": [
-      "Walk each team through the rollout step by step",
-      "Spot friction in daily use early",
-      "Keep usage visible over time"
-    ]
-  },
-  {
-    "id": "prioritization",
-    "text": "I don't know where to start with AI — everyone recommends it, but nobody says what comes first.",
-    "agentName": "Focus Compass",
-    "capabilities": [
-      "Rank use cases by effort and impact",
-      "Suggest one concrete first step",
-      "Keep progress visible over time"
-    ]
-  },
-  {
-    "id": "neglected-tool",
-    "text": "We rolled out a tool once — nobody has looked after it since.",
-    "agentName": "Tool Watchdog",
-    "capabilities": [
-      "Monitor usage and errors continuously",
-      "Automatically remind whoever is responsible",
-      "Deliver a monthly health check"
-    ]
-  },
-  {
-    "id": "quote-drafts",
-    "text": "Turning every inquiry into a quote costs us time, every single time.",
-    "agentName": "Quote Drafter",
-    "capabilities": [
-      "Read product and quantity out of inquiries",
-      "Draft a quote in the CRM",
-      "Have a human approve it before it is sent"
-    ]
-  },
-  {
     "id": "order-matching",
+    "area": "finance",
     "text": "With incoming invoices I never know whether they match the purchase order.",
     "agentName": "Order Matcher",
     "capabilities": [
@@ -259,6 +352,7 @@ export const leistungenData: LeistungenData = {
   },
   {
     "id": "payment-reminders",
+    "area": "finance",
     "text": "We only notice overdue invoices when they are long overdue.",
     "agentName": "Reminder Assistant",
     "capabilities": [
@@ -268,96 +362,52 @@ export const leistungenData: LeistungenData = {
     ]
   },
   {
-    "id": "appointments",
-    "text": "Appointment requests sit in emails, and I type them into the calendar by hand.",
-    "agentName": "Appointment Secretary",
+    "id": "contract-deadlines",
+    "area": "finance",
+    "text": "We only remember contract deadlines and notice periods once they have passed.",
+    "agentName": "Deadline Guard",
     "capabilities": [
-      "Read requested times out of emails",
-      "Suggest free calendar slots",
-      "Enter them only after your confirmation"
+      "Search contracts for deadlines",
+      "Remind you of notice dates in time",
+      "Collect all deadlines in one overview"
     ]
   },
   {
-    "id": "onboarding-questions",
-    "text": "New users keep asking the same questions, and we answer them from scratch every time.",
-    "agentName": "Onboarding Helper",
+    "id": "supplier-prices",
+    "area": "finance",
+    "text": "We only compare supplier prices when it really hurts.",
+    "agentName": "Price Comparer",
     "capabilities": [
-      "Answer recurring questions from your own documentation",
-      "Pass the rest straight to your team"
+      "Put quotes from different suppliers side by side",
+      "Flag price changes",
+      "The decision stays with you"
     ]
   },
   {
-    "id": "ticket-triage",
-    "text": "When a ticket comes in, nobody can tell right away how urgent it is.",
-    "agentName": "Ticket Sorter",
+    "id": "quote-drafts",
+    "area": "sales",
+    "text": "Turning every inquiry into a quote costs us time, every single time.",
+    "agentName": "Quote Drafter",
     "capabilities": [
-      "Rank tickets by urgency",
-      "Assign them by topic",
-      "Hand them to the team pre-sorted"
+      "Read product and quantity out of inquiries",
+      "Draft a quote in the CRM",
+      "Have a human approve it before it is sent"
     ]
   },
   {
-    "id": "feature-requests",
-    "text": "Feature requests arrive from every channel, and nobody has the full picture.",
-    "agentName": "Request Collector",
+    "id": "follow-ups",
+    "area": "sales",
+    "text": "Quotes go out, and after that nobody follows up.",
+    "agentName": "Follow-up Assistant",
     "capabilities": [
-      "Bring feedback from several channels together",
-      "Rank it by effort and value",
-      "Prepare it for the next prioritisation round"
-    ]
-  },
-  {
-    "id": "usage-reports",
-    "text": "Our usage data is sitting somewhere, but nobody reads it.",
-    "agentName": "Data Interpreter",
-    "capabilities": [
-      "Translate raw product analytics into plain language",
-      "Write a weekly report for the team",
-      "No manual digging around"
-    ]
-  },
-  {
-    "id": "conversation-insights",
-    "text": "What customers tell us in conversations disappears into individual notes.",
-    "agentName": "Conversation Analyst",
-    "capabilities": [
-      "Analyse calls and chats by topic",
-      "Detect the sentiment",
-      "Make recurring patterns visible"
-    ]
-  },
-  {
-    "id": "reply-suggestions",
-    "text": "We write almost the same answer to standard questions every time.",
-    "agentName": "Reply Suggester",
-    "capabilities": [
-      "Suggest fitting reply snippets",
-      "Adapt them to the question at hand",
-      "Sending still happens through a human"
-    ]
-  },
-  {
-    "id": "knowledge-base",
-    "text": "Our knowledge is buried in chats and documents, and nobody keeps it up to date.",
-    "agentName": "Knowledge Gardener",
-    "capabilities": [
-      "Evaluate chats and documents",
-      "Keep the internal knowledge base current",
-      "With nobody updating it by hand"
-    ]
-  },
-  {
-    "id": "meeting-tasks",
-    "text": "After the meeting, everyone remembers something different about what needs doing.",
-    "agentName": "Task Writer",
-    "capabilities": [
-      "Turn meeting notes into tasks",
-      "Assign tasks per participant",
-      "Rank them by priority"
+      "Keep track of open quotes",
+      "Prepare a follow-up email",
+      "Your team approves it before it is sent"
     ]
   },
   {
     "id": "competitor-watch",
+    "area": "sales",
     "text": "What the competition is offering right now, we usually find out by accident.",
     "agentName": "Competitor Watcher",
     "capabilities": [
@@ -367,17 +417,8 @@ export const leistungenData: LeistungenData = {
     ]
   },
   {
-    "id": "investor-updates",
-    "text": "We always write the investor update right before it is due.",
-    "agentName": "Update Preparer",
-    "capabilities": [
-      "Pull metrics from your existing tools",
-      "Draft the next update",
-      "You review and approve"
-    ]
-  },
-  {
     "id": "market-trends",
+    "area": "sales",
     "text": "Keeping an eye on the market is something we cannot manage next to daily business.",
     "agentName": "Market Radar",
     "capabilities": [
@@ -388,6 +429,7 @@ export const leistungenData: LeistungenData = {
   },
   {
     "id": "social-drafts",
+    "area": "sales",
     "text": "Our blog posts get published, but we have no time left for social media.",
     "agentName": "Social Drafter",
     "capabilities": [
@@ -397,44 +439,156 @@ export const leistungenData: LeistungenData = {
     ]
   },
   {
-    "id": "contract-deadlines",
-    "text": "We only remember contract deadlines and notice periods once they have passed.",
-    "agentName": "Deadline Guard",
+    "id": "onboarding-questions",
+    "area": "service",
+    "text": "New users keep asking the same questions, and we answer them from scratch every time.",
+    "agentName": "Onboarding Helper",
     "capabilities": [
-      "Search contracts for deadlines",
-      "Remind you of notice dates in time",
-      "Collect all deadlines in one overview"
+      "Answer recurring questions from your own documentation",
+      "Pass the rest straight to your team"
     ]
   },
   {
-    "id": "follow-ups",
-    "text": "Quotes go out, and after that nobody follows up.",
-    "agentName": "Follow-up Assistant",
+    "id": "ticket-triage",
+    "area": "service",
+    "text": "When a ticket comes in, nobody can tell right away how urgent it is.",
+    "agentName": "Ticket Sorter",
     "capabilities": [
-      "Keep track of open quotes",
-      "Prepare a follow-up email",
-      "Your team approves it before it is sent"
+      "Rank tickets by urgency",
+      "Assign them by topic",
+      "Hand them to the team pre-sorted"
     ]
   },
   {
-    "id": "supplier-prices",
-    "text": "We only compare supplier prices when it really hurts.",
-    "agentName": "Price Comparer",
+    "id": "reply-suggestions",
+    "area": "service",
+    "text": "We write almost the same answer to standard questions every time.",
+    "agentName": "Reply Suggester",
     "capabilities": [
-      "Put quotes from different suppliers side by side",
-      "Flag price changes",
-      "The decision stays with you"
+      "Suggest fitting reply snippets",
+      "Adapt them to the question at hand",
+      "Sending still happens through a human"
+    ]
+  },
+  {
+    "id": "conversation-insights",
+    "area": "service",
+    "text": "What customers tell us in conversations disappears into individual notes.",
+    "agentName": "Conversation Analyst",
+    "capabilities": [
+      "Analyse calls and chats by topic",
+      "Detect the sentiment",
+      "Make recurring patterns visible"
+    ]
+  },
+  {
+    "id": "feature-requests",
+    "area": "service",
+    "text": "Feature requests arrive from every channel, and nobody has the full picture.",
+    "agentName": "Request Collector",
+    "capabilities": [
+      "Bring feedback from several channels together",
+      "Rank it by effort and value",
+      "Prepare it for the next prioritisation round"
+    ]
+  },
+  {
+    "id": "knowledge-base",
+    "area": "organisation",
+    "text": "Our knowledge is buried in chats and documents, and nobody keeps it up to date.",
+    "agentName": "Knowledge Gardener",
+    "capabilities": [
+      "Evaluate chats and documents",
+      "Keep the internal knowledge base current",
+      "With nobody updating it by hand"
+    ]
+  },
+  {
+    "id": "meeting-tasks",
+    "area": "organisation",
+    "text": "After the meeting, everyone remembers something different about what needs doing.",
+    "agentName": "Task Writer",
+    "capabilities": [
+      "Turn meeting notes into tasks",
+      "Assign tasks per participant",
+      "Rank them by priority"
+    ]
+  },
+  {
+    "id": "appointments",
+    "area": "organisation",
+    "text": "Appointment requests sit in emails, and I type them into the calendar by hand.",
+    "agentName": "Appointment Secretary",
+    "capabilities": [
+      "Read requested times out of emails",
+      "Suggest free calendar slots",
+      "Enter them only after your confirmation"
+    ]
+  },
+  {
+    "id": "prioritization",
+    "area": "management",
+    "text": "I don't know where to start with AI — everyone recommends it, but nobody says what comes first.",
+    "agentName": "Focus Compass",
+    "capabilities": [
+      "Rank use cases by effort and impact",
+      "Suggest one concrete first step",
+      "Keep progress visible over time"
+    ]
+  },
+  {
+    "id": "tool-fatigue",
+    "area": "management",
+    "text": "We had a good concept. Nobody ever implemented it.",
+    "agentName": "Rollout Guide",
+    "capabilities": [
+      "Walk each team through the rollout step by step",
+      "Spot friction in daily use early",
+      "Keep usage visible over time"
+    ]
+  },
+  {
+    "id": "neglected-tool",
+    "area": "management",
+    "text": "We rolled out a tool once — nobody has looked after it since.",
+    "agentName": "Tool Watchdog",
+    "capabilities": [
+      "Monitor usage and errors continuously",
+      "Automatically remind whoever is responsible",
+      "Deliver a monthly health check"
+    ]
+  },
+  {
+    "id": "investor-updates",
+    "area": "management",
+    "text": "We always write the investor update right before it is due.",
+    "agentName": "Update Preparer",
+    "capabilities": [
+      "Pull metrics from your existing tools",
+      "Draft the next update",
+      "You review and approve"
+    ]
+  },
+  {
+    "id": "usage-reports",
+    "area": "management",
+    "text": "Our usage data is sitting somewhere, but nobody reads it.",
+    "agentName": "Data Interpreter",
+    "capabilities": [
+      "Translate raw product analytics into plain language",
+      "Write a weekly report for the team",
+      "No manual digging around"
     ]
   }
 ],
   clusterStory: {
-  "heading": "How your cluster takes shape with us",
-  "intro": "From your first input to a cluster that covers you 100% — a story in nine steps that builds itself as you scroll.",
+  "heading": "How your AI agents take shape – and what happens to your data",
+  "intro": "From your first input to a network of AI agents – we call it a cluster – that covers your company area by area. Nine steps that build up as you scroll.",
   "steps": [
     {
       "id": "input",
       "navLabel": "Input",
-      "heading": "Your problem",
+      "heading": "You tell us your problem – where you already work",
       "body": "You have a task that eats up too much time. Tell us about it where you already work. That works in a personal video call, via Slack, by e-mail and via WhatsApp. Nobody at Venture Labs relays it – your input goes straight into our cluster.",
       "channels": [
         {
@@ -458,37 +612,37 @@ export const leistungenData: LeistungenData = {
     {
       "id": "concepts",
       "navLabel": "Concepts",
-      "heading": "Concepts",
+      "heading": "We propose a concept, you decide",
       "body": "From your input, our cluster kicks off a concept right away. The concept comes back to you, and you decide whether and how it goes on. Only what you have approved gets built."
     },
     {
       "id": "handover",
       "navLabel": "Handover",
-      "heading": "Handover to our agents",
+      "heading": "Our agents take over the build",
       "body": "Once you have decided, the concept goes to our own agents. They take over the implementation – you do not have to trigger anything further or assemble anything yourself."
     },
     {
       "id": "build",
       "navLabel": "Build",
-      "heading": "Agents build your agents",
+      "heading": "Your AI agents, built for your processes",
       "body": "Our agents build your own agent cluster, shaped around your processes and not around a template. We usually start small, with a manageable task such as bookkeeping. The cluster runs at your site, we learn from it – and you gain experience of where it works and where it does not."
     },
     {
       "id": "telemetry",
       "navLabel": "Data flow",
-      "heading": "We see whether it runs. Not what is inside.",
+      "heading": "Data protection: we see whether it runs – not what is inside",
       "body": "Only runtime, errors and costs come back to us. From that we build updates for your cluster. Sensitive data stays with you; outward only what you release, and learning data only after you release it by hand. We use local AI models wherever possible, and every agent has its own budget with visible spend."
     },
     {
       "id": "loop",
       "navLabel": "Loop",
-      "heading": "The loop closes",
+      "heading": "Monthly call: what works, what we sharpen",
       "body": "Once a month we have a call with you: what worked, what did not? Which rules do we sharpen, which models do we update, which project do we take on next? New input leads to new concepts – the loop closes."
     },
     {
       "id": "growth",
       "navLabel": "Growth",
-      "heading": "The cluster grows ring by ring",
+      "heading": "Automating more, area by area",
       "body": "Over time the cluster tunes itself to your business: errors become fewer, results more precise, and it takes on more tasks. It grows area by area, for example with bookkeeping and bank data, your own CRM, your own frontends or apps and local models, until it covers your business.",
       "areas": [
         {
@@ -508,16 +662,89 @@ export const leistungenData: LeistungenData = {
     {
       "id": "service",
       "navLabel": "Offer",
-      "heading": "Your cluster covers you 100%",
+      "heading": "Setup as a project, operation as monthly support",
       "body": "The build is one project, the ongoing operation after that a monthly retainer. A cluster is never finished, it grows with your company. We keep building, step by step and traceably. In the free intro call we clarify what your cluster starts with.",
       "billingNote": "Build = one project · Operation = monthly retainer"
     },
     {
       "id": "outlook",
       "navLabel": "Phone",
-      "heading": "Less screen, more phone",
+      "heading": "Outlook: less screen, more phone",
       "body": "A phone call with your agent instead of a click on the screen – this is already possible today via the Claude app."
     }
   ]
 },
+  faqHeading: "Frequently asked questions about AI consulting and AI automation",
+  faq: [
+  {
+    "question": "What does an AI agency like Venture Labs do?",
+    "answer": "We find out where AI really takes work off your plate, build the solution and keep running it with you. AI consulting and implementation come from one team: what we recommend, we also build – and we stay with it once it runs."
+  },
+  {
+    "question": "What is an AI potential analysis?",
+    "answer": "We call it the Pulse Check. We look at how your company works – processes, data, tools, team – and rank the use cases by impact. What you get is a prioritised roadmap with 3–5 use cases, not a 40-page report."
+  },
+  {
+    "question": "What do AI consulting and AI automation cost?",
+    "answer": "It depends on the scope, so we do not quote a flat figure here. What a step costs in your case is something we work out in a first call, based on your scope. Running costs come mainly from the language models used; every agent gets a cost cap so there are no surprises. The free Pulse Score gives you a first impression of where you stand."
+  },
+  {
+    "question": "How long until the first automation runs?",
+    "answer": "The Pulse Check takes 1–2 days. After that we implement the most important use case in a Pulse Build, from 4 weeks to production. We deliberately start small, with a manageable task, and build on from there."
+  },
+  {
+    "question": "Do we need our own IT department?",
+    "answer": "No. What matters is one person on your side who knows the process and can make decisions. We take care of the technical part – from connecting your systems to running them."
+  },
+  {
+    "question": "Which systems does it work with?",
+    "answer": "We connect to the tools your team already uses, for example Microsoft 365 and Outlook, Slack and WhatsApp, DATEV and accounting, and SAP, ERP and CRM systems. Whether another system can be connected is something we work out in the Pulse Check."
+  },
+  {
+    "question": "Is AI automation GDPR-compliant?",
+    "answer": "We settle that per use case before we build: which data an agent sees, where it lives and which models run. Sensitive data stays with you, and we use local models wherever possible. We give no blanket promise as long as your specific case has not been checked."
+  },
+  {
+    "question": "Is there funding for AI projects in mid-sized companies?",
+    "answer": "There are federal and state funding programmes for small and medium-sized companies in Germany. Which one fits depends on your company, your state and the project – we go through it with you in the first call."
+  },
+  {
+    "question": "Do you only work with companies in Düsseldorf?",
+    "answer": "No. We are based in Düsseldorf and work remotely – with companies across Germany. In Düsseldorf and NRW we are happy to come to you for workshops or the Pulse Check."
+  }
+],
+  resourcesHeading: "Read on",
+  resourcesIntro: "Before you talk to us, you can dig deeper here.",
+  resources: [
+  {
+    "label": "AI potential analysis and readiness check",
+    "description": "What the Pulse Check examines and what you have in hand afterwards.",
+    "href": "/leistungen/ki-potenzialanalyse"
+  },
+  {
+    "label": "AI agents for companies",
+    "description": "What approvals, cost caps and data protection look like for agents.",
+    "href": "/leistungen/ki-agenten-unternehmen"
+  },
+  {
+    "label": "AI agents in everyday business: 5 use cases",
+    "description": "Five tasks agents already handle reliably today.",
+    "href": "/blog/ki-agenten-use-cases"
+  },
+  {
+    "label": "Why AI projects in mid-sized companies fail",
+    "description": "The typical mistakes – and how a check prevents them.",
+    "href": "/blog/warum-ki-projekte-im-mittelstand-scheitern"
+  },
+  {
+    "label": "AI agent or chatbot?",
+    "description": "The difference in everyday business, explained simply.",
+    "href": "/blog/ki-agent-oder-chatbot"
+  },
+  {
+    "label": "Playbook, role or your own AI agent?",
+    "description": "When which way in pays off.",
+    "href": "/blog/playbook-rolle-oder-eigener-agent"
+  }
+],
 };

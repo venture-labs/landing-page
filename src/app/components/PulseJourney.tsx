@@ -263,15 +263,27 @@ function StepDetail({
         >
           {step.description}
         </p>
-        <Link
-          to={`${localizedPath("/kontakt")}?topic=${step.key}`}
-          onClick={() => trackEvent(EVENTS.contactSent, PLACEMENTS.pulseJourney, CTAS.contact)}
-          className="self-start inline-flex items-center gap-2 font-semibold text-white rounded-lg px-6 py-3 transition-transform hover:scale-[1.02]"
-          style={{ fontSize: "var(--text-btn)", backgroundColor: accent }}
-        >
-          {step.ctaLabel}
-          <ArrowRight size={16} />
-        </Link>
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+          <Link
+            to={`${localizedPath("/kontakt")}?topic=${step.key}`}
+            onClick={() => trackEvent(EVENTS.contactSent, PLACEMENTS.pulseJourney, CTAS.contact)}
+            className="inline-flex items-center gap-2 font-semibold text-white rounded-lg px-6 py-3 transition-transform hover:scale-[1.02]"
+            style={{ fontSize: "var(--text-btn)", backgroundColor: accent }}
+          >
+            {step.ctaLabel}
+            <ArrowRight size={16} />
+          </Link>
+          {!compact && step.linkLabel && step.linkHref && (
+            <Link
+              to={localizedPath(step.linkHref)}
+              className="inline-flex items-center gap-1.5 text-white/70 hover:text-white underline underline-offset-4 decoration-white/25 hover:decoration-white/60 transition-colors"
+              style={{ fontSize: "var(--text-body)" }}
+            >
+              {step.linkLabel}
+              <ArrowRight size={15} />
+            </Link>
+          )}
+        </div>
       </div>
 
       {!compact && (
@@ -323,7 +335,7 @@ function StepDetail({
 /* ─── section ────────────────────────────────────────────────────────────── */
 
 export function PulseJourney({ compact = false }: { compact?: boolean }) {
-  const { coreHeading, coreIntro, coreServices } = useLeistungenData();
+  const { coreEyebrow, coreHeading, coreIntro, coreServices } = useLeistungenData();
   const { localizedPath } = useLocale();
   const { t } = useTranslation();
   const [activeKey, setActiveKey] = useState<CoreService["key"]>("check");
@@ -342,12 +354,22 @@ export function PulseJourney({ compact = false }: { compact?: boolean }) {
           transition={{ duration: 0.6 }}
           className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 lg:gap-12"
         >
-          <h2
-            className="font-semibold text-white leading-tight"
-            style={{ fontSize: "var(--text-hero)" }}
-          >
-            {coreHeading}
-          </h2>
+          <div className="flex flex-col gap-3">
+            {!compact && coreEyebrow && (
+              <span
+                className="font-semibold uppercase tracking-[0.16em]"
+                style={{ fontSize: "var(--text-small)", color: accent }}
+              >
+                {coreEyebrow}
+              </span>
+            )}
+            <h2
+              className="font-semibold text-white leading-tight"
+              style={{ fontSize: "var(--text-hero)" }}
+            >
+              {coreHeading}
+            </h2>
+          </div>
           <p
             className="text-white/60 font-light leading-relaxed max-w-md lg:text-right"
             style={{ fontSize: "var(--text-body)" }}
@@ -369,6 +391,17 @@ export function PulseJourney({ compact = false }: { compact?: boolean }) {
         <AnimatePresence mode="wait">
           <StepDetail key={active.key} step={active} accent={accent} compact={compact} />
         </AnimatePresence>
+
+        {/* The two inactive steps stay in the markup, hidden: the prerendered
+            HTML then carries all three steps' text (search engines read it),
+            not only the Check tab the page opens on. */}
+        {coreServices
+          .filter((s) => s.key !== active.key)
+          .map((s) => (
+            <div key={s.key} hidden>
+              <StepDetail step={s} accent={STEP_ACCENTS[s.key]} compact={compact} />
+            </div>
+          ))}
 
         {compact && (
           <Link

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView, useReducedMotion } from "motion/react";
-import { ArrowLeft, ArrowRight, Check } from "lucide-react";
+import { ArrowDown, ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useLeistungenData } from "@/data/content";
 import { CtaButton } from "@/app/components/ui/CtaButton";
@@ -48,8 +48,10 @@ import {
  * scroll-snap per card regardless of how many cards fit a given viewport, so
  * the position text stays a true card index.
  *
- * Mounted in Leistungen.tsx directly after <PulseJourney /> (`#ablauf`),
- * ahead of <SkillMatrix />.
+ * Mounted in Leistungen.tsx directly after the proof strip, ahead of
+ * <PulseJourney /> (`#ablauf`): the visitor recognises the problem first,
+ * then sees how we work. The cards are ordered by `area` in the content file;
+ * the area chips above the carousel jump to an area's first card.
  */
 
 const ACCENTS = ["#2b95f6", "#a318f8", "#fda700", "#8129ff", "#2b95f6"];
@@ -87,6 +89,14 @@ export function UseCasesSection() {
   }, [api]);
 
   const total = data.situations.length;
+  // The cards are ordered by area in the content file; a chip jumps to the
+  // first card of its area, and the chip of the card in view is highlighted.
+  const areaLabel = new Map(data.useCaseAreas.map((a) => [a.id, a.label]));
+  const firstIndexOfArea = new Map<string, number>();
+  data.situations.forEach((s, i) => {
+    if (!firstIndexOfArea.has(s.area)) firstIndexOfArea.set(s.area, i);
+  });
+  const activeArea = data.situations[selected]?.area;
 
   return (
     <motion.section
@@ -112,6 +122,36 @@ export function UseCasesSection() {
           </p>
         </div>
 
+        {data.useCaseAreas.length > 0 && (
+          <div
+            className="flex flex-wrap justify-center gap-2"
+            role="group"
+            aria-label={t("leistungen.useCases.areasLabel")}
+          >
+            {data.useCaseAreas.map((area) => {
+              const active = area.id === activeArea;
+              const start = firstIndexOfArea.get(area.id);
+              if (start === undefined) return null;
+              return (
+                <button
+                  key={area.id}
+                  type="button"
+                  aria-pressed={active}
+                  onClick={() => api?.scrollTo(start, jump)}
+                  className="px-4 py-2 rounded-full font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  style={{
+                    fontSize: "var(--text-small)",
+                    color: active ? "#0e0d13" : "rgba(255,255,255,0.7)",
+                    backgroundColor: active ? "#ffffff" : "rgba(255,255,255,0.06)",
+                  }}
+                >
+                  {area.label}
+                </button>
+              );
+            })}
+          </div>
+        )}
+
         <Carousel opts={{ align: "start", containScroll: false }} setApi={setApi} className="w-full">
           <CarouselContent>
             {data.situations.map((situation, index) => {
@@ -128,6 +168,25 @@ export function UseCasesSection() {
                       boxShadow: `inset 0 0 0 1px ${accent}59`,
                     }}
                   >
+                    {/* Problem on top, the proposed solution below: the two
+                        halves are labelled and the solution sits in its own
+                        tinted block, so the card reads as "problem → answer". */}
+                    <div className="flex items-center justify-between gap-3">
+                      <span
+                        className="font-semibold uppercase tracking-[0.12em] text-white/55"
+                        style={{ fontSize: "var(--text-small)" }}
+                      >
+                        {t("leistungen.useCases.problemLabel")}
+                      </span>
+                      {areaLabel.has(situation.area) && (
+                        <span
+                          className="px-2.5 py-0.5 rounded-full text-white/50 bg-white/[0.06] whitespace-nowrap"
+                          style={{ fontSize: "var(--text-small)" }}
+                        >
+                          {areaLabel.get(situation.area)}
+                        </span>
+                      )}
+                    </div>
                     <p
                       className="font-light text-white leading-snug"
                       style={{ fontSize: "var(--text-h3)" }}
@@ -140,10 +199,25 @@ export function UseCasesSection() {
                         ”
                       </span>
                     </p>
-                    <div className="flex flex-col gap-2 pt-3 border-t border-white/10 mt-auto">
+                    <div className="flex justify-center mt-auto pt-1" aria-hidden>
+                      <ArrowDown size={18} style={{ color: accent }} />
+                    </div>
+                    <div
+                      className="flex flex-col gap-2 rounded-2xl p-4"
+                      style={{
+                        backgroundColor: `${accent}26`,
+                        boxShadow: `inset 0 0 0 1px ${accent}40`,
+                      }}
+                    >
                       <span
-                        className="font-semibold"
-                        style={{ color: accent, fontSize: "var(--text-body)" }}
+                        className="font-semibold uppercase tracking-[0.12em]"
+                        style={{ color: accent, fontSize: "var(--text-small)" }}
+                      >
+                        {t("leistungen.useCases.solutionLabel")}
+                      </span>
+                      <span
+                        className="font-semibold text-white"
+                        style={{ fontSize: "var(--text-h3)" }}
                       >
                         {situation.agentName}
                       </span>
