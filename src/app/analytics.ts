@@ -80,6 +80,7 @@ export const PLACEMENTS = Object.freeze({
   startNeuIntroQuiz: "start-neu-intro-quiz",
   startNeuFinalQuiz: "start-neu-final-quiz",
   startNeuFinalBooking: "start-neu-final-booking",
+  startNeuToolCard: "start-neu-tool-card",
 } as const);
 
 /**

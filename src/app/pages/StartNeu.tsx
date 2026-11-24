@@ -22,9 +22,12 @@ import {
   FileText,
   Inbox,
   MessagesSquare,
+  RotateCw,
   ScanLine,
+  Sparkles,
   Target,
   UserPlus,
+  X,
   type LucideIcon,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -39,7 +42,8 @@ import { BOOKING_URL } from "@/app/links";
 import { CTAS, EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
 
 /**
- * /:lang/start-neu — alternative homepage draft (branch feature/startseite-ki-nutzen).
+ * The homepage (route /:lang). It replaced the earlier Hero-based homepage; /:lang/start-neu, the address it was
+ * drafted under, redirects here.
  *
  * Focus: the mittelstand and what custom AI tools do for it — benefit first, not "we are great". Order:
  *   1. ScrollIntro  — pinned, scroll-driven intro (~5 s of scrolling): routine → your tools → benefit → "We build what's next."
@@ -54,7 +58,7 @@ import { CTAS, EVENTS, PLACEMENTS, trackEvent } from "@/app/analytics";
  * invoices and receipts, inbox triage, first-contact customer service, quotes and lead qualification, HR
  * requests, internal knowledge) plus time tracking and leave requests. Cases come from
  * content/cases; the page's own copy
- * lives in COPY_DE / COPY_EN. Noindex, not in the nav or sitemap.
+ * lives in COPY_DE / COPY_EN. SEO title and description come from content/site/home.md.
  *
  * SSR-safe: the server and the first client render show the intro's opening frame; scroll progress and
  * reduced motion are only read on the client. Under prefers-reduced-motion the intro renders as a plain,
@@ -133,21 +137,90 @@ const COPY_DE = {
     heading: "Was wir für dich bauen.",
     intro: "Kein Tool von der Stange: Jedes passt auf deinen Ablauf und läuft da, wo dein Team ohnehin arbeitet.",
     items: [
-      { name: "Belege scannen & ablegen", benefit: "Foto rein, Beleg landet richtig abgelegt in der Buchhaltung." },
-      { name: "Eingangsrechnungen prüfen", benefit: "Mit der Bestellung abgeglichen, Abweichungen markiert." },
-      { name: "Zeiterfassung", benefit: "Stunden per Chat oder Sprachnachricht, direkt dem Projekt zugeordnet." },
-      { name: "Urlaubsanträge", benefit: "Beantragt, geprüft, im Kalender. Ohne Formular-Pingpong." },
-      { name: "Kundenkommunikation", benefit: "Anfragen sortiert, Antwort vorbereitet, dein Team gibt frei." },
-      { name: "Angebote", benefit: "Aus der Anfrage wird ein fertiger Angebotsentwurf." },
-      { name: "Mahnwesen", benefit: "Überfälliges erkannt, Erinnerung vorbereitet." },
-      { name: "Postfach sortieren", benefit: "Jede Mail landet beim richtigen Team." },
-      { name: "Termine", benefit: "Terminwünsche aus Mails direkt im Kalender." },
-      { name: "Onboarding", benefit: "Neue im Team finden Antworten, ohne lange zu suchen." },
-      { name: "Wissensdatenbank", benefit: "Euer Wissen aus Ordnern und Mails, per Frage durchsuchbar." },
-      { name: "Lead-Qualifizierung", benefit: "Neue Kontakte vorsortiert, die passenden zuerst." },
+      {
+        name: "Belege scannen & ablegen",
+        benefit: "Foto rein, Beleg landet richtig abgelegt in der Buchhaltung.",
+        pain: "Du verbringst viel Zeit mit dem Scannen und Ablegen von Belegen.",
+        build: "Wir bauen dir ein vollautomatisiertes System: Der Beleg kommt per Foto oder Mail rein, wird erkannt, geprüft und abgelegt. Mit Freigaben und Rechten, wer was sehen und bestätigen darf.",
+      },
+      {
+        name: "Eingangsrechnungen prüfen",
+        benefit: "Mit der Bestellung abgeglichen, Abweichungen markiert.",
+        pain: "Jede Rechnung wird von Hand mit der Bestellung verglichen, und Abweichungen fallen erst spät auf.",
+        build: "Das System gleicht Rechnung und Bestellung ab, markiert Abweichungen und legt sie deinem Team zur Freigabe vor. Nichts wird stillschweigend durchgewunken.",
+      },
+      {
+        name: "Zeiterfassung",
+        benefit: "Stunden per Chat oder Sprachnachricht, direkt dem Projekt zugeordnet.",
+        pain: "Stunden werden am Freitag aus dem Gedächtnis nachgetragen.",
+        build: "Dein Team meldet Zeiten per Chat oder Sprachnachricht, das System ordnet sie dem richtigen Projekt zu und fragt nach, wenn etwas unklar ist. Ausgewertet wird nach deinen Regeln.",
+      },
+      {
+        name: "Urlaubsanträge",
+        benefit: "Beantragt, geprüft, im Kalender. Ohne Formular-Pingpong.",
+        pain: "Urlaubsanträge kommen per Mail, Zettel oder Chat und müssen von Hand in den Kalender.",
+        build: "Antrag stellen, Vertretung und Fristen prüfen, Freigabe durch die richtige Person, Eintrag im Kalender. Rechte und Regeln so, wie sie bei euch gelten.",
+      },
+      {
+        name: "Kundenkommunikation",
+        benefit: "Anfragen sortiert, Antwort vorbereitet, dein Team gibt frei.",
+        pain: "Anfragen stapeln sich im Postfach, und immer dieselben Antworten werden neu geschrieben.",
+        build: "Das System sortiert Anfragen und bereitet eine Antwort in deinem Ton vor. Gesendet wird erst, wenn ein Mensch zustimmt.",
+      },
+      {
+        name: "Angebote",
+        benefit: "Aus der Anfrage wird ein fertiger Angebotsentwurf.",
+        pain: "Aus jeder Anfrage ein Angebot zu bauen, kostet jedes Mal Zeit.",
+        build: "Produkt und Menge werden aus der Anfrage gelesen, der Entwurf entsteht in deinem CRM oder deiner Vorlage. Du prüfst und gibst frei.",
+      },
+      {
+        name: "Mahnwesen",
+        benefit: "Überfälliges erkannt, Erinnerung vorbereitet.",
+        pain: "Überfällige Rechnungen fallen erst auf, wenn es schon lange her ist.",
+        build: "Das System erkennt Überfälliges und bereitet die Erinnerung vor, dein Team bestätigt nur noch. Stufen und Ton legst du fest.",
+      },
+      {
+        name: "Postfach sortieren",
+        benefit: "Jede Mail landet beim richtigen Team.",
+        pain: "Im gemeinsamen Postfach weiß keiner, wer sich um welche Mail kümmert.",
+        build: "Jede Mail wird erkannt und dem richtigen Team oder der richtigen Person zugeordnet, mit Hinweis auf die Dringlichkeit. Zuständigkeiten richten wir nach deinem Ablauf ein.",
+      },
+      {
+        name: "Termine",
+        benefit: "Terminwünsche aus Mails direkt im Kalender.",
+        pain: "Terminwünsche stehen in Mails, und jemand tippt sie von Hand in den Kalender.",
+        build: "Das System liest den Wunsch, schlägt freie Zeiten vor und trägt den Termin nach Bestätigung ein.",
+      },
+      {
+        name: "Onboarding",
+        benefit: "Neue im Team finden Antworten, ohne lange zu suchen.",
+        pain: "Neue Kolleginnen und Kollegen suchen in Ordnern und fragen immer dasselbe.",
+        build: "Eine geführte Einarbeitung mit Checkliste und einem Assistenten, der Fragen aus eurem Wissen beantwortet. Zugriff nur auf das, was die Rolle sehen darf.",
+      },
+      {
+        name: "Wissensdatenbank",
+        benefit: "Euer Wissen aus Ordnern und Mails, per Frage durchsuchbar.",
+        pain: "Das Wissen liegt in Ordnern, Mails und Köpfen.",
+        build: "Dein Wissen wird durchsuchbar, Fragen werden mit Quellenangabe beantwortet. Wer was lesen darf, legst du über Rechte fest.",
+      },
+      {
+        name: "Lead-Qualifizierung",
+        benefit: "Neue Kontakte vorsortiert, die passenden zuerst.",
+        pain: "Neue Kontakte kommen von überall, und keiner weiß, wen man zuerst anruft.",
+        build: "Kontakte werden vorsortiert, die passenden zuerst, mit kurzer Zusammenfassung. Die Kriterien bestimmst du.",
+      },
     ],
     more: "Dein Ablauf fehlt? Den bauen wir auch.",
     moreLink: "Alle Use Cases",
+    card: {
+      open: "Beispiel ansehen",
+      label: "Beispiel",
+      before: "Heute",
+      after: "Mit Venture Labs",
+      individual: "Immer individuell auf deinen Arbeitsablauf eingerichtet.",
+      cta: "Deinen Ablauf besprechen",
+      close: "Schließen",
+    },
   },
   benefits: {
     eyebrow: "Dein Gewinn",
@@ -207,21 +280,90 @@ const COPY_EN: Copy = {
     heading: "What we build for you.",
     intro: "Nothing off the shelf: each tool fits the way you work and runs where your team already works.",
     items: [
-      { name: "Scan & file receipts", benefit: "Snap a photo, the receipt is filed in the right place in your books." },
-      { name: "Check incoming invoices", benefit: "Matched against the order, deviations flagged." },
-      { name: "Time tracking", benefit: "Hours by chat or voice message, assigned straight to the project." },
-      { name: "Leave requests", benefit: "Requested, checked, in the calendar. No form ping-pong." },
-      { name: "Customer communication", benefit: "Requests sorted, reply drafted, your team approves." },
-      { name: "Quotes", benefit: "A customer request turns into a finished quote draft." },
-      { name: "Payment reminders", benefit: "Overdue invoices spotted, reminder prepared." },
-      { name: "Inbox triage", benefit: "Every email lands with the right team." },
-      { name: "Appointments", benefit: "Meeting requests from emails go straight into the calendar." },
-      { name: "Onboarding", benefit: "New colleagues find answers without a long search." },
-      { name: "Knowledge base", benefit: "Your knowledge from folders and emails, searchable by question." },
-      { name: "Lead qualification", benefit: "New contacts pre-sorted, the best fits first." },
+      {
+        name: "Scan & file receipts",
+        benefit: "Snap a photo, the receipt is filed in the right place in your books.",
+        pain: "You spend a lot of time scanning and filing receipts.",
+        build: "We build you a fully automated system: the receipt arrives by photo or email, is recognised, checked and filed. With approvals and permissions for who may see and confirm what.",
+      },
+      {
+        name: "Check incoming invoices",
+        benefit: "Matched against the order, deviations flagged.",
+        pain: "Every invoice is compared with the order by hand, and deviations show up late.",
+        build: "The system matches invoice and order, flags deviations and puts them in front of your team for approval. Nothing is waved through silently.",
+      },
+      {
+        name: "Time tracking",
+        benefit: "Hours by chat or voice message, assigned straight to the project.",
+        pain: "Hours are filled in from memory on Friday.",
+        build: "Your team reports time by chat or voice message, the system assigns it to the right project and asks when something is unclear. Reports follow your rules.",
+      },
+      {
+        name: "Leave requests",
+        benefit: "Requested, checked, in the calendar. No form ping-pong.",
+        pain: "Leave requests arrive by email, note or chat and have to be entered into the calendar by hand.",
+        build: "Submit the request, check cover and deadlines, approval by the right person, entry in the calendar. Permissions and rules as they apply at your company.",
+      },
+      {
+        name: "Customer communication",
+        benefit: "Requests sorted, reply drafted, your team approves.",
+        pain: "Requests pile up in the inbox, and the same answers are written again and again.",
+        build: "The system sorts requests and drafts a reply in your tone. Nothing is sent until a person agrees.",
+      },
+      {
+        name: "Quotes",
+        benefit: "A customer request turns into a finished quote draft.",
+        pain: "Turning every request into a quote costs time, every time.",
+        build: "Product and quantity are read from the request, the draft is created in your CRM or template. You review and approve.",
+      },
+      {
+        name: "Payment reminders",
+        benefit: "Overdue invoices spotted, reminder prepared.",
+        pain: "Overdue invoices are only noticed long after the due date.",
+        build: "The system spots overdue invoices and prepares the reminder, your team only confirms. You set the stages and the tone.",
+      },
+      {
+        name: "Inbox triage",
+        benefit: "Every email lands with the right team.",
+        pain: "In the shared inbox nobody knows who is looking after which email.",
+        build: "Every email is recognised and assigned to the right team or person, with a note on urgency. We set up responsibilities to match your process.",
+      },
+      {
+        name: "Appointments",
+        benefit: "Meeting requests from emails go straight into the calendar.",
+        pain: "Meeting requests sit in emails, and someone types them into the calendar by hand.",
+        build: "The system reads the request, suggests free slots and enters the appointment once it is confirmed.",
+      },
+      {
+        name: "Onboarding",
+        benefit: "New colleagues find answers without a long search.",
+        pain: "New colleagues search through folders and keep asking the same questions.",
+        build: "Guided onboarding with a checklist and an assistant that answers questions from your own knowledge. Access only to what the role may see.",
+      },
+      {
+        name: "Knowledge base",
+        benefit: "Your knowledge from folders and emails, searchable by question.",
+        pain: "Knowledge lives in folders, emails and people's heads.",
+        build: "Your knowledge becomes searchable, answers come with their source. Who may read what is set through permissions.",
+      },
+      {
+        name: "Lead qualification",
+        benefit: "New contacts pre-sorted, the best fits first.",
+        pain: "New contacts arrive from everywhere, and nobody knows who to call first.",
+        build: "Contacts are pre-sorted, the best fits first, with a short summary. You decide the criteria.",
+      },
     ],
     more: "Your process is missing? We build that too.",
     moreLink: "All use cases",
+    card: {
+      open: "See an example",
+      label: "Example",
+      before: "Today",
+      after: "With Venture Labs",
+      individual: "Always set up around your own way of working.",
+      cta: "Talk through your process",
+      close: "Close",
+    },
   },
   benefits: {
     eyebrow: "What you gain",
@@ -730,12 +872,32 @@ function Marquee({ names, reverse = false, reduced }: { names: string[]; reverse
   );
 }
 
-function ToolTile({ name, benefit, Icon, accent, index }: { name: string; benefit: string; Icon: LucideIcon; accent: string; index: number }) {
+type ToolItem = Copy["tools"]["items"][number];
+
+/** Where a card flew from: the tile's box on screen, so the card can start exactly there. */
+type OpenCard = { index: number; rect: { left: number; top: number; width: number; height: number } };
+
+function ToolTile({
+  item,
+  Icon,
+  accent,
+  index,
+  hidden,
+  onOpen,
+}: {
+  item: ToolItem;
+  Icon: LucideIcon;
+  accent: string;
+  index: number;
+  hidden: boolean;
+  onOpen: (rect: DOMRect, trigger: HTMLElement) => void;
+}) {
+  const COPY = useCopy();
   return (
     <Reveal delay={(index % 4) * 0.05} className="h-full">
       <div
         className="group relative flex h-full flex-col gap-4 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] p-7 transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-[color:var(--accent)] hover:shadow-[0_24px_60px_-24px_var(--accent)]"
-        style={{ "--accent": accent } as CSSProperties}
+        style={{ "--accent": accent, opacity: hidden ? 0 : 1, transitionProperty: hidden ? "none" : undefined } as CSSProperties}
       >
         <div
           aria-hidden
@@ -752,16 +914,225 @@ function ToolTile({ name, benefit, Icon, accent, index }: { name: string; benefi
           className="relative font-bold leading-tight tracking-[-0.02em] text-white [hyphens:auto] [overflow-wrap:anywhere]"
           style={{ fontSize: "clamp(1.25rem, 1.5vw, 1.5rem)" }}
         >
-          {name}
+          {item.name}
         </h3>
         <p
           className="relative font-light leading-relaxed text-white/60 transition-colors duration-300 group-hover:text-white/85"
           style={{ fontSize: "var(--text-small)" }}
         >
-          {benefit}
+          {item.benefit}
         </p>
+        <span
+          aria-hidden
+          className="relative mt-auto inline-flex items-center gap-1.5 pt-1 font-semibold opacity-70 transition-opacity duration-300 group-hover:opacity-100"
+          style={{ color: accent, fontSize: "var(--text-small)" }}
+        >
+          <RotateCw size={14} strokeWidth={2.5} className="transition-transform duration-500 group-hover:rotate-180" />
+          {COPY.tools.card.open}
+        </span>
+        {/* The whole tile is the button; the heading above stays a real heading. */}
+        <button
+          type="button"
+          aria-haspopup="dialog"
+          aria-label={`${item.name}: ${COPY.tools.card.open}`}
+          onClick={(e) => onOpen((e.currentTarget.parentElement as HTMLElement).getBoundingClientRect(), e.currentTarget)}
+          className="absolute inset-0 z-10 cursor-pointer rounded-3xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        />
       </div>
     </Reveal>
+  );
+}
+
+/**
+ * The flipped tool card: it starts exactly on the clicked tile, turns around and flies to the middle of the
+ * screen, where its back shows a small example (the situation today, what we would build, always built around
+ * the customer's own way of working). Escape, the backdrop and the close button bring it back. Under
+ * reduced motion it just fades in, already showing the back.
+ */
+function ToolCardOverlay({
+  open,
+  item,
+  Icon,
+  accent,
+  reduced,
+  onClose,
+}: {
+  open: OpenCard | null;
+  item: ToolItem | null;
+  Icon: LucideIcon | null;
+  accent: string;
+  reduced: boolean;
+  onClose: () => void;
+}) {
+  const COPY = useCopy();
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const previousOverflow = document.documentElement.style.overflow;
+    document.documentElement.style.overflow = "hidden";
+    closeRef.current?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (e.key !== "Tab" || !dialogRef.current) return;
+      // Keep Tab inside the dialog: it holds only the booking link and the close button.
+      const focusable = dialogRef.current.querySelectorAll<HTMLElement>("a[href], button");
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.documentElement.style.overflow = previousOverflow;
+    };
+  }, [open, onClose]);
+
+  // The card's final width, and where it starts: the tile's centre, scaled to the tile's width.
+  const vw = typeof window === "undefined" ? 1200 : window.innerWidth;
+  const vh = typeof window === "undefined" ? 800 : window.innerHeight;
+  const finalWidth = Math.min(vw * 0.92, 520);
+  const from = open
+    ? {
+        x: open.rect.left + open.rect.width / 2 - vw / 2,
+        y: open.rect.top + open.rect.height / 2 - vh / 2,
+        scale: open.rect.width / finalWidth,
+      }
+    : { x: 0, y: 0, scale: 1 };
+  const face = "[backface-visibility:hidden] [-webkit-backface-visibility:hidden] rounded-3xl";
+
+  return (
+    <AnimatePresence>
+      {open && item && Icon && (
+        <motion.div
+          key="tool-card-backdrop"
+          className="fixed inset-0 z-[70] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          onClick={onClose}
+        >
+          <div style={{ perspective: 1600 }} onClick={(e) => e.stopPropagation()}>
+            <motion.div
+              ref={dialogRef}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="tool-card-title"
+              className="grid"
+              style={{ width: finalWidth, transformStyle: "preserve-3d" }}
+              initial={reduced ? { opacity: 0, rotateY: 180 } : { ...from, rotateY: 0 }}
+              animate={reduced ? { opacity: 1, rotateY: 180 } : { x: 0, y: 0, scale: 1, rotateY: 180 }}
+              exit={reduced ? { opacity: 0, rotateY: 180 } : { ...from, rotateY: 0, transition: { duration: 0.45, ease: [0.4, 0, 0.2, 1] } }}
+              transition={reduced ? { duration: 0.2 } : { type: "spring", stiffness: 200, damping: 24, mass: 0.8 }}
+            >
+              {/* Front: looks like the tile it came from, so the flip reads as the tile turning around. */}
+              <div
+                aria-hidden
+                className={`${face} flex flex-col gap-4 p-7`}
+                style={{ gridArea: "1 / 1", backgroundColor: "#14131c", boxShadow: `inset 0 0 0 1px ${accent}66` }}
+              >
+                <span className="flex h-12 w-12 items-center justify-center rounded-2xl" style={{ backgroundColor: `${accent}26`, color: accent }}>
+                  <Icon size={24} strokeWidth={2.25} />
+                </span>
+                <span className="font-bold leading-tight tracking-[-0.02em] text-white" style={{ fontSize: "1.5rem" }}>
+                  {item.name}
+                </span>
+                <span className="font-light leading-relaxed text-white/60" style={{ fontSize: "var(--text-small)" }}>
+                  {item.benefit}
+                </span>
+              </div>
+
+              {/* Back: the example. */}
+              <div
+                className={`${face} relative flex max-h-[88vh] flex-col gap-5 overflow-y-auto p-7 sm:p-8`}
+                style={{
+                  gridArea: "1 / 1",
+                  transform: "rotateY(180deg)",
+                  background: `radial-gradient(circle at 0% 0%, ${accent}2e 0%, transparent 60%), #14131c`,
+                  boxShadow: `inset 0 0 0 1.5px ${accent}, 0 30px 90px -30px ${accent}`,
+                }}
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-11 w-11 items-center justify-center rounded-2xl" style={{ backgroundColor: `${accent}26`, color: accent }}>
+                      <Icon size={22} strokeWidth={2.25} />
+                    </span>
+                    <span
+                      className="rounded-full px-3 py-1 text-[0.7rem] font-bold uppercase tracking-[0.18em]"
+                      style={{ backgroundColor: `${accent}26`, color: accent }}
+                    >
+                      {COPY.tools.card.label}
+                    </span>
+                  </div>
+                  <button
+                    ref={closeRef}
+                    type="button"
+                    onClick={onClose}
+                    aria-label={COPY.tools.card.close}
+                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/15 text-white/80 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  >
+                    <X size={18} />
+                  </button>
+                </div>
+
+                <h3 id="tool-card-title" className="font-bold leading-tight tracking-[-0.025em] text-white" style={{ fontSize: "clamp(1.5rem, 2vw, 1.9rem)" }}>
+                  {item.name}
+                </h3>
+
+                <div className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-1">
+                    <span className="text-[0.7rem] font-bold uppercase tracking-[0.18em] text-white/45">{COPY.tools.card.before}</span>
+                    <p className="font-light leading-relaxed text-white/75" style={{ fontSize: "var(--text-body)" }}>
+                      {item.pain}
+                    </p>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <span className="text-[0.7rem] font-bold uppercase tracking-[0.18em]" style={{ color: accent }}>
+                      {COPY.tools.card.after}
+                    </span>
+                    <p className="font-medium leading-relaxed text-white" style={{ fontSize: "var(--text-body)" }}>
+                      {item.build}
+                    </p>
+                  </div>
+                </div>
+
+                <p
+                  className="flex items-start gap-2.5 rounded-2xl px-4 py-3 font-bold leading-snug text-white"
+                  style={{ backgroundColor: `${accent}1f`, fontSize: "var(--text-small)" }}
+                >
+                  <Sparkles size={18} className="mt-0.5 shrink-0" style={{ color: accent }} />
+                  {COPY.tools.card.individual}
+                </p>
+
+                <a
+                  href={BOOKING_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackEvent(EVENTS.callLinkClicked, PLACEMENTS.startNeuToolCard, CTAS.bookCall)}
+                  className="inline-flex items-center justify-center gap-2 self-start rounded-lg px-6 py-3 font-bold text-white transition-all hover:scale-[1.02]"
+                  style={{ backgroundColor: PURPLE, fontSize: "var(--text-body)" }}
+                >
+                  {COPY.tools.card.cta}
+                  <ArrowRight size={16} />
+                </a>
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 
@@ -769,6 +1140,21 @@ function ToolWall({ reduced }: { reduced: boolean }) {
   const COPY = useCopy();
   const { localizedPath } = useLocale();
   const names = COPY.tools.items.map((t) => t.name);
+  const [open, setOpen] = useState<OpenCard | null>(null);
+  const triggerRef = useRef<HTMLElement | null>(null);
+
+  const openCard = useCallback((index: number, rect: DOMRect, trigger: HTMLElement) => {
+    triggerRef.current = trigger;
+    setOpen({ index, rect: { left: rect.left, top: rect.top, width: rect.width, height: rect.height } });
+  }, []);
+  const closeCard = useCallback(() => {
+    setOpen(null);
+    triggerRef.current?.focus({ preventScroll: true });
+  }, []);
+
+  const item = open ? COPY.tools.items[open.index] : null;
+  const Icon = open ? TOOL_ICONS[open.index] : null;
+  const accent = open ? ACCENTS[open.index % ACCENTS.length] : PURPLE;
 
   return (
     <section id="tools" className="scroll-mt-24 overflow-hidden bg-[#0e0d13] py-24">
@@ -786,7 +1172,15 @@ function ToolWall({ reduced }: { reduced: boolean }) {
       <div className="mx-auto flex max-w-[1400px] flex-col gap-10 px-6 lg:px-12">
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {COPY.tools.items.map((t, i) => (
-            <ToolTile key={t.name} name={t.name} benefit={t.benefit} Icon={TOOL_ICONS[i]} accent={ACCENTS[i % ACCENTS.length]} index={i} />
+            <ToolTile
+              key={t.name}
+              item={t}
+              Icon={TOOL_ICONS[i]}
+              accent={ACCENTS[i % ACCENTS.length]}
+              index={i}
+              hidden={open?.index === i}
+              onOpen={(rect, trigger) => openCard(i, rect, trigger)}
+            />
           ))}
         </div>
         <div className="flex flex-wrap items-center justify-between gap-6 rounded-3xl border border-dashed border-white/20 px-7 py-6">
@@ -803,6 +1197,8 @@ function ToolWall({ reduced }: { reduced: boolean }) {
           </Link>
         </div>
       </div>
+
+      <ToolCardOverlay open={open} item={item} Icon={Icon} accent={accent} reduced={reduced} onClose={closeCard} />
     </section>
   );
 }
