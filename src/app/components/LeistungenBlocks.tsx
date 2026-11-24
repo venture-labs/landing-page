@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "motion/react";
-import { ArrowRight, ArrowUpRight, Calculator, Database, Mail, MessageCircle, Plus } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Database, Plus } from "lucide-react";
+import { INTEGRATION_LOGOS } from "@/app/components/brandLogos";
 import { Link } from "react-router";
 import { useLeistungenData } from "@/data/content";
 import { useLocale } from "@/app/locale";
@@ -77,13 +78,6 @@ export function ProofStrip() {
 
 /* ─── integrations ───────────────────────────────────────────────────── */
 
-const INTEGRATION_ICONS: Record<string, React.ReactNode> = {
-  microsoft: <Mail size={22} strokeWidth={1.5} />,
-  chat: <MessageCircle size={22} strokeWidth={1.5} />,
-  accounting: <Calculator size={22} strokeWidth={1.5} />,
-  erp: <Database size={22} strokeWidth={1.5} />,
-};
-
 export function IntegrationsSection() {
   const { integrationsHeading, integrationsIntro, integrations, integrationsNote } = useLeistungenData();
   const { ref, inView } = useReveal();
@@ -116,8 +110,15 @@ export function IntegrationsSection() {
               className="flex flex-col gap-3 rounded-2xl p-6 bg-white/[0.02]"
               style={{ boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.07)" }}
             >
-              <span className="text-[#8129ff]" aria-hidden>
-                {INTEGRATION_ICONS[item.id] ?? <Database size={22} strokeWidth={1.5} />}
+              <span className="flex items-center gap-4 h-8 text-white" aria-hidden>
+                {(INTEGRATION_LOGOS[item.id] ?? []).length > 0
+                  ? INTEGRATION_LOGOS[item.id].map((mark) => (
+                      <svg key={mark.title} viewBox="0 0 24 24" className="h-7 w-7" fill="currentColor">
+                        <title>{mark.title}</title>
+                        <path d={mark.path} />
+                      </svg>
+                    ))
+                  : <Database size={26} strokeWidth={1.5} />}
               </span>
               <h3 className="font-semibold text-white leading-tight" style={{ fontSize: "var(--text-h3)" }}>
                 {item.label}
