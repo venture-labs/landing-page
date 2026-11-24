@@ -5,9 +5,9 @@ seoDescription: 'AI consulting for mid-sized companies: an AI potential analysis
 heroEyebrow: 'Services'
 # Sits inside the <h1>, above the claim: the keyword half of the heading.
 heroKeyline: 'AI consulting & AI automation from Düsseldorf'
-heroTitlePrefix: 'Three steps.'
-heroTitleHighlight: 'One pulse.'
-heroSubheading: 'We are an AI agency for mid-sized companies. First, an AI potential analysis shows where AI really takes work off your plate. Then we build the automation – and stay with it.'
+heroTitlePrefix: 'AI that takes'
+heroTitleHighlight: 'work off your plate.'
+heroSubheading: 'In 1–2 days we find out which tasks can be automated in your company. Then we build the AI agents for them and look after them in daily work – your team approves, every agent has a cost cap.'
 proofHeading: 'What comes out of it'
 proofStats:
   - value: '1–2 days'
@@ -26,7 +26,7 @@ proofStats:
     label: 'fewer follow-up questions on briefings'
     source: 'Brylliant'
     href: '/cases/brylliant'
-coreEyebrow: 'How our AI consulting works'
+coreEyebrow: 'Three steps. One pulse.'
 coreHeading: 'Check. Build. Care.'
 coreIntro: 'Each step builds on the one before. After each, you decide whether to continue — no obligation to take the next one. What a step costs in your case is something we work out in a first call: based on your actual scope, with no obligation.'
 coreServices:
@@ -117,7 +117,7 @@ strengthFeatures:
   - icon: handshake
     title: 'Close collaboration & transparency'
     subtitle: "You're part of the development process"
-useCasesHeading: 'Where AI automation takes work off your plate'
+useCasesHeading: 'What AI automation can take over for you'
 useCasesLeadLine: 'Beleg-Inbox is already running in production at our company today — every other card is an example of what is possible with the same approach.'
 useCasesCtaLabel: 'Book a free intro call'
 useCaseAreas:

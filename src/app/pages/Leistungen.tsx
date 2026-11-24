@@ -82,16 +82,25 @@ function LeistungenHero({
               <span className="sr-only">: </span>
             </span>
             {data.heroTitlePrefix}{" "}
-            <span className="relative inline-block">
-              <span className="relative z-10">{data.heroTitleHighlight}</span>
-              <motion.span
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute bottom-1 left-0 w-full h-[4px] rounded-full origin-left"
-                style={{ background: "linear-gradient(90deg, #2b95f6, #a318f8, #fda700)" }}
-              />
-            </span>
+            {/* The underline is a background on the inline text, cloned per
+                line box: when the highlight wraps (narrow screens, the longer
+                English line), each line gets its own underline under its text
+                instead of one bar across the whole block. */}
+            <motion.span
+              initial={{ backgroundSize: "0% 4px" }}
+              animate={{ backgroundSize: "100% 4px" }}
+              transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="pb-1"
+              style={{
+                backgroundImage: "linear-gradient(90deg, #2b95f6, #a318f8, #fda700)",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "0 100%",
+                WebkitBoxDecorationBreak: "clone",
+                boxDecorationBreak: "clone",
+              }}
+            >
+              {data.heroTitleHighlight}
+            </motion.span>
           </h1>
 
           <p

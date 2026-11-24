@@ -317,7 +317,7 @@ function buildPagesForLocale(lang: Locale): PageMeta[] {
     description: leistungenDescription,
     crumbs: [crumb(footer.servicesTitle, "/leistungen")],
     // "AI Pulse" is the glossary's name for the productised offer; the hero
-    // ("Drei Schritte. Ein Puls.") is a claim, not a name. serviceType carries
+    // line ("KI, die dir Arbeit abnimmt.") is a claim, not a name. serviceType carries
     // the search terms the page is built for (SEO rework 2026-11-24).
     service: {
       name: "AI Pulse",

@@ -142,9 +142,9 @@ export const leistungenData: LeistungenData = {
   seoDescription: "KI-Beratung für den Mittelstand: KI-Potenzialanalyse in 1–2 Tagen, dann KI-Automatisierung, die im Alltag läuft. Aus Düsseldorf, remote in ganz Deutschland.",
   heroEyebrow: "Leistungen",
   heroKeyline: "KI-Beratung & KI-Automatisierung aus Düsseldorf",
-  heroTitlePrefix: "Drei Schritte.",
-  heroTitleHighlight: "Ein Puls.",
-  heroSubheading: "Wir sind eine KI-Agentur für den Mittelstand. Erst finden wir in einer KI-Potenzialanalyse heraus, wo KI dir wirklich Arbeit abnimmt. Dann bauen wir die Automatisierung – und bleiben dran.",
+  heroTitlePrefix: "KI, die dir",
+  heroTitleHighlight: "Arbeit abnimmt.",
+  heroSubheading: "In 1–2 Tagen finden wir heraus, welche Aufgaben sich bei dir automatisieren lassen. Dann bauen wir die KI-Agenten dafür und betreuen sie im Alltag – dein Team gibt frei, jeder Agent hat einen Kostendeckel.",
   proofHeading: "Was dabei herauskommt",
   proofStats: [
   {
@@ -172,7 +172,7 @@ export const leistungenData: LeistungenData = {
     "href": "/cases/brylliant"
   }
 ],
-  coreEyebrow: "So läuft die KI-Beratung bei uns",
+  coreEyebrow: "Drei Schritte. Ein Puls.",
   coreHeading: "Check. Build. Care.",
   coreIntro: "Jeder Schritt baut auf dem vorherigen auf. Nach jedem entscheidest du, ob es weitergeht – ohne Verpflichtung zum nächsten. Was ein Schritt bei dir kostet, besprechen wir im Erstgespräch: konkret auf deinen Umfang gerechnet, unverbindlich.",
   coreServices: [
@@ -291,7 +291,7 @@ export const leistungenData: LeistungenData = {
     "subtitle": "Du bist Teil des Entwicklungsprozesses"
   }
 ],
-  useCasesHeading: "Wo KI-Automatisierung dir Arbeit abnimmt",
+  useCasesHeading: "Was KI-Automatisierung bei dir übernehmen kann",
   useCasesLeadLine: "Beleg-Inbox läuft heute schon produktiv bei uns – alle anderen Karten sind Beispiele dafür, was mit demselben Ansatz möglich ist.",
   useCasesCtaLabel: "Kostenloses Erstgespräch buchen",
   useCaseAreas: [
